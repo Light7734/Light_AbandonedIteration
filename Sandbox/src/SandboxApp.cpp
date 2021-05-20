@@ -2,11 +2,6 @@
 
 class Sandbox : public Light::Application
 {
-public:
-	Sandbox()
-	{
-	}
-
 };
 
 Light::Application* Light::CreateApplication()
