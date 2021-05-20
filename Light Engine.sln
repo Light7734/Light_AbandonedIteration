@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Light Engine", "Light Engine\Light Engine.vcxproj", "{039B5335-8EC7-4005-AFF9-833E1B760755}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{A72B03C9-4FE6-4288-AE22-8DD8E4E37A4D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{039B5335-8EC7-4005-AFF9-833E1B760755} = {039B5335-8EC7-4005-AFF9-833E1B760755}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
