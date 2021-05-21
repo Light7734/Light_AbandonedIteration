@@ -26,6 +26,7 @@ project "Engine"
 		"%{prj.location}/src/Engine/",
 
 		(dependenciesdir .. "spdlog/include/"),
+		(dependenciesdir .. "glfw/include/"),
 	}
 
 	links

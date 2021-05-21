@@ -2,17 +2,27 @@
 
 #include "Base.h"
 
+#include <memory>
+
 namespace Light {
+
+	class Window;
 
 	class Application
 	{
+	private:
+		std::unique_ptr<Window> m_Window = nullptr;
+
 	public:
-		Application();
 		virtual ~Application();
 
 		void GameLoop();
-	};
 
-	Application* CreateApplication();
+		// To be defined in client project
+		friend Application* CreateApplication();
+
+	protected:
+		Application();
+	};
 
 }
