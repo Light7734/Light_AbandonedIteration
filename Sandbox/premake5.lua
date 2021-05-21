@@ -1,10 +1,10 @@
 project "Sandbox"
 
 	-- Output Directories --
-	location "../Sandbox/"
+	location "%{wks.location}/Sandbox/"
 
-	targetdir ("../bin/"     .. outputdir)
-	objdir    ("../bin-int/" .. outputdir)
+	targetdir ("%{wks.location}/bin/"     .. outputdir)
+	objdir    ("%{wks.location}/bin-int/" .. outputdir)
 
 	-- Compiler --
 	kind "ConsoleApp"

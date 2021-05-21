@@ -1,10 +1,10 @@
 project "Engine"
 
 	-- Output Directories --
-	location "../Engine/"
+	location "%{wks.location}/Engine/"
 
-	targetdir ("../bin/"     .. outputdir)
-	objdir    ("../bin-int/" .. outputdir)
+	targetdir ("%{wks.location}/bin/"     .. outputdir)
+	objdir    ("%{wks.location}/bin-int/" .. outputdir)
 
 	-- Compiler --
 	kind "StaticLib"
@@ -26,6 +26,11 @@ project "Engine"
 		"%{prj.location}/src/Engine/",
 
 		(dependenciesdir .. "spdlog/include/"),
+	}
+
+	links
+	{
+		"GLFW",
 	}
 	
 	--- Filters ---
