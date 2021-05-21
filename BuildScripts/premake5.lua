@@ -12,6 +12,7 @@ workspace "Light"
 	}
 
 -- Directories --
+dependenciesdir = "%{wks.location}/Dependencies/"
 outputdir = "%{cfg.buildcfg}/%{cfg.system}/%{cfg.architecture}/%{prj.name}"
 
 -- Projects --

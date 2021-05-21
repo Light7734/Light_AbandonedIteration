@@ -15,13 +15,18 @@ project "Engine"
 	-- Project Files ---
 	files
 	{
-		"%{prj.location}/**.h",
-		"%{prj.location}/**.cpp",
+		"%{prj.location}/src/**.h",
+		"%{prj.location}/src/**.cpp",
 		"%{prj.location}/**.lua",
 	}
 	
 	-- Dependencies --
-		-- NILL --
+	includedirs
+	{
+		"%{prj.location}/src/Engine/",
+
+		(dependenciesdir .. "spdlog/include/"),
+	}
 	
 	--- Filters ---
 	-- windows

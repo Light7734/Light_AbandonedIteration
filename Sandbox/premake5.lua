@@ -3,7 +3,7 @@ project "Sandbox"
 	-- Output Directories --
 	location "../Sandbox/"
 
-	targetdir ("../bin/"    .. outputdir)
+	targetdir ("../bin/"     .. outputdir)
 	objdir    ("../bin-int/" .. outputdir)
 
 	-- Compiler --
@@ -23,7 +23,12 @@ project "Sandbox"
 	-- Dependencies --
 	includedirs
 	{
+		-- Engine
 		"%{wks.location}/Engine/src",
+		"%{wks.location}/Engine/src/Engine",
+
+		-- 3rd party
+		(dependenciesdir .. "spdlog/include/"),
 	}
 
 	links
