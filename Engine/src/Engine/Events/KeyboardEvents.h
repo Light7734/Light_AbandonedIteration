@@ -2,7 +2,7 @@
 
 #include "Base.h"
 
-#include "Events/Event.h"
+#include "Event.h"
 
 #include <sstream>
 
@@ -25,6 +25,7 @@ namespace Light {
 			return ss.str();
 		}
 		EVENT_TYPE(KeyPressed)
+		EVENT_CATEGORY(InputEventCategory | KeyboardEventCategory)
 	};
 
 	class KeyReleasedEvent : public Event
@@ -44,6 +45,7 @@ namespace Light {
 			return ss.str();
 		}
 		EVENT_TYPE(KeyReleased)
+		EVENT_CATEGORY(InputEventCategory | KeyboardEventCategory)
 	};
 
 

@@ -2,6 +2,7 @@
 
 #include "Events/KeyboardEvents.h"
 #include "Events/MouseEvents.h"
+#include "Events/WindowEvents.h"
 
 namespace Light {
 
@@ -32,6 +33,15 @@ namespace Light {
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Handle);
+	}
+
+	void wWindow::OnEvent(Event& event)
+	{
+		switch (event.GetEventType())
+		{
+		case EventType::WindowClosed:
+			b_Open = false;
+		}
 	}
 
 	unsigned int wWindow::GetWidth()
@@ -70,6 +80,12 @@ namespace Light {
 				callback(KeyPressedEvent(key));
 			else
 				callback(KeyReleasedEvent(key));
+		});
+
+		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow* window) 
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			callback(WindowClosedEvent());
 		});
 	}
 

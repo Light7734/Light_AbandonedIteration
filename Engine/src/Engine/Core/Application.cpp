@@ -28,12 +28,18 @@ namespace Light {
 
 	void Application::GameLoop()
 	{
-		while (true) { m_Window->OnUpdate(); }
+		while (m_Window->IsOpen())
+		{
+			m_Window->OnUpdate();
+		}
 	}
 
 	void Application::OnEvent(Event& event)
 	{
-		m_Dispatcher.Dispatch(event, m_LayerStack.begin(), m_LayerStack.end());
+		if (event.IsInCategory(WindowEventCategory))
+			m_Window->OnEvent(event);
+
+		m_LayerStack.OnEvent(event);
 	}
 
 }

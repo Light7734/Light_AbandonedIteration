@@ -4,6 +4,7 @@
 
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
+#include "Events/WindowEvents.h"
 
 #include <string>
 
@@ -27,6 +28,10 @@ namespace Light {
 		// Keyboard events
 		virtual bool OnKeyPressed(const KeyPressedEvent& event) { return false; }
 		virtual bool OnKeyReleased(const KeyReleasedEvent& event) { return false; }
+
+		// Window Events
+		virtual bool OnWindowClosed(const WindowClosedEvent& event) { return false; }
+
 	};
 
 	class TestLayer : public Layer
@@ -35,13 +40,16 @@ namespace Light {
 		TestLayer(const std::string& name): Layer(name) {}
 
 		// Mouse events
-		virtual bool OnMouseMoved(const MouseMovedEvent& event) { LT_ENGINE_TRACE("{}", event.GetInfoLog()); return false; }
-		virtual bool OnButtonPressed(const ButtonPressedEvent& event) { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
-		virtual bool OnButtonReleased(const ButtonReleasedEvent& event) { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
+		virtual bool OnMouseMoved(const MouseMovedEvent& event) override { LT_ENGINE_TRACE("{}", event.GetInfoLog()); return false; }
+		virtual bool OnButtonPressed(const ButtonPressedEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
+		virtual bool OnButtonReleased(const ButtonReleasedEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
 
 		// Keyboard events
-		virtual bool OnKeyPressed(const KeyPressedEvent& event) { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
-		virtual bool OnKeyReleased(const KeyReleasedEvent& event) { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
+		virtual bool OnKeyPressed(const KeyPressedEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
+		virtual bool OnKeyReleased(const KeyReleasedEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
+
+		// Window events
+		virtual bool OnWindowClosed(const WindowClosedEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
 	};
 
 }

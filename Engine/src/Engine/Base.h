@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/Logger.h"
+
 #if defined(LT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"
 #elif defined(LT_PLATFORM_LINUX)
@@ -8,4 +10,5 @@
 	#error "Unsupported platform: Unknown"
 #endif
 
-#include "Core/Logger.h"
+
+#define BIT(x) 1 << x

@@ -26,6 +26,7 @@ namespace Light {
 			return ss.str();
 		}
 		EVENT_TYPE(MouseMoved)
+		EVENT_CATEGORY(InputEventCategory | MouseEventCategory)
 	};
 
 	class ButtonPressedEvent : public Event
@@ -45,6 +46,7 @@ namespace Light {
 			return ss.str();
 		}
 		EVENT_TYPE(ButtonPressed)
+		EVENT_CATEGORY(InputEventCategory | MouseEventCategory)
 	};
 
 	class ButtonReleasedEvent : public Event
@@ -64,7 +66,8 @@ namespace Light {
 			return ss.str();
 		}
 
-		EVENT_TYPE(ButtonReleased);
+		EVENT_TYPE(ButtonReleased)
+		EVENT_CATEGORY(InputEventCategory | MouseEventCategory)
 	};
 
 }

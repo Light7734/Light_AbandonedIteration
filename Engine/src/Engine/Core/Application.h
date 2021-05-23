@@ -3,7 +3,6 @@
 #include "Base.h"
 
 #include "Events/Event.h"
-#include "Events/Dispatcher.h"
 
 #include "Layer/LayerStack.h"
 
@@ -18,7 +17,6 @@ namespace Light {
 	private:
 		std::unique_ptr<Window> m_Window = nullptr;
 		LayerStack m_LayerStack;
-		Dispatcher m_Dispatcher;
 	public:
 		virtual ~Application();
 
