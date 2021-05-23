@@ -2,6 +2,8 @@
 
 #include "Base.h"
 
+#include "Events/Event.h"
+
 #include <string>
 
 namespace Light {
@@ -25,7 +27,7 @@ namespace Light {
 
 		virtual inline void* GetNativeHandle() = 0;
 
-		static Window* Create(const WindowProperties& properties);
+		static Window* Create(const WindowProperties& properties, std::function<void(Event&)> callback);
 	};
 
 }

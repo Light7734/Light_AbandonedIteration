@@ -7,3 +7,5 @@
 #else
 	#error "Unsupported platform: Unknown"
 #endif
+
+#include "Core/Logger.h"

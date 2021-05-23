@@ -2,7 +2,7 @@
 
 #include "Base.h"
 
-#include "Event.h"
+#include "Events/Event.h"
 
 #include <sstream>
 
@@ -22,6 +22,7 @@ namespace Light {
 		{
 			std::stringstream ss;
 			ss << "KeyPressed: " << m_Key;
+			return ss.str();
 		}
 		EVENT_TYPE(KeyPressed)
 	};
@@ -40,6 +41,7 @@ namespace Light {
 		{
 			std::stringstream ss;
 			ss << "KeyReleased: " << m_Key;
+			return ss.str();
 		}
 		EVENT_TYPE(KeyReleased)
 	};

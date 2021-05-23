@@ -4,9 +4,11 @@
 
 #include <ostream>
 
+#include <vector>
+
 namespace Light {
 
-	enum EventType
+	enum class EventType
 	{
 		None = 0,
 
@@ -18,18 +20,13 @@ namespace Light {
 		WindowMoved, WindowResized, WindowClosed,
 	};
 
-#define EVENT_TYPE(x) virtual EventType GetType() override { return x; }
+#define EVENT_TYPE(type) EventType GetEventType() const override { return EventType::##type; }
 
 	class Event
 	{
-	private:
-		bool b_Handled;
-
 	public:
-		virtual EventType GetType() = 0;
+		virtual EventType GetEventType() const = 0;
 		virtual std::string GetInfoLog() const = 0;
-
-		inline bool IsHandled() const { return b_Handled; }
 
 		friend std::ostream & operator<<(std::ostream & os, const Event& e)
 		{

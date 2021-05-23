@@ -63,7 +63,8 @@ namespace Light {
 			ss << "ButtonReleased: " << m_Button;
 			return ss.str();
 		}
-		EVENT_TYPE(ButtonReleased)
+
+		EVENT_TYPE(ButtonReleased);
 	};
 
 }
