@@ -10,7 +10,6 @@ project "Engine"
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
-	staticruntime "on"
 
 	-- Project Files ---
 	files
@@ -29,12 +28,14 @@ project "Engine"
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
 		(dependenciesdir .. "glfw/include/"),
+		(dependenciesdir .. "glad/include"),
 		(dependenciesdir .. "glm/"),
 	}
 
 	links
 	{
 		"GLFW",
+		"GLAD",
 	}
 	
 	--- Filters ---
@@ -42,6 +43,7 @@ project "Engine"
 	filter "system:windows"
 		defines "LT_PLATFORM_WINDOWS"
 		systemversion "latest"
+		staticruntime "On"
 
 	-- debug
 	filter "configurations:Debug"

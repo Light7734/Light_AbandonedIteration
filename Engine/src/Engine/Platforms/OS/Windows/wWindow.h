@@ -1,14 +1,15 @@
 #pragma once
+#define GLFW_INCLUDE_NONE
 
 #include "Base.h"
 
 #include "Core/Window.h"
 
 #include "Events/Event.h"
-
 #include <GLFW/glfw3.h>
 
 #include <memory>
+
 
 namespace Light {
 

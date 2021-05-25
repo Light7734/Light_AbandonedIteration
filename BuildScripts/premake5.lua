@@ -19,5 +19,7 @@ outputdir = "%{cfg.buildcfg}/%{cfg.system}/%{cfg.architecture}/%{prj.name}"
 include "../Sandbox/"
 include "../Engine/"
 
+-- Dependencies --
 group "Dependencies"
 include "../Dependencies/GLFW/"
+include "../Dependencies/GLAD/"

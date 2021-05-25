@@ -10,7 +10,6 @@ project "Sandbox"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"
-	staticruntime "on"
 
 	-- Project Files ---
 	files
@@ -42,6 +41,7 @@ project "Sandbox"
 	filter "system:windows"
 		defines "LT_PLATFORM_WINDOWS"
 		systemversion "latest"
+		staticruntime "On"
 
 	-- debug
 	filter "configurations:Debug"
