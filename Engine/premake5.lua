@@ -23,10 +23,13 @@ project "Engine"
 	-- Dependencies --
 	includedirs
 	{
+		-- Engine
 		"%{prj.location}/src/Engine/",
 
+		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
 		(dependenciesdir .. "glfw/include/"),
+		(dependenciesdir .. "glm/"),
 	}
 
 	links

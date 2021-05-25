@@ -34,7 +34,7 @@ namespace Light {
 		}
 	}
 
-	void Application::OnEvent(Event& event)
+	void Application::OnEvent(const Event& event)
 	{
 		if (event.IsInCategory(WindowEventCategory))
 			m_Window->OnEvent(event);

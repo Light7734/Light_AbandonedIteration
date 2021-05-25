@@ -29,6 +29,7 @@ project "Sandbox"
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
+		(dependenciesdir .. "glm/"),
 	}
 
 	links

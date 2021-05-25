@@ -48,5 +48,4 @@ namespace Light {
 		EVENT_CATEGORY(InputEventCategory | KeyboardEventCategory)
 	};
 
-
 }

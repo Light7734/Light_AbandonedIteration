@@ -21,7 +21,7 @@ namespace Light {
 		virtual ~Application();
 
 		void GameLoop();
-		void OnEvent(Event& event);
+		void OnEvent(const Event& event);
 
 		// To be defined in client project
 		friend Application* CreateApplication();

@@ -25,7 +25,7 @@ namespace Light {
 		~wWindow();
 
 		virtual void OnUpdate() override;
-		virtual void OnEvent(Event& event) override;
+		virtual void OnEvent(const Event& event) override;
 
 		virtual unsigned int GetWidth() override;
 		virtual unsigned int GetHeight() override;

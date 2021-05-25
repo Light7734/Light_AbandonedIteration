@@ -13,11 +13,11 @@ namespace Light {
 		None = 0,
 
 		// input
-		MouseMoved, ButtonPressed, ButtonReleased, // mouse
+		MouseMoved, WheelScrolled, ButtonPressed, ButtonReleased, // mouse
 		KeyPressed, KeyReleased, // keyboard
 
 		// window
-		WindowMoved, WindowResized, WindowClosed,
+		WindowMoved, WindowResized, WindowClosed, WindowLostFocus, WindowGainFocus,
 	};
 
 	enum EventCategory

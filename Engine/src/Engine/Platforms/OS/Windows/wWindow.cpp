@@ -35,7 +35,7 @@ namespace Light {
 		glfwSwapBuffers(m_Handle);
 	}
 
-	void wWindow::OnEvent(Event& event)
+	void wWindow::OnEvent(const Event& event)
 	{
 		switch (event.GetEventType())
 		{
@@ -72,6 +72,12 @@ namespace Light {
 				callback(ButtonReleasedEvent(button));
 		});
 
+		glfwSetScrollCallback(m_Handle, [](GLFWwindow* window, double xoffset, double yoffset)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			callback(WheelScrolledEvent(yoffset));
+		});
+
 		glfwSetKeyCallback(m_Handle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -87,6 +93,28 @@ namespace Light {
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			callback(WindowClosedEvent());
 		});
+
+		glfwSetWindowSizeCallback(m_Handle, [](GLFWwindow* window, int width, int height) 
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			callback(WindowResizedEvent(width, height));
+		});
+
+		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xpos, int ypos)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			callback(WindowMovedEvent(xpos, ypos));
+		});
+
+		glfwSetWindowFocusCallback(m_Handle, [](GLFWwindow* window, int focus)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+
+			if(focus == GLFW_TRUE)
+				callback(WindowGainFocusEvent());
+			else
+				callback(WindowLostFocusEvent());
+			});
 	}
 
 }
