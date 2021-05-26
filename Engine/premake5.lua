@@ -26,7 +26,10 @@ project "Engine"
 	includedirs
 	{
 		-- Engine
+		"%{prj.location}/src/",
 		"%{prj.location}/src/Engine/",
+		"%{prj.location}/src/Platform/GraphicsAPI",
+		"%{prj.location}/src/Platform/OS",
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),

@@ -5,7 +5,7 @@
 #include "Events/MouseEvents.h"
 #include "Events/WindowEvents.h"
 
-#include <glad/glad.h>
+#include "Graphics/GraphicsContext.h"
 
 namespace Light {
 
@@ -21,11 +21,10 @@ namespace Light {
 
 		m_Handle = glfwCreateWindow(properties.width, properties.height, properties.title.c_str(), nullptr, nullptr);
 
-		glfwMakeContextCurrent(m_Handle);
-		LT_ENGINE_WARN(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
 		glfwSetWindowUserPointer(m_Handle, &m_EventCallback);
-
 		BindGlfwEvents();
+
+		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle));
 	}
 
 	wWindow::~wWindow()
@@ -33,12 +32,9 @@ namespace Light {
 		glfwDestroyWindow(m_Handle);
 	}
 
-	void wWindow::OnUpdate()
+	void wWindow::PollEvents()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor(0.23f, 0.47f, 0.84f, 1.0f);
 		glfwPollEvents();
-		glfwSwapBuffers(m_Handle);
 	}
 
 	void wWindow::OnEvent(const Event& event)

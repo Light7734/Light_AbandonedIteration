@@ -25,6 +25,8 @@ project "Sandbox"
 		-- Engine
 		"%{wks.location}/Engine/src",
 		"%{wks.location}/Engine/src/Engine",
+		"%{wks.location}/Engine/src/Platform/GraphicsAPI",
+		"%{wks.location}/Engine/src/Platform/OS",
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),

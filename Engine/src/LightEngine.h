@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Engine/Events/Event.h"
-#include "Engine/Events/KeyboardEvents.h"
-#include "Engine/Events/MouseEvents.h"
+#include "Events/Event.h"
+#include "Events/KeyboardEvents.h"
+#include "Events/MouseEvents.h"
 
-#include "Engine/Core/Application.h"
-#include "Engine/Core/Logger.h"
+#include "Core/Application.h"
+#include "Core/Logger.h"
 
-#include "Engine/Base.h"
-#include "Engine/EntryPoint.h"
+#include "Base.h"
+#include "EntryPoint.h"

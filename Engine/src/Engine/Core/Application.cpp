@@ -17,9 +17,6 @@ namespace Light {
 
 		m_Window = std::unique_ptr<Window>(Window::Create({ "Title", 800u, 600u, false }, std::bind(&Application::OnEvent, this , std::placeholders::_1)));
 
-		TestLayer* layer = new TestLayer("Test Layer");
-		m_LayerStack.PushLayer(layer);
-
 		LT_ENGINE_INFO("Initialized Logger");
 	}
 
@@ -31,7 +28,10 @@ namespace Light {
 	{
 		while (m_Window->IsOpen())
 		{
-			m_Window->OnUpdate();
+			m_Window->PollEvents();
+
+			m_Window->GetGfxContext()->GetRenderCommand()->SwapBuffers();
+			m_Window->GetGfxContext()->GetRenderCommand()->ClearBackBuffer();
 		}
 	}
 
