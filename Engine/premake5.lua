@@ -11,6 +11,9 @@ project "Engine"
 	language "C++"
 	cppdialect "C++17"
 
+	pchsource "src/Engine/ltpch.cpp"
+	pchheader "ltpch.h"
+
 	-- Project Files ---
 	files
 	{

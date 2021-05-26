@@ -1,3 +1,4 @@
+#include "ltpch.h"
 #include "Application.h"
 
 #include "Logger.h"
