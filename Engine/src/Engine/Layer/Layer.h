@@ -14,11 +14,16 @@ namespace Light {
 	{
 	private:
 		std::string m_Name;
+
 	public:
 		Layer(const std::string& name): m_Name(name) {}
 		virtual ~Layer() = default;
 
 		inline const std::string& GetName() const { return m_Name; }
+
+		// Updates
+		virtual void OnUpdate(float deltaTime) {}
+		virtual void OnUserInterfaceUpdate() {}
 
 		// Mouse events
 		virtual bool OnMouseMoved(const MouseMovedEvent& event) { return false; }

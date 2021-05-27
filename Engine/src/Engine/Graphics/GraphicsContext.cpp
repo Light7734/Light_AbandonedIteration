@@ -5,7 +5,7 @@
 
 namespace Light {
 
-	GraphicsContext* GraphicsContext::s_Context;
+	GraphicsContext* GraphicsContext::s_Context = nullptr;
 
 	GraphicsContext* GraphicsContext::Create(GraphicsAPI api, GLFWwindow* windowHandle)
 	{
@@ -15,6 +15,7 @@ namespace Light {
 		case Light::GraphicsAPI::OpenGL:
 			s_Context = new glGraphicsContext(windowHandle);
 			s_Context->m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle));
+			s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle));
 			// ...Renderer
 			// ...UserInterface...
 

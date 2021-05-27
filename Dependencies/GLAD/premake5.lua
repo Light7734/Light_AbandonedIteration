@@ -15,6 +15,8 @@ project "GLAD"
 	{
 		"**.c",
 		"**.h",
+
+		"premake5.lua"
 	}
 	
 	-- Dependencies --

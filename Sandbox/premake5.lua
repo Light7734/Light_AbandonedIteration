@@ -16,7 +16,8 @@ project "Sandbox"
 	{
 		"%{prj.location}/src/**.h",
 		"%{prj.location}/src/**.cpp",
-		"%{prj.location}/**.lua",
+
+		"%{prj.location}/premake5.lua",
 	}
 
 	-- Dependencies --
@@ -30,12 +31,17 @@ project "Sandbox"
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
+		(dependenciesdir .. "imgui/"),
+		(dependenciesdir .. "imgui/backends"),
 		(dependenciesdir .. "glm/"),
 	}
 
 	links
 	{
 		"Engine",
+		"GLFW",
+		"GLAD",
+		"ImGui",
 	}
 
 	--- Filters ---
@@ -50,7 +56,7 @@ project "Sandbox"
 		defines "LT_DEBUG"
 		symbols "on"
 
-	-- release
+	-- release 
 	filter "configurations:Release"
 		defines "LT_RELEASE"
 		optimize "on"

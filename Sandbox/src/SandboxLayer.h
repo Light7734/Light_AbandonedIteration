@@ -1,9 +1,9 @@
 #include <LightEngine.h>
 
-class TestLayer : public Light::Layer
+class SandboxLayer : public Light::Layer
 {
 public:
-	TestLayer(const std::string& name) : Light::Layer(name) {}
+	SandboxLayer(const std::string& name): Light::Layer(name) {}
 
 	// Mouse events
 	virtual bool OnMouseMoved(const Light::MouseMovedEvent& event) override { LT_ENGINE_TRACE("{}", event.GetInfoLog()); return false; }
@@ -12,10 +12,10 @@ public:
 	virtual bool OnWheelScrolled(const Light::WheelScrolledEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
 
 	// Keyboard events
-	virtual bool OnKeyPressed(const Light::KeyPressedEvent& event) override 
-	{ 
+	virtual bool OnKeyPressed(const Light::KeyPressedEvent& event) override
+	{
 		LT_ENGINE_TRACE(event.GetInfoLog());
-		return true; 
+		return true;
 	}
 	virtual bool OnKeyReleased(const Light::KeyReleasedEvent& event) override { LT_ENGINE_TRACE(event.GetInfoLog()); return false; }
 

@@ -32,6 +32,10 @@ namespace Light {
 
 			m_Window->GetGfxContext()->GetRenderCommand()->SwapBuffers();
 			m_Window->GetGfxContext()->GetRenderCommand()->ClearBackBuffer();
+
+			m_Window->GetGfxContext()->GetUserInterface()->Begin();
+
+			m_Window->GetGfxContext()->GetUserInterface()->End();
 		}
 	}
 

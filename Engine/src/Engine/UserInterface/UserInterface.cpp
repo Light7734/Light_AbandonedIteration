@@ -1,11 +1,19 @@
 #include "ltpch.h"
+#include "UserInterface.h"
+
+#include "Graphics/GraphicsContext.h"
+
+#include "OpenGL/glUserInterface.h"
 
 namespace Light {
 
-	class UserInterface
+	UserInterface* UserInterface::Create(GLFWwindow* windowHandle)
 	{
-	private:
-	public:
-	};
+		switch (GraphicsContext::GetGraphicsAPI())
+		{
+		case GraphicsAPI::OpenGL:
+			return new glUserInterface(windowHandle);
+		}
+	}
 
 }

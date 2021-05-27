@@ -2,7 +2,15 @@
 #include "LayerStack.h"
 
 #include <functional>
+
 namespace Light {
+
+	LayerStack* LayerStack::s_Context = nullptr;
+
+	LayerStack::LayerStack()
+	{
+		s_Context = this; // TODO: ASSERT
+	}
 
 	LayerStack::~LayerStack()
 	{
@@ -10,22 +18,16 @@ namespace Light {
 			delete layer;
 	}
 
-	void LayerStack::PushLayer(Layer* layer)
+	void LayerStack::OnUpdate(float deltaTime)
 	{
-		m_Layers.push_back(layer);
-		m_Begin = m_Layers.begin();
-		m_End = m_Layers.end();
-
-		LT_ENGINE_TRACE("LayerStack::PushLayer: Attached [{}]", layer->GetName());
+		for (auto it = m_Begin; it != m_End; it++)
+			(*it)->OnUpdate(deltaTime);
 	}
 
-	void LayerStack::PopLayer(Layer* layer)
+	void LayerStack::OnUserInterfaceUpdate()
 	{
-		m_Layers.erase(std::find(m_Layers.begin(), m_Layers.end(), layer));
-		m_Begin = m_Layers.begin();
-		m_End = m_Layers.end();
-
-		LT_ENGINE_TRACE("LayerStack::PushLayer: Detatched[{}]", layer->GetName());
+		for (auto it = m_Begin; it != m_End; it++)
+			(*it)->OnUserInterfaceUpdate();
 	}
 
 	void LayerStack::OnEvent(const Event& event)
@@ -84,5 +86,22 @@ namespace Light {
 		}
 	}
 
+	void LayerStack::AttachLayerImpl(Layer* layer)
+	{
+		m_Layers.push_back(layer);
+		m_Begin = m_Layers.begin();
+		m_End = m_Layers.end();
+
+		LT_ENGINE_TRACE("LayerStack::PushLayer: Attached [{}]", layer->GetName());
+	}
+
+	void LayerStack::DetatchLayerImpl(Layer* layer)
+	{
+		m_Layers.erase(std::find(m_Layers.begin(), m_Layers.end(), layer));
+		m_Begin = m_Layers.begin();
+		m_End = m_Layers.end();
+
+		LT_ENGINE_TRACE("LayerStack::PushLayer: Detatched[{}]", layer->GetName());
+	}
 
 }

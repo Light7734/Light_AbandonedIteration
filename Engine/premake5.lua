@@ -35,6 +35,8 @@ project "Engine"
 		(dependenciesdir .. "spdlog/include/"),
 		(dependenciesdir .. "glfw/include/"),
 		(dependenciesdir .. "glad/include"),
+		(dependenciesdir .. "imgui/"),
+		(dependenciesdir .. "imgui/backends"),
 		(dependenciesdir .. "glm/"),
 	}
 
@@ -42,6 +44,7 @@ project "Engine"
 	{
 		"GLFW",
 		"GLAD",
+		"ImGui",
 	}
 	
 	--- Filters ---
