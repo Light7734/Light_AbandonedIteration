@@ -41,8 +41,11 @@ namespace Light {
 
 	void Application::OnEvent(const Event& event)
 	{
-		if (event.IsInCategory(WindowEventCategory))
+		if (event.HasCategory(WindowEventCategory))
 			m_Window->OnEvent(event);
+
+		if (event.HasCategory(InputEventCategory))
+			m_Window->GetGfxContext()->GetUserInterface()->OnInput(event);
 
 		m_LayerStack.OnEvent(event);
 	}

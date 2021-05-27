@@ -1,6 +1,9 @@
 #include "ltpch.h"
 #include "glUserInterface.h"
 
+#include "Events/KeyboardEvents.h"
+#include "Events/MouseEvents.h"
+
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -16,7 +19,7 @@ namespace Light {
 
 		ImGui::StyleColorsDark();
 
-		ImGui_ImplGlfw_InitForOpenGL(windowHandle, true);
+		ImGui_ImplGlfw_InitForOpenGL(windowHandle, false);
 		ImGui_ImplOpenGL3_Init();
 	}
 

@@ -31,14 +31,14 @@ namespace Light {
 	};
 
 #define EVENT_TYPE(type) EventType GetEventType() const override { return EventType::##type; }
-#define EVENT_CATEGORY(eCategory) inline bool IsInCategory(EventCategory category) const override { return (eCategory) & category; } 
+#define EVENT_CATEGORY(eCategory) inline bool HasCategory(EventCategory category) const override { return (eCategory) & category; } 
 
 	class Event
 	{
 	public:
 		virtual EventType GetEventType() const = 0;
 		virtual std::string GetInfoLog() const = 0;
-		virtual bool IsInCategory(EventCategory category) const = 0;
+		virtual bool HasCategory(EventCategory category) const = 0;
 
 		friend std::ostream & operator<<(std::ostream & os, const Event& e)
 		{
