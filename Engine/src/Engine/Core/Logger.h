@@ -1,6 +1,4 @@
 #pragma once
-// TODO: File logger
-//
 
 #include "Base.h"
 
@@ -40,7 +38,10 @@ namespace Light {
 	{
 	private:
 		static std::shared_ptr<spdlog::logger> s_EngineLogger, s_ClientLogger;
+
 	public:
+		Logger() = delete;
+
 		static void Initialize();
 
 		static inline std::shared_ptr<spdlog::logger> GetEngineLogger() { return s_EngineLogger; }

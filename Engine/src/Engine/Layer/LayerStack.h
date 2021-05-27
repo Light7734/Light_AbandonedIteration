@@ -2,13 +2,10 @@
 
 #include "Base.h"
 
-#include "Layer.h"
-
-#include "Events/Event.h"
-
-#include <vector>
-
 namespace Light {
+
+	class Layer;
+	class Event;
 
 	class LayerStack
 	{
@@ -38,7 +35,6 @@ namespace Light {
 	private:
 		void AttachLayerImpl(Layer* layer);
 		void DetatchLayerImpl(Layer* layer);
-
 	};
 
 }

@@ -1,9 +1,8 @@
 #include "ltpch.h"
 #include "RenderCommand.h"
+#include "OpenGL/glRenderCommand.h"
 
 #include "GraphicsContext.h"
-
-#include "OpenGL/glRenderCommand.h"
 
 namespace Light {
 

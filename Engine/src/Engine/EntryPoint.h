@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef LT_PLATFORM_WINDOWS
+#ifdef LIGHT_PLATFORM_WINDOWS
 
 // To be defined in client project
 extern Light::Application* Light::CreateApplication();

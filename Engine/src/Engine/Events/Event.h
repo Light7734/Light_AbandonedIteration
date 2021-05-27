@@ -2,10 +2,6 @@
 
 #include "Base.h"
 
-#include <ostream>
-
-#include <vector>
-
 namespace Light {
 
 	enum class EventType
@@ -13,8 +9,8 @@ namespace Light {
 		None = 0,
 
 		// input
-		MouseMoved, WheelScrolled, ButtonPressed, ButtonReleased, // mouse
-		KeyPressed, KeyReleased, // keyboard
+		MouseMoved, WheelScrolled, ButtonPressed, ButtonReleased,
+		KeyPressed, KeyReleased,
 
 		// window
 		WindowMoved, WindowResized, WindowClosed, WindowLostFocus, WindowGainFocus,

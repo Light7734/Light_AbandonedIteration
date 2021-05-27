@@ -2,22 +2,28 @@
 
 #include "Base.h"
 
-#include "Events/Event.h"
-
 struct GLFWwindow;
 
 namespace Light {
 
+	class Event;
+
 	class UserInterface
 	{
-	private:
 	public:
-		static UserInterface* Create(GLFWwindow* windowHandle);
+		UserInterface(const UserInterface&) = delete;
+		UserInterface operator=(const UserInterface&) = delete;
+
+		virtual ~UserInterface() = default;
 
 		void OnInput(const Event& inputEvent);
 
 		virtual void Begin() = 0;
 		virtual void End() = 0;
+
+		static UserInterface* Create(GLFWwindow* windowHandle);
+	protected:
+		UserInterface() = default;
 	};
 
 }

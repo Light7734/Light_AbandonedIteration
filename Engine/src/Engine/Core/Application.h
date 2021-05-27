@@ -2,22 +2,23 @@
 
 #include "Base.h"
 
-#include "Events/Event.h"
-
 #include "Layer/LayerStack.h"
-
-#include <memory>
 
 namespace Light {
 
 	class Window;
+	class Event;
 
 	class Application
 	{
 	private:
 		std::unique_ptr<Window> m_Window = nullptr;
 		LayerStack m_LayerStack;
+
 	public:
+		Application(const Application&) = delete;
+		Application& operator=(const Application&) = delete;
+
 		virtual ~Application();
 
 		void GameLoop();

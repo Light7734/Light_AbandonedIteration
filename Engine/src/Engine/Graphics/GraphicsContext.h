@@ -2,13 +2,13 @@
 
 #include "Base.h"
 
-#include "RenderCommand.h"
 
-#include "UserInterface/UserInterface.h"
-
-struct GLFWwindow {};
+struct GLFWwindow;
 
 namespace Light {
+
+	class RenderCommand;
+	class UserInterface;
 
 	enum class GraphicsAPI 
 	{
@@ -22,18 +22,25 @@ namespace Light {
 
 		std::unique_ptr<RenderCommand> m_RenderCommand;
 		std::unique_ptr<UserInterface> m_UserInterface;
+
 	protected:
 		GraphicsAPI m_GraphicsAPI;
 
 	public:
-		virtual ~GraphicsContext() = default;
+		GraphicsContext(const GraphicsContext&) = delete;
+		GraphicsContext& operator=(const GraphicsContext&) = delete;
 
+		virtual ~GraphicsContext() = default;
+	
 		static GraphicsContext* Create(GraphicsAPI api, GLFWwindow* windowHandle);
 
 		static inline GraphicsAPI GetGraphicsAPI() { return s_Context->m_GraphicsAPI; }
 
 		inline RenderCommand* GetRenderCommand() { return m_RenderCommand.get(); }
 		inline UserInterface* GetUserInterface() { return m_UserInterface.get(); }
+
+	protected:
+		GraphicsContext() = default;
 	};
 
 }

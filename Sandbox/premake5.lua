@@ -47,7 +47,7 @@ project "Sandbox"
 	--- Filters ---
 	-- windows
 	filter "system:windows"
-		defines "LT_PLATFORM_WINDOWS"
+		defines "LIGHT_PLATFORM_WINDOWS"
 		systemversion "latest"
 		staticruntime "On"
 

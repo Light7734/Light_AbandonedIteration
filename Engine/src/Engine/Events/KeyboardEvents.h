@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Base.h"
-
 #include "Event.h"
 
 #include <sstream>

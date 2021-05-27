@@ -1,7 +1,12 @@
 #include "ltpch.h"
 #include "LayerStack.h"
 
-#include <functional>
+#include "Layer.h"
+
+#include "Events/Event.h"
+#include "Events/MouseEvents.h"
+#include "Events/KeyboardEvents.h"
+#include "Events/WindowEvents.h"
 
 namespace Light {
 

@@ -1,17 +1,13 @@
 #pragma once
-#define GLFW_INCLUDE_NONE
 
 #include "Base.h"
-
 #include "Core/Window.h"
 
-#include "Events/Event.h"
-#include <GLFW/glfw3.h>
-
-#include <memory>
-
+struct GLFWwindow;
 
 namespace Light {
+
+	class Event;
 
 	class wWindow : public Window
 	{
@@ -20,6 +16,7 @@ namespace Light {
 		WindowProperties m_Properties;
 
 		std::function<void(Event&)> m_EventCallback;
+
 	public:
 		wWindow(const WindowProperties& properties, std::function<void(Event&)> callback);
 
@@ -32,6 +29,7 @@ namespace Light {
 		virtual unsigned int GetHeight() override;
 
 		virtual inline void* GetNativeHandle() override { return m_Handle; }
+
 	private:
 		void BindGlfwEvents();
 	};

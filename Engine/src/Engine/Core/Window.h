@@ -2,13 +2,10 @@
 
 #include "Base.h"
 
-#include "Events/Event.h"
-
-#include "Graphics/GraphicsContext.h"
-
-#include <string>
-
 namespace Light {
+
+	class Event;
+	class GraphicsContext;
 
 	struct WindowProperties
 	{
@@ -22,7 +19,11 @@ namespace Light {
 	protected:
 		std::unique_ptr<GraphicsContext> m_GraphicsContext;
 		bool b_Open;
+
 	public:
+		Window(const Window&) = delete;
+		Window& operator=(const Window&) = delete;
+
 		virtual ~Window() = default;
 
 		inline GraphicsContext* GetGfxContext() { return m_GraphicsContext.get(); }
@@ -38,6 +39,9 @@ namespace Light {
 		virtual inline void* GetNativeHandle() = 0;
 
 		static Window* Create(const WindowProperties& properties, std::function<void(Event&)> callback);
+
+	protected:
+		Window() = default;
 	};
 
 }
