@@ -6,7 +6,7 @@ namespace Light {
 	{
 	private:
 	public:
-		static Shader* Create();
+		static Shader* Create(const std::string& vertexPath, const std::string& pixelPath);
 
 		virtual ~Shader() = default;
 

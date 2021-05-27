@@ -2,7 +2,6 @@
 
 #include "Base.h"
 
-
 struct GLFWwindow;
 
 namespace Light {
@@ -10,9 +9,13 @@ namespace Light {
 	class RenderCommand;
 	class UserInterface;
 
-	enum class GraphicsAPI 
+	enum class GraphicsAPI
 	{
-		Default, OpenGL // TODO: Add DirectX, Vulkan, Metal.
+		Default = 0,
+		OpenGL, 
+		DirectX, 
+		Vulkan, 
+		Metal
 	};
 
 	class GraphicsContext

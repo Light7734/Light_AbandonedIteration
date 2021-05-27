@@ -18,6 +18,10 @@ namespace Light {
 		{
 		case GraphicsAPI::OpenGL:
 			return new glUserInterface(windowHandle);
+
+		default:
+			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			return nullptr;
 		}
 	}
 

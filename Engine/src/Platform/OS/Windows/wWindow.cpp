@@ -20,14 +20,16 @@ namespace Light {
 	wWindow::wWindow(const WindowProperties& properties, std::function<void(Event&)> callback)
 		: m_Properties(properties), m_EventCallback(callback)
 	{
-		if (!glfwInit()) __debugbreak();
+		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: glfwInit: failed to initialize glfw");
 
 		m_Handle = glfwCreateWindow(properties.width, properties.height, properties.title.c_str(), nullptr, nullptr);
+		LT_ENGINE_ASSERT(m_Handle, "wWindow::wWindow: glfwCreateWindow: failed to create glfw window");
 
 		glfwSetWindowUserPointer(m_Handle, &m_EventCallback);
 		BindGlfwEvents();
 
 		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle));
+		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: graphics context creation failed");
 	}
 
 	wWindow::~wWindow()

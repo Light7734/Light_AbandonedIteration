@@ -29,6 +29,8 @@ namespace Light {
 
 		void OnEvent(const Event& event);
 
+		inline bool IsEmpty() { return m_Layers.empty(); }
+
 		std::vector<Layer*>::iterator begin() { return m_Layers.begin(); }
 		std::vector<Layer*>::iterator end() { return m_Layers.end(); }
 

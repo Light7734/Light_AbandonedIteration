@@ -16,7 +16,8 @@ namespace Light {
 		m_GraphicsAPI = GraphicsAPI::OpenGL;
 
 		glfwMakeContextCurrent(windowHandle);
-		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		LT_ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress),
+		                 "glGraphicsContext::glGraphicsContext: gladLoadGLLoader: failed to initialize opengl context");
 
 		LT_ENGINE_INFO("glGraphicsContext:");
 		LT_ENGINE_INFO("        Renderer: {}", glGetString(GL_RENDERER));

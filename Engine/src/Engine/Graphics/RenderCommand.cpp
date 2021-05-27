@@ -14,7 +14,8 @@ namespace Light {
 			return new glRenderCommand(windowHandle);
 
 		default:
-			return nullptr; // TODO: Add ASSERT
+			LT_ENGINE_ASSERT(false, "RenderCommand::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			return nullptr;
 		}
 	}
 
