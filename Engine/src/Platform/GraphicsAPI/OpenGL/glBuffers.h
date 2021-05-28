@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Base.h"
-#include "Graphics/VertexBuffer.h"
+#include "Graphics/Buffers.h"
 
 namespace Light {
 
@@ -9,9 +9,23 @@ namespace Light {
 	{
 	private:
 		unsigned int m_BufferID;
+
 	public:
 		glVertexBuffer(unsigned int count, float* vertices);
 		~glVertexBuffer();
+
+		void Bind() override;
+		void UnBind() override;
+	};
+	
+	class glIndexBuffer : public IndexBuffer
+	{
+	private:
+		unsigned int m_BufferID;
+
+	public:
+		glIndexBuffer(unsigned int count, unsigned int* indices);
+		~glIndexBuffer();
 
 		void Bind() override;
 		void UnBind() override;
