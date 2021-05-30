@@ -13,7 +13,7 @@ namespace Light {
 		LT_ENGINE_ASSERT(dynamic_cast<glVertexBuffer*>(buffer), "glVertexLayout::glVertexLayout: failed to cast VertexBuffer to glVertexBuffer");
 
 		// elements desc
-		std::vector<glVertexElementDesc> elementsDesc(elements.size());
+		std::vector<glVertexElementDesc> elementsDesc;
 
 		unsigned int stride = 0u;
 		for(const auto& element : elements)

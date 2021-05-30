@@ -1,6 +1,10 @@
 #pragma once
 
-#include "Core/Logger.h"
+#ifndef LOGGER_H
+	#include "Core/Logger.h"
+#endif
+
+#include <memory>
 
 #if defined(LIGHT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"

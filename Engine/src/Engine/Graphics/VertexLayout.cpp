@@ -3,11 +3,10 @@
 #include "OpenGL/glVertexLayout.h"
 
 #include "GraphicsContext.h"
-#include "Buffers.h"
 
 namespace Light {
 
-	VertexLayout* VertexLayout::Create(VertexBuffer* buffer, const std::vector<VertexElementType> elements)
+	VertexLayout* VertexLayout::Create(VertexBuffer* buffer, const std::vector<VertexElementType>& elements)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{

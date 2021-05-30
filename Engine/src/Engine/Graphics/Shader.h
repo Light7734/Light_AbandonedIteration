@@ -1,10 +1,11 @@
 #pragma once
 
+#include "Base.h"
+
 namespace Light {
 
 	class Shader
 	{
-	private:
 	public:
 		static Shader* Create(const std::string& vertexPath, const std::string& pixelPath);
 

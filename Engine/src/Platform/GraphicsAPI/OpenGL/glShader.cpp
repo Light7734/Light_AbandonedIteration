@@ -1,7 +1,7 @@
 #include "ltpch.h"
 #include "glShader.h"
 
-#include <GLAD/glad.h>
+#include <glad/glad.h>
 
 namespace Light {
 

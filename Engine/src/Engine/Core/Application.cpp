@@ -7,6 +7,7 @@
 #include "Events/Event.h"
 
 #include "Graphics/GraphicsContext.h"
+#include "Graphics/Renderer.h"
 #include "Graphics/RenderCommand.h"
 
 #include "UserInterface/UserInterface.h"
@@ -34,6 +35,9 @@ namespace Light {
 			m_Window->PollEvents();
 
 			// Rendering
+			m_Window->GetGfxContext()->GetRenderer()->Draw();
+
+			// Buffer updates
 			m_Window->GetGfxContext()->GetRenderCommand()->SwapBuffers();
 			m_Window->GetGfxContext()->GetRenderCommand()->ClearBackBuffer();
 

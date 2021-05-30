@@ -7,10 +7,13 @@ namespace Light {
 	class Layer;
 	class Event;
 
+	template <typename T>
+	using Raw = T*;
+
 	class LayerStack
 	{
 	private:
-		static LayerStack* s_Context;
+		static Raw<LayerStack> s_Context;
 
 		std::vector<Layer*> m_Layers;
 

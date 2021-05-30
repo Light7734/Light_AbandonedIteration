@@ -2,6 +2,9 @@
 #include "GraphicsContext.h"
 #include "OpenGL/glGraphicsContext.h"
 
+#include "Buffers.h"
+
+#include "Renderer.h"
 #include "RenderCommand.h"
 #include "UserInterface/UserInterface.h" 
 
@@ -14,8 +17,11 @@ namespace Light {
 		// terminate gfx context dependent classes
 		if (s_Context)
 		{
+			s_Context->m_Renderer.reset();
 			s_Context->m_RenderCommand.reset();
 			s_Context->m_UserInterface.reset();
+
+			delete s_Context;
 		}
 
 		// determine the default api
@@ -41,8 +47,7 @@ namespace Light {
 		// create gfx context dependent classes
 		s_Context->m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle));
 		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle));
-		// ...Renderer
-		// ...UserInterface...
+		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand));
 
 		// sanity check
 		LT_ENGINE_ASSERT(s_Context->m_RenderCommand, "GraphicsContext::Create: RenderCommand creation failed");

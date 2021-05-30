@@ -6,6 +6,7 @@ struct GLFWwindow;
 
 namespace Light {
 
+	class Renderer;
 	class RenderCommand;
 	class UserInterface;
 
@@ -23,7 +24,8 @@ namespace Light {
 	private:
 		static GraphicsContext* s_Context;
 
-		std::unique_ptr<RenderCommand> m_RenderCommand;
+		std::unique_ptr<Renderer> m_Renderer;
+		std::shared_ptr<RenderCommand> m_RenderCommand;
 		std::unique_ptr<UserInterface> m_UserInterface;
 
 	protected:
@@ -39,6 +41,7 @@ namespace Light {
 
 		static inline GraphicsAPI GetGraphicsAPI() { return s_Context->m_GraphicsAPI; }
 
+		inline Renderer* GetRenderer() { return m_Renderer.get(); }
 		inline RenderCommand* GetRenderCommand() { return m_RenderCommand.get(); }
 		inline UserInterface* GetUserInterface() { return m_UserInterface.get(); }
 

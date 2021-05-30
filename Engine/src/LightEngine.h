@@ -14,6 +14,7 @@
 // Graphics
 #include "Graphics/GraphicsContext.h"
 #include "Graphics/RenderCommand.h"
+#include "Graphics/Renderer.h"
 
 // Layer
 #include "Layer/Layer.h"

@@ -2,11 +2,15 @@
 #include "glGraphicsContext.h"
 
 // Required for forward declaration
+#include "Graphics/Renderer.h"
 #include "Graphics/RenderCommand.h"
+#include "Graphics/Shader.h"
+#include "Graphics/Buffers.h"
+#include "Graphics/VertexLayout.h"
 #include "UserInterface/UserInterface.h" 
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include <glfw/glfw3.h>
 
 namespace Light {
 

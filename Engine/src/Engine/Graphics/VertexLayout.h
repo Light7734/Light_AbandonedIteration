@@ -19,7 +19,9 @@ namespace Light {
 	class VertexLayout
 	{
 	public:
-		static VertexLayout* Create(VertexBuffer* buffer, const std::vector<VertexElementType> elements);
+		static VertexLayout* Create(VertexBuffer* buffer, const std::vector<VertexElementType>& elements);
+
+		virtual ~VertexLayout() = default;;
 
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;

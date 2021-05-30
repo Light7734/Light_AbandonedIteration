@@ -8,7 +8,6 @@ namespace Light {
 
 	class RenderCommand
 	{
-	private:
 	public:
 		RenderCommand(const RenderCommand&) = delete;
 		RenderCommand& operator=(const RenderCommand&) = delete;
