@@ -9,6 +9,8 @@
 #include "Graphics/VertexLayout.h"
 #include "UserInterface/UserInterface.h" 
 
+#include "Utility/Stringifier.h"
+
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
@@ -23,9 +25,59 @@ namespace Light {
 		LT_ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress),
 		                 "glGraphicsContext::glGraphicsContext: gladLoadGLLoader: failed to initialize opengl context");
 
+		SetDebugMessageCallback();
+
 		LT_ENGINE_INFO("glGraphicsContext:");
 		LT_ENGINE_INFO("        Renderer: {}", glGetString(GL_RENDERER));
 		LT_ENGINE_INFO("        Version: {}", glGetString(GL_VERSION));
+	}
+
+	void glGraphicsContext::SetDebugMessageCallback()
+	{
+#if defined(LT_DEBUG)
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+#elif defined(LT_RELEASE)
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_FALSE);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
+#else // LT_DIST
+		return;
+#endif
+
+		glDebugMessageCallback([](unsigned int source, unsigned int type,
+		                          unsigned int id, unsigned int severity,
+		                          int length, const char* message,
+		                          const void* userParam) 
+		{
+			switch (severity)
+			{
+			case GL_DEBUG_SEVERITY_HIGH:
+				LT_ENGINE_CRITICAL("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",
+				                   Stringifier::glDebugMsgSeverity(severity),
+				                   Stringifier::glDebugMsgSource(source),
+				                   Stringifier::glDebugMsgType(type),
+				                   id);
+				LT_ENGINE_CRITICAL("        {}", message);
+				return;
+			case GL_DEBUG_SEVERITY_MEDIUM: case  GL_DEBUG_SEVERITY_LOW:
+				LT_ENGINE_WARN("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",
+				               Stringifier::glDebugMsgSeverity(severity),
+				               Stringifier::glDebugMsgSource(source),
+				               Stringifier::glDebugMsgType(type),
+				               id);
+				LT_ENGINE_WARN("        {}", message);
+				return;
+			case GL_DEBUG_SEVERITY_NOTIFICATION:
+				LT_ENGINE_TRACE("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",
+				                Stringifier::glDebugMsgSeverity(severity),
+				                Stringifier::glDebugMsgSource(source),
+				                Stringifier::glDebugMsgType(type),
+				                id);
+				LT_ENGINE_TRACE("        {}", message);
+				return;
+			}
+		}, nullptr);
 	}
 
 }

@@ -14,6 +14,9 @@ namespace Light {
 
 	public:
 		glGraphicsContext(GLFWwindow* windowHandle);
+
+	private:
+		void SetDebugMessageCallback();
 	};
 
 }

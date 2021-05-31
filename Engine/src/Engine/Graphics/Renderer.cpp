@@ -39,13 +39,13 @@ namespace Light {
 
 		float vertices[] =
 		{
-			-0.5f, -0.5f,
-			 0.5f, -0.5f,
-			 0.0f,  0.5f,
+			-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f,
 		};
 
-		m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(2 * 3, vertices));
-		m_VertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_VertexBuffer.get(), { VertexElementType::Float2 }));
+		m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create((2 + 4) * 3, vertices));
+		m_VertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_VertexBuffer.get(), { VertexElementType::Float2, VertexElementType::Float4 }));
 	}
 
 	Renderer* Renderer::Create(std::shared_ptr<RenderCommand> renderCommand)

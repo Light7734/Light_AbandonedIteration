@@ -1,0 +1,9 @@
+#version 450 core
+
+out vec4 FragColor;
+in vec4 vsout_Color;
+
+void main()
+{
+	FragColor = vsout_Color;
+}
