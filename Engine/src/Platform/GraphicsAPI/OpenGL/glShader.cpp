@@ -5,18 +5,19 @@
 
 namespace Light {
 
-	glShader::glShader(const std::string& vertexPath, const std::string& pixelPath)
+	glShader::glShader(const std::string& vertexSource, const std::string& fragmentSource)
 	{
 		m_ShaderID = glCreateProgram();
 
 		unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		unsigned int pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-		const char* vertexPath_cstr = vertexPath.c_str();
-		const char* pixelPath_cstr = pixelPath.c_str();
+		// & (address of) needs an lvalue
+		const char* lVertexSource = vertexSource.c_str();
+		const char* lFragmentSource = fragmentSource.c_str();
 
-		glShaderSource(vertexShader, 1, &vertexPath_cstr, NULL);
-		glShaderSource(pixelShader, 1, &pixelPath_cstr, NULL);
+		glShaderSource(vertexShader, 1, &lVertexSource, NULL);
+		glShaderSource(pixelShader, 1, &lFragmentSource, NULL);
 
 		glCompileShader(vertexShader);
 		glCompileShader(pixelShader);

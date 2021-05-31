@@ -14,26 +14,28 @@ namespace Light {
 	{
 		m_Context = this;
 
- 		m_Shader = std::unique_ptr<Shader>(Shader::Create(
-R"(
-#version 450 core
+		m_Shader = std::unique_ptr<Shader>(Shader::Create("res/vertex.vertex", "res/fragment.fragment"));
 
-layout(location = 0) in vec2 a_Position;
-
-void main()
-{
-	gl_Position = vec4(a_Position, 0.0, 1.0);
-})",
-R"(
-#version 450 core
-
-out vec4 FragColor;
-
-void main()
-{
-	FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-}
-)"));
+//  		m_Shader = std::unique_ptr<Shader>(Shader::Create(
+// R"(
+// #version 450 core
+// 
+// layout(location = 0) in vec2 a_Position;
+// 
+// void main()
+// {
+// 	gl_Position = vec4(a_Position, 0.0, 1.0);
+// })",
+// R"(
+// #version 450 core
+// 
+// out vec4 FragColor;
+// 
+// void main()
+// {
+// 	FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+// }
+// )"));
 
 		float vertices[] =
 		{
