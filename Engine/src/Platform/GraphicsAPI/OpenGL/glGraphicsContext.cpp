@@ -9,6 +9,8 @@
 #include "Graphics/VertexLayout.h"
 #include "UserInterface/UserInterface.h" 
 
+#include "Events/WindowEvents.h"
+
 #include "Utility/Stringifier.h"
 
 #include <glad/glad.h>
@@ -26,10 +28,21 @@ namespace Light {
 		                 "glGraphicsContext::glGraphicsContext: gladLoadGLLoader: failed to initialize opengl context");
 
 		SetDebugMessageCallback();
+	}
 
-		LT_ENGINE_INFO("glGraphicsContext:");
+	void glGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
+	{
+		glViewport(0, 0, event.GetSize().x, event.GetSize().y);
+	}
+
+	void glGraphicsContext::LogDebugData()
+	{
+		LT_ENGINE_INFO("________________________________________");
+		LT_ENGINE_INFO("GraphicsContext::");
+		LT_ENGINE_INFO("        API     : OpenGL");
+		LT_ENGINE_INFO("        Version : {}", glGetString(GL_VERSION));
 		LT_ENGINE_INFO("        Renderer: {}", glGetString(GL_RENDERER));
-		LT_ENGINE_INFO("        Version: {}", glGetString(GL_VERSION));
+		LT_ENGINE_INFO("________________________________________");
 	}
 
 	void glGraphicsContext::SetDebugMessageCallback()

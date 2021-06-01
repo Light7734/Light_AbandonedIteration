@@ -28,7 +28,7 @@ namespace Light {
 	public:
 		WindowMovedEvent(int x, int y): m_Position(x, y) {}
 
-		const glm::ivec2& GetPosition() { return m_Position; }
+		const glm::ivec2& GetPosition() const{ return m_Position; }
 
 		virtual std::string GetInfoLog() const override
 		{
@@ -48,7 +48,7 @@ namespace Light {
 	public:
 		WindowResizedEvent(int width, int height): m_Size(width, height) {}
 
-		const glm::ivec2& GetSize() { return m_Size; }
+		const glm::ivec2& GetSize() const { return m_Size; }
 
 		virtual std::string GetInfoLog() const override
 		{

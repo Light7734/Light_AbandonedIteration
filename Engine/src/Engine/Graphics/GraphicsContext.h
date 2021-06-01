@@ -10,6 +10,8 @@ namespace Light {
 	class RenderCommand;
 	class UserInterface;
 
+	class WindowResizedEvent;
+
 	enum class GraphicsAPI
 	{
 		Default = 0,
@@ -32,12 +34,16 @@ namespace Light {
 		GraphicsAPI m_GraphicsAPI;
 
 	public:
+		static GraphicsContext* Create(GraphicsAPI api, GLFWwindow* windowHandle);
+
 		GraphicsContext(const GraphicsContext&) = delete;
 		GraphicsContext& operator=(const GraphicsContext&) = delete;
 
 		virtual ~GraphicsContext() = default;
-	
-		static GraphicsContext* Create(GraphicsAPI api, GLFWwindow* windowHandle);
+
+		virtual void OnWindowResize(const WindowResizedEvent& event) = 0;
+
+		virtual void LogDebugData() = 0;
 
 		static inline GraphicsAPI GetGraphicsAPI() { return s_Context->m_GraphicsAPI; }
 
@@ -47,6 +53,7 @@ namespace Light {
 
 	protected:
 		GraphicsContext() = default;
+
 	};
 
 }

@@ -7,6 +7,8 @@ struct GLFWwindow;
 
 namespace Light {
 
+	class WindowResizedEvent;
+
 	class glGraphicsContext : public GraphicsContext
 	{
 	private:
@@ -14,6 +16,10 @@ namespace Light {
 
 	public:
 		glGraphicsContext(GLFWwindow* windowHandle);
+
+		virtual void OnWindowResize(const WindowResizedEvent& event) override;
+
+		virtual void LogDebugData() override;
 
 	private:
 		void SetDebugMessageCallback();

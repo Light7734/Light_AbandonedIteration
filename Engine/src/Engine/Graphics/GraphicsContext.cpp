@@ -53,7 +53,6 @@ namespace Light {
 		LT_ENGINE_ASSERT(s_Context->m_RenderCommand, "GraphicsContext::Create: RenderCommand creation failed");
 		LT_ENGINE_ASSERT(s_Context->m_UserInterface, "GraphicsContext::Create: UserInterface creation failed");
 
-
 		return s_Context;
 	}
 

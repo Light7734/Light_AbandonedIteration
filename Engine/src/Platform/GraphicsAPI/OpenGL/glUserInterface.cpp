@@ -1,4 +1,4 @@
-#include "ltpch.h"
+﻿#include "ltpch.h"
 #include "glUserInterface.h"
 
 #include <imgui.h>
@@ -40,6 +40,15 @@ namespace Light {
 	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	}
+
+	void glUserInterface::LogDebugData()
+	{
+		LT_ENGINE_INFO("________________________________________");
+		LT_ENGINE_INFO("UserInterface::");
+		LT_ENGINE_INFO("       API    : ImGui");
+		LT_ENGINE_INFO("       Version: {}", ImGui::GetVersion());
+		LT_ENGINE_INFO("________________________________________");
 	}
 
 }

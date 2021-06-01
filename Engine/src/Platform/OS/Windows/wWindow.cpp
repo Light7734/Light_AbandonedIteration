@@ -48,6 +48,8 @@ namespace Light {
 		{
 		case EventType::WindowClosed:
 			b_Open = false;
+		case EventType::WindowResized:
+			m_GraphicsContext->OnWindowResize((const WindowResizedEvent&)event);
 		}
 	}
 

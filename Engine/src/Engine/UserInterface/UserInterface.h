@@ -11,6 +11,8 @@ namespace Light {
 	class UserInterface
 	{
 	public:
+		static UserInterface* Create(GLFWwindow* windowHandle);
+
 		UserInterface(const UserInterface&) = delete;
 		UserInterface operator=(const UserInterface&) = delete;
 
@@ -21,7 +23,8 @@ namespace Light {
 		virtual void Begin() = 0;
 		virtual void End() = 0;
 
-		static UserInterface* Create(GLFWwindow* windowHandle);
+		virtual void LogDebugData() = 0;
+
 	protected:
 		UserInterface() = default;
 	};
