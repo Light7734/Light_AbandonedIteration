@@ -23,6 +23,8 @@ namespace Light {
 	{
 		m_GraphicsAPI = GraphicsAPI::DirectX;
 
+		HRESULT hr;
+
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 		sd.BufferCount = 1u;
 		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -31,15 +33,15 @@ namespace Light {
 		sd.SampleDesc.Count = 1u;
 		sd.Windowed = true;
 
-		D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE,
+		DXC(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE,
 		                              NULL, NULL, NULL, NULL, D3D11_SDK_VERSION,
-		                              &sd, &m_SwapChain, &m_Device, NULL, &m_DeviceContext);
+		                              &sd, &m_SwapChain, &m_Device, NULL, &m_DeviceContext));
 
 		m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer;
-		m_SwapChain->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer);
-		m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTargetView);
+		DXC(m_SwapChain->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
+		DXC(m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTargetView));
 		m_DeviceContext->OMSetRenderTargets(1u, m_RenderTargetView.GetAddressOf(), nullptr);
 
 
@@ -55,11 +57,11 @@ namespace Light {
 
 		m_DeviceContext->RSSetViewports(1u, &viewport);
 
-		dxSharedContext* sharedContext = new dxSharedContext({m_DeviceContext, m_SwapChain, m_RenderTargetView});
+		dxSharedContext* sharedContext = new dxSharedContext({m_DeviceContext, m_SwapChain, m_RenderTargetView, m_Device});
 		m_SharedContext = sharedContext;
 
 		// log some information about dx context //
-// locals 
+		// locals 
 		IDXGIDevice* DXGIDevice;
 		IDXGIAdapter* DXGIAdapter;
 		DXGI_ADAPTER_DESC DXGIAdapterDesc;

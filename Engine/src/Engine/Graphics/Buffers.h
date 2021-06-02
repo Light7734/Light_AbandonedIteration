@@ -7,7 +7,7 @@ namespace Light {
 	class VertexBuffer
 	{
 	public:
-		static VertexBuffer* Create(unsigned int count, float* vertices);
+		static VertexBuffer* Create(unsigned int stride, unsigned int count, float* vertices, void* sharedContext);
 
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;

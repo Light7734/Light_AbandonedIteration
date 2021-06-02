@@ -7,7 +7,7 @@
 
 namespace Light {
 
-	glVertexLayout::glVertexLayout(VertexBuffer* buffer, std::vector<VertexElementType> elements)
+	glVertexLayout::glVertexLayout(VertexBuffer* buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
 	{
 		// sanity check
 		LT_ENGINE_ASSERT(dynamic_cast<glVertexBuffer*>(buffer), "glVertexLayout::glVertexLayout: failed to cast VertexBuffer to glVertexBuffer");
@@ -18,7 +18,7 @@ namespace Light {
 		unsigned int stride = 0u;
 		for(const auto& element : elements)
 		{
-			elementsDesc.push_back(GetElementDesc(element, stride));
+			elementsDesc.push_back(GetElementDesc(element.second, stride));
 			stride += elementsDesc.back().typeSize * elementsDesc.back().count;
 		}
 

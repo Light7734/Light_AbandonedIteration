@@ -52,8 +52,8 @@ namespace Light {
 
 		// create gfx context dependent classes
 		s_Context->m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle, s_Context->m_SharedContext));
-		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle));
-		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand));
+		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle, s_Context->m_SharedContext));
+		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand, s_Context->m_SharedContext));
 
 		// sanity check
 		LT_ENGINE_ASSERT(s_Context->m_RenderCommand, "GraphicsContext::Create: RenderCommand creation failed");

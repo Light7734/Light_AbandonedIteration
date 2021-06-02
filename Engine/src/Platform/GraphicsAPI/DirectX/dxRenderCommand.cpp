@@ -31,7 +31,7 @@ namespace Light {
 
 	void dxRenderCommand::Draw(unsigned int count)
 	{
-
+		m_DeviceContext->Draw(count, 0u);
 	}
 
 	void dxRenderCommand::DrawIndexed(unsigned int count)

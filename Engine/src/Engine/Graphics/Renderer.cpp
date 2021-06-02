@@ -9,48 +9,27 @@ namespace Light {
 
 	Renderer* Renderer::m_Context;
 
-	Renderer::Renderer(std::shared_ptr<RenderCommand> renderCommand)
-		: m_RenderCommand(renderCommand)
+	Renderer::Renderer(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext)
+		: m_RenderCommand(renderCommand), m_SharedContext(sharedContext)
 	{
 		m_Context = this;
 
-		m_Shader = std::unique_ptr<Shader>(Shader::Create("res/vertex.vertex", "res/fragment.fragment"));
-
-//  		m_Shader = std::unique_ptr<Shader>(Shader::Create(
-// R"(
-// #version 450 core
-// 
-// layout(location = 0) in vec2 a_Position;
-// 
-// void main()
-// {
-// 	gl_Position = vec4(a_Position, 0.0, 1.0);
-// })",
-// R"(
-// #version 450 core
-// 
-// out vec4 FragColor;
-// 
-// void main()
-// {
-// 	FragColor = vec4(1.0, 0.0, 0.0, 1.0);
-// }
-// )"));
+		m_Shader = std::unique_ptr<Shader>(Shader::Create("res/vertex.vertex", "res/fragment.fragment", m_SharedContext));
 
 		float vertices[] =
 		{
-			-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
 			 0.0f,  0.5f, 0.0f, 0.0f, 1.0f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
+			-0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
 		};
 
-		m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create((2 + 4) * 3, vertices));
-		m_VertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_VertexBuffer.get(), { VertexElementType::Float2, VertexElementType::Float4 }));
+		m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(6 * sizeof(float), (2 + 4) * 3, vertices, m_SharedContext));
+		m_VertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_VertexBuffer.get(), m_Shader.get(), { { "POSITION", VertexElementType::Float2 },{ "COLOR", VertexElementType::Float4 } }, m_SharedContext));
 	}
 
-	Renderer* Renderer::Create(std::shared_ptr<RenderCommand> renderCommand)
+	Renderer* Renderer::Create(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext)
 	{
-		return new Renderer(renderCommand);
+		return new Renderer(renderCommand, sharedContext);
 	}
 
 	void Renderer::Draw()
@@ -58,6 +37,7 @@ namespace Light {
 		m_Shader->Bind();
 		m_VertexBuffer->Bind();
 		m_VertexLayout->Bind();
+
 		m_RenderCommand->Draw(3u);
 	}
 

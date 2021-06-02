@@ -22,13 +22,15 @@ namespace Light {
 		std::unique_ptr<Shader> m_Shader;
 		std::unique_ptr<VertexBuffer> m_VertexBuffer;
 		std::unique_ptr<VertexLayout> m_VertexLayout;
+
+		void* m_SharedContext;
 	public:
-		static Renderer* Create(std::shared_ptr<RenderCommand> renderCommand);
+		static Renderer* Create(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext);
 		
 		void Draw();
 
 	private:
-		Renderer(std::shared_ptr<RenderCommand> renderCommand);
+		Renderer(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext);
 	};
 
 }

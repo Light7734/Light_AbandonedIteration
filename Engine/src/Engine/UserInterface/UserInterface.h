@@ -11,7 +11,7 @@ namespace Light {
 	class UserInterface
 	{
 	public:
-		static UserInterface* Create(GLFWwindow* windowHandle);
+		static UserInterface* Create(GLFWwindow* windowHandle, void* sharedContext);
 
 		UserInterface(const UserInterface&) = delete;
 		UserInterface operator=(const UserInterface&) = delete;

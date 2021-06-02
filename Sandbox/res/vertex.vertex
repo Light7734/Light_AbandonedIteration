@@ -1,12 +1,13 @@
-#version 450 core
-
-layout(location = 0) in vec2 a_Position;
-layout(location = 1) in vec4 a_Color;
-
-out vec4 vsout_Color;
-
-void main()
+struct VertexOut
 {
-	gl_Position = vec4(a_Position, 0.0, 1.0);
-	vsout_Color = a_Color;
+	float4 Color : COLOR;
+	float4 Position : SV_Position;
+};
+
+VertexOut main(float2 InPosition : POSITION, float4 InColor : COLOR)
+{
+	VertexOut vso;
+	vso.Position = float4(InPosition.x, InPosition.y, 0.0f, 1.0f);
+	vso.Color = InColor;
+	return vso;
 }

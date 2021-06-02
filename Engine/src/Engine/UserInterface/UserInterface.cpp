@@ -2,6 +2,10 @@
 #include "UserInterface.h"
 #include "OpenGL/glUserInterface.h"
 
+#ifdef LIGHT_PLATFORM_WINDOWS
+	#include "DirectX/dxUserInterface.h"
+#endif
+
 #include "Graphics/GraphicsContext.h"
 
 #include "Events/Event.h"
@@ -12,12 +16,15 @@
 
 namespace Light {
 
-	UserInterface* UserInterface::Create(GLFWwindow* windowHandle)
+	UserInterface* UserInterface::Create(GLFWwindow* windowHandle, void* sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
 			return new glUserInterface(windowHandle);
+
+		case GraphicsAPI::DirectX: LT_WIN(
+			return new dxUserInterface(windowHandle, sharedContext);)
 
 		default:
 			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());

@@ -14,7 +14,7 @@ namespace Light {
 		void Begin() override;
 		void End() override;
 
-		virtual void LogDebugData() override;
+		void LogDebugData() override;
 	};
 
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Base.h"
+#include "dxBase.h"
 #include "Graphics/GraphicsContext.h"
 
 #include <d3d11.h>
