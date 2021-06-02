@@ -2,6 +2,10 @@
 #include "GraphicsContext.h"
 #include "OpenGL/glGraphicsContext.h"
 
+#ifdef LIGHT_PLATFORM_WINDOWS
+	#include "DirectX/dxGraphicsContext.h"
+#endif
+
 #include "Buffers.h"
 
 #include "Renderer.h"
@@ -35,17 +39,19 @@ namespace Light {
 		// create gfx context
 		switch (api)
 		{
-		case Light::GraphicsAPI::OpenGL:
+		case GraphicsAPI::OpenGL:
 			s_Context = new glGraphicsContext(windowHandle);
 			break;
-
+		case GraphicsAPI::DirectX: LT_WIN(
+			s_Context = new dxGraphicsContext(windowHandle);
+			break;)
 		default:
 			LT_ENGINE_ASSERT(false, "GraphicsContext::Create: invalid/unsupported GraphicsAPI {}", api);
 			return nullptr;
 		}
 
 		// create gfx context dependent classes
-		s_Context->m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle));
+		s_Context->m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle, s_Context->m_SharedContext));
 		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle));
 		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand));
 

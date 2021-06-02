@@ -20,7 +20,7 @@ namespace Light {
 		virtual void Draw(unsigned int count) = 0;
 		virtual void DrawIndexed(unsigned int count) = 0;
 
-		static RenderCommand* Create(GLFWwindow* windowHandle);
+		static RenderCommand* Create(GLFWwindow* windowHandle, void* sharedContext);
 
 	protected:
 		RenderCommand() = default;

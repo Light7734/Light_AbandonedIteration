@@ -32,6 +32,7 @@ namespace Light {
 
 	protected:
 		GraphicsAPI m_GraphicsAPI;
+		void* m_SharedContext = nullptr;
 
 	public:
 		static GraphicsContext* Create(GraphicsAPI api, GLFWwindow* windowHandle);

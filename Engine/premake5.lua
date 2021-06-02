@@ -49,10 +49,22 @@ project "Engine"
 	
 	--- Filters ---
 	-- windows
+
 	filter "system:windows"
 		defines "LIGHT_PLATFORM_WINDOWS"
 		systemversion "latest"
 		staticruntime "On"
+
+		links
+		{
+			"d3d11.lib"       ,
+			"dxguid.lib"      ,
+			"D3DCompiler.lib" ,
+		}
+
+	filter "system:not windows"
+		excludes "%{prj.location}/src/Platform/GraphicsAPI/DirectX**"
+		excludes "%{prj.location}/src/Platform/OS/Windows**"
 
 	-- debug
 	filter "configurations:Debug"
