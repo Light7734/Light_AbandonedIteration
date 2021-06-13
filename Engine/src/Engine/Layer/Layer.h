@@ -33,6 +33,8 @@ namespace Light {
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnUserInterfaceUpdate() {}
 
+		virtual void OnRender() {}
+
 		// Mouse events
 		virtual bool OnMouseMoved(const MouseMovedEvent& event) { return false; }
 		virtual bool OnButtonPressed(const ButtonPressedEvent& event) { return false; }

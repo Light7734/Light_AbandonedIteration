@@ -14,6 +14,9 @@ namespace Light {
 		glVertexBuffer(unsigned int count, float* vertices);
 		~glVertexBuffer();
 
+		void* Map() override;
+		void UnMap() override;
+
 		void Bind() override;
 		void UnBind() override;
 	};

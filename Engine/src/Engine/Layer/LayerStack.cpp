@@ -35,6 +35,12 @@ namespace Light {
 			(*it)->OnUserInterfaceUpdate();
 	}
 
+	void LayerStack::OnRender()
+	{
+		for (auto it = m_Begin; it != m_End; it++)
+			(*it)->OnRender();
+	}
+
 	void LayerStack::OnEvent(const Event& event)
 	{
 		switch (event.GetEventType())

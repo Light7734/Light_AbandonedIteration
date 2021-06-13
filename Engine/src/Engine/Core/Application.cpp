@@ -41,7 +41,9 @@ namespace Light {
 			m_Window->PollEvents();
 
 			// Rendering
-			m_Window->GetGfxContext()->GetRenderer()->Draw();
+			m_Window->GetGfxContext()->GetRenderer()->BeginScene();
+			m_LayerStack.OnRender();
+			m_Window->GetGfxContext()->GetRenderer()->EndScene();
 
 			// Buffer updates
 			m_Window->GetGfxContext()->GetRenderCommand()->SwapBuffers();

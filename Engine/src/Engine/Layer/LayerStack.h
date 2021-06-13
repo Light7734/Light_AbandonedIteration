@@ -30,6 +30,8 @@ namespace Light {
 		void OnUpdate(float deltaTime);
 		void OnUserInterfaceUpdate();
 
+		void OnRender();
+
 		void OnEvent(const Event& event);
 
 		inline bool IsEmpty() { return m_Layers.empty(); }

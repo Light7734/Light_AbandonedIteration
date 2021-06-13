@@ -1,4 +1,10 @@
-float4 main(float4 Color : COLOR) : SV_Target
+#version 440 core
+
+in vec4 fragColor;
+
+out vec4 FragmentColor;
+
+void main()
 {
-	return Color;
+	FragmentColor = fragColor;
 }

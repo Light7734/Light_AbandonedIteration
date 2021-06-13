@@ -1,7 +1,7 @@
 #define LIGHT_ENTRY_POINT
 #include <LightEngine.h>
 
-#include "SandboxLayer.h"
+	#include "SandboxLayer.h"
 
 class Sandbox : public Light::Application
 {

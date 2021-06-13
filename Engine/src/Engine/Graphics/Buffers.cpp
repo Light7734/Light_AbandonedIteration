@@ -27,12 +27,15 @@ namespace Light {
 		}
 	}
 
-	IndexBuffer* IndexBuffer::Create(unsigned int count, unsigned int* indices)
+	IndexBuffer* IndexBuffer::Create(unsigned int count, unsigned int* indices, void* sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
 			return new glIndexBuffer(count, indices);
+		case GraphicsAPI::DirectX: LT_WIN(
+			return new dxIndexBuffer(count, indices, sharedContext);
+		)
 		default:
 			LT_ENGINE_ASSERT(false, "IndexBuffer::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
