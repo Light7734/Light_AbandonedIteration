@@ -21,10 +21,16 @@ namespace Light {
 		bool b_Open;
 
 	public:
+		static Window* Create(const WindowProperties& properties, std::function<void(Event&)> callback);
+
 		Window(const Window&) = delete;
 		Window& operator=(const Window&) = delete;
 
 		virtual ~Window() = default;
+
+		virtual void SetProperties(const WindowProperties& properties) = 0;
+
+		virtual void SetVisible(bool visible) = 0;
 
 		inline GraphicsContext* GetGfxContext() { return m_GraphicsContext.get(); }
 
@@ -37,8 +43,6 @@ namespace Light {
 		virtual unsigned int GetWidth()  = 0;
 
 		virtual inline void* GetNativeHandle() = 0;
-
-		static Window* Create(const WindowProperties& properties, std::function<void(Event&)> callback);
 
 	protected:
 		Window() = default;

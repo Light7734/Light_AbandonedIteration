@@ -12,8 +12,10 @@ namespace Light {
 	class Application
 	{
 	private:
-		std::unique_ptr<Window> m_Window = nullptr;
 		LayerStack m_LayerStack;
+
+	protected:
+		std::unique_ptr<Window> m_Window = nullptr;
 
 	public:
 		Application(const Application&) = delete;
@@ -22,13 +24,15 @@ namespace Light {
 		virtual ~Application();
 
 		void GameLoop();
-		void OnEvent(const Event& event);
 
 		// To be defined in client project
 		friend Application* CreateApplication();
 
 	protected:
 		Application();
+
+	private:
+		void OnEvent(const Event& event);
 	};
 
 }

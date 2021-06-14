@@ -17,12 +17,14 @@ namespace Light {
 		return new wWindow(properties, callback);
 	}
 
-	wWindow::wWindow(const WindowProperties& properties, std::function<void(Event&)> callback)
-		: m_Properties(properties), m_EventCallback(callback)
+	wWindow::wWindow(std::function<void(Event&)> callback)
+		: m_EventCallback(callback)
 	{
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: glfwInit: failed to initialize glfw");
 
-		m_Handle = glfwCreateWindow(properties.width, properties.height, properties.title.c_str(), nullptr, nullptr);
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
+		m_Handle = glfwCreateWindow(1u, 1u, "", nullptr, nullptr);
 		LT_ENGINE_ASSERT(m_Handle, "wWindow::wWindow: glfwCreateWindow: failed to create glfw window");
 
 		glfwSetWindowUserPointer(m_Handle, &m_EventCallback);
@@ -35,6 +37,23 @@ namespace Light {
 	wWindow::~wWindow()
 	{
 		glfwDestroyWindow(m_Handle);
+	}
+
+	void wWindow::SetProperties(const WindowProperties& properties)
+	{
+		m_Properties = properties;
+
+		glfwSetWindowSize(m_Handle, properties.width, properties.height);
+		glfwSetWindowTitle(m_Handle, properties.title.c_str());
+		glfwSwapInterval((int)properties.vsync);
+	}
+
+	void wWindow::SetVisible(bool visible)
+	{
+		if (visible)
+			glfwShowWindow(m_Handle);
+		else
+			glfwHideWindow(m_Handle);
 	}
 
 	void wWindow::PollEvents()

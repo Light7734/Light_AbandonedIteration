@@ -17,12 +17,12 @@ namespace Light {
 	Application::Application()
 	{
 		Logger::Initialize();
-		m_Window = std::unique_ptr<Window>(Window::Create({ "Title", 800u, 600u, false }, std::bind(&Application::OnEvent, this , std::placeholders::_1)));
+		m_Window = std::unique_ptr<Light::Window>(Light::Window::Create(std::bind(&Light::Application::OnEvent, this, std::placeholders::_1)));
 	}
 
 	Application::~Application()
 	{
-		LT_ENGINE_INFO("Application::~Application: Terminating Application");
+		LT_ENGINE_TRACE("Application::~Application()");
 	}
 
 	void Application::GameLoop()
@@ -30,9 +30,12 @@ namespace Light {
 		// check
 		LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop: Layerstack is empty");
 
-		// Log some data
+		// Log window data
 		m_Window->GetGfxContext()->LogDebugData();
 		m_Window->GetGfxContext()->GetUserInterface()->LogDebugData();
+
+		// Show window
+		m_Window->SetVisible(true);
 
 		//  GAMELOOP  //
 		while (m_Window->IsOpen())
