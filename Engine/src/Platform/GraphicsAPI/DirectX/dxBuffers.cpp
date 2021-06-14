@@ -5,7 +5,7 @@
 
 namespace Light {
 
-	dxVertexBuffer::dxVertexBuffer(unsigned int count, unsigned int stride, float* vertices, void* sharedContext)
+	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, void* sharedContext)
 		: m_Stride(stride)
 	{
 		HRESULT hr;
@@ -54,7 +54,7 @@ namespace Light {
 	}
 
 
-	dxIndexBuffer::dxIndexBuffer(unsigned int count, unsigned int* indices, void* sharedContext)
+	dxIndexBuffer::dxIndexBuffer(unsigned int* indices, unsigned int count, void* sharedContext)
 	{
 		HRESULT hr;
 
@@ -63,6 +63,32 @@ namespace Light {
 
 		m_Device = dxContext->device;
 		m_DeviceContext = dxContext->deviceContext;
+
+		bool hasIndices = !!indices;
+		if (!hasIndices)
+		{
+			if (count % 6 != 0)
+			{
+				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: count should be divisible by 6 when no indices is provided");
+				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: adding {} to count -> {}", (6 - (count % 6)), count + (6 - (count % 6)));
+				count = count + (6 - (count % 6));
+			}
+
+			indices = new unsigned int[count];
+			unsigned int offset = 0;
+			for (unsigned int i = 0; i < count; i += 6)
+			{
+				indices[i + 0] = offset + 0;
+				indices[i + 1] = offset + 1;
+				indices[i + 2] = offset + 2;
+
+				indices[i + 3] = offset + 2;
+				indices[i + 4] = offset + 3;
+				indices[i + 5] = offset + 0;
+
+				offset += 4;
+			}
+		}
 
 		D3D11_BUFFER_DESC bufferDesc = { 0 };
 		D3D11_SUBRESOURCE_DATA sd = { 0 };
@@ -75,6 +101,9 @@ namespace Light {
 		sd.pSysMem = indices;
 
 		DXC(m_Device->CreateBuffer(&bufferDesc, &sd, &m_Buffer));
+
+		if (!hasIndices)
+			delete[] indices;
 	}
 
 	dxIndexBuffer::~dxIndexBuffer()

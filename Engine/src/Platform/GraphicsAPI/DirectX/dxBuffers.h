@@ -21,7 +21,7 @@ namespace Light {
 		
 		unsigned int m_Stride;
 	public:
-		dxVertexBuffer(unsigned int count, unsigned int stride, float* vertices, void* sharedContext);
+		dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, void* sharedContext);
 		~dxVertexBuffer();
 
 		void* Map() override;
@@ -39,7 +39,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
 	public:
-		dxIndexBuffer(unsigned int count, unsigned int* indices, void* sharedContext);
+		dxIndexBuffer(unsigned int* indices, unsigned int count, void* sharedContext);
 		~dxIndexBuffer();
 
 		void Bind() override;

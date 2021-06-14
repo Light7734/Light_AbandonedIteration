@@ -11,7 +11,7 @@ namespace Light {
 		unsigned int m_BufferID;
 
 	public:
-		glVertexBuffer(unsigned int count, float* vertices);
+		glVertexBuffer(float* vertices, unsigned int count);
 		~glVertexBuffer();
 
 		void* Map() override;
@@ -27,7 +27,7 @@ namespace Light {
 		unsigned int m_BufferID;
 
 	public:
-		glIndexBuffer(unsigned int count, unsigned int* indices);
+		glIndexBuffer(unsigned int* indices, unsigned int count);
 		~glIndexBuffer();
 
 		void Bind() override;

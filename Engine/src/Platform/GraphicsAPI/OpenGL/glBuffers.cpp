@@ -5,7 +5,7 @@
 
 namespace Light {
 
-	glVertexBuffer::glVertexBuffer(unsigned int count, float* vertices)
+	glVertexBuffer::glVertexBuffer(float* vertices, unsigned int count)
 	{
 		glCreateBuffers(1, &m_BufferID);
 		glNamedBufferData(m_BufferID, count * sizeof(float), vertices, GL_DYNAMIC_DRAW);
@@ -36,10 +36,39 @@ namespace Light {
 		glBindBuffer(GL_ARRAY_BUFFER, NULL);
 	}
 
-	glIndexBuffer::glIndexBuffer(unsigned int count, unsigned int* indices)
+	glIndexBuffer::glIndexBuffer(unsigned int* indices, unsigned int count)
 	{
+		bool hasIndices = !!indices;
+		if (!hasIndices)
+		{
+			if (count % 6 != 0)
+			{
+				LT_ENGINE_WARN("glIndexBuffer::glIndexBuffer: count should be divisible by 6 when no indices is provided");
+				LT_ENGINE_WARN("glIndexBuffer::glIndexBuffer: adding {} to count -> {}", (6 - (count % 6)), count + (6 - (count % 6)));
+				count = count + (6 - (count % 6));
+			}
+
+			indices = new unsigned int[count];
+			unsigned int offset = 0;
+			for (unsigned int i = 0; i < count; i += 6)
+			{
+				indices[i + 0] = offset + 0;
+				indices[i + 1] = offset + 1;
+				indices[i + 2] = offset + 2;
+
+				indices[i + 3] = offset + 2;
+				indices[i + 4] = offset + 3;
+				indices[i + 5] = offset + 0;
+
+				offset += 4;
+			}
+		}
+
 		glCreateBuffers(1, &m_BufferID);
 		glNamedBufferData(m_BufferID, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+
+		if (!hasIndices)
+			delete[] indices;
 	}
 
 	glIndexBuffer::~glIndexBuffer()

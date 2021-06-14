@@ -11,15 +11,15 @@
 namespace Light {
 
 
-	VertexBuffer* VertexBuffer::Create(unsigned int stride, unsigned int count, float* vertices, void* sharedContext)
+	VertexBuffer* VertexBuffer::Create(float* vertices, unsigned int stride, unsigned int count, void* sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return new glVertexBuffer(count, vertices);
+			return new glVertexBuffer(vertices, count);
 			
 		case GraphicsAPI::DirectX:
-			return new dxVertexBuffer(count, stride, vertices, sharedContext);
+			return new dxVertexBuffer(vertices, stride, count, sharedContext);
 
 		default:
 			LT_ENGINE_ASSERT(false, "VertexBuffer::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
@@ -27,15 +27,16 @@ namespace Light {
 		}
 	}
 
-	IndexBuffer* IndexBuffer::Create(unsigned int count, unsigned int* indices, void* sharedContext)
+	IndexBuffer* IndexBuffer::Create(unsigned int* indices, unsigned int count, void* sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return new glIndexBuffer(count, indices);
+			return new glIndexBuffer(indices, count);
+
 		case GraphicsAPI::DirectX: LT_WIN(
-			return new dxIndexBuffer(count, indices, sharedContext);
-		)
+			return new dxIndexBuffer(indices, count, sharedContext);)
+
 		default:
 			LT_ENGINE_ASSERT(false, "IndexBuffer::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;

@@ -15,27 +15,10 @@ namespace Light {
 		s_Context = this;
 
 		// QUADRENDERER //
-		unsigned int offset = 0;
-		unsigned int* indices = new unsigned int[LT_MAX_QUAD * 6];
-
-		for (int i = 0; i < LT_MAX_QUAD * 6; i += 6)
-		{
-			indices[i + 0] = offset + 0;
-			indices[i + 1] = offset + 1;
-			indices[i + 2] = offset + 2;
-
-			indices[i + 3] = offset + 2;
-			indices[i + 4] = offset + 3;
-			indices[i + 5] = offset + 0;
-
-			offset += 4;
-		}
-
 		m_QuadRenderer.shader = std::unique_ptr<Shader>(Shader::Create("res/vertex.vertex", "res/fragment.fragment", m_SharedContext));
-		m_QuadRenderer.vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(sizeof(QuadRendererProgram::QuadVertexData), LT_MAX_QUAD * 4, nullptr, m_SharedContext));
+		m_QuadRenderer.vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(QuadRendererProgram::QuadVertexData), LT_MAX_QUAD * 4, m_SharedContext));
 		m_QuadRenderer.vertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_QuadRenderer.vertexBuffer.get(), m_QuadRenderer.shader.get(), { { "POSITION", VertexElementType::Float3 },{ "COLOR", VertexElementType::Float4 } }, m_SharedContext));
-		m_QuadRenderer.indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(LT_MAX_QUAD * 6, indices, m_SharedContext));
-		delete[] indices;
+		m_QuadRenderer.indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(nullptr, LT_MAX_QUAD * 3, m_SharedContext));
 		// QUADRENDERER //
 	}
 
@@ -60,7 +43,7 @@ namespace Light {
 			m_QuadRenderer.Map();
 		}
 
-		// local
+		// locals
 		const float xMin = position.x;
 		const float yMin = position.y;
 		const float xMax = position.x + size.x;
