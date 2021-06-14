@@ -21,7 +21,7 @@ namespace Light {
 		bool b_Open;
 
 	public:
-		static Window* Create(const WindowProperties& properties, std::function<void(Event&)> callback);
+		static Window* Create(std::function<void(Event&)> callback);
 
 		Window(const Window&) = delete;
 		Window& operator=(const Window&) = delete;

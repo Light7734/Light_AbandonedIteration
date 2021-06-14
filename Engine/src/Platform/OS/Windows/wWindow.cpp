@@ -12,9 +12,9 @@
 
 namespace Light {
 
-	Window* Window::Create(const WindowProperties& properties, std::function<void(Event&)> callback)
+	Window* Window::Create(std::function<void(Event&)> callback)
 	{
-		return new wWindow(properties, callback);
+		return new wWindow(callback);
 	}
 
 	wWindow::wWindow(std::function<void(Event&)> callback)
