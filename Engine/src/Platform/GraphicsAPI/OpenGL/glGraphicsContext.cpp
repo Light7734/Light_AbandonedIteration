@@ -43,6 +43,7 @@ namespace Light {
 
 	void glGraphicsContext::LogDebugData()
 	{
+		// #todo: log more information
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("GraphicsContext::");
 		LT_ENGINE_INFO("        API     : OpenGL");
@@ -53,10 +54,10 @@ namespace Light {
 
 	void glGraphicsContext::SetDebugMessageCallback()
 	{
-#if defined(LT_DEBUG)
+#if defined(LIGHT_DEBUG)
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-#elif defined(LT_RELEASE)
+#elif defined(LIGHT_RELEASE)
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_FALSE);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
@@ -72,14 +73,9 @@ namespace Light {
 			switch (severity)
 			{
 			case GL_DEBUG_SEVERITY_HIGH:
-				LT_ENGINE_CRITICAL("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",
-				                   Stringifier::glDebugMsgSeverity(severity),
-				                   Stringifier::glDebugMsgSource(source),
-				                   Stringifier::glDebugMsgType(type),
-				                   id);
-				__debugbreak();
-				LT_ENGINE_CRITICAL("        {}", message);
+				throw glException(source, type, id, message);
 				return;
+
 			case GL_DEBUG_SEVERITY_MEDIUM: case  GL_DEBUG_SEVERITY_LOW:
 				LT_ENGINE_WARN("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",
 				               Stringifier::glDebugMsgSeverity(severity),

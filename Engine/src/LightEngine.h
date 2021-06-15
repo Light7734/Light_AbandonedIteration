@@ -3,7 +3,9 @@
 // Core
 #include "Core/Application.h"
 #include "Core/Window.h"
-#include "Core/Logger.h"
+
+// Debug
+#include "Debug/Logger.h"
 
 // Events
 #include "Events/Event.h"

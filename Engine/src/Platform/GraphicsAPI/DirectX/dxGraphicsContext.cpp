@@ -107,13 +107,11 @@ namespace Light {
 
 	void dxGraphicsContext::LogDebugData()
 	{
-		// log some information about dx context //
 		// locals 
 		IDXGIDevice* DXGIDevice;
 		IDXGIAdapter* DXGIAdapter;
 		DXGI_ADAPTER_DESC DXGIAdapterDesc;
 
-		// initialize Locals
 		m_Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&DXGIDevice);
 		DXGIDevice->GetAdapter(&DXGIAdapter);
 		DXGIAdapter->GetDesc(&DXGIAdapterDesc);

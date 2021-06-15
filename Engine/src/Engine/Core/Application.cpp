@@ -1,7 +1,6 @@
 #include "ltpch.h"
 #include "Application.h"
 
-#include "Logger.h"
 #include "Window.h"
 
 #include "Events/Event.h"

@@ -1,8 +1,10 @@
 #pragma once
 
 #ifndef LOGGER_H
-	#include "Core/Logger.h"
+	#include "Debug/Logger.h"
 #endif
+
+#include "Debug/Exceptions.h"
 
 #include <memory>
 
