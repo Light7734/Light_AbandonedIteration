@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 
 // LOGGER MACROS //
-#ifndef LT_DIST 
+#ifndef LIGHT_DIST
 	// Engine
 	#define LT_ENGINE_TRACE(...)    ::Light::Logger::GetEngineLogger()->log(spdlog::level::trace   , __VA_ARGS__)
 	#define LT_ENGINE_INFO(...)     ::Light::Logger::GetEngineLogger()->log(spdlog::level::info    , __VA_ARGS__)

@@ -39,7 +39,6 @@ namespace Light {
 
 	dxVertexLayout::~dxVertexLayout()
 	{
-
 	}
 
 	void dxVertexLayout::Bind()

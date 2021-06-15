@@ -13,12 +13,14 @@
 #if defined(LIGHT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"
 	#define LT_WIN(x) x
-#elif defined(LT_PLATFORM_LINUX)
+#elif defined(LIGHT_PLATFORM_LINUX)
 	#error "Unsupported platform: UNIX"
 	#define LT_LIN(x)
+#elif defined(LIGHT_PLATFORM_MAC)
+	#error "Unsupported platform: MAC"
+	#define LT_MAC(x) x
 #else
 	#error "Unsupported platform: Unknown"
-	#define LT_MAC(x) x
 #endif
 
 #define BIT(x) 1 << x

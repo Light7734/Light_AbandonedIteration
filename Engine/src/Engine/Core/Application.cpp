@@ -31,6 +31,7 @@ namespace Light {
 		LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop: Layerstack is empty");
 
 		// Log window data
+		LogDebugData();
 		m_Window->GetGfxContext()->LogDebugData();
 		m_Window->GetGfxContext()->GetUserInterface()->LogDebugData();
 
@@ -76,6 +77,14 @@ namespace Light {
 
 		// Layers
 		m_LayerStack.OnEvent(event);
+	}
+
+	void Application::LogDebugData()
+	{
+		LT_ENGINE_INFO("________________________________________");
+		LT_ENGINE_INFO("Platform::");
+		LT_ENGINE_INFO("        OS: {}", LT_BUILD_PLATFORM);
+		LT_ENGINE_INFO("________________________________________");
 	}
 
 }

@@ -18,7 +18,7 @@ namespace Light {
 		m_QuadRenderer.shader = std::unique_ptr<Shader>(Shader::Create("res/vertex.vertex", "res/fragment.fragment", m_SharedContext));
 		m_QuadRenderer.vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(QuadRendererProgram::QuadVertexData), LT_MAX_QUAD * 4, m_SharedContext));
 		m_QuadRenderer.vertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_QuadRenderer.vertexBuffer.get(), m_QuadRenderer.shader.get(), { { "POSITION", VertexElementType::Float3 },{ "COLOR", VertexElementType::Float4 } }, m_SharedContext));
-		m_QuadRenderer.indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(nullptr, LT_MAX_QUAD * 3, m_SharedContext));
+		m_QuadRenderer.indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(nullptr, LT_MAX_QUAD * 6, m_SharedContext));
 		// QUADRENDERER //
 	}
 
@@ -49,27 +49,21 @@ namespace Light {
 		const float xMax = position.x + size.x;
 		const float yMax = position.y + size.y;
 
-		// TOP LEFT
-		m_QuadRenderer.mapCurrent->position = { xMin, yMin, position.z };
-		m_QuadRenderer.mapCurrent->tint = glm::vec4(1.0f, 0.1f, 0.1f, 1.0f);
-		m_QuadRenderer.mapCurrent++;
+		
+		m_QuadRenderer.mapCurrent[0].position = { xMin, yMin, position.z };
+		m_QuadRenderer.mapCurrent[0].tint = glm::vec4(0.1f, 0.1f, 1.0f, 1.0f);
 
-		// TOP RIGHT
-		m_QuadRenderer.mapCurrent->position = { xMax, yMin, position.z };
-		m_QuadRenderer.mapCurrent->tint = glm::vec4(0.1f, 1.0f, 0.1f, 1.0f);
-		m_QuadRenderer.mapCurrent++;
+		m_QuadRenderer.mapCurrent[1].position = { xMax, yMin, position.z };
+		m_QuadRenderer.mapCurrent[1].tint = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f);
 
-		// BOTTOM RIGHT
-		m_QuadRenderer.mapCurrent->position = { xMax, yMax, position.z };
-		m_QuadRenderer.mapCurrent->tint = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f);
-		m_QuadRenderer.mapCurrent++;
+		m_QuadRenderer.mapCurrent[2].position = { xMax, yMax, position.z };
+		m_QuadRenderer.mapCurrent[2].tint = glm::vec4(0.1f, 1.0f, 0.1f, 1.0f);
 
-		// BOTTOM LEFT
-		m_QuadRenderer.mapCurrent->position = { xMin, yMax, position.z };
-		m_QuadRenderer.mapCurrent->tint = glm::vec4(0.1f, 0.1f, 1.0f, 1.0f);
-		m_QuadRenderer.mapCurrent++;
+		m_QuadRenderer.mapCurrent[3].position = { xMin, yMax, position.z };
+		m_QuadRenderer.mapCurrent[3].tint = glm::vec4(1.0f, 0.1f, 0.1f, 1.0f);
 
 		// advance
+		m_QuadRenderer.mapCurrent += 4;
 		m_QuadRenderer.quadCount++;
 	}
 
@@ -81,9 +75,13 @@ namespace Light {
 
 	void Renderer::EndScene()
 	{
-		m_QuadRenderer.Bind();
-		m_RenderCommand->DrawIndexed(m_QuadRenderer.quadCount * 6);
-		m_QuadRenderer.quadCount = 0;
+		if (m_QuadRenderer.quadCount)
+		{
+			m_QuadRenderer.Bind();
+
+			m_RenderCommand->DrawIndexed(m_QuadRenderer.quadCount * 6);
+			m_QuadRenderer.quadCount = 0;
+		}
 	}
 
 }

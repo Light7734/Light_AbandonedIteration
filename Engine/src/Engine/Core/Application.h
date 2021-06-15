@@ -33,6 +33,8 @@ namespace Light {
 
 	private:
 		void OnEvent(const Event& event);
+
+		void LogDebugData();
 	};
 
 }

@@ -1,3 +1,4 @@
++GLSL
 #version 440 core
 
 in vec4 fragColor;
@@ -8,3 +9,10 @@ void main()
 {
 	FragmentColor = fragColor;
 }
+-GLSL
++HLSL
+float4 main(float4 Color : COLOR) : SV_Target
+{
+	return Color;
+}
+-HLSL

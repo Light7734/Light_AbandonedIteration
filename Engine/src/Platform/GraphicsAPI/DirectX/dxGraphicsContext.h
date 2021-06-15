@@ -21,6 +21,8 @@ namespace Light {
 		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 
+		Microsoft::WRL::ComPtr<ID3D11Debug> debugInterface;
+
 	public:
 		dxGraphicsContext(GLFWwindow* windowHandle);
 

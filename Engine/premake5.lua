@@ -68,15 +68,15 @@ project "Engine"
 
 	-- debug
 	filter "configurations:Debug"
-		defines "LT_DEBUG"
+		defines "LIGHT_DEBUG"
 		symbols "on"
 
 	-- release
 	filter "configurations:Release"
-		defines "LT_RELEASE"
+		defines "LIGHT_RELEASE"
 		optimize "on"
 
 	-- distribution
 	filter "configurations:Distribution"
-		defines "LT_DIST"
+		defines "LIGHT_DIST"
 		optimize "on"

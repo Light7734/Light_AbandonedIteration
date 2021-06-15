@@ -16,6 +16,9 @@ namespace Light {
 
 	protected:
 		Shader() = default;
+
+	private:
+		static void ExtractShaderSource(std::string& src, const std::string& delim);
 	};
 
 }
