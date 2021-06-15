@@ -14,7 +14,8 @@ namespace Light {
 
 	LayerStack::LayerStack()
 	{
-		s_Context = this; // TODO: ASSERT
+		LT_ENGINE_ASSERT(!s_Context, "LayerStack::LayerStack: context re-initialization")
+		s_Context = this;
 	}
 
 	LayerStack::~LayerStack()

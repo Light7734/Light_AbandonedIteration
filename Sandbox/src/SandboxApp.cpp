@@ -13,8 +13,7 @@ public:
 		// Set window properties
 		Light::WindowProperties properties;
 		properties.title = "Sandbox";
-		properties.width = 800u;
-		properties.height = 600u;
+		properties.size = glm::uvec2(800u, 600u);
 		properties.vsync = true;
 
 		m_Window->SetProperties(properties);

@@ -2,6 +2,8 @@
 
 #include "Base.h"
 
+#include <glm/glm.hpp>
+
 namespace Light {
 
 	class Event;
@@ -10,15 +12,16 @@ namespace Light {
 	struct WindowProperties
 	{
 		std::string title;
-		unsigned int width, height;
-		bool vsync;
+		glm::uvec2 size;
+		bool vsync, visible;
 	};
 
 	class Window
 	{
 	protected:
 		std::unique_ptr<GraphicsContext> m_GraphicsContext;
-		bool b_Open;
+		WindowProperties m_Properties = {};
+		bool b_Closed = false;
 
 	public:
 		static Window* Create(std::function<void(Event&)> callback);
@@ -28,21 +31,33 @@ namespace Light {
 
 		virtual ~Window() = default;
 
-		virtual void SetProperties(const WindowProperties& properties) = 0;
-
-		virtual void SetVisible(bool visible) = 0;
-
-		inline GraphicsContext* GetGfxContext() { return m_GraphicsContext.get(); }
-
-		inline bool IsOpen() const { return b_Open; }
-
 		virtual void PollEvents() = 0;
 		virtual void OnEvent(const Event& event) = 0;
 
-		virtual unsigned int GetHeight() = 0;
-		virtual unsigned int GetWidth()  = 0;
+		// Setters //
+		virtual void SetProperties(const WindowProperties& properties) = 0;
 
-		virtual inline void* GetNativeHandle() = 0;
+		virtual void SetTitle(const std::string& title) = 0;
+
+		virtual void SetSize(const glm::uvec2& size) = 0; // pass 0 for width or height for single dimension resizing
+
+		inline void Close() { b_Closed = true; }
+		virtual void SetVSync(bool vsync, bool toggle = false) = 0;
+		virtual void SetVisibility(bool visible, bool toggle = false) = 0;
+
+
+		// Getters //
+		inline GraphicsContext* GetGfxContext() const { return m_GraphicsContext.get(); }
+
+		inline const WindowProperties& GetProperties() const { return m_Properties; }
+
+		inline const std::string& GetTitle() const { return m_Properties.title; }
+
+		inline const glm::uvec2& GetSize() const { return m_Properties.size; }
+
+		inline bool IsClosed() const { return b_Closed; }
+		inline bool IsVSync() const { return m_Properties.vsync; }
+		inline bool IsVisible() const { return m_Properties.visible; }
 
 	protected:
 		Window() = default;

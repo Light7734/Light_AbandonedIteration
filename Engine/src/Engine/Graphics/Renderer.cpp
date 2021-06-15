@@ -49,16 +49,19 @@ namespace Light {
 		const float xMax = position.x + size.x;
 		const float yMax = position.y + size.y;
 
-		
+		// TOP_LEFT
 		m_QuadRenderer.mapCurrent[0].position = { xMin, yMin, position.z };
 		m_QuadRenderer.mapCurrent[0].tint = glm::vec4(0.1f, 0.1f, 1.0f, 1.0f);
 
+		// TOP_RIGHT
 		m_QuadRenderer.mapCurrent[1].position = { xMax, yMin, position.z };
 		m_QuadRenderer.mapCurrent[1].tint = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f);
 
+		// BOTTOM_RIGHT
 		m_QuadRenderer.mapCurrent[2].position = { xMax, yMax, position.z };
 		m_QuadRenderer.mapCurrent[2].tint = glm::vec4(0.1f, 1.0f, 0.1f, 1.0f);
 
+		// BOTTOM_LEFT
 		m_QuadRenderer.mapCurrent[3].position = { xMin, yMax, position.z };
 		m_QuadRenderer.mapCurrent[3].tint = glm::vec4(1.0f, 0.1f, 0.1f, 1.0f);
 

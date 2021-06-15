@@ -20,7 +20,7 @@ namespace Light {
 	wWindow::wWindow(std::function<void(Event&)> callback)
 		: m_EventCallback(callback)
 	{
-		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: glfwInit: failed to initialize glfw");
+		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize glfw");
 
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
@@ -31,7 +31,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle));
-		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: graphics context creation failed");
+		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create graphics context");
 	}
 
 	wWindow::~wWindow()
@@ -43,14 +43,16 @@ namespace Light {
 	{
 		m_Properties = properties;
 
-		glfwSetWindowSize(m_Handle, properties.width, properties.height);
+		glfwSetWindowSize(m_Handle, properties.size.x, properties.size.y);
 		glfwSetWindowTitle(m_Handle, properties.title.c_str());
 		glfwSwapInterval((int)properties.vsync);
 	}
 
-	void wWindow::SetVisible(bool visible)
+	void wWindow::SetVisibility(bool visible, bool toggle)
 	{
-		if (visible)
+		m_Properties.visible = toggle ? !m_Properties.visible : visible;
+
+		if (m_Properties.visible)
 			glfwShowWindow(m_Handle);
 		else
 			glfwHideWindow(m_Handle);
@@ -66,24 +68,40 @@ namespace Light {
 		switch (event.GetEventType())
 		{
 		case EventType::WindowClosed:
-			b_Open = false;
+			b_Closed = true;
+			break;
+
 		case EventType::WindowResized:
 			m_GraphicsContext->OnWindowResize((const WindowResizedEvent&)event);
+			break;
 		}
 	}
 
-	unsigned int wWindow::GetWidth()
+	void wWindow::SetTitle(const std::string& title)
 	{
-		return m_Properties.width;
+		m_Properties.title = title;
+
+		glfwSetWindowTitle(m_Handle, m_Properties.title.c_str());
 	}
 
-	unsigned int wWindow::GetHeight()
+	void wWindow::SetVSync(bool vsync, bool toggle /*= false*/)
 	{
-		return m_Properties.height;
+		m_Properties.vsync = toggle ? !m_Properties.vsync : vsync;
+
+		glfwSwapInterval(m_Properties.vsync);
+	}
+
+	void wWindow::SetSize(const glm::uvec2& size)
+	{
+		m_Properties.size.x = size.x == 0u ? m_Properties.size.x : size.x;
+		m_Properties.size.y = size.y == 0u ? m_Properties.size.y : size.y;
+
+		glfwSetWindowSize(m_Handle, m_Properties.size.x, m_Properties.size.y);
 	}
 
 	void wWindow::BindGlfwEvents()
 	{
+		// Mouse Events //
 		glfwSetCursorPosCallback(m_Handle, [](GLFWwindow* window, double xpos, double ypos)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -106,6 +124,7 @@ namespace Light {
 			callback(WheelScrolledEvent(yoffset));
 		});
 
+		// Keyboard Events //
 		glfwSetKeyCallback(m_Handle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -116,6 +135,7 @@ namespace Light {
 				callback(KeyReleasedEvent(key));
 		});
 
+		// Window Events //
 		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow* window) 
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);

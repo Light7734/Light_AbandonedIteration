@@ -10,10 +10,12 @@ namespace Light {
 		glException(unsigned int source, unsigned int type, unsigned int id, const char* msg);
 	};
 
+#ifdef LIGHT_PLATFORM_WINDOWS
 	// DirectX
 	struct dxException : std::exception
 	{
 		dxException(long hr, const char* file, int line);
 	};
+#endif
 
 }

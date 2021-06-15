@@ -8,9 +8,9 @@
 
 #include <memory>
 
-#define LT_WIN(x) 
-#define LT_LIN(x)
-#define LT_MAC(x)
+#define LT_WIN(x) // Windows
+#define LT_LIN(x) // Linux
+#define LT_MAC(x) // Mac
 
 #if defined(LIGHT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"
@@ -27,5 +27,6 @@
 
 #define BIT(x) 1 << x
 
+// #todo: log to file in distribution builds
 #define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); __debugbreak(); } }
 #define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); __debugbreak(); } }

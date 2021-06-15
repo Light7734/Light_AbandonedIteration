@@ -30,15 +30,16 @@ namespace Light {
 		LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop: Layerstack is empty");
 
 		// Log window data
+		Logger::LogDebugData();
 		LogDebugData();
 		m_Window->GetGfxContext()->LogDebugData();
 		m_Window->GetGfxContext()->GetUserInterface()->LogDebugData();
 
 		// Show window
-		m_Window->SetVisible(true);
+		m_Window->SetVisibility(true);
 
 		//  GAMELOOP  //
-		while (m_Window->IsOpen())
+		while (!m_Window->IsClosed())
 		{
 			// Events
 			m_Window->PollEvents();

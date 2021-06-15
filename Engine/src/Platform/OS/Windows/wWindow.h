@@ -13,7 +13,6 @@ namespace Light {
 	{
 	private:
 		GLFWwindow* m_Handle = nullptr;
-		WindowProperties m_Properties = {};
 
 		std::function<void(Event&)> m_EventCallback;
 
@@ -22,17 +21,18 @@ namespace Light {
 
 		~wWindow();
 
-		virtual void SetProperties(const WindowProperties& properties) override;
+		void PollEvents() override;
+		void OnEvent(const Event& event) override;
 
-		virtual void SetVisible(bool visible) override;
+		// Setters //
+		void SetProperties(const WindowProperties& properties) override;
 
-		virtual void PollEvents() override;
-		virtual void OnEvent(const Event& event) override;
+		void SetTitle(const std::string& title) override;
 
-		virtual unsigned int GetWidth() override;
-		virtual unsigned int GetHeight() override;
+		void SetSize(const glm::uvec2& size) override;
 
-		virtual inline void* GetNativeHandle() override { return m_Handle; }
+		void SetVSync(bool vsync, bool toggle = false) override;
+		void SetVisibility(bool visible, bool toggle = false) override;
 
 	private:
 		void BindGlfwEvents();

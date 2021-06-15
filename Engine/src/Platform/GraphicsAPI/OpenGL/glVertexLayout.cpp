@@ -9,8 +9,9 @@ namespace Light {
 
 	glVertexLayout::glVertexLayout(VertexBuffer* buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
 	{
-		// sanity check
+		// check
 		LT_ENGINE_ASSERT(dynamic_cast<glVertexBuffer*>(buffer), "glVertexLayout::glVertexLayout: failed to cast VertexBuffer to glVertexBuffer");
+		LT_ENGINE_ASSERT(!elements.empty(), "glVertexLayout::glVertexLayout: elements is empty");
 
 		// elements desc
 		std::vector<glVertexElementDesc> elementsDesc;
@@ -22,7 +23,7 @@ namespace Light {
 			stride += elementsDesc.back().typeSize * elementsDesc.back().count;
 		}
 
-		// bind
+		// prepare
 		glCreateVertexArrays(1, &m_ArrayID);
 		buffer->Bind();
 		Bind();

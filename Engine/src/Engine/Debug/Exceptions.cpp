@@ -28,6 +28,7 @@ namespace Light {
 		LT_ENGINE_CRITICAL("________________________________________");
 	}
 
+	LT_WIN(
 	dxException::dxException(long hr, const char* file, int line)
 	{
 		char* message;
@@ -44,6 +45,6 @@ namespace Light {
 		LT_ENGINE_CRITICAL("________________________________________");
 
 		LocalFree(message);
-	}
+	})
 
 }

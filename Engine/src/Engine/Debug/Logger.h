@@ -34,6 +34,7 @@
 
 namespace Light {
 
+	// #todo: add a FileLogger
 	class Logger
 	{
 	private:
@@ -46,6 +47,8 @@ namespace Light {
 
 		static inline std::shared_ptr<spdlog::logger> GetEngineLogger() { return s_EngineLogger; }
 		static inline std::shared_ptr<spdlog::logger> GetClientLogger() { return s_ClientLogger; }
+
+		static void LogDebugData();
 	};
 
 }

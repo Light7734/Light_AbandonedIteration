@@ -7,53 +7,57 @@ project "Engine"
 	objdir    ("%{wks.location}/bin-int/" .. outputdir)
 
 	-- Compiler --
+	-- kind
 	kind "StaticLib"
+
+	-- language
 	language "C++"
 	cppdialect "C++17"
 
+	-- pch
 	pchsource "src/Engine/ltpch.cpp"
 	pchheader "ltpch.h"
 
 	-- Project Files ---
 	files
 	{
-		"%{prj.location}/src/**.h",
-		"%{prj.location}/src/**.cpp",
-		"%{prj.location}/**.lua",
+		"%{prj.location}/src/**.h"      ,
+		"%{prj.location}/src/**.cpp"    ,
+		"%{prj.location}/**.lua"        ,
+		"%{prj.location}/dxgidebug.dll" ,
 	}
 	
 	-- Dependencies --
 	includedirs
 	{
-		-- Engine
-		"%{prj.location}/src/",
-		"%{prj.location}/src/Engine/",
-		"%{prj.location}/src/Platform/GraphicsAPI",
-		"%{prj.location}/src/Platform/OS",
+		-- engine
+		"%{prj.location}/src/"                     ,
+		"%{prj.location}/src/Engine/"              ,
+		"%{prj.location}/src/Platform/GraphicsAPI" ,
+		"%{prj.location}/src/Platform/OS"          ,
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
-		(dependenciesdir .. "glfw/include/"),
-		(dependenciesdir .. "glad/include"),
-		(dependenciesdir .. "imgui/"),
-		(dependenciesdir .. "imgui/backends"),
-		(dependenciesdir .. "glm/"),
+		(dependenciesdir .. "glfw/include/"  ),
+		(dependenciesdir .. "glad/include"   ),
+		(dependenciesdir .. "imgui/backends" ),
+		(dependenciesdir .. "imgui/"         ),
+		(dependenciesdir .. "glm/"           ),
 	}
 
 	links
 	{
-		"GLFW",
-		"GLAD",
-		"ImGui",
+		"GLFW"  ,
+		"GLAD"  ,
+		"ImGui" ,
 	}
 	
 	--- Filters ---
 	-- windows
-
 	filter "system:windows"
 		defines "LIGHT_PLATFORM_WINDOWS"
 		systemversion "latest"
-		staticruntime "On"
+		staticruntime "on"
 
 		links
 		{
@@ -61,10 +65,6 @@ project "Engine"
 			"dxguid.lib"      ,
 			"D3DCompiler.lib" ,
 		}
-
-	filter "system:not windows"
-		excludes "%{prj.location}/src/Platform/GraphicsAPI/DirectX**"
-		excludes "%{prj.location}/src/Platform/OS/Windows**"
 
 	-- debug
 	filter "configurations:Debug"
@@ -80,3 +80,11 @@ project "Engine"
 	filter "configurations:Distribution"
 		defines "LIGHT_DIST"
 		optimize "on"
+
+	--- Excludes ---
+	-- !windows
+	filter "system:not windows"
+		excludes "%{prj.location}/src/Platform/GraphicsAPI/DirectX**"
+		excludes "%{prj.location}/src/Platform/OS/Windows**"
+	-- !linux #todo:
+	-- !mac #todo:
