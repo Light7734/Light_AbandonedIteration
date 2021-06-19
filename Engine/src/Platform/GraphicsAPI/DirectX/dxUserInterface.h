@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Base.h"
-#include "dxBase.h"
 #include "UserInterface/UserInterface.h"
 
 struct GLFWwindow;
@@ -11,14 +10,12 @@ struct GLFWwindow;
 
 namespace Light {
 
+	class dxSharedContext;
+
 	class dxUserInterface : public UserInterface
 	{
-	private:
-		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-
 	public:
-		dxUserInterface(GLFWwindow* windowHandle, void* sharedContext);
+		dxUserInterface(GLFWwindow* windowHandle, std::shared_ptr<dxSharedContext> sharedContext);
 		~dxUserInterface();
 
 		void Begin() override;

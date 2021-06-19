@@ -8,15 +8,15 @@
 
 namespace Light {
 
+	class dxSharedContext;
+
 	class dxRenderCommand : public RenderCommand
 	{
 	private:
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
+		std::shared_ptr<dxSharedContext> m_Context;
 
 	public:
-		dxRenderCommand(void* sharedContext);
+		dxRenderCommand(std::shared_ptr<dxSharedContext> sharedContext);
 		~dxRenderCommand();
 
 		virtual void SwapBuffers() override;

@@ -8,6 +8,8 @@ namespace Light {
 
 	class VertexBuffer;
 	class Shader;
+	
+	class SharedContext;
 
 	enum class VertexElementType
 	{
@@ -20,7 +22,7 @@ namespace Light {
 	class VertexLayout
 	{
 	public:
-		static VertexLayout* Create(VertexBuffer* buffer, Shader* shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, void* sharedContext);
+		static VertexLayout* Create(VertexBuffer* buffer, Shader* shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<SharedContext> sharedContext);
 
 		virtual ~VertexLayout() = default;;
 

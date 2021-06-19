@@ -7,11 +7,12 @@ struct GLFWwindow;
 namespace Light {
 
 	class Event;
+	class SharedContext;
 
 	class UserInterface
 	{
 	public:
-		static UserInterface* Create(GLFWwindow* windowHandle, void* sharedContext);
+		static UserInterface* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
 
 		UserInterface(const UserInterface&) = delete;
 		UserInterface operator=(const UserInterface&) = delete;

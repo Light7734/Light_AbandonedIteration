@@ -11,8 +11,14 @@
 
 namespace Light {
 
+	FailedAssertion::FailedAssertion(const char* file, int line)
+	{
+		LT_ENGINE_CRITICAL("FailedAssertion::FailedAssertion: assertion failed in: {} (line {})", file, line);
+	}
+
 	glException::glException(unsigned int source, unsigned int type, unsigned int id, const char* msg)
 	{
+		// #todo: improve
 		LT_ENGINE_CRITICAL("________________________________________");
 		LT_ENGINE_CRITICAL("glException::glException::");
 		LT_ENGINE_CRITICAL("        Severity: {}", Stringifier::glDebugMsgSeverity(GL_DEBUG_SEVERITY_HIGH));
@@ -28,7 +34,7 @@ namespace Light {
 		LT_ENGINE_CRITICAL("________________________________________");
 	}
 
-	LT_WIN(
+#ifdef LIGHT_PLATFORM_WINDOWS
 	dxException::dxException(long hr, const char* file, int line)
 	{
 		char* message;
@@ -37,7 +43,7 @@ namespace Light {
 		               MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
 		               (LPSTR)(&message), NULL, nullptr);
 
-		// #todo: format better
+		// #todo: improve
 		LT_ENGINE_CRITICAL("________________________________________");
 		LT_ENGINE_CRITICAL("dxException::dxException::");
 		LT_ENGINE_CRITICAL("        File: {}, Line: {}", file, line);
@@ -45,6 +51,7 @@ namespace Light {
 		LT_ENGINE_CRITICAL("________________________________________");
 
 		LocalFree(message);
-	})
+	}
+#endif
 
 }

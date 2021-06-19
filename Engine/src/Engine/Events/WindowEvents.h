@@ -43,12 +43,12 @@ namespace Light {
 	class WindowResizedEvent : public Event
 	{
 	private:
-		const glm::ivec2 m_Size;
+		const glm::uvec2 m_Size;
 
 	public:
-		WindowResizedEvent(int width, int height): m_Size(width, height) {}
+		WindowResizedEvent(unsigned int width, unsigned int height): m_Size(width, height) {}
 
-		const glm::ivec2& GetSize() const { return m_Size; }
+		const glm::uvec2& GetSize() const { return m_Size; }
 
 		virtual std::string GetInfoLog() const override
 		{

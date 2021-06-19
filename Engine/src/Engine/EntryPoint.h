@@ -19,6 +19,11 @@ int main(int argc, char** argv)
 
 		application->GameLoop();
 	}
+	catch (Light::FailedAssertion)
+	{
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled FailedAssertion");
+		exitCode = -1;
+	}
 	catch(Light::glException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled glException");

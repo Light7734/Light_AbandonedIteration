@@ -84,6 +84,7 @@ namespace Light {
 				               id);
 				LT_ENGINE_WARN("        {}", message);
 				return;
+
 			case GL_DEBUG_SEVERITY_NOTIFICATION:
 				LT_ENGINE_TRACE("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",
 				                Stringifier::glDebugMsgSeverity(severity),

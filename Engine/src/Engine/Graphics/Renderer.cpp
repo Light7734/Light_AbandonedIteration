@@ -9,7 +9,7 @@ namespace Light {
 
 	Renderer* Renderer::s_Context;
 
-	Renderer::Renderer(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext)
+	Renderer::Renderer(std::shared_ptr<RenderCommand> renderCommand, std::shared_ptr<SharedContext> sharedContext)
 		: m_RenderCommand(renderCommand), m_SharedContext(sharedContext)
 	{
 		s_Context = this;
@@ -17,12 +17,12 @@ namespace Light {
 		// QUADRENDERER //
 		m_QuadRenderer.shader = std::unique_ptr<Shader>(Shader::Create("res/vertex.vertex", "res/fragment.fragment", m_SharedContext));
 		m_QuadRenderer.vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(QuadRendererProgram::QuadVertexData), LT_MAX_QUAD * 4, m_SharedContext));
-		m_QuadRenderer.vertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_QuadRenderer.vertexBuffer.get(), m_QuadRenderer.shader.get(), { { "POSITION", VertexElementType::Float3 },{ "COLOR", VertexElementType::Float4 } }, m_SharedContext));
 		m_QuadRenderer.indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(nullptr, LT_MAX_QUAD * 6, m_SharedContext));
+		m_QuadRenderer.vertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_QuadRenderer.vertexBuffer.get(), m_QuadRenderer.shader.get(), { { "POSITION", VertexElementType::Float3 },{ "COLOR", VertexElementType::Float4 } }, m_SharedContext));
 		// QUADRENDERER //
 	}
 
-	Renderer* Renderer::Create(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext)
+	Renderer* Renderer::Create(std::shared_ptr<RenderCommand> renderCommand, std::shared_ptr<SharedContext> sharedContext)
 	{
 		return new Renderer(renderCommand, sharedContext);
 	}

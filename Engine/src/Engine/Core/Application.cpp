@@ -27,60 +27,61 @@ namespace Light {
 	void Application::GameLoop()
 	{
 		// check
-		LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop: Layerstack is empty");
+		LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop(pre): LayerStack is empty");
 
-		// Log window data
-		Logger::LogDebugData();
+		// log debug data
 		LogDebugData();
+		Logger::LogDebugData();
 		m_Window->GetGfxContext()->LogDebugData();
 		m_Window->GetGfxContext()->GetUserInterface()->LogDebugData();
 
-		// Show window
+		// reveal window
 		m_Window->SetVisibility(true);
 
-		//  GAMELOOP  //
+		//*  [ GAMELOOP ] *//
 		while (!m_Window->IsClosed())
 		{
-			// Events
-			m_Window->PollEvents();
+			// update layyers
+			m_LayerStack.OnUpdate(1000.0f / 60.0f); // #todo: implement time
 
-			// Rendering
+			// render layers
 			m_Window->GetGfxContext()->GetRenderer()->BeginScene();
 			m_LayerStack.OnRender();
 			m_Window->GetGfxContext()->GetRenderer()->EndScene();
 
-			// Buffer updates
+			// render user interface
+			m_Window->GetGfxContext()->GetUserInterface()->Begin();
+			m_Window->GetGfxContext()->GetUserInterface()->End();
+
+			// swap buffers
 			m_Window->GetGfxContext()->GetRenderCommand()->SwapBuffers();
 			m_Window->GetGfxContext()->GetRenderCommand()->ClearBackBuffer();
 
-			// Update
-			// ...
-
-			// UserInterface
-			m_Window->GetGfxContext()->GetUserInterface()->Begin();
-			m_Window->GetGfxContext()->GetUserInterface()->End();
+			// poll events
+			m_Window->PollEvents();
 		}
 	}
 
 	void Application::OnEvent(const Event& event)
 	{
-		// Window
+		// window
 		if (event.HasCategory(WindowEventCategory))
 			m_Window->OnEvent(event);
 
-		// UserInterface
+		// user interface
 		if (event.HasCategory(InputEventCategory))
 			m_Window->GetGfxContext()->GetUserInterface()->OnInput(event);
 
-		// Input
+		// #todo: add input manager
 		// ...
 
-		// Layers
+		// layers
 		m_LayerStack.OnEvent(event);
 	}
 
 	void Application::LogDebugData()
 	{
+		// #todo: log more information
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("Platform::");
 		LT_ENGINE_INFO("        OS: {}", LT_BUILD_PLATFORM);

@@ -22,7 +22,7 @@ namespace Light {
 		~LayerStack();
 
 		static inline void AttachLayer(Layer* layer) { s_Context->AttachLayerImpl(layer); }
-		static inline void DetatchLayer(Layer* layer) { s_Context->DetatchLayerImpl(layer); }
+		static inline void DetachLayer(Layer* layer) { s_Context->DetachLayerImpl(layer); }
 
 		void OnUpdate(float deltaTime);
 		void OnUserInterfaceUpdate();
@@ -38,7 +38,7 @@ namespace Light {
 
 	private:
 		void AttachLayerImpl(Layer* layer);
-		void DetatchLayerImpl(Layer* layer);
+		void DetachLayerImpl(Layer* layer);
 	};
 
 }

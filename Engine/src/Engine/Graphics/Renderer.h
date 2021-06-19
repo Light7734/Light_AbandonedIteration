@@ -15,6 +15,7 @@
 namespace Light {
 
 	class RenderCommand;
+	class SharedContext;
 
 	struct RendererProgram
 	{
@@ -29,9 +30,9 @@ namespace Light {
 		{
 			// graphics context
 			std::shared_ptr<Shader> shader;
-			std::shared_ptr<VertexLayout> vertexLayout;
 			std::shared_ptr<VertexBuffer> vertexBuffer;
 			std::shared_ptr<IndexBuffer> indexBuffer;
+			std::shared_ptr<VertexLayout> vertexLayout;
 
 			// buffer data
 			struct QuadVertexData
@@ -67,9 +68,9 @@ namespace Light {
 
 		std::shared_ptr<RenderCommand> m_RenderCommand;
 
-		void* m_SharedContext;
+		std::shared_ptr<SharedContext> m_SharedContext;
 	public:
-		static Renderer* Create(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext);
+		static Renderer* Create(std::shared_ptr<RenderCommand> renderCommand, std::shared_ptr<SharedContext> sharedContext);
 		
 		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 
@@ -77,7 +78,7 @@ namespace Light {
 		void EndScene();
 
 	private:
-		Renderer(std::shared_ptr<RenderCommand> renderCommand, void* sharedContext);
+		Renderer(std::shared_ptr<RenderCommand> renderCommand, std::shared_ptr<SharedContext> sharedContext);
 
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 	};

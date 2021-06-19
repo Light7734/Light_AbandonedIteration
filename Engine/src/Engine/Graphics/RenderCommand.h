@@ -6,6 +6,8 @@ struct GLFWwindow;
 
 namespace Light {
 
+	class SharedContext;
+
 	class RenderCommand
 	{
 	public:
@@ -20,7 +22,7 @@ namespace Light {
 		virtual void Draw(unsigned int count) = 0;
 		virtual void DrawIndexed(unsigned int count) = 0;
 
-		static RenderCommand* Create(GLFWwindow* windowHandle, void* sharedContext);
+		static RenderCommand* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
 
 	protected:
 		RenderCommand() = default;

@@ -4,6 +4,7 @@
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxShader.h"
+#include "DirectX/dxSharedContext.h"
 #endif
 
 #include "GraphicsContext.h"
@@ -12,7 +13,7 @@
 
 namespace Light {
 
-	Shader* Shader::Create(const std::string& vertexPath, const std::string& pixelPath, void* sharedContext)
+	Shader* Shader::Create(const std::string& vertexPath, const std::string& pixelPath, std::shared_ptr<SharedContext> sharedContext)
 	{
 		// load shader source
 		std::string vertexSource = FileManager::ReadTXTFile(vertexPath);
@@ -30,7 +31,7 @@ namespace Light {
 			ExtractShaderSource(vertexSource, "HLSL");
 			ExtractShaderSource(pixelSource, "HLSL");
 
-			return new dxShader(vertexSource, pixelSource, sharedContext);)
+			return new dxShader(vertexSource, pixelSource, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "Shader::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
@@ -42,18 +43,21 @@ namespace Light {
 	{
 		size_t begDelimPos, endDelimPos;
 
+		// find begin and end delimiter (eg. +GLSL ... -GLSL )
 		begDelimPos = src.find('+' + delim) + 5;
 		endDelimPos = src.find('-' + delim);
 
+		// check
 		LT_ENGINE_ASSERT(begDelimPos != std::string::npos + 5,
 		                 "Shader::ExtractShaderSource: failed to find the start delimeter in shader source, delim: {}, shader:\n{}",
 		                 delim, src);
 
 
 		LT_ENGINE_ASSERT(endDelimPos != std::string::npos,
-			"Shader::ExtractShaderSource: failed to find the end delimeter in shader source, delim: {}, shader:\n{}",
-			delim, src);
+		                 "Shader::ExtractShaderSource: failed to find the end delimeter in shader source, delim: {}, shader:\n{}",
+		                 delim, src);
 
+		// extract the shader
 		src = src.substr(begDelimPos, endDelimPos - begDelimPos);
 	}
 

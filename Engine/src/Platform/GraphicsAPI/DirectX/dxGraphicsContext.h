@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Base.h"
-#include "dxBase.h"
 #include "Graphics/GraphicsContext.h"
+
+#include <glm/glm.hpp>
 
 #include <d3d11.h>
 #include <wrl.h>
@@ -21,7 +22,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 
-		Microsoft::WRL::ComPtr<ID3D11Debug> debugInterface;
+		Microsoft::WRL::ComPtr<ID3D11Debug> m_DebugInterface;
 
 	public:
 		dxGraphicsContext(GLFWwindow* windowHandle);
@@ -29,6 +30,9 @@ namespace Light {
 		virtual void OnWindowResize(const WindowResizedEvent& event) override;
 
 		virtual void LogDebugData() override;
+
+	private:
+		void SetResolution(const glm::uvec2& resolution);
 	};
 
 }

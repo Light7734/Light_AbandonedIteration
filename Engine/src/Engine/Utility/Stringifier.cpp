@@ -1,6 +1,8 @@
 #include "ltpch.h"
 #include "Stringifier.h"
 
+#include "Graphics/GraphicsContext.h"
+
 #include <glad/glad.h>
 
 #include <spdlog/common.h>
@@ -62,6 +64,19 @@ namespace Light {
 		case SPDLOG_LEVEL_CRITICAL:    return "SPDLOG_LEVEL_CRITICAL";
 		case SPDLOG_LEVEL_OFF:         return "SPDLOG_LEVEL_OFF";
 		default:                       return "UNKNOWN";
+		}
+	}
+
+	std::string Stringifier::GraphicsAPIToString(GraphicsAPI api)
+	{
+		switch (api)
+		{
+		case Light::GraphicsAPI::Default:    return "Default";
+		case Light::GraphicsAPI::OpenGL:     return "OpenGL";
+		case Light::GraphicsAPI::DirectX:    return "DirectX";
+		case Light::GraphicsAPI::Vulkan:     return "Vulkan";
+		case Light::GraphicsAPI::Metal:      return "Metal";
+		default:                             return "UNKNOWN";
 		}
 	}
 

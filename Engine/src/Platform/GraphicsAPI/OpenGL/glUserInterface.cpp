@@ -9,13 +9,18 @@ namespace Light {
 
 	glUserInterface::glUserInterface(GLFWwindow* windowHandle)
 	{
+		// create context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
+
+		// configure  io
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
+		// style color
 		ImGui::StyleColorsDark();
 
+		// init
 		ImGui_ImplGlfw_InitForOpenGL(windowHandle, false);
 		ImGui_ImplOpenGL3_Init();
 	}
@@ -33,7 +38,7 @@ namespace Light {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		// TEMP
+		//* TEMP_ IMGUI DEBUG WINDOW _TEMP *//
 		ImGui::ShowDemoWindow();
 	}
 
@@ -45,6 +50,7 @@ namespace Light {
 
 	void glUserInterface::LogDebugData()
 	{
+		// #todo: improve
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("UserInterface::");
 		LT_ENGINE_INFO("       API    : ImGui");

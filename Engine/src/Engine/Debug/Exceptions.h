@@ -3,6 +3,11 @@
 #define DXC(x) hr = x; if(FAILED(x)) throw dxException(hr, __FILE__, __LINE__)
 
 namespace Light {
+	
+	struct FailedAssertion : std::exception
+	{
+		FailedAssertion(const char* file, int line);
+	};
 
 	// OpenGL
 	struct glException : std::exception

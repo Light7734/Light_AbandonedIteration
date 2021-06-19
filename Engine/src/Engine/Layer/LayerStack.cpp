@@ -100,6 +100,7 @@ namespace Light {
 
 	void LayerStack::AttachLayerImpl(Layer* layer)
 	{
+		// #todo: handle attaching layer on for loop
 		m_Layers.push_back(layer);
 		m_Begin = m_Layers.begin();
 		m_End = m_Layers.end();
@@ -107,13 +108,14 @@ namespace Light {
 		LT_ENGINE_TRACE("LayerStack::PushLayer: Attached [{}]", layer->GetName());
 	}
 
-	void LayerStack::DetatchLayerImpl(Layer* layer)
+	void LayerStack::DetachLayerImpl(Layer* layer)
 	{
+		// #todo: handle detaching layer on for loop
 		m_Layers.erase(std::find(m_Layers.begin(), m_Layers.end(), layer));
 		m_Begin = m_Layers.begin();
 		m_End = m_Layers.end();
 
-		LT_ENGINE_TRACE("LayerStack::PushLayer: Detatched[{}]", layer->GetName());
+		LT_ENGINE_TRACE("LayerStack::PushLayer: Detached[{}]", layer->GetName());
 	}
 
 }

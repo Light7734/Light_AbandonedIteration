@@ -12,6 +12,8 @@
 #include "RenderCommand.h"
 #include "UserInterface/UserInterface.h" 
 
+#include "Utility/Stringifier.h"
+
 namespace Light {
 
 	GraphicsContext* GraphicsContext::s_Context = nullptr;
@@ -31,8 +33,12 @@ namespace Light {
 		// determine the default api
 		if (api == GraphicsAPI::Default)
 		{
-#ifdef LIGHT_PLATFORM_WINDOWS
-			api = GraphicsAPI::OpenGL; // TODO: Change to DirectX
+#if defined(LIGHT_PLATFORM_WINDOWS)
+			api = GraphicsAPI::DirectX;
+#elif defined(LIGHT_PLATFORM_LINUX)
+			// #todo:
+#elif defined(LIGHT_PLATFORM_MAC)
+			// #todo:
 #endif
 		}
 
@@ -42,11 +48,13 @@ namespace Light {
 		case GraphicsAPI::OpenGL:
 			s_Context = new glGraphicsContext(windowHandle);
 			break;
+
 		case GraphicsAPI::DirectX: LT_WIN(
 			s_Context = new dxGraphicsContext(windowHandle);
 			break;)
+
 		default:
-			LT_ENGINE_ASSERT(false, "GraphicsContext::Create: invalid/unsupported GraphicsAPI {}", api);
+			LT_ENGINE_ASSERT(false, "GraphicsContext::Create: invalid/unsupported GraphicsAPI {}", Stringifier::GraphicsAPIToString(api));
 			return nullptr;
 		}
 
@@ -56,8 +64,9 @@ namespace Light {
 		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand, s_Context->m_SharedContext));
 
 		// sanity check
-		LT_ENGINE_ASSERT(s_Context->m_RenderCommand, "GraphicsContext::Create: RenderCommand creation failed");
-		LT_ENGINE_ASSERT(s_Context->m_UserInterface, "GraphicsContext::Create: UserInterface creation failed");
+		LT_ENGINE_ASSERT(s_Context->m_RenderCommand, "GraphicsContext::Create: failed to create RenderCommand");
+		LT_ENGINE_ASSERT(s_Context->m_UserInterface, "GraphicsContext::Create: failed to create UserInterface");
+		LT_ENGINE_ASSERT(s_Context->m_Renderer, "GraphicsContext::Create: failed to create Renderer");
 
 		return s_Context;
 	}

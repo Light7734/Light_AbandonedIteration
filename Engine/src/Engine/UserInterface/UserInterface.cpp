@@ -4,6 +4,7 @@
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxUserInterface.h"
+	#include "DirectX/dxSharedContext.h"
 #endif
 
 #include "Graphics/GraphicsContext.h"
@@ -16,7 +17,7 @@
 
 namespace Light {
 
-	UserInterface* UserInterface::Create(GLFWwindow* windowHandle, void* sharedContext)
+	UserInterface* UserInterface::Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
@@ -24,7 +25,7 @@ namespace Light {
 			return new glUserInterface(windowHandle);
 
 		case GraphicsAPI::DirectX: LT_WIN(
-			return new dxUserInterface(windowHandle, sharedContext);)
+			return new dxUserInterface(windowHandle, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
@@ -37,13 +38,13 @@ namespace Light {
 		ImGuiIO& io = ImGui::GetIO();
 		switch (inputEvent.GetEventType())
 		{
+		// Mouse Events
 		case EventType::MouseMoved:
 		{
 			const MouseMovedEvent& event = (const MouseMovedEvent&)inputEvent;
 			ImGui::GetIO().MousePos = ImVec2(event.GetX(), event.GetY());
 			return;
 		}
-
 		case EventType::ButtonPressed:
 		{
 			const ButtonPressedEvent& event = (const ButtonPressedEvent&)inputEvent;
@@ -56,7 +57,13 @@ namespace Light {
 			ImGui::GetIO().MouseDown[event.GetButton()] = false;
 			return;
 		}
-
+		case EventType::WheelScrolled:
+		{
+			const WheelScrolledEvent& event = (const WheelScrolledEvent&)inputEvent;
+			ImGui::GetIO().MouseWheel = event.GetOffset();
+			return;
+		}
+		// Keyboard Events
 		case EventType::KeyPressed:
 		{
 			const KeyPressedEvent& event = (const KeyPressedEvent&)inputEvent;
@@ -67,12 +74,6 @@ namespace Light {
 		{
 			const KeyReleasedEvent& event = (const KeyReleasedEvent&)inputEvent;
 			ImGui::GetIO().MouseDown[event.GetKey()] = false;
-			return;
-		}
-		case EventType::WheelScrolled:
-		{
-			const WheelScrolledEvent& event = (const WheelScrolledEvent&)inputEvent;
-			ImGui::GetIO().MouseWheel = event.GetOffset();
 			return;
 		}
 		}

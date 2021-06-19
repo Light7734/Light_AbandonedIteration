@@ -38,9 +38,11 @@ namespace Light {
 
 	glIndexBuffer::glIndexBuffer(unsigned int* indices, unsigned int count)
 	{
+		// generate indices if not provided
 		bool hasIndices = !!indices;
 		if (!hasIndices)
 		{
+			// check
 			if (count % 6 != 0)
 			{
 				LT_ENGINE_WARN("glIndexBuffer::glIndexBuffer: count should be divisible by 6 when no indices is provided");
@@ -48,6 +50,7 @@ namespace Light {
 				count = count + (6 - (count % 6));
 			}
 
+			// create indices
 			indices = new unsigned int[count];
 			unsigned int offset = 0;
 			for (unsigned int i = 0; i < count; i += 6)
@@ -64,9 +67,11 @@ namespace Light {
 			}
 		}
 
+		// create buffer
 		glCreateBuffers(1, &m_BufferID);
 		glNamedBufferData(m_BufferID, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
 
+		// delete indices
 		if (!hasIndices)
 			delete[] indices;
 	}

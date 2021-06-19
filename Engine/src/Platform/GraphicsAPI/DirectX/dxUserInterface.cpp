@@ -13,24 +13,22 @@
 
 namespace Light {
 
-	dxUserInterface::dxUserInterface(GLFWwindow* windowHandle, void* sharedContext)
+	dxUserInterface::dxUserInterface(GLFWwindow* windowHandle, std::shared_ptr<dxSharedContext> sharedContext)
 	{
-		// set dxContext
-		dxSharedContext* dxContext = static_cast<dxSharedContext*>(sharedContext);
-		LT_ENGINE_ASSERT(dxContext, "dxUserInterface::dxUserInterface: invalid sharedContext");
-
-		m_DeviceContext = dxContext->deviceContext;
-		m_Device = dxContext->device;
-
+		// create context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
+
+		// configure io
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
+		// style
 		ImGui::StyleColorsDark();
 
+		// init
 		ImGui_ImplWin32_Init(glfwGetWin32Window(windowHandle));
-		ImGui_ImplDX11_Init(m_Device.Get(), m_DeviceContext.Get());
+		ImGui_ImplDX11_Init(sharedContext->device.Get(), sharedContext->deviceContext.Get());
 	}
 
 	dxUserInterface::~dxUserInterface()
@@ -46,7 +44,7 @@ namespace Light {
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		// TEMP
+		//* TEMP_ IMGUI DEBUG WINDOW _TEMP *//
 		ImGui::ShowDemoWindow();
 	}
 
@@ -58,6 +56,7 @@ namespace Light {
 
 	void dxUserInterface::LogDebugData()
 	{
+		// #todo: improve
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("UserInterface::");
 		LT_ENGINE_INFO("       API    : ImGui");

@@ -9,6 +9,8 @@
 #include "Graphics/VertexLayout.h"
 #include "UserInterface/UserInterface.h" 
 
+#include "Events/WindowEvents.h"
+
 #include <glfw/glfw3.h>
 
 #define GLFW_EXPOSE_NATIVE_WIN32
@@ -23,8 +25,7 @@ namespace Light {
 	{
 		m_GraphicsAPI = GraphicsAPI::DirectX;
 
-		HRESULT hr;
-
+		// swap chain desc
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 		sd.OutputWindow = static_cast<HWND>(glfwGetWin32Window(windowHandle));
 
@@ -53,20 +54,29 @@ namespace Light {
 		flags = D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
+		// create device and swap chain
+		HRESULT hr;
 		DXC(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE,
 		                              NULL, flags, NULL, NULL, D3D11_SDK_VERSION,
 		                              &sd, &m_SwapChain, &m_Device, NULL, &m_DeviceContext));
+
+		// set primitive topology
 		m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+		// create render target view 
 		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer;
 		DXC(m_SwapChain->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
 		DXC(m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTargetView));
+
+		// set render target view
 		m_DeviceContext->OMSetRenderTargets(1u, m_RenderTargetView.GetAddressOf(), nullptr);
 
+#ifdef LIGHT_DEBUG
+		// configure the debug interface
 		Microsoft::WRL::ComPtr<ID3D11InfoQueue> infoQueue;
 
-		DXC(m_Device.As(&debugInterface));
-		DXC(debugInterface.As(&infoQueue));
+		DXC(m_Device.As(&m_DebugInterface));
+		DXC(m_DebugInterface.As(&infoQueue));
 
 		D3D11_MESSAGE_ID hide[] =
 		{
@@ -80,8 +90,20 @@ namespace Light {
 		filter.DenyList.NumIDs = _countof(hide);
 		filter.DenyList.pIDList = hide;
 		infoQueue->AddStorageFilterEntries(&filter);
+#endif
 
+		// create shared context
+		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
+	}
 
+	void dxGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
+	{
+		SetResolution(event.GetSize());
+	}
+
+	void dxGraphicsContext::SetResolution(const glm::uvec2& resolution)
+	{
+		// viewport
 		D3D11_VIEWPORT viewport;
 
 		viewport.Width = 800.0f;
@@ -92,17 +114,8 @@ namespace Light {
 		viewport.TopLeftX = 0.0f;
 		viewport.TopLeftY = 0.0f;
 
+		// set viewport
 		m_DeviceContext->RSSetViewports(1u, &viewport);
-
-		dxSharedContext* sharedContext = new dxSharedContext({m_DeviceContext, m_SwapChain, m_RenderTargetView, m_Device});
-		m_SharedContext = sharedContext;
-
-
-	}
-
-	void dxGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
-	{
-
 	}
 
 	void dxGraphicsContext::LogDebugData()
@@ -126,7 +139,7 @@ namespace Light {
 		DXGIDevice->Release();
 		DXGIAdapter->Release();
 
-		// log info // #todo: log more information
+		// #todo: log more information
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("dxGraphicsContext:");
 		LT_ENGINE_INFO("        Renderer: {}", adapterDesc);

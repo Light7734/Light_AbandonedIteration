@@ -9,6 +9,7 @@ namespace Light {
 	{
 		m_ShaderID = glCreateProgram();
 
+		// create shaders
 		unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		unsigned int pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -16,13 +17,15 @@ namespace Light {
 		const char* lVertexSource = vertexSource.c_str();
 		const char* lFragmentSource = fragmentSource.c_str();
 
+		// set shaders' sorce code
 		glShaderSource(vertexShader, 1, &lVertexSource, NULL);
 		glShaderSource(pixelShader, 1, &lFragmentSource, NULL);
 
+		// compile shaders
 		glCompileShader(vertexShader);
 		glCompileShader(pixelShader);
 
-		// TEMP
+		//* TEMP__ HANDLE SHADER COMPILE FAILURE __TEMP **//
 		int isCompiled = 0;
 		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
 		if (isCompiled == GL_FALSE)
@@ -47,16 +50,18 @@ namespace Light {
 
 			glDeleteShader(pixelShader);
 		}
-		// TEMP
+		//* TEMP__ HANDLE SHADER COMPILE FAILURE __TEMP **//
 
+		// attach and link shaders to the shader program
 		glAttachShader(m_ShaderID, vertexShader);
 		glAttachShader(m_ShaderID, pixelShader);
 		glLinkProgram(m_ShaderID);
 	
+		// delete shaders (free memory)
 		glDeleteShader(vertexShader);
 		glDeleteShader(pixelShader);
 
-		// TODO: validate program
+		// #todo: validate program
 	}
 
 	glShader::~glShader()

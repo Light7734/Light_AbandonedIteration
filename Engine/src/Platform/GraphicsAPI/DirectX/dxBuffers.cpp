@@ -5,67 +5,65 @@
 
 namespace Light {
 
-	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, void* sharedContext)
-		: m_Stride(stride)
+	//* VERTEX BUFFER *//
+	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
+		: m_Stride(stride), m_Context(sharedContext)
+	
 	{
+		// buffer desc
+		D3D11_BUFFER_DESC bd = { 0 };
+
+		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bd.Usage = D3D11_USAGE_DYNAMIC;
+		bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+		bd.ByteWidth = count * stride;
+		bd.StructureByteStride = stride;
+
+		// create buffer
 		HRESULT hr;
-
-		dxSharedContext* dxContext = static_cast<dxSharedContext*>(sharedContext);
-		LT_ENGINE_ASSERT(dxContext, "dxShader::dxShader: invalid dxContext");
-
-		m_Device = dxContext->device;
-		m_DeviceContext = dxContext->deviceContext;
-
-		D3D11_BUFFER_DESC desc = { 0 };
-
-		desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		desc.Usage = D3D11_USAGE_DYNAMIC;
-		desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-
-		desc.ByteWidth = count * stride;
-		desc.StructureByteStride = stride;
-
-		DXC(m_Device->CreateBuffer(&desc, nullptr, &m_Buffer));
+		DXC(m_Context->device->CreateBuffer(&bd, nullptr, &m_Buffer));
 	}
 
 	dxVertexBuffer::~dxVertexBuffer()
 	{
+		UnBind();
 	}
 
 	void* dxVertexBuffer::Map()
 	{
-		m_DeviceContext->Map(m_Buffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &m_Map);
+		m_Context->deviceContext->Map(m_Buffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &m_Map);
 		return m_Map.pData;
 	}
 
 	void dxVertexBuffer::UnMap()
 	{
-		m_DeviceContext->Unmap(m_Buffer.Get(), NULL);
+		m_Context->deviceContext->Unmap(m_Buffer.Get(), NULL);
 	}
 
 	void dxVertexBuffer::Bind()
 	{
 		static const unsigned int offset = 0u;
-		m_DeviceContext->IASetVertexBuffers(0u, 1u, m_Buffer.GetAddressOf(), &m_Stride, &offset);
+		m_Context->deviceContext->IASetVertexBuffers(0u, 1u, m_Buffer.GetAddressOf(), &m_Stride, &offset);
 	}
 
 	void dxVertexBuffer::UnBind()
 	{
+		static const unsigned int offset = 0u;
+		static ID3D11Buffer* buffer = nullptr;
+
+		m_Context->deviceContext->IASetVertexBuffers(0u, 1u, &buffer, &m_Stride, &offset);
 	}
 
-	dxIndexBuffer::dxIndexBuffer(unsigned int* indices, unsigned int count, void* sharedContext)
+	//* INDEX BUFFER *//
+	dxIndexBuffer::dxIndexBuffer(unsigned int* indices, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
+		: m_Context(sharedContext)
 	{
-		HRESULT hr;
-
-		dxSharedContext* dxContext = static_cast<dxSharedContext*>(sharedContext);
-		LT_ENGINE_ASSERT(dxContext, "dxShader::dxShader: invalid dxContext");
-
-		m_Device = dxContext->device;
-		m_DeviceContext = dxContext->deviceContext;
-
+		// generate indices if not provided
 		bool hasIndices = !!indices;
 		if (!hasIndices)
 		{
+			// check
 			if (count % 6 != 0)
 			{
 				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: indices can only be null if count is multiple of 6");
@@ -73,6 +71,7 @@ namespace Light {
 				count = count + (6 - (count % 6));
 			}
 
+			// create indices
 			indices = new unsigned int[count];
 			unsigned int offset = 0;
 			for (unsigned int i = 0; i < count; i += 6)
@@ -89,18 +88,23 @@ namespace Light {
 			}
 		}
 
-		D3D11_BUFFER_DESC bufferDesc = { 0 };
+		// buffer desc
+		D3D11_BUFFER_DESC bd = { 0 };
+		bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
+		bd.Usage = D3D11_USAGE_DEFAULT;
+
+		bd.ByteWidth = count * sizeof(unsigned int);
+		bd.StructureByteStride = sizeof(unsigned int);
+
+		// subresource data
 		D3D11_SUBRESOURCE_DATA sd = { 0 };
-		bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-
-		bufferDesc.ByteWidth = count * sizeof(unsigned int);
-		bufferDesc.StructureByteStride = sizeof(unsigned int);
-
 		sd.pSysMem = indices;
 
-		DXC(m_Device->CreateBuffer(&bufferDesc, &sd, &m_Buffer));
+		// create buffer
+		HRESULT hr;
+		DXC(m_Context->device->CreateBuffer(&bd, &sd, &m_Buffer));
 
+		// delete indices
 		if (!hasIndices)
 		{
 			delete[] indices;
@@ -110,15 +114,20 @@ namespace Light {
 
 	dxIndexBuffer::~dxIndexBuffer()
 	{
+		UnBind();
 	}
 
 	void dxIndexBuffer::Bind()
 	{
-		m_DeviceContext->IASetIndexBuffer(m_Buffer.Get(), DXGI_FORMAT_R32_UINT, 0u);
+		m_Context->deviceContext->IASetIndexBuffer(m_Buffer.Get(), DXGI_FORMAT_R32_UINT, 0u);
 	}
 
 	void dxIndexBuffer::UnBind()
 	{
+		static const unsigned int offset = 0u;
+		static ID3D11Buffer* buffer = nullptr;
+
+		m_Context->deviceContext->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, offset);
 	}
 
 }

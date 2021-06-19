@@ -20,16 +20,20 @@ namespace Light {
 	wWindow::wWindow(std::function<void(Event&)> callback)
 		: m_EventCallback(callback)
 	{
+		// init glfw
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize glfw");
 
+		// create window
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-
 		m_Handle = glfwCreateWindow(1u, 1u, "", nullptr, nullptr);
+
 		LT_ENGINE_ASSERT(m_Handle, "wWindow::wWindow: glfwCreateWindow: failed to create glfw window");
 
+		// manage events
 		glfwSetWindowUserPointer(m_Handle, &m_EventCallback);
 		BindGlfwEvents();
 
+		// create graphics context
 		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle));
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create graphics context");
 	}
@@ -43,7 +47,7 @@ namespace Light {
 	{
 		m_Properties = properties;
 
-		glfwSetWindowSize(m_Handle, properties.size.x, properties.size.y);
+		glfwSetWindowSize(m_Handle, properties.size.x, properties.size.y); // #todo: check if this triggers an event
 		glfwSetWindowTitle(m_Handle, properties.title.c_str());
 		glfwSwapInterval((int)properties.vsync);
 	}
@@ -91,10 +95,10 @@ namespace Light {
 		glfwSwapInterval(m_Properties.vsync);
 	}
 
-	void wWindow::SetSize(const glm::uvec2& size)
+	void wWindow::SetSize(const glm::uvec2& size, bool add /*= false*/)
 	{
-		m_Properties.size.x = size.x == 0u ? m_Properties.size.x : size.x;
-		m_Properties.size.y = size.y == 0u ? m_Properties.size.y : size.y;
+		m_Properties.size.x = size.x == 0u ? m_Properties.size.x : add ? m_Properties.size.x + size.x : size.x;
+		m_Properties.size.y = size.y == 0u ? m_Properties.size.y : add ? m_Properties.size.y + size.y : size.y;
 
 		glfwSetWindowSize(m_Handle, m_Properties.size.x, m_Properties.size.y);
 	}
@@ -136,10 +140,10 @@ namespace Light {
 		});
 
 		// Window Events //
-		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow* window) 
+		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xpos, int ypos)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
-			callback(WindowClosedEvent());
+			callback(WindowMovedEvent(xpos, ypos));
 		});
 
 		glfwSetWindowSizeCallback(m_Handle, [](GLFWwindow* window, int width, int height) 
@@ -148,10 +152,10 @@ namespace Light {
 			callback(WindowResizedEvent(width, height));
 		});
 
-		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xpos, int ypos)
+		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow* window)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
-			callback(WindowMovedEvent(xpos, ypos));
+			callback(WindowClosedEvent());
 		});
 
 		glfwSetWindowFocusCallback(m_Handle, [](GLFWwindow* window, int focus)

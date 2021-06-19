@@ -5,6 +5,15 @@
 #include <spdlog/spdlog.h>
 
 // LOGGER MACROS //
+
+#define LT_LOG_FILE_LOCATION "Log.txt";
+
+// File
+#define LT_FILE_INFO(...)       ::Light::Logger::GetFileLogger()->log(spdlog::level::info    , __VA_ARGS__)
+#define LT_FILE_WARN(...)       ::Light::Logger::GetFileLogger()->log(spdlog::level::warn    , __VA_ARGS__)
+#define LT_FILE_ERROR(...)      ::Light::Logger::GetFileLogger()->log(spdlog::level::err     , __VA_ARGS__)
+#define LT_FILE_CRITICAL(...)   ::Light::Logger::GetFileLogger()->log(spdlog::level::critical, __VA_ARGS__)
+
 #ifndef LIGHT_DIST
 	// Engine
 	#define LT_ENGINE_TRACE(...)    ::Light::Logger::GetEngineLogger()->log(spdlog::level::trace   , __VA_ARGS__)
@@ -38,7 +47,8 @@ namespace Light {
 	class Logger
 	{
 	private:
-		static std::shared_ptr<spdlog::logger> s_EngineLogger, s_ClientLogger;
+		static std::shared_ptr<spdlog::logger> s_EngineLogger, s_ClientLogger, s_FileLogger;
+		static std::string s_LogFilePath;
 
 	public:
 		Logger() = delete;
@@ -47,6 +57,7 @@ namespace Light {
 
 		static inline std::shared_ptr<spdlog::logger> GetEngineLogger() { return s_EngineLogger; }
 		static inline std::shared_ptr<spdlog::logger> GetClientLogger() { return s_ClientLogger; }
+		static inline std::shared_ptr<spdlog::logger> GetFileLogger() { return s_FileLogger; }
 
 		static void LogDebugData();
 	};

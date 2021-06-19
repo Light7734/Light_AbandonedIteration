@@ -29,7 +29,7 @@ namespace Light {
 
 		void SetTitle(const std::string& title) override;
 
-		void SetSize(const glm::uvec2& size) override;
+		void SetSize(const glm::uvec2& size, bool add = false) override;
 
 		void SetVSync(bool vsync, bool toggle = false) override;
 		void SetVisibility(bool visible, bool toggle = false) override;

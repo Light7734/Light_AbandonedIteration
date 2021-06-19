@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Base.h"
-#include "dxBase.h"
 #include "Graphics/Shader.h"
 
 #include <d3d11.h>
@@ -9,18 +8,19 @@
 
 namespace Light {
 
+	class dxSharedContext;
+
 	class dxShader : public Shader
 	{
 	private:
+		std::shared_ptr<dxSharedContext> m_Context;
+
 		Microsoft::WRL::ComPtr<ID3D11VertexShader> m_VertexShader;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
 
-		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-
 		Microsoft::WRL::ComPtr<ID3DBlob> m_VertexBlob;
 	public:
-		dxShader(const std::string& vertexSource, const std::string& pixelSource, void* sharedContext);
+		dxShader(const std::string& vertexSource, const std::string& pixelSource, std::shared_ptr<dxSharedContext> sharedContext);
 		~dxShader();
 
 		void Bind() override;
