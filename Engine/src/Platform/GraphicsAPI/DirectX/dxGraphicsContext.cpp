@@ -35,6 +35,10 @@ namespace Light {
 		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
 	}
 
+	void dxGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
+	{
+		SetResolution(event.GetSize());
+	}
 
 	void dxGraphicsContext::SetupDeviceAndSwapChain(GLFWwindow* windowHandle)
 	{
