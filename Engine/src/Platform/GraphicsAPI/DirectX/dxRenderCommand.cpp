@@ -16,7 +16,20 @@ namespace Light {
 
 	void dxRenderCommand::SwapBuffers()
 	{
-		m_Context->swapChain->Present(0, 0);
+#ifdef LIGHT_DEBUG
+		HRESULT hr;
+		if (FAILED(hr = m_Context->swapChain->Present(0u, 0u)))
+		{
+			if (hr == DXGI_ERROR_DEVICE_REMOVED)
+			{
+				LT_ENGINE_CRITICAL("dxRenderCommand::SwapBuffers: DeviceRemoved:");
+				LT_ENGINE_CRITICAL("        {}", m_Context->device->GetDeviceRemovedReason());
+			}
+		}
+#else
+		m_Context->swapChain->Present(0u, 0u);
+#endif
+
 	}
 
 	void dxRenderCommand::ClearBackBuffer()
