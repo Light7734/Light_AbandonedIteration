@@ -1,6 +1,6 @@
 #pragma once
 
-#define DXC(x) hr = x; if(FAILED(x)) throw dxException(hr, __FILE__, __LINE__)
+#define DXC(x) if(FAILED(hr = x)) throw dxException(hr, __FILE__, __LINE__)
 
 namespace Light {
 	
