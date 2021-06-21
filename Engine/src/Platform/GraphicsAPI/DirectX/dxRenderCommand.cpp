@@ -10,10 +10,6 @@ namespace Light {
 	{
 	}
 
-	dxRenderCommand::~dxRenderCommand()
-	{
-	}
-
 	void dxRenderCommand::SwapBuffers()
 	{
 #ifdef LIGHT_DEBUG

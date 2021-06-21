@@ -9,7 +9,6 @@ namespace Light {
 	dxVertexLayout::dxVertexLayout(Shader* shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
-
 		// local
 		std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementsDesc;
 		inputElementsDesc.reserve(elements.size());
@@ -27,12 +26,11 @@ namespace Light {
 			                               0u });
 		}
 
-	
 		// #todo: take in shared_ptr
 		dxShader* dxpShader = static_cast<dxShader*>(shader);
 		LT_ENGINE_ASSERT(dxpShader, "dxVertexLayout::dxVertexLayout: failed to cast Shader to dxShader");
 
-		// create input layout ( vertex layout )
+		// create input layout (vertex layout)
 		HRESULT hr;
 		DXC(m_Context->device->CreateInputLayout(&inputElementsDesc[0], inputElementsDesc.size(), dxpShader->GetVertexBlob().Get()->GetBufferPointer(), dxpShader->GetVertexBlob().Get()->GetBufferSize(), &m_InputLayout));
 	}

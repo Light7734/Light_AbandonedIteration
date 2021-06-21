@@ -17,7 +17,6 @@ namespace Light {
 
 	public:
 		dxRenderCommand(std::shared_ptr<dxSharedContext> sharedContext);
-		~dxRenderCommand();
 
 		virtual void SwapBuffers() override;
 		virtual void ClearBackBuffer() override;

@@ -32,6 +32,11 @@ namespace Light {
 		virtual void LogDebugData() override;
 
 	private:
+		void SetupDeviceAndSwapChain(GLFWwindow* windowHandle);
+		void SetupRenderTargets();
+		void SetupDebugInterface();
+
+
 		void SetResolution(const glm::uvec2& resolution);
 	};
 

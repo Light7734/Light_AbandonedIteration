@@ -1,6 +1,8 @@
 #include "ltpch.h"
 #include "dxGraphicsContext.h"
 
+#include "dxSharedContext.h"
+
 // Required for forward declaration
 #include "Graphics/Renderer.h"
 #include "Graphics/RenderCommand.h"
@@ -16,65 +18,100 @@
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <glfw/glfw3native.h>
 
-#include "dxSharedContext.h"
-
 namespace Light {
 
 	dxGraphicsContext::dxGraphicsContext(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
 	{
+		// DirectX API
 		m_GraphicsAPI = GraphicsAPI::DirectX;
 
-		// swap chain desc
+		// setup
+		SetupDeviceAndSwapChain(windowHandle);
+		SetupRenderTargets();
+		SetupDebugInterface();
+
+		// create shared context
+		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
+	}
+
+
+	void dxGraphicsContext::SetupDeviceAndSwapChain(GLFWwindow* windowHandle)
+	{
+		//* swap chain desc *//
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
-		sd.OutputWindow = static_cast<HWND>(glfwGetWin32Window(windowHandle));
 
-		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		sd.BufferCount = 1u;
-
+		// buffer desc
 		sd.BufferDesc.Width = 800u;
 		sd.BufferDesc.Height = 600u;
-		sd.BufferDesc.RefreshRate.Denominator = NULL;
-		sd.BufferDesc.RefreshRate.Numerator = NULL;
+		sd.BufferDesc.RefreshRate.Numerator = NULL; // :#todo
+		sd.BufferDesc.RefreshRate.Denominator = NULL; // :#todo
 		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 		sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+		sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-
+		// sample desc (for multi sampling)
+		// #todo: implement multi-sampling
 		sd.SampleDesc.Count = 1u;
 		sd.SampleDesc.Quality = 0u;
 
+		// #todo: support swap chains with more than 1 back-buffer
+		sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		sd.BufferCount = 1u;
+
+		// #todo: don't handle Windows's window with glfw, create it yourself
+		sd.OutputWindow = static_cast<HWND>(glfwGetWin32Window(windowHandle));
 		sd.Windowed = true;
+
+		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+
 		sd.Flags = NULL;
 		
-		UINT flags = NULL;
 
+		UINT flags = NULL;
 #ifdef LIGHT_DEBUG
 		flags = D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
 		// create device and swap chain
 		HRESULT hr;
-		DXC(D3D11CreateDeviceAndSwapChain(nullptr, D3D_DRIVER_TYPE_HARDWARE,
-		                              NULL, flags, NULL, NULL, D3D11_SDK_VERSION,
-		                              &sd, &m_SwapChain, &m_Device, NULL, &m_DeviceContext));
+		DXC(D3D11CreateDeviceAndSwapChain(nullptr, 
+		                                  D3D_DRIVER_TYPE_HARDWARE,
+		                                  NULL,
+		                                  flags,
+		                                  nullptr,
+		                                  NULL,
+		                                  D3D11_SDK_VERSION,
+		                                  &sd, 
+		                                  &m_SwapChain,
+		                                  &m_Device,
+		                                  nullptr,
+		                                  &m_DeviceContext));
+	}
 
+	void dxGraphicsContext::SetupRenderTargets()
+	{
 		// set primitive topology
 		m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// create render target view 
 		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer;
+
+		HRESULT hr;
 		DXC(m_SwapChain->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
 		DXC(m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTargetView));
 
 		// set render target view
 		m_DeviceContext->OMSetRenderTargets(1u, m_RenderTargetView.GetAddressOf(), nullptr);
+	}
 
+	void dxGraphicsContext::SetupDebugInterface()
+	{
 #ifdef LIGHT_DEBUG
 		// configure the debug interface
 		Microsoft::WRL::ComPtr<ID3D11InfoQueue> infoQueue;
 
+		HRESULT hr;
 		DXC(m_Device.As(&m_DebugInterface));
 		DXC(m_DebugInterface.As(&infoQueue));
 
@@ -85,20 +122,12 @@ namespace Light {
 			// #todo: add more message IDs here as needed
 		};
 
-		D3D11_INFO_QUEUE_FILTER filter;
-		memset(&filter, 0, sizeof(filter));
+		D3D11_INFO_QUEUE_FILTER filter = { 0 };
 		filter.DenyList.NumIDs = _countof(hide);
 		filter.DenyList.pIDList = hide;
-		infoQueue->AddStorageFilterEntries(&filter);
+
+		DXC(infoQueue->AddStorageFilterEntries(&filter));
 #endif
-
-		// create shared context
-		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
-	}
-
-	void dxGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
-	{
-		SetResolution(event.GetSize());
 	}
 
 	void dxGraphicsContext::SetResolution(const glm::uvec2& resolution)
