@@ -22,8 +22,8 @@ namespace Light {
 		case GraphicsAPI::OpenGL:
 			return new glVertexBuffer(vertices, count);
 			
-		case GraphicsAPI::DirectX: 
-			return new dxVertexBuffer(vertices, stride, count, std::static_pointer_cast<dxSharedContext>(sharedContext));
+		case GraphicsAPI::DirectX: LT_WIN(
+			return new dxVertexBuffer(vertices, stride, count, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "VertexBuffer::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());

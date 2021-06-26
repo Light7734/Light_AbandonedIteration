@@ -36,6 +36,9 @@ namespace Light {
 			std::vector<char> errorLog(maxLength);
 			glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &errorLog[0]);
 
+			for(int i = 0; i < errorLog.size() -1; i++)
+				std::cout << errorLog[i];
+
 			glDeleteShader(vertexShader);
 		}
 

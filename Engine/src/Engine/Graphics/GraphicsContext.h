@@ -42,7 +42,7 @@ namespace Light {
 		GraphicsContext(const GraphicsContext&) = delete;
 		GraphicsContext& operator=(const GraphicsContext&) = delete;
 
-		virtual ~GraphicsContext() = default;
+		virtual ~GraphicsContext();
 
 		virtual void OnWindowResize(const WindowResizedEvent& event) = 0;
 

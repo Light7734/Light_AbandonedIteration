@@ -6,3 +6,17 @@ bin-int/
 # VS Files
 **.vcxproj**
 **.sln
+
+.codelite/
+.build-debug/
+**.workspace
+
+Makefile
+
+**/**.mk
+
+**/**.project
+
+**/Engine.txt
+**/GLAD.txt
+**/Sandbox.txt

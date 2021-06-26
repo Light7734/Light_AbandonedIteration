@@ -51,19 +51,20 @@ namespace Light {
 
 		// TOP_LEFT
 		m_QuadRenderer.mapCurrent[0].position = { xMin, yMin, position.z };
-		m_QuadRenderer.mapCurrent[0].tint = tint;
+		m_QuadRenderer.mapCurrent[0].tint = glm::vec4((float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, 1.0f);
 
+		
 		// TOP_RIGHT
 		m_QuadRenderer.mapCurrent[1].position = { xMax, yMin, position.z };
-		m_QuadRenderer.mapCurrent[1].tint = tint;
+		m_QuadRenderer.mapCurrent[1].tint = glm::vec4((float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, 1.0f);
 
 		// BOTTOM_RIGHT
 		m_QuadRenderer.mapCurrent[2].position = { xMax, yMax, position.z };
-		m_QuadRenderer.mapCurrent[2].tint = tint;
+		m_QuadRenderer.mapCurrent[2].tint = glm::vec4((float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, 1.0f);
 
 		// BOTTOM_LEFT
 		m_QuadRenderer.mapCurrent[3].position = { xMin, yMax, position.z };
-		m_QuadRenderer.mapCurrent[3].tint = tint;
+		m_QuadRenderer.mapCurrent[3].tint = glm::vec4((float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, (float)(rand() % 100) / 100.0f, 1.0f);
 
 		// advance
 		m_QuadRenderer.mapCurrent += 4;

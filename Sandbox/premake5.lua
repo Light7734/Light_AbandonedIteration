@@ -51,6 +51,16 @@ project "Sandbox"
 		systemversion "latest"
 		staticruntime "On"
 
+	-- linux
+	filter "system:linux"
+		defines "LIGHT_PLATFORM_LINUX"
+		
+		links
+		{
+			"dl",
+			"pthread",
+		}
+	
 	-- debug
 	filter "configurations:Debug"
 		defines "LIGHT_DEBUG"

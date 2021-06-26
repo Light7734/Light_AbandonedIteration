@@ -14,7 +14,7 @@
 #include "Utility/Stringifier.h"
 
 #include <glad/glad.h>
-#include <glfw/glfw3.h>
+#include <GLFW/glfw3.h>
 
 namespace Light {
 
@@ -24,10 +24,11 @@ namespace Light {
 		m_GraphicsAPI = GraphicsAPI::OpenGL;
 
 		glfwMakeContextCurrent(windowHandle);
-		LT_ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress),
-		                 "glGraphicsContext::glGraphicsContext: gladLoadGLLoader: failed to initialize opengl context");
+		
+		if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{ exit(1); }
 
-		SetDebugMessageCallback();
+		
 	}
 
 	void glGraphicsContext::OnWindowResize(const WindowResizedEvent& event)

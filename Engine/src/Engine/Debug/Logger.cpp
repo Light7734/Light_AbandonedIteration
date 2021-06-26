@@ -17,8 +17,11 @@ namespace Light {
 	void Light::Logger::Initialize()
 	{
 		// set spdlog pattern
+#if   defined(LIGHT_PLATFORM_WINDOWS)
 		spdlog::set_pattern("%^[%M:%S:%e] <%n>: %v%$");
-
+#elif defined(LIGHT_PLATFORM_LINUX)
+		spdlog::set_pattern("%^{%l} - [%M:%S:%e] <%n>: %v%$");
+#endif
 		// create loggers
 #ifndef LIGHT_DIST
 		s_EngineLogger = spdlog::stdout_color_mt("Engine");
@@ -28,7 +31,7 @@ namespace Light {
 		s_FileLogger->set_pattern("%^[%M:%S:%e] <%l>: %v%$");
 
 		// set level
-#if defined(LIGHT_DEBUG)
+#if   defined(LIGHT_DEBUG)
 		s_EngineLogger->set_level(spdlog::level::trace);
 		s_ClientLogger->set_level(spdlog::level::trace);
 #elif defined (LIGHT_RELEASE)

@@ -18,6 +18,8 @@ namespace Light {
 
 	GraphicsContext* GraphicsContext::s_Context = nullptr;
 
+	GraphicsContext::~GraphicsContext() { }
+
 	GraphicsContext* GraphicsContext::Create(GraphicsAPI api, GLFWwindow* windowHandle)
 	{
 		// terminate gfx context dependent classes

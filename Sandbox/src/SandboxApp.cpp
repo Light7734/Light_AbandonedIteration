@@ -1,5 +1,6 @@
 #define LIGHT_ENTRY_POINT
 #include <LightEngine.h>
+#include <EntryPoint.h>
 
 #include "SandboxLayer.h"
 

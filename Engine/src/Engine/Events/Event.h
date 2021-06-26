@@ -24,9 +24,9 @@ namespace Light {
 		InputEventCategory = BIT(1),
 		KeyboardEventCategory = BIT(2),
 		MouseEventCategory = BIT(3),
-	};
+	}; 
 
-#define EVENT_TYPE(type) EventType GetEventType() const override { return EventType::##type; }
+#define EVENT_TYPE(type) EventType GetEventType() const override { return ::Light::EventType:: type; }
 #define EVENT_CATEGORY(eCategory) inline bool HasCategory(EventCategory category) const override { return (eCategory) & category; } 
 
 	class Event

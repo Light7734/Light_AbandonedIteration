@@ -31,15 +31,15 @@ project "Engine"
 	includedirs
 	{
 		-- engine
-		"%{prj.location}/src/"                     ,
-		"%{prj.location}/src/Engine/"              ,
+		"%{prj.location}/src"                     ,
+		"%{prj.location}/src/Engine"              ,
 		"%{prj.location}/src/Platform/GraphicsAPI" ,
 		"%{prj.location}/src/Platform/OS"          ,
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
-		(dependenciesdir .. "glfw/include/"  ),
-		(dependenciesdir .. "glad/include"   ),
+		(dependenciesdir .. "GLFW/include/"  ),
+		(dependenciesdir .. "GLAD/include"   ),
 		(dependenciesdir .. "imgui/backends" ),
 		(dependenciesdir .. "imgui/"         ),
 		(dependenciesdir .. "glm/"           ),
@@ -65,6 +65,26 @@ project "Engine"
 			"dxguid.lib"      ,
 			"D3DCompiler.lib" ,
 		}
+	
+	-- linux
+	filter "system:linux"
+		defines "LIGHT_PLATFORM_LINUX"
+		
+		links
+		{
+			"dl",
+		}
+		
+		buildoptions
+		{
+			"-lgtest",
+			"-lpthread",
+		}
+		excludes
+		{
+			"%{prj.location}/src/Platform/GraphicsAPI/DirectX/**",
+			"%{prj.location}/src/Platform/OS/Windows/**",
+		}
 
 	-- debug
 	filter "configurations:Debug"
@@ -83,8 +103,7 @@ project "Engine"
 
 	--- Excludes ---
 	-- !windows
-	filter "system:not windows"
-		excludes "%{prj.location}/src/Platform/GraphicsAPI/DirectX**"
-		excludes "%{prj.location}/src/Platform/OS/Windows**"
+	filter "system:not linux"
+
 	-- !linux #todo:
 	-- !mac #todo:
