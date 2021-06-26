@@ -13,7 +13,6 @@
 #define LT_MAC(x) // Mac
 
 #if defined(LIGHT_PLATFORM_WINDOWS)
-	#error "test"
 	#define LT_BUILD_PLATFORM "Windows"
 	#define LT_WIN(x) x
 #elif defined(LIGHT_PLATFORM_LINUX)

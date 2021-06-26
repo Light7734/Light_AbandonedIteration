@@ -24,13 +24,12 @@ namespace Light {
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize glfw");
 
 		// create window
-	
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
-		m_Handle = glfwCreateWindow(800u, 600u, "", nullptr, nullptr);
-
+		m_Handle = glfwCreateWindow(1u, 1u, "", nullptr, nullptr);
 		LT_ENGINE_ASSERT(m_Handle, "wWindow::wWindow: glfwCreateWindow: failed to create glfw window");
 
 		// manage events
@@ -38,7 +37,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		// create graphics context
-		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle));
+		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle));
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create graphics context");
 	}
 
