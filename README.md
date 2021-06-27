@@ -11,9 +11,9 @@ Will support:
 
 ## Supported Operating Systems
 * Windows
-
-Will support:
 * Linux
+ 
+Will support:
 * Mac
 
 ## Getting Started
