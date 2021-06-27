@@ -58,12 +58,7 @@ project "Engine"
 		defines "LIGHT_PLATFORM_WINDOWS"
 		systemversion "latest"
 		staticruntime "on"
-		
-		filter "files:%{prj.location}/src/Platform/OS/Linux/**"
-			flags "ExcludeFromBuild"	
-		filter "files:%{prj.location}/src/Platform/OS/Mac/**"
-			flags "ExcludeFromBuild"	
-		
+
 		links
 		{
 			"d3d11.lib"       ,
@@ -71,6 +66,9 @@ project "Engine"
 			"D3DCompiler.lib" ,
 		}
 	
+	filter { "system:windows", "files:src/Platform/OS/Linux/**.**" }
+		flags { "ExcludeFromBuild" }
+
 	-- linux
 	filter "system:linux"
 		defines "LIGHT_PLATFORM_LINUX"
@@ -85,11 +83,11 @@ project "Engine"
 			"-lpthread",
 		}
 		
-		filter "files:src/Platform/GraphicsAPI/DirectX/**.**"
+		filter { "system:linux", "files:src/Platform/GraphicsAPI/DirectX/**.**" }
+			flags { "ExcludeFromBuild" }
+		filter { "system:linux", "files:src/Platform/OS/Windows/**.**" }
 			flags "ExcludeFromBuild"
-		filter "files:src/Platform/OS/Windows/**.**"
-			flags "ExcludeFromBuild"
-
+		
 	-- debug
 	filter "configurations:Debug"
 		defines "LIGHT_DEBUG"
@@ -104,10 +102,3 @@ project "Engine"
 	filter "configurations:Distribution"
 		defines "LIGHT_DIST"
 		optimize "on"
-
-	--- Excludes ---
-	-- !windows
-	filter "system:not linux"
-
-	-- !linux #todo:
-	-- !mac #todo:
