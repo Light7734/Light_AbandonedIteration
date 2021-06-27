@@ -58,7 +58,14 @@ project "Engine"
 		defines "LIGHT_PLATFORM_WINDOWS"
 		systemversion "latest"
 		staticruntime "on"
+		
+		excludes
+		{
+			"%{prj.location}/src/Platform/OS/Linux/**",
+			"%{prj.location}/src/Platform/OS/Mac/**",
 
+		}
+		
 		links
 		{
 			"d3d11.lib"       ,
@@ -69,7 +76,6 @@ project "Engine"
 	-- linux
 	filter "system:linux"
 		defines "LIGHT_PLATFORM_LINUX"
-		
 		links
 		{
 			"dl",
@@ -80,10 +86,14 @@ project "Engine"
 			"-lgtest",
 			"-lpthread",
 		}
+		
+		-- why this no work? :c
 		excludes
 		{
 			"%{prj.location}/src/Platform/GraphicsAPI/DirectX/**",
+			
 			"%{prj.location}/src/Platform/OS/Windows/**",
+			"%{prj.location}/src/Platform/OS/Mac/**",
 		}
 
 	-- debug
