@@ -59,12 +59,10 @@ project "Engine"
 		systemversion "latest"
 		staticruntime "on"
 		
-		excludes
-		{
-			"%{prj.location}/src/Platform/OS/Linux/**",
-			"%{prj.location}/src/Platform/OS/Mac/**",
-
-		}
+		filter "files:%{prj.location}/src/Platform/OS/Linux/**"
+			flags "ExcludeFromBuild"	
+		filter "files:%{prj.location}/src/Platform/OS/Mac/**"
+			flags "ExcludeFromBuild"	
 		
 		links
 		{
@@ -87,14 +85,10 @@ project "Engine"
 			"-lpthread",
 		}
 		
-		-- why this no work? :c
-		excludes
-		{
-			"%{prj.location}/src/Platform/GraphicsAPI/DirectX/**",
-			
-			"%{prj.location}/src/Platform/OS/Windows/**",
-			"%{prj.location}/src/Platform/OS/Mac/**",
-		}
+		filter "files:src/Platform/GraphicsAPI/DirectX/**.**"
+			flags "ExcludeFromBuild"
+		filter "files:src/Platform/OS/Windows/**.**"
+			flags "ExcludeFromBuild"
 
 	-- debug
 	filter "configurations:Debug"
