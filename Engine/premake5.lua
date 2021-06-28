@@ -21,10 +21,16 @@ project "Engine"
 	-- Project Files ---
 	files
 	{
-		"%{prj.location}/src/**.h"      ,
-		"%{prj.location}/src/**.cpp"    ,
-		"%{prj.location}/**.lua"        ,
-		"%{prj.location}/dxgidebug.dll" ,
+		-- src
+		"%{prj.location}/src/**.h",
+		"%{prj.location}/src/**.cpp",
+		
+		-- premake
+		"%{prj.location}/preake5*.lua",
+		
+		"%{prj.location}/dxgidebug.dll", -- :#todo
+
+		"%{prj.location}/res/**"
 	}
 	
 	-- Dependencies --
@@ -38,11 +44,11 @@ project "Engine"
 
 		-- 3rd party
 		(dependenciesdir .. "spdlog/include/"),
-		(dependenciesdir .. "GLFW/include/"  ),
-		(dependenciesdir .. "GLAD/include"   ),
-		(dependenciesdir .. "imgui/backends" ),
-		(dependenciesdir .. "imgui/"         ),
-		(dependenciesdir .. "glm/"           ),
+		(dependenciesdir .. "GLFW/include/"),
+		(dependenciesdir .. "GLAD/include"),
+		(dependenciesdir .. "imgui/backends"),
+		(dependenciesdir .. "imgui/"),
+		(dependenciesdir .. "glm/"),
 	}
 
 	links

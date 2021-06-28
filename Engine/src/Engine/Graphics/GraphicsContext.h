@@ -6,8 +6,12 @@
 
 struct GLFWwindow;
 
+#include "Utility/ResourceManager.h"
+
+
 namespace Light {
 
+	class ResourceManager;
 	class Renderer;
 	class RenderCommand;
 	class UserInterface;
@@ -27,6 +31,8 @@ namespace Light {
 	{
 	private:
 		static GraphicsContext* s_Context;
+
+		std::unique_ptr<ResourceManager> m_ResourceManager;
 
 		std::unique_ptr<Renderer> m_Renderer;
 		std::shared_ptr<RenderCommand> m_RenderCommand;

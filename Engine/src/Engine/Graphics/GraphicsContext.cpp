@@ -12,6 +12,7 @@
 #include "RenderCommand.h"
 #include "UserInterface/UserInterface.h" 
 
+#include "Utility/ResourceManager.h"
 #include "Utility/Stringifier.h"
 
 namespace Light {
@@ -61,6 +62,8 @@ namespace Light {
 		}
 
 		// create gfx context dependent classes
+		s_Context->m_ResourceManager = std::unique_ptr<ResourceManager>(ResourceManager::Create(s_Context->m_SharedContext));
+
 		s_Context->m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle, s_Context->m_SharedContext));
 		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle, s_Context->m_SharedContext));
 		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand, s_Context->m_SharedContext));
