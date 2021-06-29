@@ -48,6 +48,7 @@ project "Engine"
 		(dependenciesdir .. "GLAD/include"),
 		(dependenciesdir .. "imgui/backends"),
 		(dependenciesdir .. "imgui/"),
+		(dependenciesdir .. "stb_image/"),
 		(dependenciesdir .. "glm/"),
 	}
 

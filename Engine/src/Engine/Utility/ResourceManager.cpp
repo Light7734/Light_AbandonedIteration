@@ -2,7 +2,9 @@
 #include "ResourceManager.h"
 
 #include "Graphics/GraphicsContext.h"
+
 #include "Graphics/Shader.h"
+#include "Graphics/Texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>g
@@ -21,6 +23,8 @@ namespace Light {
 	{
 		LT_ENGINE_ASSERT(!s_Context, "ResourceManager::ResourceManager: an instance of 'resource manager' already exists, do not construct this class");
 		s_Context = this;
+
+		stbi_set_flip_vertically_on_load(true);
 	}
 
 	void ResourceManager::CreateShaderImpl(const std::string& name, const std::string& vertexSource, const std::string& pixelSource)
@@ -84,6 +88,24 @@ namespace Light {
 
 		// create shader
 		m_Shaders[name] = std::shared_ptr<Shader>(Shader::Create(vertexSource, pixelSource, m_SharedContext));
+	}
+
+	void ResourceManager::LoadTextureImpl(const std::string& name, const std::string& path, int desiredComponents)
+	{
+		// load image
+		int width, height, components;
+		unsigned char* pixels = stbi_load(path.c_str(), &width, &height, &components, desiredComponents);
+		
+		// check
+		LT_ENGINE_ASSERT(pixels, "ResourceManager::LoadTexture: failed to load texture <{}>, path: {}", name, path);
+		if (components != desiredComponents)
+		{
+			LT_ENGINE_WARN("ResourceManager::LoadTexture: image file compoenents != desired components ({} - {})", components, desiredComponents);
+			LT_ENGINE_WARN("ResourceManager::LoadTexture: <{}> path: {}", name, path);
+		}
+
+		// create texture
+		m_Textures[name] = std::shared_ptr<Texture>(Texture::Create(width, height, components, pixels, m_SharedContext));
 	}
 
 	void ResourceManager::ExtractShaderSource(std::string& src, const std::string& delim)

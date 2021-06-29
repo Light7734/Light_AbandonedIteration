@@ -68,7 +68,8 @@ namespace Light {
 		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle, s_Context->m_SharedContext));
 		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(s_Context->m_RenderCommand, s_Context->m_SharedContext));
 
-		// sanity check
+		// check
+		LT_ENGINE_ASSERT(s_Context->m_ResourceManager, "GraphicsContext::Create: failed to create ResourceManager");
 		LT_ENGINE_ASSERT(s_Context->m_RenderCommand, "GraphicsContext::Create: failed to create RenderCommand");
 		LT_ENGINE_ASSERT(s_Context->m_UserInterface, "GraphicsContext::Create: failed to create UserInterface");
 		LT_ENGINE_ASSERT(s_Context->m_Renderer, "GraphicsContext::Create: failed to create Renderer");
