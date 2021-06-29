@@ -5,7 +5,8 @@
 
 #include "OpenGL/glTexture.h"
 #ifdef LIGHT_PLATFORM_WINDOWS
-	// #todo:
+	#include "DirectX/dxTexture.h"
+	#include "DirectX/dxSharedContext.h"
 #endif
 
 namespace Light {
@@ -17,7 +18,9 @@ namespace Light {
 		case GraphicsAPI::OpenGL:
 			return new glTexture(width, height, components, pixels);
 
-		case GraphicsAPI::DirectX: LT_WIN()
+		case GraphicsAPI::DirectX: LT_WIN(
+			return new dxTexture(width, height, components, pixels, std::static_pointer_cast<dxSharedContext>(sharedContext));
+		)
 
 		default:
 			LT_ENGINE_ASSERT(false, "Texture::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());

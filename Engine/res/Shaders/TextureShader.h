@@ -14,6 +14,22 @@ void main()
 	texCoords = a_TexCoords;
 }
 -GLSL
++HLSL
+struct VertexOut
+{
+	float2 uv : UV;
+	float4 position : SV_Position;
+};
+
+VertexOut main(float3 InPosition : POSITION, float2 InUV : UV) 
+{
+	VertexOut vso;
+	vso.position = float4(InPosition, 1.0);
+	vso.uv = InUV;
+	
+	return vso;
+}
+-HLSL
 )"
 
 #define LT_ENGINE_RESOURCES_TEXTURE_SHADER_PS \
@@ -32,4 +48,14 @@ void main()
 	FragmentColor = texture(u_Texture, texCoords);
 }
 -GLSL
++HLSL
+sampler samplerState : register(s0);
+Texture2D<float4> myTexture : register(t0);
+
+float4 main(float2 InUV : UV) : SV_Target
+{
+	return myTexture.Sample(samplerState, InUV);
+}
+
+-HLSL
 )"

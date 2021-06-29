@@ -35,7 +35,7 @@ namespace Light {
 		m_TextureRenderer.shader = ResourceManager::GetShader("TextureShader");
 		m_TextureRenderer.vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TextureRendererProgram::TextureVertexData), LT_MAX_QUAD * 4, m_SharedContext));
 		m_TextureRenderer.indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(nullptr, LT_MAX_QUAD * 6, m_SharedContext));
-		m_TextureRenderer.vertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_TextureRenderer.vertexBuffer.get(), m_TextureRenderer.shader.get(), { { "POSITION", VertexElementType::Float3 },{ "TEXCOORDS", VertexElementType::Float2 } }, m_SharedContext));
+		m_TextureRenderer.vertexLayout = std::unique_ptr<VertexLayout>(VertexLayout::Create(m_TextureRenderer.vertexBuffer.get(), m_TextureRenderer.shader.get(), { { "POSITION", VertexElementType::Float3 },{ "UV", VertexElementType::Float2 } }, m_SharedContext));
 		//** texture rendererc **//
 	}
 
