@@ -11,6 +11,8 @@
 
 #include "UserInterface/UserInterface.h"
 
+#include <filesystem>
+
 namespace Light {
 
 	Application::Application()
@@ -38,10 +40,10 @@ namespace Light {
 		// reveal window
 		m_Window->SetVisibility(true);
 
-		//*  [ GAMELOOP ] *//
+		//** GAMELOOP **//
 		while (!m_Window->IsClosed())
 		{
-			// update layyers
+			// update layers
 			m_LayerStack.OnUpdate(1000.0f / 60.0f); // #todo: implement time
 
 			// render layers
@@ -52,10 +54,6 @@ namespace Light {
 			// render user interface
 			m_Window->GetGfxContext()->GetUserInterface()->Begin();
 			m_Window->GetGfxContext()->GetUserInterface()->End();
-
-			// swap buffers
-			m_Window->GetGfxContext()->GetRenderCommand()->SwapBuffers();
-			m_Window->GetGfxContext()->GetRenderCommand()->ClearBackBuffer();
 
 			// poll events
 			m_Window->PollEvents();
@@ -85,6 +83,7 @@ namespace Light {
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("Platform::");
 		LT_ENGINE_INFO("        OS: {}", LT_BUILD_PLATFORM);
+		LT_ENGINE_INFO("       DIR: {}", std::filesystem::current_path().generic_string());
 		LT_ENGINE_INFO("________________________________________");
 	}
 

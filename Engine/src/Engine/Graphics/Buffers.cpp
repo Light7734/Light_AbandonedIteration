@@ -11,10 +11,9 @@
 
 #include "GraphicsContext.h"
 
-
 namespace Light {
 
-	//* VERTEX BUFFER *//
+	//* VERTEX_BUFFER *//
 	VertexBuffer* VertexBuffer::Create(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
@@ -26,12 +25,12 @@ namespace Light {
 			return new dxVertexBuffer(vertices, stride, count, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
-			LT_ENGINE_ASSERT(false, "VertexBuffer::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			LT_ENGINE_ASSERT(false, "VertexBuffer::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
 		}
 	}
 
-	//* INDEX BUFFER *//
+	//* INDEX_BUFFER *//
 	IndexBuffer* IndexBuffer::Create(unsigned int* indices, unsigned int count, std::shared_ptr<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
@@ -43,7 +42,7 @@ namespace Light {
 			return new dxIndexBuffer(indices, count, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
-			LT_ENGINE_ASSERT(false, "IndexBuffer::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			LT_ENGINE_ASSERT(false, "IndexBuffer::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
 		}
 	}

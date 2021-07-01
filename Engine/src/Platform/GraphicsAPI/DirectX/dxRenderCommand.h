@@ -23,7 +23,6 @@ namespace Light {
 
 		virtual void Draw(unsigned int count) override;
 		virtual void DrawIndexed(unsigned int count) override;
-
 	};
 
 }

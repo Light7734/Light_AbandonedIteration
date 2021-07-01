@@ -29,23 +29,23 @@ namespace Light {
 
 		inline const std::string& GetName() const { return m_Name; }
 
-		// Updates
+		//** UPDATES //
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnUserInterfaceUpdate() {}
 
 		virtual void OnRender() {}
 
-		// Mouse events
+		//** MOUSE_EVENTS //
 		virtual bool OnMouseMoved(const MouseMovedEvent& event) { return false; }
 		virtual bool OnButtonPressed(const ButtonPressedEvent& event) { return false; }
 		virtual bool OnButtonReleased(const ButtonReleasedEvent& event) { return false; }
 		virtual bool OnWheelScrolled(const WheelScrolledEvent& event) { return false; }
 
-		// Keyboard events
+		//** KEYBOARD_EVENTS **//
 		virtual bool OnKeyPressed(const KeyPressedEvent& event) { return false; }
 		virtual bool OnKeyReleased(const KeyReleasedEvent& event) { return false; }
 
-		// Window Events
+		//** WINDOW_EVENTS **/
 		virtual bool OnWindowClosed(const WindowClosedEvent& event) { return false; }
 		virtual bool OnWindowResized(const WindowResizedEvent& event) { return false; }
 		virtual bool OnWindowMoved(const WindowMovedEvent& event) { return false; }

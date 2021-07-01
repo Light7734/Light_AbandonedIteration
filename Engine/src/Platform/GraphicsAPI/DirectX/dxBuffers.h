@@ -10,7 +10,7 @@ namespace Light {
 
 	class dxSharedContext;
 
-	//* VERTEX BUFFER *//
+	//* VERTEX_BUFFER *//
 	class dxVertexBuffer : public VertexBuffer
 	{
 	private:
@@ -32,7 +32,7 @@ namespace Light {
 		void UnBind() override;
 	};
 
-	//* INDEX BUFFER *//
+	//* INDEX_BUFFER *//
 	class dxIndexBuffer : public IndexBuffer
 	{
 	private:

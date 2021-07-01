@@ -4,7 +4,7 @@
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxShader.h"
-#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxSharedContext.h"
 #endif
 
 #include "GraphicsContext.h"
@@ -23,7 +23,7 @@ namespace Light {
 			return new dxShader(vertexSource, pixelSource, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
-			LT_ENGINE_ASSERT(false, "Shader::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			LT_ENGINE_ASSERT(false, "Shader::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
 		}
 	}

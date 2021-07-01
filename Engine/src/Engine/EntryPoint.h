@@ -4,7 +4,7 @@
 
 #include <LightEngine.h>
 
-// To be defined in client project
+// to be defined in client project
 extern Light::Application* Light::CreateApplication();
 
 // #todo: use windows specific stuff
@@ -22,17 +22,17 @@ int main(int argc, char** argv)
 	}
 	catch (Light::FailedAssertion)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled FailedAssertion");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedAssertion'");
 		exitCode = -1;
 	}
 	catch(Light::glException)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled glException");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
 		exitCode = -2;
 	}
 	catch (Light::dxException)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled dxException");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'dxException'");
 		exitCode = -3;
 	}
 
@@ -44,7 +44,7 @@ int main(int argc, char** argv)
 
 #include <LightEngine.h>
 
-// To be defined in client project
+// to be defined in client project
 extern Light::Application* Light::CreateApplication();
 
 // #todo: use linux specific stuff
@@ -62,12 +62,12 @@ int main(int argc, char* argv[])
 	}
 	catch (Light::FailedAssertion)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled FailedAssertion");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedAssertion'");
 		exitCode = -1;
 	}
 	catch(Light::glException)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled glException");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
 		exitCode = -2;
 	}
 

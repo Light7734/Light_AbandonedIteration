@@ -1,21 +1,17 @@
 #include "ltpch.h"
 #include "dxGraphicsContext.h"
-
 #include "dxSharedContext.h"
-
-// Required for forward declaration
-#include "Graphics/Renderer.h"
-#include "Graphics/RenderCommand.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Buffers.h"
-#include "Graphics/VertexLayout.h"
-#include "UserInterface/UserInterface.h" 
 
 #include "Events/WindowEvents.h"
 
-#include <glfw/glfw3.h>
+// forward declaration
+#include "Graphics/Renderer.h"
+#include "Graphics/RenderCommand.h"
+#include "UserInterface/UserInterface.h"
+#include "Utility/ResourceManager.h"
 
 #define GLFW_EXPOSE_NATIVE_WIN32
+#include <glfw/glfw3.h>
 #include <glfw/glfw3native.h>
 
 namespace Light {
@@ -23,26 +19,26 @@ namespace Light {
 	dxGraphicsContext::dxGraphicsContext(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
 	{
-		// DirectX API
+		// set 'GraphicsAPI';
 		m_GraphicsAPI = GraphicsAPI::DirectX;
 
-		// setup
+		// setup stuff
 		SetupDeviceAndSwapChain(windowHandle);
 		SetupRenderTargets();
 		SetupDebugInterface();
 
-		// create shared context
+		// create 'dxSharedContext'
 		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
 	}
 
 	void dxGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
 	{
-		SetResolution(event.GetSize());
+		SetResolution(event.GetSize().x, event.GetSize().y);
 	}
 
 	void dxGraphicsContext::SetupDeviceAndSwapChain(GLFWwindow* windowHandle)
 	{
-		//* swap chain desc *//
+		// swap chain desc
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 
 		// buffer desc
@@ -54,8 +50,7 @@ namespace Light {
 		sd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 		sd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-		// sample desc (for multi sampling)
-		// #todo: implement multi-sampling
+		// sample desc (for multi sampling) #todo: implement multi-samplingz
 		sd.SampleDesc.Count = 1u;
 		sd.SampleDesc.Quality = 0u;
 
@@ -70,8 +65,8 @@ namespace Light {
 		sd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 
 		sd.Flags = NULL;
-		
 
+		// determine device flags
 		UINT flags = NULL;
 #ifdef LIGHT_DEBUG
 		flags = D3D11_CREATE_DEVICE_DEBUG;
@@ -123,7 +118,7 @@ namespace Light {
 		{
 			D3D11_MESSAGE_ID_DEVICE_DRAW_SAMPLER_NOT_SET,
 
-			// #todo: add more message IDs here as needed
+			// #todo: add more message ids here as needed
 		};
 
 		D3D11_INFO_QUEUE_FILTER filter = { 0 };
@@ -134,13 +129,13 @@ namespace Light {
 #endif
 	}
 
-	void dxGraphicsContext::SetResolution(const glm::uvec2& resolution)
+	void dxGraphicsContext::SetResolution(unsigned int width, unsigned int height)
 	{
 		// viewport
 		D3D11_VIEWPORT viewport;
 
-		viewport.Width = 800.0f;
-		viewport.Height = 600.0f;
+		viewport.Width = width;
+		viewport.Height = height;
 
 		viewport.MinDepth = 0.0f;
 		viewport.MaxDepth = 1.0f;

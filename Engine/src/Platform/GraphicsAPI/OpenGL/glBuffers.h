@@ -5,6 +5,7 @@
 
 namespace Light {
 
+	//** VERTEX_BUFFER **//
 	class glVertexBuffer : public VertexBuffer
 	{
 	private:
@@ -21,6 +22,7 @@ namespace Light {
 		void UnBind() override;
 	};
 	
+	//** INDEX_BUFFER **//
 	class glIndexBuffer : public IndexBuffer
 	{
 	private:

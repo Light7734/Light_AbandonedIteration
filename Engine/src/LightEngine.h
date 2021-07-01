@@ -30,6 +30,10 @@
 #include "UserInterface/UserInterface.h"
 // -----------------------------
 
+// Utility ---------------------
+#include "Utility/ResourceManager.h"
+// -----------------------------
+
 // Base -----------------------
 #include "Base.h"
 

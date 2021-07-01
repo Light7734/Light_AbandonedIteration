@@ -2,12 +2,11 @@
 #include "ResourceManager.h"
 
 #include "Graphics/GraphicsContext.h"
-
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 
 #define STB_IMAGE_IMPLEMENTATION
-#include <stb_image.h>g
+#include <stb_image.h>
 
 namespace Light {
 
@@ -21,12 +20,12 @@ namespace Light {
 	ResourceManager::ResourceManager(std::shared_ptr<SharedContext> sharedContext)
 		: m_SharedContext(sharedContext)
 	{
-		LT_ENGINE_ASSERT(!s_Context, "ResourceManager::ResourceManager: an instance of 'resource manager' already exists, do not construct this class");
+		LT_ENGINE_ASSERT(!s_Context, "ResourceManager::ResourceManager: an instance of 'ResourceManager' already exists, do not construct this class!");
 		s_Context = this;
 
 		stbi_set_flip_vertically_on_load(true);
 	}
-
+	
 	void ResourceManager::CreateShaderImpl(const std::string& name, const std::string& vertexSource, const std::string& pixelSource)
 	{
 		// delim
@@ -34,15 +33,15 @@ namespace Light {
 		                    GraphicsContext::GetGraphicsAPI() == GraphicsAPI::DirectX ? "HLSL" : NULL;
 
 		// check
-		LT_ENGINE_ASSERT(!vertexSource.empty(), "ResourceManager::CreateShader: vertex source is empty");
-		LT_ENGINE_ASSERT(!vertexSource.empty(), "ResourceManager::CreateShader: pixel source is empty");
-		LT_ENGINE_ASSERT(!delim.empty(), "ResourceManager::LoadShader: invalid/unsupported graphics api: {}", GraphicsContext::GetGraphicsAPI());
+		LT_ENGINE_ASSERT(!vertexSource.empty(), "ResourceManager::CreateShader: 'vertexSource' is empty");
+		LT_ENGINE_ASSERT(!vertexSource.empty(), "ResourceManager::CreateShader: 'pixelSource' is empty");
+		LT_ENGINE_ASSERT(!delim.empty(), "ResourceManager::LoadShader: invalid/unsupported 'GraphicsAPI': {}", GraphicsContext::GetGraphicsAPI());
 
 		// save to string
 		std::string vsSource = vertexSource;
 		std::string psSource = pixelSource;
 
-		// extract source
+		// extract shader source
 		ResourceManager::ExtractShaderSource(vsSource, delim);
 		ResourceManager::ExtractShaderSource(psSource, delim);
 
@@ -53,8 +52,8 @@ namespace Light {
 	void ResourceManager::LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath)
 	{
 		// check
-		LT_ENGINE_ASSERT(!vertexPath.empty(), "ResourceManager::LoadShader: vertex path is empty");
-		LT_ENGINE_ASSERT(!pixelPath.empty(), "ResourceManager::LoadShader: pixel path is empty");
+		LT_ENGINE_ASSERT(!vertexPath.empty(), "ResourceManager::LoadShader: 'vertexPath' is empty");
+		LT_ENGINE_ASSERT(!pixelPath.empty(), "ResourceManager::LoadShader: 'pixelPath' is empty");
 
 		// initialize
 		std::ifstream vsStream(vertexPath), psStream(pixelPath);
@@ -67,9 +66,9 @@ namespace Light {
 		                    GraphicsContext::GetGraphicsAPI() == GraphicsAPI::DirectX ? "HLSL" : NULL;
 
 		// check
-		LT_ENGINE_ASSERT(!delim.empty(), "ResourceManager::LoadShader: invalid/unsupported graphics api: {}", GraphicsContext::GetGraphicsAPI());
-		LT_ENGINE_ASSERT(vsStream.is_open(), "ResourceManager::LoadShader: invalid vertex path: {}", vertexPath);
-		LT_ENGINE_ASSERT(psStream.is_open(), "ResourceManager::LoadShader: invalid pixel path: {}", pixelPath);
+		LT_ENGINE_ASSERT(!delim.empty(), "ResourceManager::LoadShader: invalid/unsupported 'GraphicsAPI': {}", GraphicsContext::GetGraphicsAPI());
+		LT_ENGINE_ASSERT(vsStream.is_open(), "ResourceManager::LoadShader: invalid 'vertexPath': {}", vertexPath);
+		LT_ENGINE_ASSERT(psStream.is_open(), "ResourceManager::LoadShader: invalid 'pixelPath': {}", pixelPath);
 
 		// read
 		while (std::getline(vsStream, line))
@@ -90,18 +89,18 @@ namespace Light {
 		m_Shaders[name] = std::shared_ptr<Shader>(Shader::Create(vertexSource, pixelSource, m_SharedContext));
 	}
 
-	void ResourceManager::LoadTextureImpl(const std::string& name, const std::string& path, int desiredComponents)
+	void ResourceManager::LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents /* = 4u */)
 	{
 		// load image
 		int width, height, components;
 		unsigned char* pixels = stbi_load(path.c_str(), &width, &height, &components, desiredComponents);
 		
 		// check
-		LT_ENGINE_ASSERT(pixels, "ResourceManager::LoadTexture: failed to load texture <{}>, path: {}", name, path);
+		LT_ENGINE_ASSERT(pixels, "ResourceManager::LoadTexture: failed to load texture <{}>, 'path': {}", name, path);
 		if (components != desiredComponents)
 		{
-			LT_ENGINE_WARN("ResourceManager::LoadTexture: image file compoenents != desired components ({} - {})", components, desiredComponents);
-			LT_ENGINE_WARN("ResourceManager::LoadTexture: <{}> path: {}", name, path);
+			LT_ENGINE_WARN("ResourceManager::LoadTexture: image file compoenents != 'desiredComponents' ({} - {})", components, desiredComponents);
+			LT_ENGINE_WARN("ResourceManager::LoadTexture: <{}> 'path': {}", name, path);
 		}
 
 		// create texture

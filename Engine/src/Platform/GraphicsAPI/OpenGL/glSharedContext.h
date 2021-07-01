@@ -4,9 +4,6 @@
 
 namespace Light {
 
-	struct glSharedContext
-	{
-
-	};
+	struct glSharedContext { };
 
 }

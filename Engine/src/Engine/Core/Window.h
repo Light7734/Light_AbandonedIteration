@@ -34,18 +34,18 @@ namespace Light {
 		virtual void PollEvents() = 0;
 		virtual void OnEvent(const Event& event) = 0;
 
-		// Setters //
-		virtual void SetProperties(const WindowProperties& properties) = 0;
+		//* SETTERS *//
+		virtual void SetProperties(const WindowProperties& properties, bool affectVisibility = false) = 0;
 
 		virtual void SetTitle(const std::string& title) = 0;
 
-		virtual void SetSize(const glm::uvec2& size, bool add = false) = 0; // pass 0 for width or height for single dimension resizing
+		virtual void SetSize(const glm::uvec2& size, bool additive = false) = 0; // pass 0 for width or height for single dimension resizing
 
 		inline  void Close() { b_Closed = true; }
 		virtual void SetVSync(bool vsync, bool toggle = false) = 0;
 		virtual void SetVisibility(bool visible, bool toggle = false) = 0;
 
-		// Getters //
+		//* GETTERS *//
 		inline GraphicsContext* GetGfxContext() const { return m_GraphicsContext.get(); }
 
 		inline const WindowProperties& GetProperties() const { return m_Properties; }

@@ -28,7 +28,7 @@ namespace Light {
 			return new dxUserInterface(windowHandle, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
-			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
 		}
 	}
@@ -38,7 +38,7 @@ namespace Light {
 		ImGuiIO& io = ImGui::GetIO();
 		switch (inputEvent.GetEventType())
 		{
-		// Mouse Events
+		//** MOUSE_EVENTS **//
 		case EventType::MouseMoved:
 		{
 			const MouseMovedEvent& event = (const MouseMovedEvent&)inputEvent;
@@ -63,7 +63,7 @@ namespace Light {
 			ImGui::GetIO().MouseWheel = event.GetOffset();
 			return;
 		}
-		// Keyboard Events
+		//** MOUSE_EVENTS **//
 		case EventType::KeyPressed:
 		{
 			const KeyPressedEvent& event = (const KeyPressedEvent&)inputEvent;

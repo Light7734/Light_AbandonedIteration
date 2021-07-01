@@ -19,6 +19,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> m_PixelShader;
 
 		Microsoft::WRL::ComPtr<ID3DBlob> m_VertexBlob;
+
 	public:
 		dxShader(const std::string& vertexSource, const std::string& pixelSource, std::shared_ptr<dxSharedContext> sharedContext);
 		~dxShader();
@@ -28,6 +29,5 @@ namespace Light {
 
 		Microsoft::WRL::ComPtr<ID3DBlob> GetVertexBlob() { return m_VertexBlob; }
 	};
-
 
 }

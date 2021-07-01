@@ -1,15 +1,15 @@
 #include "ltpch.h"
 #include "dxVertexLayout.h"
+#include "dxSharedContext.h"
 
 #include "dxShader.h"
-#include "dxSharedContext.h"
 
 namespace Light {
 
-	dxVertexLayout::dxVertexLayout(Shader* shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<dxSharedContext> sharedContext)
+	dxVertexLayout::dxVertexLayout(std::shared_ptr<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
-		// local
+		// occupy space for input elements
 		std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementsDesc;
 		inputElementsDesc.reserve(elements.size());
 
@@ -26,13 +26,12 @@ namespace Light {
 			                               0u });
 		}
 
-		// #todo: take in shared_ptr
-		dxShader* dxpShader = static_cast<dxShader*>(shader);
-		LT_ENGINE_ASSERT(dxpShader, "dxVertexLayout::dxVertexLayout: failed to cast Shader to dxShader");
+		std::shared_ptr<dxShader> dxpShader = std::dynamic_pointer_cast<dxShader>(shader);
+		LT_ENGINE_ASSERT(dxpShader, "dxVertexLayout::dxVertexLayout: failed to cast 'Shader' to 'dxShader'");
 
 		// create input layout (vertex layout)
 		HRESULT hr;
-		DXC(m_Context->device->CreateInputLayout(&inputElementsDesc[0], inputElementsDesc.size(), dxpShader->GetVertexBlob().Get()->GetBufferPointer(), dxpShader->GetVertexBlob().Get()->GetBufferSize(), &m_InputLayout));
+		DXC(m_Context->GetDevice()->CreateInputLayout(&inputElementsDesc[0], inputElementsDesc.size(), dxpShader->GetVertexBlob().Get()->GetBufferPointer(), dxpShader->GetVertexBlob().Get()->GetBufferSize(), &m_InputLayout));
 	}
 
 	dxVertexLayout::~dxVertexLayout()
@@ -42,18 +41,19 @@ namespace Light {
 
 	void dxVertexLayout::Bind()
 	{
-		m_Context->deviceContext->IASetInputLayout(m_InputLayout.Get());
+		m_Context->GetDeviceContext()->IASetInputLayout(m_InputLayout.Get());
 	}
 
 	void dxVertexLayout::UnBind()
 	{
-		m_Context->deviceContext->IASetInputLayout(nullptr);
+		m_Context->GetDeviceContext()->IASetInputLayout(nullptr);
 	}
 
 	DXGI_FORMAT dxVertexLayout::GetDxgiFormat(VertexElementType type)
 	{
 		switch (type)
 		{
+		// #todo: add char
 		// int
 		case Light::VertexElementType::Int1: return DXGI_FORMAT_R32_SINT;
 		case Light::VertexElementType::Int2: return DXGI_FORMAT_R32G32_SINT;
@@ -78,7 +78,7 @@ namespace Light {
 		case Light::VertexElementType::Double3:
 		case Light::VertexElementType::Double4:
 
-		default: LT_ENGINE_ASSERT(false, "dxVertexLayout::GetDxgiFormat: invalid type");
+		default: LT_ENGINE_ASSERT(false, "dxVertexLayout::GetDxgiFormat: invalid 'VertexElementType'");
 		}
 	}
 

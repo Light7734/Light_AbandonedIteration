@@ -2,8 +2,6 @@
 
 #include "Base.h"
 
-#include <vector>
-
 namespace Light {
 
 	class VertexBuffer;
@@ -13,16 +11,16 @@ namespace Light {
 
 	enum class VertexElementType
 	{
-		Int1, Int2, Int3, Int4,
-		UInt1, UInt2, UInt3, UInt4,
-		Float1, Float2, Float3, Float4,
+		Int1   , Int2   , Int3   , Int4,
+		UInt1  , UInt2  , UInt3  , UInt4,
+		Float1 , Float2 , Float3 , Float4,
 		Double1, Double2, Double3, Double4
 	};
 
 	class VertexLayout
 	{
 	public:
-		static VertexLayout* Create(VertexBuffer* buffer, Shader* shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<SharedContext> sharedContext);
+		static VertexLayout* Create(std::shared_ptr<VertexBuffer> vertexBuffer, std::shared_ptr<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<SharedContext> sharedContext);
 
 		virtual ~VertexLayout() = default;;
 

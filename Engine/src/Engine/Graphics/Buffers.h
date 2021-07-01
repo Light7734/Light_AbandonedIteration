@@ -6,7 +6,7 @@ namespace Light {
 
 	class SharedContext;
 
-	//* VERTEX BUFFER *//
+	//* VERTEX_BUFFER *//
 	class VertexBuffer
 	{
 	public:
@@ -22,7 +22,7 @@ namespace Light {
 		VertexBuffer() = default;
 	};
 
-	//* INDEX BUFFER *//
+	//* INDEX_BUFFER *//
 	class IndexBuffer
 	{
 	public:

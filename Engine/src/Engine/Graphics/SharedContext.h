@@ -8,7 +8,6 @@ namespace Light {
 	{
 	public:
 		virtual ~SharedContext() = default;
-
-		void DummyFunc(const std::string& value) { LT_ENGINE_TRACE(value); }
 	};
+
 }

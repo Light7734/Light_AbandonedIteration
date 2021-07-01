@@ -1,6 +1,5 @@
 #include "ltpch.h"
 #include "dxUserInterface.h"
-
 #include "dxSharedContext.h"
 
 #include <imgui.h>
@@ -28,7 +27,7 @@ namespace Light {
 
 		// init
 		ImGui_ImplWin32_Init(glfwGetWin32Window(windowHandle));
-		ImGui_ImplDX11_Init(sharedContext->device.Get(), sharedContext->deviceContext.Get());
+		ImGui_ImplDX11_Init(sharedContext->GetDevice().Get(), sharedContext->GetDeviceContext().Get());
 	}
 
 	dxUserInterface::~dxUserInterface()
@@ -44,7 +43,7 @@ namespace Light {
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
 
-		//* TEMP_ IMGUI DEBUG WINDOW _TEMP *//
+		//** #TEMP_IMGUI_DEMO_TEMP# **//
 		ImGui::ShowDemoWindow();
 	}
 
@@ -61,7 +60,7 @@ namespace Light {
 		LT_ENGINE_INFO("UserInterface::");
 		LT_ENGINE_INFO("       API    : ImGui");
 		LT_ENGINE_INFO("       Version: {}", ImGui::GetVersion());
-		LT_ENGINE_INFO("       GfxAPI : DirectX");
+		LT_ENGINE_INFO("  GraphicsAPI : DirectX");
 		LT_ENGINE_INFO("________________________________________");
 	}
 

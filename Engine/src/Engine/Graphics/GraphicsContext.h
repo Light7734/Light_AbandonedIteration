@@ -2,19 +2,15 @@
 
 #include "Base.h"
 
-#include "SharedContext.h"
-
 struct GLFWwindow;
-
-#include "Utility/ResourceManager.h"
-
 
 namespace Light {
 
 	class ResourceManager;
-	class Renderer;
-	class RenderCommand;
 	class UserInterface;
+	class Renderer;
+
+	class SharedContext;
 
 	class WindowResizedEvent;
 
@@ -23,8 +19,8 @@ namespace Light {
 		Default = 0,
 		OpenGL, 
 		DirectX, 
-		Vulkan, 
-		Metal
+		Vulkan, // :#todo
+		Metal   // :#todo
 	};
 
 	class GraphicsContext
@@ -33,10 +29,8 @@ namespace Light {
 		static GraphicsContext* s_Context;
 
 		std::unique_ptr<ResourceManager> m_ResourceManager;
-
-		std::unique_ptr<Renderer> m_Renderer;
-		std::shared_ptr<RenderCommand> m_RenderCommand;
 		std::unique_ptr<UserInterface> m_UserInterface;
+		std::unique_ptr<Renderer> m_Renderer;
 
 	protected:
 		GraphicsAPI m_GraphicsAPI;
@@ -57,7 +51,6 @@ namespace Light {
 		static inline GraphicsAPI GetGraphicsAPI() { return s_Context->m_GraphicsAPI; }
 
 		inline Renderer* GetRenderer() { return m_Renderer.get(); }
-		inline RenderCommand* GetRenderCommand() { return m_RenderCommand.get(); }
 		inline UserInterface* GetUserInterface() { return m_UserInterface.get(); }
 
 	protected:

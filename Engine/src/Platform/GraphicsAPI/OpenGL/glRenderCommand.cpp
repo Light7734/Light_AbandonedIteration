@@ -8,8 +8,7 @@ namespace Light {
 
 	glRenderCommand::glRenderCommand(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
-	{
-	}
+	{ }
 
 	void glRenderCommand::SwapBuffers()
 	{
@@ -19,7 +18,7 @@ namespace Light {
 	void glRenderCommand::ClearBackBuffer()
 	{
 		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor(0.25f, 0.45f, 0.91f, 1.0f);
+		glClearColor(0.25f, 0.45f, 0.91f, 1.0f); // #todo: use a variable for this
 	}
 
 	void glRenderCommand::Draw(unsigned int count)

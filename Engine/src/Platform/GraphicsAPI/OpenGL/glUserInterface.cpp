@@ -38,7 +38,7 @@ namespace Light {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		//* TEMP_ IMGUI DEBUG WINDOW _TEMP *//
+		//** #TEMP_IMGUI_DEMO_TEMP# **//
 		ImGui::ShowDemoWindow();
 	}
 
@@ -55,7 +55,7 @@ namespace Light {
 		LT_ENGINE_INFO("UserInterface::");
 		LT_ENGINE_INFO("       API    : ImGui");
 		LT_ENGINE_INFO("       Version: {}", ImGui::GetVersion());
-		LT_ENGINE_INFO("       GfxAPI : OpenGL");
+		LT_ENGINE_INFO("  GraphicsAPI : OpenGL");
 		LT_ENGINE_INFO("________________________________________");
 	}
 

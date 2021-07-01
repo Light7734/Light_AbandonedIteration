@@ -43,7 +43,7 @@
 
 namespace Light {
 
-	// #todo: add a FileLogger
+	// #todo: extend
 	class Logger
 	{
 	private:

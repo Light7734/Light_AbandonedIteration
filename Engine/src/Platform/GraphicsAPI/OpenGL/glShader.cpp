@@ -11,58 +11,67 @@ namespace Light {
 
 		// create shaders
 		unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-		unsigned int pixelShader = glCreateShader(GL_FRAGMENT_SHADER);
+		unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
-		// & (address of) needs an lvalue
+		// &(address of) needs an lvalue
 		const char* lVertexSource = vertexSource.c_str();
 		const char* lFragmentSource = fragmentSource.c_str();
 
-		// set shaders' sorce code
+		// set shaders' source code
 		glShaderSource(vertexShader, 1, &lVertexSource, NULL);
-		glShaderSource(pixelShader, 1, &lFragmentSource, NULL);
+		glShaderSource(fragmentShader, 1, &lFragmentSource, NULL);
 
 		// compile shaders
 		glCompileShader(vertexShader);
-		glCompileShader(pixelShader);
+		glCompileShader(fragmentShader);
 
-		//* TEMP__ HANDLE SHADER COMPILE FAILURE __TEMP **//
+		//** #TEMP_HANDLE_SHADER_COMPILE_FAILURE# **//
 		int isCompiled = 0;
 		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
 		if (isCompiled == GL_FALSE)
 		{
-			GLint maxLength = 0;
-			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength);
+			int logLength = 0;
+			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logLength);
 
-			std::vector<char> errorLog(maxLength);
-			glGetShaderInfoLog(vertexShader, maxLength, &maxLength, &errorLog[0]);
-
-			for(int i = 0; i < errorLog.size() -1; i++)
-				std::cout << errorLog[i];
+			char* errorLog = (char*)alloca(logLength);
+			glGetShaderInfoLog(vertexShader, logLength, &logLength, &errorLog[0]);
 
 			glDeleteShader(vertexShader);
+			glDeleteShader(fragmentShader);
+
+			LT_ENGINE_ASSERT(false, "glShader::glShader: failed to compile vertex shader:\n        {}", errorLog);
+
+			return;
 		}
 
-		glGetShaderiv(pixelShader, GL_COMPILE_STATUS, &isCompiled);
+		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);
 		if (isCompiled == GL_FALSE)
 		{
-			GLint maxLength = 0;
-			glGetShaderiv(pixelShader, GL_INFO_LOG_LENGTH, &maxLength);
+			int logLength = 0;
+			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logLength);
 
-			std::vector<char> errorLog(maxLength);
-			glGetShaderInfoLog(pixelShader, maxLength, &maxLength, &errorLog[0]);
+			char* errorLog = (char*)alloca(logLength);
+			glGetShaderInfoLog(fragmentShader, logLength, &logLength, &errorLog[0]);
 
-			glDeleteShader(pixelShader);
+			glDeleteShader(fragmentShader);
+			glDeleteShader(vertexShader);
+
+			LT_ENGINE_ASSERT(false, "glShader::glShader: failed to compile fragment shader:\n        {}", errorLog);
+
+			return;
 		}
-		//* TEMP__ HANDLE SHADER COMPILE FAILURE __TEMP **//
+		//** #TEMP_HANDLE_SHADER_COMPILE_FAILURE# **//
 
-		// attach and link shaders to the shader program
+		// attach shaders
 		glAttachShader(m_ShaderID, vertexShader);
-		glAttachShader(m_ShaderID, pixelShader);
+		glAttachShader(m_ShaderID, fragmentShader);
+
+		// link shader program
 		glLinkProgram(m_ShaderID);
 	
 		// delete shaders (free memory)
 		glDeleteShader(vertexShader);
-		glDeleteShader(pixelShader);
+		glDeleteShader(fragmentShader);
 
 		// #todo: validate program
 	}

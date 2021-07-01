@@ -3,10 +3,10 @@
 #include "Base.h"
 #include "UserInterface/UserInterface.h"
 
-struct GLFWwindow;
-
 #include <d3d11.h>
 #include <wrl.h>
+
+struct GLFWwindow;
 
 namespace Light {
 

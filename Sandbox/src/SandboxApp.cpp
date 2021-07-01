@@ -22,7 +22,7 @@ public:
 		// Attach the sandbox layer
 		Light::LayerStack::AttachLayer(new SandboxLayer("SandboxLayer"));
 	}
-
+		
 	~Sandbox()
 	{
 		LT_CLIENT_TRACE("Sandbox::~Sandbox");

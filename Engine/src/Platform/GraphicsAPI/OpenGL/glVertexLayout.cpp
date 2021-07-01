@@ -7,11 +7,11 @@
 
 namespace Light {
 
-	glVertexLayout::glVertexLayout(VertexBuffer* buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
+	glVertexLayout::glVertexLayout(std::shared_ptr<VertexBuffer> buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
 	{
 		// check
-		LT_ENGINE_ASSERT(dynamic_cast<glVertexBuffer*>(buffer), "glVertexLayout::glVertexLayout: failed to cast VertexBuffer to glVertexBuffer");
-		LT_ENGINE_ASSERT(!elements.empty(), "glVertexLayout::glVertexLayout: elements is empty");
+		LT_ENGINE_ASSERT(std::dynamic_pointer_cast<glVertexBuffer>(buffer), "glVertexLayout::glVertexLayout: failed to cast 'VertexBuffer' to 'glVertexBuffer'");
+		LT_ENGINE_ASSERT(!elements.empty(), "glVertexLayout::glVertexLayout: 'elements' is empty");
 
 		// local
 		std::vector<glVertexElementDesc> elementsDesc;
@@ -60,23 +60,24 @@ namespace Light {
 	{
 		switch (type)
 		{
+		// #todo: add char
 		// int
-		case VertexElementType::Int1: return { GL_INT, 1, sizeof(int), offset };
-		case VertexElementType::Int2: return { GL_INT, 2, sizeof(int), offset };
-		case VertexElementType::Int3: return { GL_INT, 3, sizeof(int), offset };
-		case VertexElementType::Int4: return { GL_INT, 4, sizeof(int), offset };
+		case VertexElementType::Int1: return { GL_INT, 1u, sizeof(int), offset };
+		case VertexElementType::Int2: return { GL_INT, 2u, sizeof(int), offset };
+		case VertexElementType::Int3: return { GL_INT, 3u, sizeof(int), offset };
+		case VertexElementType::Int4: return { GL_INT, 4u, sizeof(int), offset };
 
 		// uint
-		case VertexElementType::UInt1: return { GL_UNSIGNED_INT, 1, sizeof(unsigned int), offset };
-		case VertexElementType::UInt2: return { GL_UNSIGNED_INT, 2, sizeof(unsigned int), offset };
-		case VertexElementType::UInt3: return { GL_UNSIGNED_INT, 3, sizeof(unsigned int), offset };
-		case VertexElementType::UInt4: return { GL_UNSIGNED_INT, 4, sizeof(unsigned int), offset };
+		case VertexElementType::UInt1: return { GL_UNSIGNED_INT, 1u, sizeof(unsigned int), offset };
+		case VertexElementType::UInt2: return { GL_UNSIGNED_INT, 2u, sizeof(unsigned int), offset };
+		case VertexElementType::UInt3: return { GL_UNSIGNED_INT, 3u, sizeof(unsigned int), offset };
+		case VertexElementType::UInt4: return { GL_UNSIGNED_INT, 4u, sizeof(unsigned int), offset };
 
 		// float
-		case VertexElementType::Float1: return { GL_FLOAT, 1, sizeof(float), offset };
-		case VertexElementType::Float2: return { GL_FLOAT, 2, sizeof(float), offset };
-		case VertexElementType::Float3: return { GL_FLOAT, 3, sizeof(float), offset };
-		case VertexElementType::Float4: return { GL_FLOAT, 4, sizeof(float), offset };
+		case VertexElementType::Float1: return { GL_FLOAT, 1u, sizeof(float), offset };
+		case VertexElementType::Float2: return { GL_FLOAT, 2u, sizeof(float), offset };
+		case VertexElementType::Float3: return { GL_FLOAT, 3u, sizeof(float), offset };
+		case VertexElementType::Float4: return { GL_FLOAT, 4u, sizeof(float), offset };
 
 		// double
 		case VertexElementType::Double1: return { GL_DOUBLE, 1, sizeof(float), offset };
@@ -85,7 +86,7 @@ namespace Light {
 		case VertexElementType::Double4: return { GL_DOUBLE, 4, sizeof(float), offset };
 
 		default:
-			LT_ENGINE_ASSERT(false, "glVertexLayout::GetElementDesc: invalid vertex element type");
+			LT_ENGINE_ASSERT(false, "glVertexLayout::GetElementDesc: invalid 'VertexElementType'");
 			return {};
 		}
 	}

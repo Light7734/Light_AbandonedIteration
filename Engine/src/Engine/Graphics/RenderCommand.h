@@ -11,6 +11,8 @@ namespace Light {
 	class RenderCommand
 	{
 	public:
+		static RenderCommand* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
+
 		RenderCommand(const RenderCommand&) = delete;
 		RenderCommand& operator=(const RenderCommand&) = delete;
 
@@ -21,8 +23,6 @@ namespace Light {
 
 		virtual void Draw(unsigned int count) = 0;
 		virtual void DrawIndexed(unsigned int count) = 0;
-
-		static RenderCommand* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
 
 	protected:
 		RenderCommand() = default;

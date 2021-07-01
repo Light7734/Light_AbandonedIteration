@@ -3,8 +3,6 @@
 #include "Base.h"
 #include "Graphics/GraphicsContext.h"
 
-#include <glm/glm.hpp>
-
 #include <d3d11.h>
 #include <wrl.h>
 
@@ -37,7 +35,7 @@ namespace Light {
 		void SetupDebugInterface();
 
 
-		void SetResolution(const glm::uvec2& resolution);
+		void SetResolution(unsigned int width, unsigned int height);
 	};
 
 }

@@ -5,6 +5,7 @@
 
 namespace Light {
 
+	//** VERTEX_BUFFER **//
 	glVertexBuffer::glVertexBuffer(float* vertices, unsigned int count)
 	{
 		glCreateBuffers(1, &m_BufferID);
@@ -36,6 +37,7 @@ namespace Light {
 		glBindBuffer(GL_ARRAY_BUFFER, NULL);
 	}
 
+	//** INDEX_BUFFER **//
 	glIndexBuffer::glIndexBuffer(unsigned int* indices, unsigned int count)
 	{
 		// generate indices if not provided
@@ -45,8 +47,8 @@ namespace Light {
 			// check
 			if (count % 6 != 0)
 			{
-				LT_ENGINE_WARN("glIndexBuffer::glIndexBuffer: count should be divisible by 6 when no indices is provided");
-				LT_ENGINE_WARN("glIndexBuffer::glIndexBuffer: adding {} to count -> {}", (6 - (count % 6)), count + (6 - (count % 6)));
+				LT_ENGINE_WARN("glIndexBuffer::dxIndexBuffer: 'indices' can only be null if count is multiple of 6");
+				LT_ENGINE_WARN("glIndexBuffer::glIndexBuffer: adding {} to 'count' -> {}", (6 - (count % 6)), count + (6 - (count % 6)));
 				count = count + (6 - (count % 6));
 			}
 

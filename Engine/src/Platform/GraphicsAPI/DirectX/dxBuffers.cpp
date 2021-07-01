@@ -5,10 +5,9 @@
 
 namespace Light {
 
-	//* VERTEX BUFFER *//
+	//* VERTEX_BUFFER *//
 	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
 		: m_Stride(stride), m_Context(sharedContext)
-	
 	{
 		// buffer desc
 		D3D11_BUFFER_DESC bd = { 0 };
@@ -22,7 +21,7 @@ namespace Light {
 
 		// create buffer
 		HRESULT hr;
-		DXC(m_Context->device->CreateBuffer(&bd, nullptr, &m_Buffer));
+		DXC(m_Context->GetDevice()->CreateBuffer(&bd, nullptr, &m_Buffer));
 	}
 
 	dxVertexBuffer::~dxVertexBuffer()
@@ -32,19 +31,19 @@ namespace Light {
 
 	void* dxVertexBuffer::Map()
 	{
-		m_Context->deviceContext->Map(m_Buffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &m_Map);
+		m_Context->GetDeviceContext()->Map(m_Buffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &m_Map);
 		return m_Map.pData;
 	}
 
 	void dxVertexBuffer::UnMap()
 	{
-		m_Context->deviceContext->Unmap(m_Buffer.Get(), NULL);
+		m_Context->GetDeviceContext()->Unmap(m_Buffer.Get(), NULL);
 	}
 
 	void dxVertexBuffer::Bind()
 	{
 		static const unsigned int offset = 0u;
-		m_Context->deviceContext->IASetVertexBuffers(0u, 1u, m_Buffer.GetAddressOf(), &m_Stride, &offset);
+		m_Context->GetDeviceContext()->IASetVertexBuffers(0u, 1u, m_Buffer.GetAddressOf(), &m_Stride, &offset);
 	}
 
 	void dxVertexBuffer::UnBind()
@@ -52,10 +51,10 @@ namespace Light {
 		static const unsigned int offset = 0u;
 		static ID3D11Buffer* buffer = nullptr;
 
-		m_Context->deviceContext->IASetVertexBuffers(0u, 1u, &buffer, &m_Stride, &offset);
+		m_Context->GetDeviceContext()->IASetVertexBuffers(0u, 1u, &buffer, &m_Stride, &offset);
 	}
 
-	//* INDEX BUFFER *//
+	//* INDEX_BUFFER *//
 	dxIndexBuffer::dxIndexBuffer(unsigned int* indices, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
@@ -66,8 +65,8 @@ namespace Light {
 			// check
 			if (count % 6 != 0)
 			{
-				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: indices can only be null if count is multiple of 6");
-				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: adding {} to count -> {}", (6 - (count % 6)), count + (6 - (count % 6)));
+				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: 'indices' can only be null if count is multiple of 6");
+				LT_ENGINE_WARN("dxIndexBuffer::dxIndexBuffer: adding {} to 'count' -> {}", (6 - (count % 6)), count + (6 - (count % 6)));
 				count = count + (6 - (count % 6));
 			}
 
@@ -102,14 +101,11 @@ namespace Light {
 
 		// create buffer
 		HRESULT hr;
-		DXC(m_Context->device->CreateBuffer(&bd, &sd, &m_Buffer));
+		DXC(m_Context->GetDevice()->CreateBuffer(&bd, &sd, &m_Buffer));
 
 		// delete indices
 		if (!hasIndices)
-		{
 			delete[] indices;
-			indices = nullptr;
-		}
 	}
 
 	dxIndexBuffer::~dxIndexBuffer()
@@ -119,7 +115,7 @@ namespace Light {
 
 	void dxIndexBuffer::Bind()
 	{
-		m_Context->deviceContext->IASetIndexBuffer(m_Buffer.Get(), DXGI_FORMAT_R32_UINT, 0u);
+		m_Context->GetDeviceContext()->IASetIndexBuffer(m_Buffer.Get(), DXGI_FORMAT_R32_UINT, 0u);
 	}
 
 	void dxIndexBuffer::UnBind()
@@ -127,7 +123,7 @@ namespace Light {
 		static const unsigned int offset = 0u;
 		static ID3D11Buffer* buffer = nullptr;
 
-		m_Context->deviceContext->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, offset);
+		m_Context->GetDeviceContext()->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, offset);
 	}
 
 }

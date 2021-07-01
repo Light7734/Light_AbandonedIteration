@@ -1,17 +1,13 @@
 #include "ltpch.h"
 #include "glGraphicsContext.h"
 
-// Required for forward declaration
-#include "Graphics/Renderer.h"
-#include "Graphics/RenderCommand.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Buffers.h"
-#include "Graphics/VertexLayout.h"
-#include "UserInterface/UserInterface.h" 
-
 #include "Events/WindowEvents.h"
 
-#include "Utility/Stringifier.h"
+// forward declaration
+#include "Graphics/Renderer.h"
+#include "Graphics/RenderCommand.h"
+#include "UserInterface/UserInterface.h"
+#include "Utility/ResourceManager.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -21,10 +17,13 @@ namespace Light {
 	glGraphicsContext::glGraphicsContext(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
 	{
+		// set 'GraphicsAPI'
 		m_GraphicsAPI = GraphicsAPI::OpenGL;
 
+		// make context current
 		glfwMakeContextCurrent(windowHandle);
 		
+		// load opengl (glad)
 		LT_ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "glGraphicsContext::glGraphicsContext: failed to initialize opengl (glad)");
 
 		// #todo: add blender
@@ -36,7 +35,7 @@ namespace Light {
 	{
 		if (event.GetSize().x < 0 || event.GetSize().y < 0)
 		{
-			LT_ENGINE_ERROR("glGraphicsContext::OnWindowResize: width/height cannot be negative: [{}x{}]", event.GetSize().x, event.GetSize().y);
+			LT_ENGINE_ERROR("glGraphicsContext::OnWindowResize: 'width'/'height' cannot be negative: [{}x{}]", event.GetSize().x, event.GetSize().y);
 			return;
 		}
 
@@ -56,6 +55,7 @@ namespace Light {
 
 	void glGraphicsContext::SetDebugMessageCallback()
 	{
+		// determine log level
 #if defined(LIGHT_DEBUG)
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
@@ -67,6 +67,7 @@ namespace Light {
 		return;
 #endif
 
+		// setup message callback
 		glDebugMessageCallback([](unsigned int source, unsigned int type,
 		                          unsigned int id, unsigned int severity,
 		                          int length, const char* message,

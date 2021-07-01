@@ -5,12 +5,16 @@
 #endif
 
 #include "Debug/Exceptions.h"
+#include "Utility/Stringifier.h"
 
 #include <memory>
 
-#define LT_WIN(x) // Windows
-#define LT_LIN(x) // Linux
-#define LT_MAC(x) // Mac
+#define LT_WIN(x) // windows
+#define LT_LIN(x) // linux
+#define LT_MAC(x) // mac
+
+// #todo: figure out a proper way to give version numbers
+#define LT_VERSION "0.5.1" 
 
 #if defined(LIGHT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"
@@ -29,5 +33,10 @@
 #define BIT(x) 1 << x
 
 // #todo: log to file in distribution builds
-#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); /* __builtin_trap() */; throw ::Light::FailedAssertion(__FILE__, __LINE__); } }
-#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); __builtin_trap(); } }
+#if defined(LIGHT_PLATFORM_WINDOWS)
+	#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); __debugbreak(); throw ::Light::FailedAssertion(__FILE__, __LINE__); } }
+	#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); __debugbreak(); } }
+#elif defined(LIGHT_PLATFORM_LINUX)
+	#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); /* #todo: implement break */ throw ::Light::FailedAssertion(__FILE__, __LINE__); } }
+	#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); /* #todo: implement break */ } }	
+#endif

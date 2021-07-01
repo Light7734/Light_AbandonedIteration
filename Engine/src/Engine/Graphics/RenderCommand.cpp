@@ -2,11 +2,9 @@
 #include "RenderCommand.h"
 #include "OpenGL/glRenderCommand.h"
 
-#include "SharedContext.h"
-
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxRenderCommand.h"
-	#include "Directx/dxSharedContext.h"
+	#include "DirectX/dxSharedContext.h"
 #endif
 
 #include "GraphicsContext.h"
@@ -24,7 +22,7 @@ namespace Light {
 			return new dxRenderCommand((std::static_pointer_cast<dxSharedContext>)(sharedContext));)
 
 		default:
-			LT_ENGINE_ASSERT(false, "RenderCommand::Create: invalid/unsupported GraphicsAPI {}", GraphicsContext::GetGraphicsAPI());
+			LT_ENGINE_ASSERT(false, "RenderCommand::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
 		}
 	}

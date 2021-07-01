@@ -6,14 +6,16 @@ R"(
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec4 a_Color;
 
-out vec4 fragColor;
+out vec4 vso_FragmentColor;
 
 void main()
 {
 	gl_Position = vec4(a_Position, 1.0);
-	fragColor = a_Color;
+	vso_FragmentColor = a_Color;
 }
 -GLSL
+
+
 +HLSL
 struct VertexOut
 {
@@ -26,6 +28,7 @@ VertexOut main(float3 InPosition : POSITION, float4 InColor : COLOR)
 	VertexOut vso;
 	vso.Position = float4(InPosition.x, InPosition.y, InPosition.z, 1.0);
 	vso.Color = InColor;
+
 	return vso;
 }
 -HLSL)"
@@ -35,15 +38,17 @@ R"(
 +GLSL
 #version 440 core
 
-in vec4 fragColor;
+in vec4 vso_FragmentColor;
 
-out vec4 FragmentColor;
+out vec4 fso_FragmentColor;
 
 void main()
 {
-	FragmentColor = fragColor;
+	fso_FragmentColor = vso_FragmentColor;
 }
 -GLSL
+
+
 +HLSL
 float4 main(float4 Color : COLOR) : SV_Target
 {
