@@ -3,6 +3,10 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+#include <glm/matrix.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 namespace Light {
 
 	glShader::glShader(const std::string& vertexSource, const std::string& fragmentSource)
@@ -89,6 +93,16 @@ namespace Light {
 	void glShader::UnBind()
 	{
 		glUseProgram(NULL);
+	}
+
+	void glShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
+	{
+		int location = glGetUniformLocation(m_ShaderID, name.c_str());
+
+		if (location == -1)
+			LT_ENGINE_ERROR("glShader::SetUniformMat4: failed to find uniform: {}", name);
+
+		glUniformMatrix4fv(location, 1, GL_FALSE, &(value[0][0]));
 	}
 
 }

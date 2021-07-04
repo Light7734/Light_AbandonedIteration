@@ -12,6 +12,8 @@ namespace Light {
 	class IndexBuffer;
 	class VertexLayout;
 
+	class Camera;
+
 	class SharedContext;
 
 	class TextureRendererProgram : RendererProgram
@@ -39,6 +41,8 @@ namespace Light {
 		TextureRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext);
 
 		bool Advance();
+
+		void SetCamera(const Camera& camera) override;
 
 		void Map() override;
 		void Bind() override;

@@ -44,12 +44,12 @@ namespace Light {
 		while (!m_Window->IsClosed())
 		{
 			// update layers
-			m_LayerStack.OnUpdate(1000.0f / 60.0f); // #todo: implement time
+			m_LayerStack.OnUpdate(60.0f / 10000.0f); // #todo: implement time
 
 			// render layers
-			m_Window->GetGfxContext()->GetRenderer()->BeginScene();
+			m_Window->GetGfxContext()->GetRenderer()->BeginFrame();
 			m_LayerStack.OnRender();
-			m_Window->GetGfxContext()->GetRenderer()->EndScene();
+			m_Window->GetGfxContext()->GetRenderer()->EndFrame();
 
 			// render user interface
 			m_Window->GetGfxContext()->GetUserInterface()->Begin();

@@ -42,4 +42,9 @@ namespace Light {
 		m_Context->GetDeviceContext()->PSSetShader(nullptr, nullptr, 0u);
 	}
 
+	void dxShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
+	{
+		LT_ENGINE_ERROR("dxShader::SetUniformMat4: NOT_IMPLEMENTED");
+	}
+
 }

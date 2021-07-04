@@ -3,6 +3,8 @@
 #include "Base.h"
 #include "Graphics/Shader.h"
 
+#include <glm/glm.hpp>
+
 #include <d3d11.h>
 #include <wrl.h>
 
@@ -26,6 +28,8 @@ namespace Light {
 
 		void Bind() override;
 		void UnBind() override;
+
+		void SetUniformMat4(const std::string& name, const glm::mat4& value) override;
 
 		Microsoft::WRL::ComPtr<ID3DBlob> GetVertexBlob() { return m_VertexBlob; }
 	};

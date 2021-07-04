@@ -15,6 +15,8 @@ namespace Light {
 	class RenderCommand;
 	class Texture;
 
+	class Camera;
+
 	class SharedContext;
 
 	class Renderer
@@ -30,17 +32,23 @@ namespace Light {
 	public:
 		static Renderer* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
 		
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
-		static void DrawQuad(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture);
+		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint) { s_Context->DrawQuadImpl(position, size, tint); }
+		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture) { s_Context->DrawQuadImpl(position, size, texture); }
 
-		void BeginScene();
-		void EndScene();
+		static inline void BeginScene(const Camera& camera) { s_Context->BeginSceneImpl(camera); }
+		static inline void EndScene() { s_Context->EndSceneImpl(); }
+
+		void BeginFrame();
+		void EndFrame();
 
 	private:
 		Renderer(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
 
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture);
+
+		void BeginSceneImpl(const Camera& camera);
+		void EndSceneImpl();
 	};
 
 }

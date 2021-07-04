@@ -1,6 +1,8 @@
 #include "ltpch.h"
 #include "TextureRendererProgram.h"
 
+#include "Camera/Camera.h"
+
 #include "Graphics/Shader.h"
 #include "Graphics/Buffers.h"
 #include "Graphics/VertexLayout.h"
@@ -33,6 +35,12 @@ namespace Light {
 
 		m_MapCurrent += 4;
 		m_QuadCount++;
+	}
+
+	void TextureRendererProgram::SetCamera(const Camera& camera)
+	{
+		m_Shader->Bind();
+		m_Shader->SetUniformMat4("u_ViewProjection", camera.GetProjection() * camera.GetView());
 	}
 
 	void TextureRendererProgram::Map()

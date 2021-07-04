@@ -37,7 +37,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		// create graphics context
-		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle));
+		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle));
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create 'GraphicsContext'");
 	}
 
@@ -149,7 +149,7 @@ namespace Light {
 
 			if (action == GLFW_PRESS)
 				callback(KeyPressedEvent(key));
-			else
+			else if(action == GLFW_RELEASE)
 				callback(KeyReleasedEvent(key));
 		});
 

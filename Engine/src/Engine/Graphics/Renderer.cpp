@@ -23,16 +23,6 @@ namespace Light {
 		return new Renderer(windowHandle, sharedContext);
 	}
 
-	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint)
-	{
-		s_Context->DrawQuadImpl(position, size, tint);
-	}
-
-	void Renderer::DrawQuad(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture)
-	{
-		s_Context->DrawQuadImpl(position, size, texture);
-	}
-
 	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint)
 	{
 		// locals
@@ -62,8 +52,8 @@ namespace Light {
 		// advance
 		if (!m_QuadRenderer.Advance())
 		{
-			EndScene();
-			BeginScene();
+			EndFrame();
+			BeginFrame();
 		}
 	}
 
@@ -99,18 +89,31 @@ namespace Light {
 		// advance
 		if (!m_TextureRenderer.Advance())
 		{
-			EndScene();
-			BeginScene();
+			EndFrame();
+			BeginFrame();
 		}
 	}
 
-	void Renderer::BeginScene()
+	void Renderer::BeginFrame()
+	{
+
+	}
+
+	void Renderer::EndFrame()
+	{
+
+	}
+
+	void Renderer::BeginSceneImpl(const Camera& camera)
 	{
 		m_QuadRenderer.Map();
 		m_TextureRenderer.Map();
+
+		m_QuadRenderer.SetCamera(camera);
+		m_TextureRenderer.SetCamera(camera);
 	}
 
-	void Renderer::EndScene()
+	void Renderer::EndSceneImpl()
 	{
 		//** QUAD_RENDERER **//
 		if (m_QuadRenderer.GetQuadCount())

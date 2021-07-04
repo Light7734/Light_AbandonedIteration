@@ -5,6 +5,10 @@
 #include "Core/Window.h"
 // -----------------------------
 
+// Camera ----------------------
+#include "Camera/Camera.h"
+// -----------------------------
+
 // Debug 
 #include "Debug/Logger.h"
 // -----------------------------
