@@ -45,6 +45,8 @@ namespace Light {
 		void SetCamera(const Camera& camera) override;
 
 		void Map() override;
+		void UnMap() override;
+
 		void Bind() override;
 
 		inline QuadVertexData* GetMapCurrent() { return m_MapCurrent; }

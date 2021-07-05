@@ -6,7 +6,10 @@ R"(
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec2 a_TexCoord;
 
-uniform mat4 u_ViewProjection;
+layout(std140, binding = 0) uniform ub_ViewProjection
+{
+	mat4 u_ViewProjection;
+};
 
 out vec2 vso_TexCoord;
 
@@ -25,10 +28,16 @@ struct VertexOut
 	float4 Position : SV_Position;
 };
 
-VertexOut main(float3 InPosition : POSITION, float2 InTexChoord : TEXCHOORD) 
+cbuffer cb_ViewProjection : register(b0)
+{
+	row_major matrix  viewProjection;
+}
+
+
+VertexOut main(float3 InPosition : POSITION, float2 InTexChoord : TEXCOORD)
 {
 	VertexOut vso;
-	vso.Position = float4(InPosition, 1.0);
+	vso.Position = mul(float4(InPosition, 1.0), viewProjection);
 	vso.TexChoord = InTexChoord;
 	
 	return vso;

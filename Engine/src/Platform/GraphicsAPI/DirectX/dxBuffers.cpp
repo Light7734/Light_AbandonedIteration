@@ -5,6 +5,38 @@
 
 namespace Light {
 
+	dxConstantBuffer::dxConstantBuffer(ConstantBufferIndex index, unsigned int size, std::shared_ptr<dxSharedContext> sharedContext)
+		: m_Context(sharedContext), m_Index((int)index)
+	{
+		D3D11_BUFFER_DESC bufferDesc = { };
+		
+		bufferDesc.ByteWidth = size;
+		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+		HRESULT hr;
+		DXC(m_Context->GetDevice()->CreateBuffer(&bufferDesc, nullptr, &m_Buffer));
+		m_Context->GetDeviceContext()->VSSetConstantBuffers(m_Index, 1u, m_Buffer.GetAddressOf());
+	}
+
+	void dxConstantBuffer::Bind()
+	{
+		m_Context->GetDeviceContext()->VSSetConstantBuffers(m_Index, 1u, m_Buffer.GetAddressOf());
+	}
+
+	void* dxConstantBuffer::Map()
+	{
+		m_Context->GetDeviceContext()->VSSetConstantBuffers(m_Index, 1u, m_Buffer.GetAddressOf());
+		m_Context->GetDeviceContext()->Map(m_Buffer.Get(), NULL, D3D11_MAP_WRITE_DISCARD, NULL, &m_Map);
+		return m_Map.pData;
+	}
+
+	void dxConstantBuffer::UnMap()
+	{
+		m_Context->GetDeviceContext()->Unmap(m_Buffer.Get(), NULL);
+	}
+
 	//* VERTEX_BUFFER *//
 	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
 		: m_Stride(stride), m_Context(sharedContext)

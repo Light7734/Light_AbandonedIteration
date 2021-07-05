@@ -5,6 +5,21 @@
 
 namespace Light {
 
+	class glConstantBuffer : public ConstantBuffer
+	{
+	private:
+		unsigned int m_BufferID, m_Index;
+
+	public:
+		glConstantBuffer(ConstantBufferIndex index, unsigned int size);
+		~glConstantBuffer();
+
+		void Bind() override;
+
+		void* Map() override;
+		void UnMap() override;
+	};
+
 	//** VERTEX_BUFFER **//
 	class glVertexBuffer : public VertexBuffer
 	{

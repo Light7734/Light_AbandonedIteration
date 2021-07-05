@@ -13,7 +13,7 @@ namespace Light {
 
 	void Camera::CalculateView()
 	{
-		m_View = glm::lookAt(glm::vec3(m_Position, -100.0f), glm::vec3(m_Position, 0.0f), m_Up);
+		m_View = glm::lookAt(glm::vec3(m_Position, 100.0f), glm::vec3(m_Position, 0.0f), m_Up);
 	}
 
 	void Camera::CalculateProjection()

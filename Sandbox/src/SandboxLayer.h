@@ -45,11 +45,10 @@ public:
 
 	bool OnKeyPressed(const Light::KeyPressedEvent& event) override
 	{
-		// #todo: add input class
 		if (event.GetKey() == 65) // GLFW_KEY_A
-			m_Direction.x +=  1.0f;
+			m_Direction.x +=  -1.0f;
 		if(event.GetKey() == 68)  // GLFW_KEY_D
-			m_Direction.x += -1.0f;
+			m_Direction.x += 1.0f;
 
 		if (event.GetKey() == 87) // GLFW_KEY_W
 			m_Direction.y +=  1.0f;
@@ -63,9 +62,9 @@ public:
 	{
 		// #todo: add input class
 		if (event.GetKey() == 65)  // GLFW_KEY_A
-			m_Direction.x -=  1.0f;
-		if (event.GetKey() == 68)  // GLFW_KEY_D
 			m_Direction.x -= -1.0f;
+		if (event.GetKey() == 68)  // GLFW_KEY_D
+			m_Direction.x -= 1.0f;
 
 		if (event.GetKey() == 87) // GLFW_KEY_W
 			m_Direction.y -=  1.0f;

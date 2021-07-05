@@ -23,7 +23,7 @@ namespace Light {
 			                               0u,
 			                               D3D11_APPEND_ALIGNED_ELEMENT,
 			                               D3D11_INPUT_PER_VERTEX_DATA,
-			                               0u });
+										   0u });
 		}
 
 		std::shared_ptr<dxShader> dxpShader = std::dynamic_pointer_cast<dxShader>(shader);

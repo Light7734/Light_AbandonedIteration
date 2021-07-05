@@ -51,9 +51,13 @@ namespace Light {
 		m_MapEnd = m_MapCurrent + m_MaxVertices;
 	}
 
-	void TextureRendererProgram::Bind()
+	void TextureRendererProgram::UnMap()
 	{
 		m_VertexBuffer->UnMap();
+	}
+
+	void TextureRendererProgram::Bind()
+	{
 		m_Shader->Bind();
 		m_VertexLayout->Bind();
 		m_VertexBuffer->Bind();

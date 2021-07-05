@@ -5,6 +5,37 @@
 
 namespace Light {
 
+	//** CONSTANT_BUFFER **//
+	glConstantBuffer::glConstantBuffer(ConstantBufferIndex index, unsigned int size)
+		: m_Index((int)index)
+	{
+		glCreateBuffers(1, &m_BufferID);
+		glNamedBufferData(m_BufferID, size, nullptr, GL_DYNAMIC_DRAW);
+
+		Bind();
+	}
+
+	glConstantBuffer::~glConstantBuffer()
+	{
+		glDeleteBuffers(1, &m_BufferID);
+	}
+
+	void glConstantBuffer::Bind()
+	{
+		glBindBufferBase(GL_UNIFORM_BUFFER, m_Index, m_BufferID);
+	}
+
+	void* glConstantBuffer::Map()
+	{
+		void* map = glMapNamedBuffer(m_BufferID, GL_WRITE_ONLY);
+		return map;
+	}
+
+	void glConstantBuffer::UnMap()
+	{
+		glUnmapNamedBuffer(m_BufferID);
+	}
+
 	//** VERTEX_BUFFER **//
 	glVertexBuffer::glVertexBuffer(float* vertices, unsigned int count)
 	{

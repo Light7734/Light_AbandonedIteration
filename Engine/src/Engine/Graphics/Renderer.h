@@ -2,6 +2,8 @@
 
 #include "Base.h"
 
+#include "Buffers.h"
+
 #include "RendererPrograms/QuadRendererProgram.h"
 #include "RendererPrograms/TextureRendererProgram.h"
 
@@ -28,6 +30,7 @@ namespace Light {
 		TextureRendererProgram m_TextureRenderer;
 
 		std::unique_ptr<RenderCommand> m_RenderCommand;
+		std::unique_ptr<ConstantBuffer> m_ViewProjectionBuffer;
 
 	public:
 		static Renderer* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);

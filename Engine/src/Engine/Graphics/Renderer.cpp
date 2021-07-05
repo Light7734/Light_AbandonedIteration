@@ -3,6 +3,13 @@
 
 #include "RenderCommand.h"
 #include "Texture.h"
+#include "Buffers.h"
+
+#include "Camera/Camera.h"
+
+#include <glm/glm.hpp>
+#include <glm/matrix.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 namespace Light {
 
@@ -16,6 +23,8 @@ namespace Light {
 		s_Context = this;
 
 		m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle, sharedContext));
+
+		m_ViewProjectionBuffer = std::unique_ptr<ConstantBuffer>(ConstantBuffer::Create(ConstantBufferIndex::ViewProjection, sizeof(glm::mat4), sharedContext));
 	}
 
 	Renderer* Renderer::Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
@@ -106,15 +115,19 @@ namespace Light {
 
 	void Renderer::BeginSceneImpl(const Camera& camera)
 	{
+		glm::mat4* map = (glm::mat4*)m_ViewProjectionBuffer->Map();
+		map[0] = camera.GetProjection() * camera.GetView();
+		m_ViewProjectionBuffer->UnMap();
+
 		m_QuadRenderer.Map();
 		m_TextureRenderer.Map();
-
-		m_QuadRenderer.SetCamera(camera);
-		m_TextureRenderer.SetCamera(camera);
 	}
 
 	void Renderer::EndSceneImpl()
 	{
+		m_QuadRenderer.UnMap();
+		m_TextureRenderer.UnMap();
+
 		//** QUAD_RENDERER **//
 		if (m_QuadRenderer.GetQuadCount())
 		{
