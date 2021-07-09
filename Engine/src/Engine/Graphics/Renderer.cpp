@@ -1,9 +1,10 @@
 #include "ltpch.h"
 #include "Renderer.h"
 
-#include "RenderCommand.h"
-#include "Texture.h"
+#include "Blender.h"
 #include "Buffers.h"
+#include "Texture.h"
+#include "RenderCommand.h"
 
 #include "Camera/Camera.h"
 
@@ -25,6 +26,8 @@ namespace Light {
 		m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle, sharedContext));
 
 		m_ViewProjectionBuffer = std::unique_ptr<ConstantBuffer>(ConstantBuffer::Create(ConstantBufferIndex::ViewProjection, sizeof(glm::mat4), sharedContext));
+
+		m_Blender = std::unique_ptr<Blender>(Blender::Create(sharedContext));
 	}
 
 	Renderer* Renderer::Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
@@ -127,6 +130,8 @@ namespace Light {
 	{
 		m_QuadRenderer.UnMap();
 		m_TextureRenderer.UnMap();
+
+		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
 
 		//** QUAD_RENDERER **//
 		if (m_QuadRenderer.GetQuadCount())

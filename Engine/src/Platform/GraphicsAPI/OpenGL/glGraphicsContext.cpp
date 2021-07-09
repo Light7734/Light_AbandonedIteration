@@ -27,10 +27,6 @@ namespace Light {
 		LT_ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "glGraphicsContext::glGraphicsContext: failed to initialize opengl (glad)");
 
 		SetDebugMessageCallback();
-
-		// #todo: add blender
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	void glGraphicsContext::OnWindowResize(const WindowResizedEvent& event)

@@ -3,6 +3,7 @@
 #include "Base.h"
 
 #include "Buffers.h"
+#include "Blender.h"
 
 #include "RendererPrograms/QuadRendererProgram.h"
 #include "RendererPrograms/TextureRendererProgram.h"
@@ -15,9 +16,11 @@ struct GLFWwindow;
 namespace Light {
 
 	class RenderCommand;
-	class Texture;
+	class Blender;
 
 	class Camera;
+
+	class Texture;
 
 	class SharedContext;
 
@@ -31,6 +34,8 @@ namespace Light {
 
 		std::unique_ptr<RenderCommand> m_RenderCommand;
 		std::unique_ptr<ConstantBuffer> m_ViewProjectionBuffer;
+
+		std::unique_ptr<Blender> m_Blender;
 
 	public:
 		static Renderer* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
