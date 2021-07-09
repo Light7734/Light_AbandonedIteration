@@ -22,13 +22,12 @@ namespace Light {
 	class DeltaTimer
 	{
 	private:
-		std::chrono::time_point<std::chrono::steady_clock> m_Previous;
+		Timer timer;
 
+		float m_PreviousFrame = 0.0f;
 		float m_DeltaTime = 60.0f / 1000.0f;
-
+		
 	public:
-		DeltaTimer(): m_Previous(std::chrono::steady_clock::now()) { }
-
 		void Update();
 
 		inline float GetDeltaTime() const { return m_DeltaTime; }
