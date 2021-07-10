@@ -7,8 +7,6 @@
 #include "Graphics/Buffers.h"
 #include "Graphics/VertexLayout.h"
 
-#include "../res/Shaders/QuadShader.h"
-
 #include "Utility/ResourceManager.h"
 
 namespace Light {
@@ -16,7 +14,7 @@ namespace Light {
 	QuadRendererProgram::QuadRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext)
 		: m_MaxVertices(maxVertices)
 	{
-		ResourceManager::CreateShader("LT_ENGINE_RESOURCES_QUAD_SHADER", LT_ENGINE_RESOURCES_QUAD_SHADER_VS, LT_ENGINE_RESOURCES_QUAD_SHADER_PS);
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_QUAD_SHADER", "../Engine/res/Shaders/Quad/Quad_VS", "../Engine//res/Shaders/Quad/Quad_PS");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_QUAD_SHADER");
 		m_VertexBuffer = std::shared_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(QuadVertexData), maxVertices, sharedContext));
@@ -63,4 +61,5 @@ namespace Light {
 		m_VertexBuffer->Bind();
 		m_IndexBuffer->Bind();
 	}
+
 }

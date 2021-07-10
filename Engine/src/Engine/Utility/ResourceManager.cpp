@@ -55,20 +55,13 @@ namespace Light {
 		LT_ENGINE_ASSERT(!vertexPath.empty(), "ResourceManager::LoadShader: 'vertexPath' is empty");
 		LT_ENGINE_ASSERT(!pixelPath.empty(), "ResourceManager::LoadShader: 'pixelPath' is empty");
 
+		std::string vPath = vertexPath + (GraphicsContext::GetGraphicsAPI() == GraphicsAPI::OpenGL ? ".glsl" : ".hlsl");
+		std::string pPath = pixelPath  + (GraphicsContext::GetGraphicsAPI() == GraphicsAPI::OpenGL ? ".glsl" : ".hlsl");
+
 		// initialize
-		std::ifstream vsStream(vertexPath), psStream(pixelPath);
+		std::ifstream vsStream(vPath), psStream(pPath);
 		std::stringstream vsSS, psSS; // pss pss pss pss :D 
-		std::string vertexSource, pixelSource;
 		std::string line;
-
-		// delim
-		std::string delim = GraphicsContext::GetGraphicsAPI() == GraphicsAPI::OpenGL ? "GLSL" :
-		                    GraphicsContext::GetGraphicsAPI() == GraphicsAPI::DirectX ? "HLSL" : NULL;
-
-		// check
-		LT_ENGINE_ASSERT(!delim.empty(), "ResourceManager::LoadShader: invalid/unsupported 'GraphicsAPI': {}", GraphicsContext::GetGraphicsAPI());
-		LT_ENGINE_ASSERT(vsStream.is_open(), "ResourceManager::LoadShader: invalid 'vertexPath': {}", vertexPath);
-		LT_ENGINE_ASSERT(psStream.is_open(), "ResourceManager::LoadShader: invalid 'pixelPath': {}", pixelPath);
 
 		// read
 		while (std::getline(vsStream, line))
@@ -77,16 +70,8 @@ namespace Light {
 		while (std::getline(psStream, line))
 			psSS << line << '\n';
 
-		// save to string
-		vertexSource = vsSS.str();
-		pixelSource = psSS.str();
-
-		// extract source
-		ResourceManager::ExtractShaderSource(vertexSource, delim);
-		ResourceManager::ExtractShaderSource(pixelSource, delim);
-
 		// create shader
-		m_Shaders[name] = std::shared_ptr<Shader>(Shader::Create(vertexSource, pixelSource, m_SharedContext));
+		m_Shaders[name] = std::shared_ptr<Shader>(Shader::Create(vsSS.str(), psSS.str(), m_SharedContext));
 	}
 
 	void ResourceManager::LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents /* = 4u */)

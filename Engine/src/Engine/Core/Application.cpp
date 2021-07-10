@@ -43,23 +43,12 @@ namespace Light {
 		m_Window->SetVisibility(true);
 
 		DeltaTimer deltaTimer;
-		Timer timer;
-		int frames = 0;
 
 		//** GAMELOOP **//
 		while (!m_Window->IsClosed())
 		{
 			// update layers
 			m_LayerStack.OnUpdate(deltaTimer.GetDeltaTime());
-
-			frames++;
-			if (timer.GetElapsedTime() > 1.0f)
-			{
-				LT_ENGINE_INFO(frames);
-
-				frames = 0;
-				timer.Reset();
-			}
 
 			// render layers
 			m_Window->GetGfxContext()->GetRenderer()->BeginFrame();

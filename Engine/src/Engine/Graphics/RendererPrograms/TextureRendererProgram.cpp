@@ -7,8 +7,6 @@
 #include "Graphics/Buffers.h"
 #include "Graphics/VertexLayout.h"
 
-#include "../res/Shaders/TextureShader.h"
-
 #include "Utility/ResourceManager.h"
 
 namespace Light {
@@ -16,7 +14,7 @@ namespace Light {
 	TextureRendererProgram::TextureRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext)
 		: m_MaxVertices(maxVertices)
 	{
-		ResourceManager::CreateShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", LT_ENGINE_RESOURCES_TEXTURE_SHADER_VS, LT_ENGINE_RESOURCES_TEXTURE_SHADER_PS);
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", "../Engine/res/Shaders/Texture/Texture_VS", "../Engine/res/Shaders/Texture/Texture_PS");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER");
 		m_VertexBuffer = std::shared_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TextureVertexData), maxVertices, sharedContext));

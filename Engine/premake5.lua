@@ -37,8 +37,9 @@ project "Engine"
 	includedirs
 	{
 		-- engine
-		"%{prj.location}/src"                     ,
-		"%{prj.location}/src/Engine"              ,
+		"%{prj.location}"                          ,
+		"%{prj.location}/src"                      ,
+		"%{prj.location}/src/Engine"               ,
 		"%{prj.location}/src/Platform/GraphicsAPI" ,
 		"%{prj.location}/src/Platform/OS"          ,
 
@@ -109,3 +110,7 @@ project "Engine"
 	filter "configurations:Distribution"
 		defines "LIGHT_DIST"
 		optimize "on"
+
+	filter { "files:**.hlsl" }
+		flags "ExcludeFromBuild"
+		shadermodel "4.0"
