@@ -9,9 +9,12 @@ namespace Light {
 	class Window;
 	class Event;
 
+	class Instrumentor;
+
 	class Application
 	{
 	private:
+		std::unique_ptr<Instrumentor> m_Instrumentor = nullptr;
 		LayerStack m_LayerStack;
 
 	protected:

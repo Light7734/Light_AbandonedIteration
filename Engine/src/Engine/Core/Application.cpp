@@ -11,6 +11,8 @@
 
 #include "UserInterface/UserInterface.h"
 
+#include "Debug/Instrumentor.h"
+
 #include "Time/Timer.h"
 
 #include <filesystem>
@@ -20,12 +22,16 @@ namespace Light {
 	Application::Application()
 	{
 		Logger::Initialize();
+		m_Instrumentor = std::unique_ptr<Instrumentor>(Instrumentor::Create());
+
+		m_Instrumentor->BeginSession("Logs/ProfileResults_Startup.json");
 		m_Window = std::unique_ptr<Light::Window>(Light::Window::Create(std::bind(&Light::Application::OnEvent, this, std::placeholders::_1)));
 	}
 
 	Application::~Application()
 	{
 		LT_ENGINE_TRACE("Application::~Application()");
+		m_Instrumentor->EndSession(); // ProfileResults_Termination //
 	}
 
 	void Application::GameLoop()
@@ -42,29 +48,46 @@ namespace Light {
 		// reveal window
 		m_Window->SetVisibility(true);
 
-		DeltaTimer deltaTimer;
+		m_Instrumentor->EndSession(); // ProfileResults_GameLoop //
+		m_Instrumentor->BeginSession("Logs/ProfileResults_GameLoop.json");
 
 		//** GAMELOOP **//
+		DeltaTimer deltaTimer;
 		while (!m_Window->IsClosed())
 		{
-			// update layers
-			m_LayerStack.OnUpdate(deltaTimer.GetDeltaTime());
+			{
+				// update layers
+				LT_PROFILE_SCOPE("GameLoop::Update");
+				m_LayerStack.OnUpdate(deltaTimer.GetDeltaTime());
+			}
 
-			// render layers
-			m_Window->GetGfxContext()->GetRenderer()->BeginFrame();
-			m_LayerStack.OnRender();
-			m_Window->GetGfxContext()->GetRenderer()->EndFrame();
+			{
+				// render layers
+				LT_PROFILE_SCOPE("GameLoop::Render");
+				m_Window->GetGfxContext()->GetRenderer()->BeginFrame();
+				m_LayerStack.OnRender();
+				m_Window->GetGfxContext()->GetRenderer()->EndFrame();
+			}
 
-			// render user interface
-			m_Window->GetGfxContext()->GetUserInterface()->Begin();
-			m_Window->GetGfxContext()->GetUserInterface()->End();
+			{
+				// render user interface
+				LT_PROFILE_SCOPE("GameLoop::UserInterface");
+				m_Window->GetGfxContext()->GetUserInterface()->Begin();
+				m_Window->GetGfxContext()->GetUserInterface()->End();
+			}
 
-			// poll events
-			m_Window->PollEvents();
+			{
+				// poll events
+				LT_PROFILE_SCOPE("GameLoop::Events");
+				m_Window->PollEvents();
+			}
 
 			/// update delta time
 			deltaTimer.Update();
 		}
+		
+		m_Instrumentor->EndSession(); // ProfileResults_GameLoop //
+		m_Instrumentor->BeginSession("Logs/ProfileResults_Termination.json");
 	}
 
 	void Application::OnEvent(const Event& event)

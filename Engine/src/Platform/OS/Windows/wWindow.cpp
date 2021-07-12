@@ -20,9 +20,6 @@ namespace Light {
 	wWindow::wWindow(std::function<void(Event&)> callback)
 		: m_EventCallback(callback)
 	{
-								LT_ENGINE_TRACE("Pressed");
-
-		
 		// init glfw
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize 'glfw'");
 
