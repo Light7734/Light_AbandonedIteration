@@ -18,13 +18,19 @@ namespace Light {
 
 	class TextureRendererProgram : RendererProgram
 	{
+	public:
+		struct TextureVertexData
+		{
+			glm::vec3 position;
+			glm::vec2 texcoord;
+		};
+		
 	private:
 		std::shared_ptr<Shader> m_Shader;
 		std::shared_ptr<VertexBuffer> m_VertexBuffer;
 		std::shared_ptr<IndexBuffer> m_IndexBuffer;
 		std::shared_ptr<VertexLayout> m_VertexLayout;
 
-		struct TextureVertexData; // <-- forward declaration
 		TextureVertexData* m_MapCurrent = nullptr;
 		TextureVertexData* m_MapEnd = nullptr;
 
@@ -32,12 +38,6 @@ namespace Light {
 		unsigned int m_MaxVertices = 0u;
 
 	public:
-		struct TextureVertexData
-		{
-			glm::vec3 position;
-			glm::vec2 texcoord;
-		};
-
 		TextureRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext);
 
 		bool Advance();

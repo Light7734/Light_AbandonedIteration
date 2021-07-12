@@ -18,19 +18,6 @@ namespace Light {
 
 	class QuadRendererProgram : RendererProgram
 	{
-	private:
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
-		std::shared_ptr<VertexLayout> m_VertexLayout;
-
-		struct QuadVertexData; // <-- forward declaration
-		QuadVertexData* m_MapCurrent = nullptr;
-		QuadVertexData* m_MapEnd = nullptr;
-
-		unsigned int m_QuadCount = 0u;
-		unsigned int m_MaxVertices = 0u;
-
 	public:
 		struct QuadVertexData
 		{
@@ -38,6 +25,19 @@ namespace Light {
 			glm::vec4 tint;
 		};
 
+	private:
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexBuffer> m_VertexBuffer;
+		std::shared_ptr<IndexBuffer> m_IndexBuffer;
+		std::shared_ptr<VertexLayout> m_VertexLayout;
+
+		QuadVertexData* m_MapCurrent = nullptr;
+		QuadVertexData* m_MapEnd = nullptr;
+
+		unsigned int m_QuadCount = 0u;
+		unsigned int m_MaxVertices = 0u;
+
+	public:
 		QuadRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext);
 
 		bool Advance();

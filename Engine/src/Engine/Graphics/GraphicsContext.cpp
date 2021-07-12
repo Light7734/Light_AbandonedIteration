@@ -36,7 +36,7 @@ namespace Light {
 #if defined(LIGHT_PLATFORM_WINDOWS)
 			api = GraphicsAPI::DirectX;
 #elif defined(LIGHT_PLATFORM_LINUX)
-			api = GraphicsContext::OpenGL;
+			api = GraphicsAPI::OpenGL;
 #elif defined(LIGHT_PLATFORM_MAC)
 			// #todo:
 #endif

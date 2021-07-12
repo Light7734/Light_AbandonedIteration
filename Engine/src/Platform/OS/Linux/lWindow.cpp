@@ -24,8 +24,8 @@ namespace Light {
 		LT_ENGINE_ASSERT(glfwInit(), "lWindow::lWindow: failed to initialize 'glfw'");
 		
 		// create window
-		glfwWindowHint(GLFW_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_VERSION_MINOR, 5);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		
@@ -44,6 +44,27 @@ namespace Light {
 	lWindow::~lWindow()
 	{
 		glfwDestroyWindow(m_Handle);
+	}
+	
+	void lWindow::PollEvents()
+	{
+		glfwPollEvents();
+	}
+
+	void lWindow::OnEvent(const Event& event)
+	{
+		switch (event.GetEventType())
+		{
+		// closed
+		case EventType::WindowClosed:
+			b_Closed = true;
+			break;
+
+		// resized
+		case EventType::WindowResized:
+			m_GraphicsContext->OnWindowResize((const WindowResizedEvent&)event);
+			break;
+		}
 	}
 	
 	void lWindow::SetProperties(const WindowProperties& properties, bool affectsVisiblity /* = false */)
@@ -115,7 +136,7 @@ namespace Light {
 				ButtonPressedEvent event(button);
 				callback(event);
 			}
-			else
+			else if(action == GLFW_RELEASE)
 			{
 				ButtonReleasedEvent	event(button);
 				callback(event);
@@ -142,7 +163,7 @@ namespace Light {
 				KeyPressedEvent event(key);
 				callback(event);
 			}
-			else
+			else if(action == GLFW_RELEASE)
 			{
 				KeyReleasedEvent event(key);
 				callback(event);

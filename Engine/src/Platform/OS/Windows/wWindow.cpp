@@ -5,7 +5,7 @@
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
 #include "Events/WindowEvents.h"
-
+		
 #include "Graphics/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
@@ -20,6 +20,9 @@ namespace Light {
 	wWindow::wWindow(std::function<void(Event&)> callback)
 		: m_EventCallback(callback)
 	{
+								LT_ENGINE_TRACE("Pressed");
+
+		
 		// init glfw
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize 'glfw'");
 
