@@ -11,6 +11,7 @@ namespace Light {
 	}
 	
 	Instrumentor::Instrumentor()
+		: m_CurrentSessionCount(0u)
 	{
 		// #todo: maintenance
 		LT_ENGINE_ASSERT(!s_Context, "Instrumentor::Instrumentor: an instance of 'Instrumentor' already exists, do not construct this class!");
@@ -25,6 +26,11 @@ namespace Light {
 
 	void Instrumentor::EndSessionImpl()
 	{
+		if (m_CurrentSessionCount == 0u)
+			LT_ENGINE_WARN("Instrumentor::EndSessionImpl: 0 profiling for the ended session");
+
+		m_CurrentSessionCount = 0u;
+
 		m_OutputFileStream << "]}";
 		m_OutputFileStream.flush();
 		m_OutputFileStream.close();
@@ -32,14 +38,9 @@ namespace Light {
 
 	void Instrumentor::SubmitScopeProfileImpl(const ScopeProfileResult& profileResult)
 	{
-		static bool test = true;
-
-		if (test)
-		{
-			test = false;
+		if (m_CurrentSessionCount++ == 0u)
 			m_OutputFileStream << "{";
-		}
-		else 
+		else
 			m_OutputFileStream << ",{";
 
 		m_OutputFileStream << "\"name\":\"" << profileResult.name << "\",";

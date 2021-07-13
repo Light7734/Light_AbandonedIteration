@@ -21,7 +21,8 @@ namespace Light {
 		static Instrumentor* s_Context;
 
 		std::ofstream m_OutputFileStream;
-		bool m_FirstScopeProfile = true;
+
+		unsigned int m_CurrentSessionCount;
 
 	public:
 		static Instrumentor* Create();
