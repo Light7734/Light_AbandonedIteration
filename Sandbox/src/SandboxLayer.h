@@ -11,12 +11,14 @@ private:
 	glm::vec2 m_Direction;
 	float m_Speed = 1.2f;
 
-	Light::Camera m_Camera;
+	std::shared_ptr<Light::Camera> m_Camera;
 
 public:
 	SandboxLayer(const std::string& name) 
-		: Light::Layer(name), m_Camera(glm::vec2(0.0f), 800.0f / 600.0f, 1.0f), m_Direction(glm::vec2(0.0f, 0.0f))
+		: Light::Layer(name), m_Direction(glm::vec2(0.0f, 0.0f))
 	{
+		m_Camera = std::make_shared<Light::Camera>(glm::vec2(0.0f), 800.0f / 600.0f, 1.0f);
+
 		Light::ResourceManager::LoadTexture("awesomeface", "res/Textures/awesomeface.png");
 		m_AwesomefaceTexture = Light::ResourceManager::GetTexture("awesomeface");
 
@@ -32,8 +34,8 @@ public:
 
 	void OnRender() override
 	{
-		m_Camera.CalculateProjection();
-		m_Camera.CalculateView();
+		m_Camera->CalculateProjection();
+		m_Camera->CalculateView();
 
 		Light::Renderer::BeginScene(m_Camera);
 
@@ -76,7 +78,7 @@ public:
 
 	void OnUpdate(float deltaTime) override
 	{
-		m_Camera.Move(m_Direction * m_Speed * deltaTime);
+		m_Camera->Move(m_Direction * m_Speed * deltaTime);
 	}
 
 };
