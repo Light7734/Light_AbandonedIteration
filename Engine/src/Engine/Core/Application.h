@@ -2,6 +2,8 @@
 
 #include "Base.h"
 
+#include "Debug/Instrumentor.h"
+
 #include "Layer/LayerStack.h"
 
 namespace Light {

@@ -120,6 +120,8 @@ namespace Light {
 
 	void Renderer::EndFrame()
 	{
+		m_RenderCommand->SwapBuffers();
+		m_RenderCommand->ClearBackBuffer();
 	}
 
 	void Renderer::BeginSceneImpl(const std::shared_ptr<Camera>& camera)
@@ -158,9 +160,6 @@ namespace Light {
 			m_TextureRenderer.Bind();
 			m_RenderCommand->DrawIndexed(m_TextureRenderer.GetQuadCount() * 6u);
 		}
-
-		m_RenderCommand->SwapBuffers();
-		m_RenderCommand->ClearBackBuffer();
 	}
 
 }

@@ -33,6 +33,7 @@ namespace Light {
 
 		m_MapCurrent += 4;
 		m_QuadCount++;
+		return true;
 	}
 
 	void TextureRendererProgram::SetCamera(const Camera& camera)

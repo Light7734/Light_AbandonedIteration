@@ -2,6 +2,9 @@
 
 #include "Base.h"
 
+#include <ostream>
+#include <fstream>
+
 #include <chrono>
 
 namespace Light {
