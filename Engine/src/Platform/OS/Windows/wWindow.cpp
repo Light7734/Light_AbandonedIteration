@@ -86,9 +86,14 @@ namespace Light {
 
 		// resized
 		case EventType::WindowResized:
-			m_GraphicsContext->OnWindowResize((const WindowResizedEvent&)event);
+			OnWindowResize((const WindowResizedEvent&)event);
 			break;
 		}
+	}
+
+	void wWindow::OnWindowResize(const WindowResizedEvent& event)
+	{
+		m_Properties.size = event.GetSize();
 	}
 
 	void wWindow::SetTitle(const std::string& title)
@@ -107,10 +112,8 @@ namespace Light {
 
 	void wWindow::SetSize(const glm::uvec2& size, bool additive /* = false */)
 	{
-		m_Properties.size.x = size.x == 0u ? m_Properties.size.x : additive ? m_Properties.size.x + size.x : size.x;
-		m_Properties.size.y = size.y == 0u ? m_Properties.size.y : additive ? m_Properties.size.y + size.y : size.y;
-
-		glfwSetWindowSize(m_Handle, m_Properties.size.x, m_Properties.size.y);
+		glfwSetWindowSize(m_Handle, size.x == 0u ? m_Properties.size.x : additive ? m_Properties.size.x + size.x : size.x,
+									size.y == 0u ? m_Properties.size.y : additive ? m_Properties.size.y + size.y : size.y);
 	}
 
 	void wWindow::BindGlfwEvents()
