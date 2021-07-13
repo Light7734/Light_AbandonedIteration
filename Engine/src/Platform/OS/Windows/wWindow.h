@@ -8,16 +8,17 @@ struct GLFWwindow;
 namespace Light {
 
 	class Event;
+	class WindowResizedEvent;
 
 	class wWindow : public Window
 	{
 	private:
-		// #todo: don't handle Windows's window with glfw, create it yourself
+		// #todo: don't handle Windows's window with glfw, create an HWND
 		GLFWwindow* m_Handle = nullptr;
 
 		std::function<void(Event&)> m_EventCallback;
 
-	public:
+	public: 
 		wWindow(std::function<void(Event&)> callback);
 
 		~wWindow();
@@ -37,6 +38,8 @@ namespace Light {
 
 	private:
 		void BindGlfwEvents();
+
+		void OnWindowResize(const WindowResizedEvent& event);
 	};
 
 }

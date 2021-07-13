@@ -17,8 +17,6 @@ namespace Light {
 	public:
 		glGraphicsContext(GLFWwindow* windowHandle);
 
-		virtual void OnWindowResize(const WindowResizedEvent& event) override;
-
 		virtual void LogDebugData() override;
 
 	private:

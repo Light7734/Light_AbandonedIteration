@@ -8,6 +8,7 @@ struct GLFWwindow;
 namespace Light {
 	
 	class Event;
+	class WindowResizedEvent;
 	
 	class lWindow : public Window
 	{
@@ -35,6 +36,8 @@ namespace Light {
 		
 	private:
 		void BindGlfwEvents();
+
+		void OnWindowResize(const WindowResizedEvent& event);
 	};
 	
 }

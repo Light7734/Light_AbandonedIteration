@@ -36,7 +36,7 @@ namespace Light {
 		glfwSetWindowUserPointer(m_Handle, &m_EventCallback);
 		BindGlfwEvents();
 		
-		// create graphics context
+		// create graphics contextG
 		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle));
 		LT_ENGINE_ASSERT(m_GraphicsContext, "lWindow::lWindow: failed to create 'GraphicsContext'");
 	}
@@ -62,11 +62,16 @@ namespace Light {
 
 		// resized
 		case EventType::WindowResized:
-			m_GraphicsContext->OnWindowResize((const WindowResizedEvent&)event);
+			OnWindowResize((const WindowResizedEvent&)event);
 			break;
 		}
 	}
 	
+	void lWindow::OnWindowResize(const WindowResizedEvent& event)
+	{
+		m_Properties.size = event.GetSize();
+	}
+
 	void lWindow::SetProperties(const WindowProperties& properties, bool affectsVisiblity /* = false */)
 	{
 		// save the visibility status and re-assign if 'affectVisibility' is false

@@ -6,6 +6,8 @@
 #include "Texture.h"
 #include "RenderCommand.h"
 
+#include "Events/WindowEvents.h"
+
 #include "Camera/Camera.h"
 
 #include <glm/glm.hpp>
@@ -28,11 +30,17 @@ namespace Light {
 		m_ViewProjectionBuffer = std::unique_ptr<ConstantBuffer>(ConstantBuffer::Create(ConstantBufferIndex::ViewProjection, sizeof(glm::mat4), sharedContext));
 
 		m_Blender = std::unique_ptr<Blender>(Blender::Create(sharedContext));
+		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
 	}
 
 	Renderer* Renderer::Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
 	{
 		return new Renderer(windowHandle, sharedContext);
+	}
+
+	void Renderer::OnWindowResize(const WindowResizedEvent& event)
+	{
+		m_RenderCommand->SetViewport(0u, 0u, event.GetSize().x, event.GetSize().y);
 	}
 
 	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint)
@@ -64,8 +72,8 @@ namespace Light {
 		// advance
 		if (!m_QuadRenderer.Advance())
 		{
-			EndFrame();
-			BeginFrame();
+			LT_ENGINE_WARN("Renderer::DrawQuadImpl: exceeded LT_MAX_QUAD_RENDERER_VERTICES: {}", LT_MAX_QUAD_RENDERER_VERTICES);
+			FlushScene();
 		}
 	}
 
@@ -101,26 +109,32 @@ namespace Light {
 		// advance
 		if (!m_TextureRenderer.Advance())
 		{
-			EndFrame();
-			BeginFrame();
+			LT_ENGINE_WARN("Renderer::DrawQuadImpl: exceeded LT_MAX_TEXTURE_RENDERER_VERTICES: {}", LT_MAX_TEXTURE_RENDERER_VERTICES);
+			FlushScene();
 		}
 	}
 
 	void Renderer::BeginFrame()
 	{
-
 	}
 
 	void Renderer::EndFrame()
 	{
-
 	}
 
-	void Renderer::BeginSceneImpl(const Camera& camera)
+	void Renderer::BeginSceneImpl(const std::shared_ptr<Camera>& camera)
 	{
 		glm::mat4* map = (glm::mat4*)m_ViewProjectionBuffer->Map();
-		map[0] = camera.GetProjection() * camera.GetView();
+		map[0] = camera->GetProjection() * camera->GetView();
 		m_ViewProjectionBuffer->UnMap();
+
+		m_QuadRenderer.Map();
+		m_TextureRenderer.Map();
+	}
+
+	void Renderer::FlushScene()
+	{
+		EndScene();
 
 		m_QuadRenderer.Map();
 		m_TextureRenderer.Map();
@@ -130,8 +144,6 @@ namespace Light {
 	{
 		m_QuadRenderer.UnMap();
 		m_TextureRenderer.UnMap();
-
-		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
 
 		//** QUAD_RENDERER **//
 		if (m_QuadRenderer.GetQuadCount())

@@ -42,4 +42,22 @@ namespace Light {
 		m_Context->GetDeviceContext()->DrawIndexed(count, 0u, 0u);
 	}
 
+	void dxRenderCommand::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+	{
+		// create viewport
+		D3D11_VIEWPORT viewport;
+
+		viewport.TopLeftX = x;
+		viewport.TopLeftY = y;
+
+		viewport.Width = width;
+		viewport.Height = height;
+
+		viewport.MinDepth = 0.0f;
+		viewport.MaxDepth = 1.0f;
+
+		// set viewport
+		m_Context->GetDeviceContext()->RSSetViewports(1u, &viewport);
+	}
+
 }

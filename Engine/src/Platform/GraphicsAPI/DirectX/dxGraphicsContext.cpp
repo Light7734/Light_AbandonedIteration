@@ -31,11 +31,6 @@ namespace Light {
 		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
 	}
 
-	void dxGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
-	{
-		SetResolution(event.GetSize().x, event.GetSize().y);
-	}
-
 	void dxGraphicsContext::SetupDeviceAndSwapChain(GLFWwindow* windowHandle)
 	{
 		// swap chain desc
@@ -127,23 +122,6 @@ namespace Light {
 
 		DXC(infoQueue->AddStorageFilterEntries(&filter));
 #endif
-	}
-
-	void dxGraphicsContext::SetResolution(unsigned int width, unsigned int height)
-	{
-		// viewport
-		D3D11_VIEWPORT viewport;
-
-		viewport.Width = width;
-		viewport.Height = height;
-
-		viewport.MinDepth = 0.0f;
-		viewport.MaxDepth = 1.0f;
-		viewport.TopLeftX = 0.0f;
-		viewport.TopLeftY = 0.0f;
-
-		// set viewport
-		m_DeviceContext->RSSetViewports(1u, &viewport);
 	}
 
 	void dxGraphicsContext::LogDebugData()

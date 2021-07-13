@@ -6,9 +6,10 @@ namespace Light {
 
 	class SharedContext;
 
+	// #todo: improve textures
 	class Texture
 	{
-	public:
+	public:	
 		static Texture* Create(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, std::shared_ptr<SharedContext> sharedContext);
 
 		Texture(const Texture&) = delete;

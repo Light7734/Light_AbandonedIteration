@@ -5,13 +5,13 @@
 
 #include "Events/Event.h"
 
+#include "Debug/Instrumentor.h"
+
 #include "Graphics/GraphicsContext.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/RenderCommand.h"
 
 #include "UserInterface/UserInterface.h"
-
-#include "Debug/Instrumentor.h"
 
 #include "Time/Timer.h"
 
@@ -94,7 +94,12 @@ namespace Light {
 	{
 		// window
 		if (event.HasCategory(WindowEventCategory))
+		{
 			m_Window->OnEvent(event);
+
+			if(event.GetEventType() == EventType::WindowResized)
+				m_Window->GetGfxContext()->GetRenderer()->OnWindowResize((const WindowResizedEvent&)event);
+		}
 
 		// user interface
 		if (event.HasCategory(InputEventCategory))

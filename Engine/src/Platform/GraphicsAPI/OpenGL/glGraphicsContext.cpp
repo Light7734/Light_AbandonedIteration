@@ -29,17 +29,6 @@ namespace Light {
 		SetDebugMessageCallback();
 	}
 
-	void glGraphicsContext::OnWindowResize(const WindowResizedEvent& event)
-	{
-		if (event.GetSize().x < 0 || event.GetSize().y < 0)
-		{
-			LT_ENGINE_ERROR("glGraphicsContext::OnWindowResize: 'width'/'height' cannot be negative: [{}x{}]", event.GetSize().x, event.GetSize().y);
-			return;
-		}
-
-		glViewport(0, 0, event.GetSize().x, event.GetSize().y);
-	}
-
 	void glGraphicsContext::LogDebugData()
 	{
 		// #todo: log more information

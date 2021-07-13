@@ -25,17 +25,12 @@ namespace Light {
 	public:
 		dxGraphicsContext(GLFWwindow* windowHandle);
 
-		virtual void OnWindowResize(const WindowResizedEvent& event) override;
-
 		virtual void LogDebugData() override;
 
 	private:
 		void SetupDeviceAndSwapChain(GLFWwindow* windowHandle);
 		void SetupRenderTargets();
 		void SetupDebugInterface();
-
-
-		void SetResolution(unsigned int width, unsigned int height);
 	};
 
 }

@@ -44,8 +44,6 @@ namespace Light {
 
 		virtual ~GraphicsContext();
 
-		virtual void OnWindowResize(const WindowResizedEvent& event) = 0;
-
 		virtual void LogDebugData() = 0;
 
 		static inline GraphicsAPI GetGraphicsAPI() { return s_Context->m_GraphicsAPI; }
