@@ -20,6 +20,8 @@ namespace Light {
 
 	void Instrumentor::BeginSessionImpl(const std::string& outputPath)
 	{
+		std::filesystem::create_directory(outputPath.substr(0, outputPath.find_last_of('/') + 1));
+
 		m_OutputFileStream.open(outputPath);
 		m_OutputFileStream << "{\"traceEvents\":[";
 	}

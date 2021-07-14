@@ -17,7 +17,7 @@ namespace Light {
 	};
 
 	// #todo: add event categories
-	// #todo: use ofstream in a seperate thread
+	// #todo: use ofstream in a separate thread
 	class Instrumentor
 	{
 	private:
