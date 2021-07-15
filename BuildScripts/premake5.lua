@@ -16,8 +16,9 @@ dependenciesdir = "%{wks.location}/Dependencies/"
 outputdir = "%{cfg.buildcfg}/%{cfg.system}/%{cfg.architecture}/%{prj.name}"
 
 -- Projects --
-include "../Sandbox/"
 include "../Engine/"
+include "../Mirror/"
+include "../Sandbox/"
 
 -- Dependencies --
 group "Dependencies"
