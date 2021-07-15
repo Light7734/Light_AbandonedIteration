@@ -5,6 +5,7 @@
 #include "Buffers.h"
 #include "Texture.h"
 #include "RenderCommand.h"
+#include "Framebuffer.h"
 
 #include "Events/WindowEvents.h"
 
@@ -124,8 +125,16 @@ namespace Light {
 		m_RenderCommand->ClearBackBuffer();
 	}
 
-	void Renderer::BeginSceneImpl(const std::shared_ptr<Camera>& camera)
+	void Renderer::BeginSceneImpl(const std::shared_ptr<Camera>& camera, const std::shared_ptr<Framebuffer>& targetFrameBuffer /* = nullptr */)
 	{
+		m_TargetFramebuffer = targetFrameBuffer;
+
+		if (targetFrameBuffer)
+			targetFrameBuffer->BindAsTarget();
+		else
+			m_RenderCommand->DefaultTargetFramebuffer();
+
+
 		glm::mat4* map = (glm::mat4*)m_ViewProjectionBuffer->Map();
 		map[0] = camera->GetProjection() * camera->GetView();
 		m_ViewProjectionBuffer->UnMap();
@@ -144,6 +153,8 @@ namespace Light {
 
 	void Renderer::EndSceneImpl()
 	{
+		// m_Blender->Disable();
+		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
 		m_QuadRenderer.UnMap();
 		m_TextureRenderer.UnMap();
 
@@ -159,6 +170,12 @@ namespace Light {
 		{
 			m_TextureRenderer.Bind();
 			m_RenderCommand->DrawIndexed(m_TextureRenderer.GetQuadCount() * 6u);
+		}
+
+		if(m_TargetFramebuffer)
+		{
+			m_TargetFramebuffer = nullptr;
+			m_RenderCommand->DefaultTargetFramebuffer();
 		}
 	}
 

@@ -3,19 +3,17 @@
 
 #include "Window.h"
 
-#include "Events/Event.h"
-
 #include "Debug/Instrumentor.h"
+
+#include "Events/Event.h"
 
 #include "Graphics/GraphicsContext.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/RenderCommand.h"
 
-#include "UserInterface/UserInterface.h"
-
 #include "Time/Timer.h"
 
-#include <filesystem>
+#include "UserInterface/UserInterface.h"
 
 namespace Light {
 
@@ -37,7 +35,7 @@ namespace Light {
 	void Application::GameLoop()
 	{
 		// check
-		LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop(pre): LayerStack is empty");
+		// LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop(pre): LayerStack is empty");
 
 		// log debug data
 		LogDebugData();
@@ -73,6 +71,7 @@ namespace Light {
 				// render user interface
 				LT_PROFILE_SCOPE("GameLoop::UserInterface");
 				m_Window->GetGfxContext()->GetUserInterface()->Begin();
+				m_LayerStack.OnUserInterfaceUpdate();
 				m_Window->GetGfxContext()->GetUserInterface()->End();
 			}
 

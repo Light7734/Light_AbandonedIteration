@@ -38,13 +38,13 @@ namespace Light {
 
 		// blender desc
 		m_Desc = { };
-		
+
 		m_Desc.RenderTarget[0].BlendEnable = true;
 		m_Desc.RenderTarget[0].SrcBlend = D3D11_BLEND_ZERO;
 		m_Desc.RenderTarget[0].DestBlend = D3D11_BLEND_ZERO;
 		m_Desc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 		m_Desc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
-		m_Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+		m_Desc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE;
 		m_Desc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 		m_Desc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
@@ -65,7 +65,7 @@ namespace Light {
 		DXC(m_Context->GetDevice()->CreateBlendState(&m_Desc, &m_BlendState));
 
 		// bind blend state
-		m_Context->GetDeviceContext()->OMSetBlendState(m_BlendState.Get(), nullptr, 0xffffffff);
+		m_Context->GetDeviceContext()->OMSetBlendState(m_BlendState.Get(), nullptr, 0x0000000f);
 	}
 
 	void dxBlender::Disable()

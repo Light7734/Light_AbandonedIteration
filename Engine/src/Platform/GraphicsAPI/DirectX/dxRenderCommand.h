@@ -24,6 +24,8 @@ namespace Light {
 		virtual void Draw(unsigned int count) override;
 		virtual void DrawIndexed(unsigned int count) override;
 
+		virtual void DefaultTargetFramebuffer() override;
+
 		virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
 	};
 

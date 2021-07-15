@@ -47,9 +47,11 @@ namespace Light {
 		virtual void LogDebugData() = 0;
 
 		static inline GraphicsAPI GetGraphicsAPI() { return s_Context->m_GraphicsAPI; }
+		static inline std::shared_ptr<SharedContext> GetSharedContext() { return s_Context->m_SharedContext; }
 
 		inline Renderer* GetRenderer() { return m_Renderer.get(); }
 		inline UserInterface* GetUserInterface() { return m_UserInterface.get(); }
+
 
 	protected:
 		GraphicsContext() = default;

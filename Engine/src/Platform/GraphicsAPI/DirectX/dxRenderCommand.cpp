@@ -28,7 +28,7 @@ namespace Light {
 
 	void dxRenderCommand::ClearBackBuffer()
 	{
-		float colors[] = { 1.2f, 0.4f, 0.9f, 1.0f }; // #todo: use a variable for this
+		float colors[] = { 0.1, 0.35f, 0.46f, 1.0f }; // #todo: use a local variable for this
 		m_Context->GetDeviceContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), colors);
 	}
 
@@ -40,6 +40,11 @@ namespace Light {
 	void dxRenderCommand::DrawIndexed(unsigned int count)
 	{
 		m_Context->GetDeviceContext()->DrawIndexed(count, 0u, 0u);
+	}
+
+	void dxRenderCommand::DefaultTargetFramebuffer()
+	{
+		m_Context->GetDeviceContext()->OMSetRenderTargets(1, m_Context->GetRenderTargetView().GetAddressOf(), nullptr);
 	}
 
 	void dxRenderCommand::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
