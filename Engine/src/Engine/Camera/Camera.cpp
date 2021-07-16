@@ -25,6 +25,12 @@ namespace Light {
 		                           FLT_MAX, FLT_MIN);
 	}
 
+	void Camera::OnResize(const glm::vec2& size)
+	{
+		m_AspectRatio = size.x / size.y;
+		CalculateProjection();
+	}
+
 	void Camera::Move(const glm::vec2& position)
 	{
 		m_Position += position;

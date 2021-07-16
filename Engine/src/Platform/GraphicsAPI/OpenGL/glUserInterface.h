@@ -3,10 +3,15 @@
 #include "Base.h"
 #include "UserInterface/UserInterface.h"
 
+class GLFWwindow;
+
 namespace Light {
 
 	class glUserInterface : public UserInterface
 	{
+	private:
+		GLFWwindow* m_WindowHandle;
+
 	public:
 		glUserInterface(GLFWwindow* windowHandle);
 		~glUserInterface();

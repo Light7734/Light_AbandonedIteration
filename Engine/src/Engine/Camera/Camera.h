@@ -25,6 +25,8 @@ namespace Light {
 		void CalculateView();
 		void CalculateProjection();
 
+		void OnResize(const glm::vec2& size);
+
 		inline const glm::mat4& GetView() const { return m_View; }
 		inline const glm::mat4& GetProjection() const { return m_Projection; }
 

@@ -28,6 +28,8 @@ namespace Light {
 		virtual void BindAsTarget() = 0;
 		virtual void BindAsResource() = 0;
 
+		virtual void Resize(const glm::vec2& size) = 0;
+
 	protected:
 		Framebuffer() = default;
 	};

@@ -5,9 +5,12 @@
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
 
+#include <GLFW/glfw3.h>
+
 namespace Light {
 
 	glUserInterface::glUserInterface(GLFWwindow* windowHandle)
+		: m_WindowHandle(windowHandle)
 	{
 		// create context
 		IMGUI_CHECKVERSION();
@@ -16,6 +19,11 @@ namespace Light {
 		// configure  io
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+		io.ConfigFlags |= ImGuiBackendFlags_PlatformHasViewports;
+		io.ConfigFlags |= ImGuiBackendFlags_RendererHasViewports;
 
 		// style color
 		ImGui::StyleColorsDark();
@@ -46,6 +54,10 @@ namespace Light {
 	{
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
+		glfwMakeContextCurrent(m_WindowHandle);
 	}
 
 	void glUserInterface::LogDebugData()

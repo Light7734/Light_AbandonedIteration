@@ -1,13 +1,48 @@
 #include "ltpch.h"
 #include "glFramebuffer.h"
 
+#include <glm/glm.hpp>
+
 #include <glad/glad.h>
 
 namespace Light {
 
 	glFramebuffer::glFramebuffer(const FramebufferSpecification& specification)
-		: m_Specification(specification)
+		: m_Specification(specification), m_BufferID(0u), m_ColorAttachment(0u), m_DepthStencilAttachment(0u)
 	{
+		Resize({ specification.width, specification.height });
+	}
+
+	glFramebuffer::~glFramebuffer()
+	{
+		glDeleteFramebuffers(1, &m_BufferID);
+		glDeleteTextures(1, &m_ColorAttachment);
+		// glDeleteTextures(1, &m_DepthStencilAttachment);
+	}
+
+	void glFramebuffer::BindAsTarget()
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, m_BufferID);
+		glViewport(0, 0, m_Specification.width, m_Specification.height);
+
+		glClearColor(m_Specification.defaultColor.r, m_Specification.defaultColor.g, m_Specification.defaultColor.b, m_Specification.defaultColor.a);
+		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	void glFramebuffer::BindAsResource()
+	{
+		LT_ENGINE_ERROR("glFramebuffer::BindAsResource: NO_IMPLEMENT!");
+	}
+
+	void glFramebuffer::Resize(const glm::vec2& size)
+	{
+		if (m_BufferID)
+		{
+			glDeleteFramebuffers(1, &m_BufferID);
+			glDeleteTextures(1, &m_ColorAttachment);
+			// glDeleteTextures(1, &m_DepthStencilAttachment);
+		}
+
 		glCreateFramebuffers(1, &m_BufferID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_BufferID);
 
@@ -30,23 +65,6 @@ namespace Light {
 		LT_ENGINE_ASSERT((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE), "glFramebuffer::Validate: framebuffer is incomplete");
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	}
-
-	glFramebuffer::~glFramebuffer()
-	{
-		glDeleteFramebuffers(1, &m_BufferID);
-	}
-
-	void glFramebuffer::BindAsTarget()
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, m_BufferID);
-		glClearColor(m_Specification.defaultColor.r, m_Specification.defaultColor.g, m_Specification.defaultColor.b, m_Specification.defaultColor.a);
-		glClear(GL_COLOR_BUFFER_BIT);
-	}
-
-	void glFramebuffer::BindAsResource()
-	{
-		LT_ENGINE_ERROR("glFramebuffer::BindAsResource: NO_IMPLEMENT!");
 	}
 
 }

@@ -54,4 +54,20 @@ namespace Light {
 		LT_ENGINE_ERROR("dxFramebuffer::BindAsResource: NO_IMPLEMENT");
 	}
 
+	void dxFramebuffer::Resize(const glm::vec2& size)
+	{
+		D3D11_TEXTURE2D_DESC textureDesc;
+		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+
+		m_ColorAttachment->GetDesc(&textureDesc);
+		m_RenderTargetView->GetDesc(&rtvDesc);
+		m_ResourceView->GetDesc(&srvDesc);
+
+		HRESULT hr;
+		DXC(m_Context->GetDevice()->CreateTexture2D(&textureDesc, nullptr, &m_ColorAttachment));
+		DXC(m_Context->GetDevice()->CreateRenderTargetView(m_ColorAttachment.Get(), &rtvDesc, &m_RenderTargetView));
+		DXC(m_Context->GetDevice()->CreateShaderResourceView(m_ColorAttachment.Get(), &srvDesc, &m_ResourceView));
+	}
+
 }	

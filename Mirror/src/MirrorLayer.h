@@ -53,10 +53,20 @@ public:
 	{
 		ImGui::Begin("GameView");
 
+		static ImVec2 regionAvailPrev = {0, 0};
+		ImVec2 regionAvail = ImGui::GetContentRegionAvail();
+
+		if (regionAvail.x != regionAvailPrev.x || regionAvail.y != regionAvailPrev.y)
+		{
+			m_Framebuffer->Resize({ regionAvail.x, regionAvail.y });
+			m_Camera->OnResize({ regionAvail.x, regionAvail.y });
+			regionAvailPrev = regionAvail;
+		}
+
 		if(Light::GraphicsContext::GetGraphicsAPI() == Light::GraphicsAPI::DirectX)
-			ImGui::Image(m_Framebuffer->GetColorAttachment(), ImVec2(400, 300));
+			ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail);
 		else
-			ImGui::Image(m_Framebuffer->GetColorAttachment(), ImVec2(400, 300), ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail, ImVec2(0, 1), ImVec2(1, 0));
 
 		ImGui::End();
 	}

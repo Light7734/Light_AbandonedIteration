@@ -20,6 +20,8 @@ namespace Light {
 
 		void BindAsTarget() override;
 		void BindAsResource() override;
+
+		void Resize(const glm::vec2& size) override;
 	};
 
 }

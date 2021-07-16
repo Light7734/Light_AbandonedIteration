@@ -22,6 +22,12 @@ namespace Light {
 		ImGuiIO& io = ImGui::GetIO();
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
+		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+		io.ConfigFlags |= ImGuiBackendFlags_PlatformHasViewports;
+		io.ConfigFlags |= ImGuiBackendFlags_RendererHasViewports;
+
 		// style
 		ImGui::StyleColorsDark();
 
@@ -51,6 +57,9 @@ namespace Light {
 	{
 		ImGui::Render();
 		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+		ImGui::UpdatePlatformWindows();
+		ImGui::RenderPlatformWindowsDefault();
 	}
 
 	void dxUserInterface::LogDebugData()
