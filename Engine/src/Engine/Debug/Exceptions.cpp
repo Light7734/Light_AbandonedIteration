@@ -11,9 +11,14 @@
 
 namespace Light {
 
-	FailedAssertion::FailedAssertion(const char* file, int line)
+	FailedEngineAssertion::FailedEngineAssertion(const char* file, int line)
 	{
-		LT_ENGINE_CRITICAL("FailedAssertion::FailedAssertion: assertion failed in: {} (line {})", file, line);
+		LT_ENGINE_CRITICAL("FailedAssertion::FailedAssertion: engine assertion failed in: {} (line {})", file, line);
+	}
+
+	FailedClientAssertion::FailedClientAssertion(const char* file, int line)
+	{
+		LT_ENGINE_CRITICAL("FailedClientAssertion::FailedClientAssertion: client assertion failed in: {} (line {})", file, line);
 	}
 
 	glException::glException(unsigned int source, unsigned int type, unsigned int id, const char* msg)

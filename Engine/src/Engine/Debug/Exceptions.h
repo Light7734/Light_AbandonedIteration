@@ -4,9 +4,14 @@
 
 namespace Light {
 	
-	struct FailedAssertion : std::exception
+	struct FailedEngineAssertion : std::exception
 	{
-		FailedAssertion(const char* file, int line);
+		FailedEngineAssertion(const char* file, int line);
+	};
+
+	struct FailedClientAssertion : std::exception
+	{
+		FailedClientAssertion(const char* file, int line);
 	};
 
 	// OpenGL

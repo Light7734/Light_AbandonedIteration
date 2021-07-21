@@ -9,19 +9,16 @@
 
 #include <memory>
 
-#define LT_WIN(x) // windows
-#define LT_LIN(x) // linux
-#define LT_MAC(x) // mac
 
-#define LT_VERSION "0.7.0" 
+// version
+#define LT_VERSION "0.7.2" 
 ///*** [  CHANGE_LOG  ] ***///
 // --------------------------------------------------------------------
-// Note: change log starts from 2021-07-21, the starting version is 
-// 0.7.0, I came up with that version because of the engine's major
-// features: 
-//     projects: 'Engine', 'Sandbox', 'Mirror' + 0.3
-//     graphics apis: 'OpenGL', 'DirectX11' + 0.2
-//     platforms: 'Windows', 'Linux' + 0.2
+// Note: change log starts from 2021-07-21, the starting version is 0.7.0,
+// I came up with that version because of:
+//     projects: 'Engine', 'Sandbox', 'Mirror' [+0.3]
+//     graphics apis: 'OpenGL', 'DirectX11'    [+0.2]
+//     platforms: 'Windows', 'Linux'           [+0.2]
 // --------------------------------------------------------------------
 // 
 // 0.7.0: started the change log
@@ -29,7 +26,16 @@
 // 0.7.1: [ LT_BREAK ]
 //     - Added the 'LT_BERAK' macro, a portable debug-trap
 // 
+// 0.7.2: [ Failed engine/client assertion ]
+//     - Separated 'FailedAssertion' into 'FailedEngineAssertion' and 'FailedClientAssertion'
+//     - Minor adjustment to the change log
+//
 ///*** [  CHANGE_LOG  ] ***///
+
+// platform
+#define LT_WIN(x) // windows
+#define LT_LIN(x) // linux
+#define LT_MAC(x) // mac
 
 #if defined(LIGHT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"
@@ -48,11 +54,13 @@
 
 #endif
 
+// operations
 #define BIT(x) 1 << x
 
+// assertions
 // #todo: log to file in distribution builds
-#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); LT_BREAK(); throw ::Light::FailedAssertion(__FILE__, __LINE__); } }
-#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); LT_BREAK(); } }
+#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); LT_BREAK(); throw ::Light::FailedEngineAssertion(__FILE__, __LINE__); } }
+#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); LT_BREAK(); throw ::Light::FailedClientAssertion(__FILE__, __LINE__); } } }
 
 
 ///*** [  PORTABLES  ] ***///

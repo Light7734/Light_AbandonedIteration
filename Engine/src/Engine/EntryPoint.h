@@ -20,20 +20,25 @@ int main(int argc, char** argv)
 
 		application->GameLoop();
 	}
-	catch (Light::FailedAssertion)
+	catch (Light::FailedEngineAssertion)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedAssertion'");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedEngineAssertion'");
 		exitCode = -1;
+	}
+	catch (Light::FailedClientAssertion)
+	{
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedClientAssertion'");
+		exitCode = -2;
 	}
 	catch(Light::glException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
-		exitCode = -2;
+		exitCode = -3;
 	}
 	catch (Light::dxException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'dxException'");
-		exitCode = -3;
+		exitCode = -4;
 	}
 
 	delete application;
@@ -60,15 +65,20 @@ int main(int argc, char* argv[])
 
 		application->GameLoop();
 	}
-	catch (Light::FailedAssertion)
+	catch (Light::FailedEngineAssertion)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedAssertion'");
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedEngineAssertion'");
 		exitCode = -1;
+	}
+	catch (Light::FailedClientAssertion)
+	{
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedClientAssertion'");
+		exitCode = -2;
 	}
 	catch(Light::glException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
-		exitCode = -2;
+		exitCode = -3;
 	}
 
 	delete application;
