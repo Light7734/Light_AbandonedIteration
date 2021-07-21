@@ -24,17 +24,12 @@ namespace Light {
 		static inline void AttachLayer(Layer* layer) { s_Context->AttachLayerImpl(layer); }
 		static inline void DetachLayer(Layer* layer) { s_Context->DetachLayerImpl(layer); }
 
-		void OnUpdate(float deltaTime);
-		void OnUserInterfaceUpdate();
-
-		void OnRender();
-
-		void OnEvent(const Event& event);
-
 		inline bool IsEmpty() { return m_Layers.empty(); }
 
 		std::vector<Layer*>::iterator begin() { return m_Layers.begin(); }
 		std::vector<Layer*>::iterator end() { return m_Layers.end(); }
+		std::vector<Layer*>::reverse_iterator rbegin() { return m_Layers.rbegin(); }
+		std::vector<Layer*>::reverse_iterator rend() { return m_Layers.rend(); }
 
 	private:
 		void AttachLayerImpl(Layer* layer);

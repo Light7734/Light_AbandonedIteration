@@ -11,6 +11,8 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/RenderCommand.h"
 
+#include "Layer/Layer.h"
+
 #include "Time/Timer.h"
 
 #include "UserInterface/UserInterface.h"
@@ -56,14 +58,19 @@ namespace Light {
 			{
 				// update layers
 				LT_PROFILE_SCOPE("GameLoop::Update");
-				m_LayerStack.OnUpdate(deltaTimer.GetDeltaTime());
+
+				for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); it++)
+					(*it)->OnUpdate(deltaTimer.GetDeltaTime());
 			}
 
 			{
 				// render layers
 				LT_PROFILE_SCOPE("GameLoop::Render");
 				m_Window->GetGfxContext()->GetRenderer()->BeginFrame();
-				m_LayerStack.OnRender();
+
+				for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); it++)
+					(*it)->OnRender();
+
 				m_Window->GetGfxContext()->GetRenderer()->EndFrame();
 			}
 
@@ -71,7 +78,10 @@ namespace Light {
 				// render user interface
 				LT_PROFILE_SCOPE("GameLoop::UserInterface");
 				m_Window->GetGfxContext()->GetUserInterface()->Begin();
-				m_LayerStack.OnUserInterfaceUpdate();
+
+				for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); it++)
+					(*it)->OnUserInterfaceUpdate();
+
 				m_Window->GetGfxContext()->GetUserInterface()->End();
 			}
 
@@ -108,7 +118,8 @@ namespace Light {
 		// ...
 
 		// layers
-		m_LayerStack.OnEvent(event);
+		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
+			if ((*it)->OnEvent(event)) return;
 	}
 
 	void Application::LogDebugData()

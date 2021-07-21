@@ -4,6 +4,8 @@
 
 namespace Light {
 
+	class Event;
+
 	class MouseMovedEvent;
 	class ButtonPressedEvent;
 	class ButtonReleasedEvent;
@@ -35,6 +37,9 @@ namespace Light {
 
 		virtual void OnRender() {}
 
+		bool OnEvent(const Event& event);
+
+	protected:
 		//** MOUSE_EVENTS //
 		virtual bool OnMouseMoved(const MouseMovedEvent& event) { return false; }
 		virtual bool OnButtonPressed(const ButtonPressedEvent& event) { return false; }

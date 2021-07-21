@@ -20,7 +20,7 @@ public:
 		m_Window->SetProperties(properties);
 
 		// Attach the sandbox layer
-		Light::LayerStack::AttachLayer(new MirrorLayer("SandboxLayer"));
+		Light::LayerStack::AttachLayer(new MirrorLayer("MirrorLayer"));
 	}
 		
 	~Mirror()

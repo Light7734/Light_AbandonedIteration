@@ -29,7 +29,20 @@
 // 0.7.2: [ Failed engine/client assertion ]
 //     - Separated 'FailedAssertion' into 'FailedEngineAssertion' and 'FailedClientAssertion'
 //     - Minor adjustment to the change log
-//
+// 
+// 0.7.3: [ Layer ]
+//     - Added 'Layer::OnEvent()', 'Layer' now handles an event by itself and doesn't need another class to determine the event's type
+//     
+//     - Added reverse iterators 'rend()' and 'rbegin()' to 'LayerStack'
+//     
+//     - Removed 'LayerStack::On*()', 'LayerStack'
+//     
+//     - 'Layer::On*Event()' are now protected and called by 'Layer::OnEvent()'
+//     
+//     - 'Application' now handles iterating through the 'Layer's and calling the update / on * functions
+//     
+//     - Fixed a typo where in 'Mirror' where the name of the 'MirrorLayer' was "SandboxLayer" instead of "MirrorLayer"
+// 
 ///*** [  CHANGE_LOG  ] ***///
 
 // platform
