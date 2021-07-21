@@ -15,6 +15,8 @@ private:
 
 	std::shared_ptr<Light::Framebuffer> m_Framebuffer;
 
+	bool m_GameSceneEvents = false;
+
 public:
 	MirrorLayer(const std::string& name)
 		: Light::Layer(name), m_Direction(glm::vec2(0.0f, 0.0f))
@@ -51,59 +53,45 @@ public:
 
 	void OnUserInterfaceUpdate()
 	{
-		ImGui::Begin("GameView");
-
-		static ImVec2 regionAvailPrev = {0, 0};
-		ImVec2 regionAvail = ImGui::GetContentRegionAvail();
-
-		if (regionAvail.x != regionAvailPrev.x || regionAvail.y != regionAvailPrev.y)
+		if (ImGui::Begin("GameView"))
 		{
-			m_Framebuffer->Resize({ regionAvail.x, regionAvail.y });
-			m_Camera->OnResize({ regionAvail.x, regionAvail.y });
-			regionAvailPrev = regionAvail;
-		}
+			Light::Input::ReceiveGameEvents(ImGui::IsWindowFocused());
 
-		if(Light::GraphicsContext::GetGraphicsAPI() == Light::GraphicsAPI::DirectX)
-			ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail);
-		else
-			ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail, ImVec2(0, 1), ImVec2(1, 0));
+			static ImVec2 regionAvailPrev = { 0, 0 };
+			ImVec2 regionAvail = ImGui::GetContentRegionAvail();
+
+			if (regionAvail.x != regionAvailPrev.x || regionAvail.y != regionAvailPrev.y)
+			{
+				m_Framebuffer->Resize({ regionAvail.x, regionAvail.y });
+				m_Camera->OnResize({ regionAvail.x, regionAvail.y });
+				regionAvailPrev = regionAvail;
+			}
+
+			if (Light::GraphicsContext::GetGraphicsAPI() == Light::GraphicsAPI::DirectX)
+				ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail);
+			else
+				ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail, ImVec2(0, 1), ImVec2(1, 0));
+		}
 
 		ImGui::End();
 	}
 
-	bool OnKeyPressed(const Light::KeyPressedEvent& event) override
-	{
-		if (event.GetKey() == 65) // GLFW_KEY_A
-			m_Direction.x +=  -1.0f;
-		if(event.GetKey() == 68)  // GLFW_KEY_D
-			m_Direction.x += 1.0f;
-
-		if (event.GetKey() == 87) // GLFW_KEY_W
-			m_Direction.y +=  1.0f;
-		if (event.GetKey() == 83) // GLFW_KEY_S
-			m_Direction.y += -1.0f;
-
-		return true;
-	}
-
-	bool OnKeyReleased(const Light::KeyReleasedEvent& event) override
-	{
-		// #todo: add input class
-		if (event.GetKey() == 65)  // GLFW_KEY_A
-			m_Direction.x -= -1.0f;
-		if (event.GetKey() == 68)  // GLFW_KEY_D
-			m_Direction.x -= 1.0f;
-
-		if (event.GetKey() == 87) // GLFW_KEY_W
-			m_Direction.y -=  1.0f;
-		if (event.GetKey() == 83) // GLFW_KEY_S
-			m_Direction.y -= -1.0f;
-
-		return true;
-	}
-
 	void OnUpdate(float deltaTime) override
 	{
+		if (Light::Input::GetKeyboardKey(KEY_A))
+			m_Direction.x = -1.0f;
+		else if (Light::Input::GetKeyboardKey(KEY_D))
+			m_Direction.x = 1.0f;
+		else
+			m_Direction.x = 0.0f;
+
+		if (Light::Input::GetKeyboardKey(KEY_W))
+			m_Direction.y = 1.0f;
+		else if (Light::Input::GetKeyboardKey(KEY_S))
+			m_Direction.y = -1.0f;
+		else
+			m_Direction.y = 0.0f;
+
 		m_Camera->Move(m_Direction * m_Speed * deltaTime);
 	}
 

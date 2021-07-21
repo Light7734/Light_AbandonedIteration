@@ -110,14 +110,15 @@ namespace Light {
 				m_Window->GetGfxContext()->GetRenderer()->OnWindowResize((const WindowResizedEvent&)event);
 		}
 
-		// user interface
+		// input
 		if (event.HasCategory(InputEventCategory))
-			m_Window->GetGfxContext()->GetUserInterface()->OnInput(event);
-
-		// #todo: add input manager
-		// ...
+			m_Input.OnEvent(event);
 
 		// layers
+		// return if the event is an input event and 'Input' has disabled the game events
+		if (event.HasCategory(InputEventCategory) && !m_Input.IsReceivingGameEvents()) 
+			return;
+
 		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
 			if ((*it)->OnEvent(event)) return;
 	}

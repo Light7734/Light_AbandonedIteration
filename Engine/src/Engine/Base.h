@@ -11,7 +11,7 @@
 
 
 // version
-#define LT_VERSION "0.7.2" 
+#define LT_VERSION "0.7.4" 
 ///*** [  CHANGE_LOG  ] ***///
 // --------------------------------------------------------------------
 // Note: change log starts from 2021-07-21, the starting version is 0.7.0,
@@ -20,6 +20,7 @@
 //     graphics apis: 'OpenGL', 'DirectX11'    [+0.2]
 //     platforms: 'Windows', 'Linux'           [+0.2]
 // --------------------------------------------------------------------
+// 
 // 
 // 0.7.0: started the change log
 //
@@ -30,7 +31,7 @@
 //     - Separated 'FailedAssertion' into 'FailedEngineAssertion' and 'FailedClientAssertion'
 //     - Minor adjustment to the change log
 // 
-// 0.7.3: [ Layer ]
+// 0.7.3: [ Layer Improvements ]
 //     - Added 'Layer::OnEvent()', 'Layer' now handles an event by itself and doesn't need another class to determine the event's type
 //     
 //     - Added reverse iterators 'rend()' and 'rbegin()' to 'LayerStack'
@@ -43,9 +44,15 @@
 //     
 //     - Fixed a typo where in 'Mirror' where the name of the 'MirrorLayer' was "SandboxLayer" instead of "MirrorLayer"
 // 
+// 0.7.4 [ Input ]
+//     - Added 'Input'
+//     - - Added <InputCodes>
+//     - The 'MirrorLayer''s ImGuiWindow, "GameView" will not receive/react to input events if the window is not focused
+// 
+// 
 ///*** [  CHANGE_LOG  ] ***///
 
-// platform
+// platform	
 #define LT_WIN(x) // windows
 #define LT_LIN(x) // linux
 #define LT_MAC(x) // mac

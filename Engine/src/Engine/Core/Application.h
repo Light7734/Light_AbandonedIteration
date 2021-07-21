@@ -6,6 +6,8 @@
 
 #include "Layer/LayerStack.h"
 
+#include "Input/Input.h"
+
 namespace Light {
 
 	class Window;
@@ -18,6 +20,7 @@ namespace Light {
 	private:
 		std::unique_ptr<Instrumentor> m_Instrumentor = nullptr;
 		LayerStack m_LayerStack;
+		Input m_Input;
 
 	protected:
 		std::unique_ptr<Window> m_Window = nullptr;

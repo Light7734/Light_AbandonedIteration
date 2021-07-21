@@ -21,6 +21,10 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Framebuffer.h"
 
+//** INPUT **//
+#include "Input/Input.h"
+#include "Input/InputCodes.h"
+
 //** LAYER **//
 #include "Layer/Layer.h"
 #include "Layer/LayerStack.h"
