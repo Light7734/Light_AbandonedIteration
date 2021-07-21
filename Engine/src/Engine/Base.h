@@ -13,8 +13,20 @@
 #define LT_LIN(x) // linux
 #define LT_MAC(x) // mac
 
-// #todo: figure out a proper way to give version numbers
-#define LT_VERSION "0.5.1" 
+#define LT_VERSION "0.7.0" 
+///*** [  CHANGE_LOG  ] ***///
+// --------------------------------------------------------------------
+// Note: change log starts from 2021-07-21, the starting version is 
+// 0.7.0, I came up with that version because of the engine's major
+// features: 
+//     projects: 'Engine', 'Sandbox', 'Mirror' + 0.3
+//     graphics apis: 'OpenGL', 'DirectX11' + 0.2
+//     platforms: 'Windows', 'Linux' + 0.2
+// --------------------------------------------------------------------
+// 
+// 0.7.0: started the change log
+// 
+///*** [  CHANGE_LOG  ] ***///
 
 #if defined(LIGHT_PLATFORM_WINDOWS)
 	#define LT_BUILD_PLATFORM "Windows"
@@ -36,11 +48,8 @@
 #define BIT(x) 1 << x
 
 // #todo: log to file in distribution builds
-#if defined(LIGHT_PLATFORM_WINDOWS)
-	#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); __debugbreak(); throw ::Light::FailedAssertion(__FILE__, __LINE__); } }
 	#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); __debugbreak(); } }
 
 #elif defined(LIGHT_PLATFORM_LINUX)
-	#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); __builtin_trap(); throw ::Light::FailedAssertion(__FILE__, __LINE__); } }
 	#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); __builtin_trap(); } }	
 #endif
