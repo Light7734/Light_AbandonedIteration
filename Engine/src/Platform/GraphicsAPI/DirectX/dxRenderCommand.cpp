@@ -49,6 +49,9 @@ namespace Light {
 
 	void dxRenderCommand::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
 	{
+		// #todo: maybe call this somewhere else??
+		SetResolution(width, height);
+
 		// create viewport
 		D3D11_VIEWPORT viewport;
 
@@ -63,6 +66,26 @@ namespace Light {
 
 		// set viewport
 		m_Context->GetDeviceContext()->RSSetViewports(1u, &viewport);
+	}
+
+	void dxRenderCommand::SetResolution(unsigned int width, unsigned int height)
+	{
+		HRESULT hr;
+
+		// remove render target
+		ID3D11RenderTargetView* nullViews[] = { nullptr };
+		m_Context->GetDeviceContext()->OMSetRenderTargets(1u, nullViews, nullptr);
+		m_Context->GetRenderTargetViewRef().Reset();
+
+		// resize buffer
+		DXC(m_Context->GetSwapChain()->ResizeBuffers(0u, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, NULL));
+
+		// create render target
+		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer = nullptr;
+		DXC(m_Context->GetSwapChain()->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
+		DXC(m_Context->GetDevice()->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_Context->GetRenderTargetViewRef()));
+		// set render target
+		m_Context->GetDeviceContext()->OMSetRenderTargets(1, m_Context->GetRenderTargetView().GetAddressOf(), nullptr);
 	}
 
 }

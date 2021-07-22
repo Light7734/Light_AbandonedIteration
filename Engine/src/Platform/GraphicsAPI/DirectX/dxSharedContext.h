@@ -12,24 +12,21 @@ namespace Light {
 	class dxSharedContext : public SharedContext
 	{
 	private:
-		Microsoft::WRL::ComPtr<ID3D11Device          > m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext   > m_DeviceContext;
-		Microsoft::WRL::ComPtr<IDXGISwapChain        > m_SwapChain;
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
+		Microsoft::WRL::ComPtr<ID3D11Device          > m_Device           = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext   > m_DeviceContext    = nullptr;
+		Microsoft::WRL::ComPtr<IDXGISwapChain        > m_SwapChain        = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView = nullptr;
 
 	public:
-		dxSharedContext(Microsoft::WRL::ComPtr<ID3D11Device          > device,
-		                Microsoft::WRL::ComPtr<ID3D11DeviceContext   > deviceContext,
-		                Microsoft::WRL::ComPtr<IDXGISwapChain        > swapChain,
-		                Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView)
-			: m_Device(device), m_DeviceContext(deviceContext), m_SwapChain(swapChain), m_RenderTargetView(renderTargetView)
-		{
-		}
-
 		inline Microsoft::WRL::ComPtr<ID3D11Device          > GetDevice          () { return m_Device;           }
 		inline Microsoft::WRL::ComPtr<ID3D11DeviceContext   > GetDeviceContext   () { return m_DeviceContext;    }
 		inline Microsoft::WRL::ComPtr<IDXGISwapChain        > GetSwapChain       () { return m_SwapChain;        }
 		inline Microsoft::WRL::ComPtr<ID3D11RenderTargetView> GetRenderTargetView() { return m_RenderTargetView; }
+
+		inline Microsoft::WRL::ComPtr<ID3D11Device          >& GetDeviceRef          () { return m_Device;           }
+		inline Microsoft::WRL::ComPtr<ID3D11DeviceContext   >& GetDeviceContextRef   () { return m_DeviceContext;    }
+		inline Microsoft::WRL::ComPtr<IDXGISwapChain        >& GetSwapChainRef       () { return m_SwapChain;        }
+		inline Microsoft::WRL::ComPtr<ID3D11RenderTargetView>& GetRenderTargetViewRef() { return m_RenderTargetView; }
 	};
 
 }

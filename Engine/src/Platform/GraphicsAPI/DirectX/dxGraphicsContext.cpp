@@ -21,18 +21,19 @@ namespace Light {
 	{
 		// set 'GraphicsAPI';
 		m_GraphicsAPI = GraphicsAPI::DirectX;
+		
+		m_SharedContext = std::make_shared<dxSharedContext>();
 
 		// setup stuff
 		SetupDeviceAndSwapChain(windowHandle);
 		SetupRenderTargets();
 		SetupDebugInterface();
-
-		// create 'dxSharedContext'
-		m_SharedContext = std::make_shared<dxSharedContext>(m_Device, m_DeviceContext, m_SwapChain, m_RenderTargetView);
 	}
 
 	void dxGraphicsContext::SetupDeviceAndSwapChain(GLFWwindow* windowHandle)
 	{
+		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+
 		// swap chain desc
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 
@@ -77,61 +78,70 @@ namespace Light {
 		                                  NULL,
 		                                  D3D11_SDK_VERSION,
 		                                  &sd, 
-		                                  &m_SwapChain,
-		                                  &m_Device,
+		                                  &context->GetSwapChainRef(),
+		                                  &context->GetDeviceRef(),
 		                                  nullptr,
-		                                  &m_DeviceContext));
+		                                  &context->GetDeviceContextRef()));
+
 	}
 
 	void dxGraphicsContext::SetupRenderTargets()
 	{
+		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+
 		// set primitive topology
-		m_DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// create render target view 
 		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer;
 
 		HRESULT hr;
-		DXC(m_SwapChain->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
-		DXC(m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTargetView));
+		DXC(context->GetSwapChain()->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
+		DXC(context->GetDevice()->CreateRenderTargetView(backBuffer.Get(), nullptr, &context->GetRenderTargetViewRef()));
 
 		// set render target view
-		m_DeviceContext->OMSetRenderTargets(1u, m_RenderTargetView.GetAddressOf(), nullptr);
+		context->GetDeviceContext()->OMSetRenderTargets(1u, context->GetRenderTargetView().GetAddressOf(), nullptr);
 	}
 
 	void dxGraphicsContext::SetupDebugInterface()
 	{
 #ifdef LIGHT_DEBUG
-		// configure the debug interface
-		Microsoft::WRL::ComPtr<ID3D11InfoQueue> infoQueue;
+		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
 
 		HRESULT hr;
-		DXC(m_Device.As(&m_DebugInterface));
-		DXC(m_DebugInterface.As(&infoQueue));
+		Microsoft::WRL::ComPtr<ID3D11Debug> debugInterface = nullptr;
+		DXC(context->GetDevice()->QueryInterface(__uuidof(ID3D11Debug), &debugInterface));
+
+		Microsoft::WRL::ComPtr<ID3D11InfoQueue> infoQueue = nullptr;
+		DXC(debugInterface->QueryInterface(__uuidof(ID3D11InfoQueue), &infoQueue));
+
+		infoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_CORRUPTION, true);
+		infoQueue->SetBreakOnSeverity(D3D11_MESSAGE_SEVERITY_ERROR, true);
 
 		D3D11_MESSAGE_ID hide[] =
 		{
-			D3D11_MESSAGE_ID_DEVICE_DRAW_SAMPLER_NOT_SET,
-
-			// #todo: add more message ids here as needed
+			D3D11_MESSAGE_ID_UNKNOWN,
+			// #todo: add more messages here as needed
 		};
 
-		D3D11_INFO_QUEUE_FILTER filter = { 0 };
+		D3D11_INFO_QUEUE_FILTER filter = { };
 		filter.DenyList.NumIDs = _countof(hide);
 		filter.DenyList.pIDList = hide;
-
-		DXC(infoQueue->AddStorageFilterEntries(&filter));
+		infoQueue->AddStorageFilterEntries(&filter);
+		infoQueue->Release();
 #endif
 	}
 
 	void dxGraphicsContext::LogDebugData()
 	{
+		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+
 		// locals 
 		IDXGIDevice* DXGIDevice;
 		IDXGIAdapter* DXGIAdapter;
 		DXGI_ADAPTER_DESC DXGIAdapterDesc;
 
-		m_Device->QueryInterface(__uuidof(IDXGIDevice), (void**)&DXGIDevice);
+		context->GetDevice()->QueryInterface(__uuidof(IDXGIDevice), (void**)&DXGIDevice);
 		DXGIDevice->GetAdapter(&DXGIAdapter);
 		DXGIAdapter->GetDesc(&DXGIAdapterDesc);
 

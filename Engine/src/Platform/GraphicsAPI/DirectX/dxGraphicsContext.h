@@ -14,12 +14,6 @@ namespace Light {
 	{
 	private:
 		GLFWwindow* m_WindowHandle;
-
-		Microsoft::WRL::ComPtr<ID3D11Device> m_Device;
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_DeviceContext;
-		Microsoft::WRL::ComPtr<IDXGISwapChain> m_SwapChain;
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
-
 		Microsoft::WRL::ComPtr<ID3D11Debug> m_DebugInterface;
 
 	public:

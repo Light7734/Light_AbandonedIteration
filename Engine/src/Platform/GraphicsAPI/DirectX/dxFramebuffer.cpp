@@ -47,6 +47,20 @@ namespace Light {
 
 		m_Context->GetDeviceContext()->OMSetRenderTargets(1u, m_RenderTargetView.GetAddressOf(), nullptr);
 		m_Context->GetDeviceContext()->ClearRenderTargetView(m_RenderTargetView.Get(), color);
+
+		D3D11_VIEWPORT viewport;
+
+		viewport.TopLeftX = 0;
+		viewport.TopLeftY = 0;
+
+		viewport.Width = m_Specification.width;
+		viewport.Height = m_Specification.height;
+
+		viewport.MinDepth = 0.0f;
+		viewport.MaxDepth = 1.0f;
+
+		// set viewport
+		m_Context->GetDeviceContext()->RSSetViewports(1u, &viewport);
 	}
 
 	void dxFramebuffer::BindAsResource()
@@ -56,13 +70,19 @@ namespace Light {
 
 	void dxFramebuffer::Resize(const glm::vec2& size)
 	{
+		m_Specification.width = std::clamp(size.x, 1.0f, 16384.0f);  
+		m_Specification.height= std::clamp(size.y, 1.0f, 16384.0f);  
+
 		D3D11_TEXTURE2D_DESC textureDesc;
 		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc;
-		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;	
 
 		m_ColorAttachment->GetDesc(&textureDesc);
 		m_RenderTargetView->GetDesc(&rtvDesc);
 		m_ResourceView->GetDesc(&srvDesc);
+
+		textureDesc.Width = m_Specification.width;
+		textureDesc.Height = m_Specification.height;
 
 		HRESULT hr;
 		DXC(m_Context->GetDevice()->CreateTexture2D(&textureDesc, nullptr, &m_ColorAttachment));

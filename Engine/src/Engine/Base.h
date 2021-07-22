@@ -11,10 +11,10 @@
 
 
 // version
-#define LT_VERSION "0.7.4" 
+#define LT_VERSION "0.7.5b"
 ///*** [  CHANGE_LOG  ] ***///
 // --------------------------------------------------------------------
-// Note: change log starts from 2021-07-21, the starting version is 0.7.0,
+// Note: change log starts from 2021-07-21, the starting version is 0.7.0a,
 // I came up with that version because of:
 //     projects: 'Engine', 'Sandbox', 'Mirror' [+0.3]
 //     graphics apis: 'OpenGL', 'DirectX11'    [+0.2]
@@ -22,16 +22,16 @@
 // --------------------------------------------------------------------
 // 
 // 
-// 0.7.0: started the change log
+// 0.7.0a: started the change log
 //
-// 0.7.1: [ LT_BREAK ]
+// 0.7.1a: [ LT_BREAK ]
 //     - Added the 'LT_BERAK' macro, a portable debug-trap
 // 
-// 0.7.2: [ Failed engine/client assertion ]
+// 0.7.2a: [ Failed engine/client assertion ]
 //     - Separated 'FailedAssertion' into 'FailedEngineAssertion' and 'FailedClientAssertion'
 //     - Minor adjustment to the change log
 // 
-// 0.7.3: [ Layer Improvements ]
+// 0.7.3a: [ Layer Improvements ]
 //     - Added 'Layer::OnEvent()', 'Layer' now handles an event by itself and doesn't need another class to determine the event's type
 //     
 //     - Added reverse iterators 'rend()' and 'rbegin()' to 'LayerStack'
@@ -44,11 +44,21 @@
 //     
 //     - Fixed a typo where in 'Mirror' where the name of the 'MirrorLayer' was "SandboxLayer" instead of "MirrorLayer"
 // 
-// 0.7.4 [ Input ]
+// 0.7.4a: [ Input ]
 //     - Added 'Input'
 //     - - Added <InputCodes>
 //     - The 'MirrorLayer''s ImGuiWindow, "GameView" will not receive/react to input events if the window is not focused
 // 
+//  0.7.4b [ Maintenance ]
+//      - Added 'Get*Ref()' to 'dxSharedContext'
+//      
+//      - Fixed 'dxFramebuffer::Resize' not resizing : /
+//      - Fixed 'dxFrameBuffer::BindAsTarget' not setting the viewport
+//      - Fixed 'dxRenderCommand::SetViewport()' not resizing the swapchain's buffer
+//      
+//      - Improved 'dxGraphicsContext''s debug interface
+//      
+//      - Removed most of the 'ComPtr's in 'dxGraphicsContext', they can be accessed with the 'm_SharedContext'
 // 
 ///*** [  CHANGE_LOG  ] ***///
 

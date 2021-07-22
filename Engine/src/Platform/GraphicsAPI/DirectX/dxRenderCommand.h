@@ -27,6 +27,9 @@ namespace Light {
 		virtual void DefaultTargetFramebuffer() override;
 
 		virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
+
+	private:
+		void SetResolution(unsigned int width, unsigned int height);
 	};
 
 }
