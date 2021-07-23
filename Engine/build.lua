@@ -28,8 +28,6 @@ project "Engine"
 		-- premake
 		"%{prj.location}/build.lua",
 		
-		"%{prj.location}/dxgidebug.dll", -- :#todo
-
 		"%{prj.location}/res/**"
 	}
 	
