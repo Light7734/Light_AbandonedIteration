@@ -17,7 +17,7 @@ project "Sandbox"
 		"%{prj.location}/src/**.h",
 		"%{prj.location}/src/**.cpp",
 
-		"%{prj.location}/premake5.lua",
+		"%{prj.location}/build.lua",
 	}
 
 	-- Dependencies --
@@ -50,6 +50,8 @@ project "Sandbox"
 		defines "LIGHT_PLATFORM_WINDOWS"
 		systemversion "latest"
 		staticruntime "On"
+
+		flags { "MultiProcessorCompile" }
 
 	-- linux
 	filter "system:linux"

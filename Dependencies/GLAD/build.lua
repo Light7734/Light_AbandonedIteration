@@ -16,7 +16,7 @@ project "GLAD"
 		"**.c",
 		"**.h",
 
-		"premake5.lua"
+		"build.lua"
 	}
 	
 	-- Dependencies --
@@ -35,6 +35,8 @@ project "GLAD"
 		{ 
 			"_CRT_SECURE_NO_WARNINGS",
 		}
+
+		flags { "MultiProcessorCompile" }
 
 	-- debug
 	filter "configurations:Debug"

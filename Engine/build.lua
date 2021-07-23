@@ -26,7 +26,7 @@ project "Engine"
 		"%{prj.location}/src/**.cpp",
 		
 		-- premake
-		"%{prj.location}/preake5*.lua",
+		"%{prj.location}/build.lua",
 		
 		"%{prj.location}/dxgidebug.dll", -- :#todo
 
@@ -73,6 +73,8 @@ project "Engine"
 			"dxguid.lib"      ,
 			"D3DCompiler.lib" ,
 		}
+
+		flags { "MultiProcessorCompile" }
 	
 	filter { "system:windows", "files:src/Platform/OS/Linux/**.**" }
 		flags { "ExcludeFromBuild" }

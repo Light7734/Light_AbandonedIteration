@@ -36,7 +36,7 @@
 #include "Utility/ResourceManager.h"
 
 //** TIME **//
-#include "TIme/Timer.h"
+#include "Time/Timer.h"
 
 //** BASE **//
 #include "Base.h"

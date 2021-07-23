@@ -22,6 +22,6 @@ include "../Sandbox/build.lua"
 
 -- Dependencies --
 group "Dependencies"
-include "../Dependencies/GLFW/"
-include "../Dependencies/GLAD/"
-include "../Dependencies/imgui/"
+include "../Dependencies/GLFW/build.lua"
+include "../Dependencies/GLAD/build.lua"
+include "../Dependencies/imgui/build.lua"
