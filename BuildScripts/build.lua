@@ -1,6 +1,6 @@
 workspace "Light"
 	location "../"
-	startproject "Sandbox"
+	startproject "Mirror"
 
 	architecture "x64"
 
@@ -16,9 +16,9 @@ dependenciesdir = "%{wks.location}/Dependencies/"
 outputdir = "%{cfg.buildcfg}/%{cfg.system}/%{cfg.architecture}/%{prj.name}"
 
 -- Projects --
-include "../Engine/"
-include "../Mirror/"
-include "../Sandbox/"
+include "../Engine/build.lua"
+include "../Mirror/build.lua"
+include "../Sandbox/build.lua"
 
 -- Dependencies --
 group "Dependencies"
