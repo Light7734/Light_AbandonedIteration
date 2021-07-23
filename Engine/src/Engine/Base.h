@@ -14,8 +14,7 @@
 #define LT_VERSION "0.7.5b"
 ///*** [  CHANGE_LOG  ] ***///
 // --------------------------------------------------------------------
-// Note: change log starts from 2021-07-21, the starting version is 0.7.0a,
-// I came up with that version because of:
+// Note: change log starts from 2021-07-21, the starting version is 0.7.0a:
 //     projects: 'Engine', 'Sandbox', 'Mirror' [+0.3]
 //     graphics apis: 'OpenGL', 'DirectX11'    [+0.2]
 //     platforms: 'Windows', 'Linux'           [+0.2]

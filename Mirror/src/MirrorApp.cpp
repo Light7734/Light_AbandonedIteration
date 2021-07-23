@@ -9,11 +9,11 @@ class Mirror : public Light::Application
 public:
 	Mirror()
 	{
-		LT_CLIENT_TRACE("Sandbox::Sandbox");
+		LT_CLIENT_TRACE("Mirror::Mirror");
 
 		// Set window properties
 		Light::WindowProperties properties;
-		properties.title = "Sandbox";
+		properties.title = "Mirror";
 		properties.size = glm::uvec2(800u, 600u);
 		properties.vsync = true;
 
@@ -25,7 +25,7 @@ public:
 		
 	~Mirror()
 	{
-		LT_CLIENT_TRACE("Sandbox::~Sandbox");
+		LT_CLIENT_TRACE("Mirror::~Mirror");
 	}
 };
 

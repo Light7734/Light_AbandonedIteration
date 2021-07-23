@@ -25,6 +25,12 @@ namespace Light {
 		io.ConfigFlags |= ImGuiBackendFlags_PlatformHasViewports;
 		io.ConfigFlags |= ImGuiBackendFlags_RendererHasViewports;
 
+		// #todo: handle this in a better way
+		if (std::filesystem::exists("user_gui_layout.ini"))
+			io.IniFilename = "user_gui_layout.ini";
+		else
+			io.IniFilename = "default_gui_layout.ini";
+
 		// style color
 		ImGui::StyleColorsDark();
 
@@ -35,6 +41,12 @@ namespace Light {
 
 	glUserInterface::~glUserInterface()
 	{
+		// #todo: handle this in a better way
+		ImGuiIO& io = ImGui::GetIO();
+
+		if (io.IniFilename == "default_gui_layout.ini")
+			io.IniFilename = "user_gui_layout.ini";
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();

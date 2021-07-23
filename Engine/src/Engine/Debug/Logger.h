@@ -6,7 +6,7 @@
 
 // LOGGER MACROS //
 
-#define LT_LOG_FILE_LOCATION "Log.txt";
+#define LT_LOG_FILE_LOCATION "Logs/Logger.txt";
 
 // #todo: log function signature 
 // File

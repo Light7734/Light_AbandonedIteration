@@ -20,3 +20,7 @@ Makefile
 **/Engine.txt
 **/GLAD.txt
 **/Sandbox.txt
+
+**/Logs/**
+**.ini
+!**/default_gui_layout.ini
