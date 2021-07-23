@@ -42,6 +42,7 @@ project "Mirror"
 		"GLFW",
 		"GLAD",
 		"ImGui",
+		"stb_image" ,
 	}
 
 	--- Filters ---

@@ -42,6 +42,7 @@ project "Sandbox"
 		"GLFW",
 		"GLAD",
 		"ImGui",
+		"stb_image" ,
 	}
 
 	--- Filters ---

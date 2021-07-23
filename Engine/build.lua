@@ -56,6 +56,7 @@ project "Engine"
 		"GLFW"  ,
 		"GLAD"  ,
 		"ImGui" ,
+		"stb_image" ,
 	}
 	
 	--- Filters ---
