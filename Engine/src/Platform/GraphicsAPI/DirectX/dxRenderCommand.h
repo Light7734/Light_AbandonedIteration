@@ -19,7 +19,7 @@ namespace Light {
 		dxRenderCommand(std::shared_ptr<dxSharedContext> sharedContext);
 
 		virtual void SwapBuffers() override;
-		virtual void ClearBackBuffer() override;
+		virtual void ClearBackBuffer(const glm::vec4& clearColor) override;
 
 		virtual void Draw(unsigned int count) override;
 		virtual void DrawIndexed(unsigned int count) override;

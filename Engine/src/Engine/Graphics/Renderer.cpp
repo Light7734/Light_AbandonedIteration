@@ -122,7 +122,7 @@ namespace Light {
 	void Renderer::EndFrame()
 	{
 		m_RenderCommand->SwapBuffers();
-		m_RenderCommand->ClearBackBuffer();
+		m_RenderCommand->ClearBackBuffer(m_Camera->GetClearColor());
 	}
 
 	void Renderer::BeginSceneImpl(const std::shared_ptr<Camera>& camera, const std::shared_ptr<Framebuffer>& targetFrameBuffer /* = nullptr */)
@@ -135,8 +135,9 @@ namespace Light {
 			m_RenderCommand->DefaultTargetFramebuffer();
 
 
+		m_Camera = camera;
 		glm::mat4* map = (glm::mat4*)m_ViewProjectionBuffer->Map();
-		map[0] = camera->GetProjection() * camera->GetView();
+		map[0] = m_Camera->GetProjection() * m_Camera->GetView();
 		m_ViewProjectionBuffer->UnMap();
 
 		m_QuadRenderer.Map();

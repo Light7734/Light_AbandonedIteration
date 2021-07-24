@@ -2,6 +2,8 @@
 
 #include "Base.h"
 
+#include <glm/glm.hpp>
+
 struct GLFWwindow;
 
 namespace Light {
@@ -19,7 +21,7 @@ namespace Light {
 		virtual ~RenderCommand() = default;
 
 		virtual void SwapBuffers() = 0;
-		virtual void ClearBackBuffer() = 0;
+		virtual void ClearBackBuffer(const glm::vec4& clearColor) = 0;
 
 		virtual void Draw(unsigned int count) = 0;
 		virtual void DrawIndexed(unsigned int count) = 0;

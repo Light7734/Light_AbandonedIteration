@@ -46,6 +46,8 @@ namespace Light {
 
 		std::shared_ptr<Framebuffer> m_TargetFramebuffer;
 
+		std::shared_ptr<Camera> m_Camera;
+
 	public:
 		static Renderer* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
 		

@@ -26,10 +26,9 @@ namespace Light {
 #endif
 	}
 
-	void dxRenderCommand::ClearBackBuffer()
+	void dxRenderCommand::ClearBackBuffer(const glm::vec4& clearColor)
 	{
-		float colors[] = { 0.1, 0.35f, 0.46f, 1.0f }; // #todo: use a local variable for this
-		m_Context->GetDeviceContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), colors);
+		m_Context->GetDeviceContext()->ClearRenderTargetView(m_Context->GetRenderTargetView().Get(), &clearColor[0]);
 	}
 
 	void dxRenderCommand::Draw(unsigned int count)

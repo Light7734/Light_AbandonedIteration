@@ -15,9 +15,9 @@ namespace Light {
 		glfwSwapBuffers(m_WindowHandle);
 	}
 
-	void glRenderCommand::ClearBackBuffer()
+	void glRenderCommand::ClearBackBuffer(const glm::vec4& clearColor)
 	{
-		glClearColor(0.25f, 0.45f, 0.91f, 1.0f); // #todo: use a variable for this
+		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 

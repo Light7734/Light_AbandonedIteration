@@ -6,8 +6,8 @@
 
 namespace Light {
 	
-	Camera::Camera(const glm::vec2& position, float aspectRatio, float zoomLevel)
-		: m_Up(0.0f, 1.0f, 0.0f), m_Position(position), m_AspectRatio(aspectRatio), m_ZoomLevel(zoomLevel)
+	Camera::Camera(const glm::vec2& position, float aspectRatio, float zoomLevel, const glm::vec4& clearColor /* = glm::vec4(0.1f, 0.3f, 0.7f, 1.0f) */)
+		: m_Up(0.0f, 1.0f, 0.0f), m_Position(position), m_AspectRatio(aspectRatio), m_ZoomLevel(zoomLevel), m_ClearColor(clearColor)
 	{
 	}
 

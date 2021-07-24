@@ -14,7 +14,7 @@ namespace Light {
 		glRenderCommand(GLFWwindow* windowHandle);
 
 		void SwapBuffers() override;
-		void ClearBackBuffer() override;
+		void ClearBackBuffer(const glm::vec4& clearColor) override;
 
 		void Draw(unsigned int count) override;
 		void DrawIndexed(unsigned int count) override;
