@@ -49,6 +49,7 @@ project "Engine"
 		(dependenciesdir .. "imgui/"),
 		(dependenciesdir .. "stb_image/"),
 		(dependenciesdir .. "glm/"),
+		(dependenciesdir .. "entt/"),
 	}
 
 	links
@@ -56,7 +57,8 @@ project "Engine"
 		"GLFW"  ,
 		"GLAD"  ,
 		"ImGui" ,
-		"stb_image" ,
+		"stb_image",
+		"entt",
 	}
 	
 	--- Filters ---

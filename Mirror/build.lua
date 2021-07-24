@@ -43,6 +43,7 @@ project "Mirror"
 		"GLAD",
 		"ImGui",
 		"stb_image" ,
+		"entt",
 	}
 
 	--- Filters ---

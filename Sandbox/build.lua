@@ -43,6 +43,7 @@ project "Sandbox"
 		"GLAD",
 		"ImGui",
 		"stb_image" ,
+		"entt",
 	}
 
 	--- Filters ---

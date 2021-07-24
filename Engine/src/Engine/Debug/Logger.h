@@ -8,7 +8,6 @@
 
 #define LT_LOG_FILE_LOCATION "Logs/Logger.txt";
 
-// #todo: log function signature 
 // File
 #define LT_FILE_INFO(...)       ::Light::Logger::GetFileLogger()->log(spdlog::level::info    , __VA_ARGS__)
 #define LT_FILE_WARN(...)       ::Light::Logger::GetFileLogger()->log(spdlog::level::warn    , __VA_ARGS__)

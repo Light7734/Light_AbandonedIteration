@@ -76,8 +76,6 @@ namespace Light {
 		// delete shaders (free memory)
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
-
-		// #todo: validate program
 	}
 
 	glShader::~glShader()

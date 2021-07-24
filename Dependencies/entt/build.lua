@@ -1,6 +1,6 @@
-project "stb_image"
+project "entt"
 
-	location "%{wks.location}/Dependencies/stb_image"
+	location "%{wks.location}/Dependencies/entt"
 
 	-- Output Directories --
 	targetdir ("%{wks.location}/bin/"     .. outputdir)
@@ -8,15 +8,16 @@ project "stb_image"
 
 	-- Compiler --
 	kind "StaticLib"
-	language "C"
+	language "C++"
+	cppdialect "C++17"
 	
 	optimize "on"
 
 	-- Project Files ---
 	files
 	{
-		"stb_image.c",
-		"stb_image.h",
+		"entt.cpp",
+		"entt.hpp",
 
 		"build.lua"
 	}

@@ -35,7 +35,6 @@
 #define BIT(x) 1 << x
 
 // assertions
-// #todo: log to file in distribution builds
 #if defined(LIGHT_DIST)
 	#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_FILE_CRITICAL(__VA_ARGS__); throw ::Light::FailedEngineAssertion(__FILE__, __LINE__); } }
 	#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_FILE_CRITICAL(__VA_ARGS__); throw ::Light::FailedClientAssertion(__FILE__, __LINE__); } }

@@ -38,8 +38,8 @@ namespace Light {
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
 
 		// buffer desc
-		sd.BufferDesc.Width = 800u;
-		sd.BufferDesc.Height = 600u;
+		sd.BufferDesc.Width = 1u;
+		sd.BufferDesc.Height = 1u;
 		sd.BufferDesc.RefreshRate.Numerator = NULL; // :#todo
 		sd.BufferDesc.RefreshRate.Denominator = NULL; // :#todo
 		sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
