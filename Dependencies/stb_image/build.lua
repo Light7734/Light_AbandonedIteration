@@ -10,10 +10,7 @@ project "stb_image"
 	kind "StaticLib"
 	language "C"
 	
-	runtime "Release"
 	optimize "on"
-
-	defines "STB_IMAGE_IMPLEMENTATION"
 
 	-- Project Files ---
 	files
@@ -24,12 +21,6 @@ project "stb_image"
 		"build.lua"
 	}
 	
-	-- Dependencies --
-	includedirs
-	{
-		"%{prj.location}/include/"
-	}
-
 	--- Filters ---
 	-- windows
 	filter "system:windows"
