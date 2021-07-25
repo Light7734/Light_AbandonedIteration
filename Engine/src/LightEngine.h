@@ -44,6 +44,11 @@
 //** THIRD_PARTY **//
 #include <imgui.h>
 
+//** SCENE **//
+#include "Scene/Scene.h"
+#include "Scene/Entity.h"
+#include "Scene/Components.h"
+
 // entry point
 #ifdef LIGHT_ENTRY_POINT
 	#include "EntryPoint.h"

@@ -1,98 +1,107 @@
 #include <LightEngine.h>
 
-class MirrorLayer : public Light::Layer
-{
-private:
-	std::shared_ptr<Light::Texture> m_AwesomefaceTexture;
+namespace Light {
 
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> sizes;
-
-	glm::vec2 m_Direction;
-	float m_Speed = 1.2f;
-
-	std::shared_ptr<Light::Camera> m_Camera;
-
-	std::shared_ptr<Light::Framebuffer> m_Framebuffer;
-
-	bool m_GameSceneEvents = false;
-
-public:
-	MirrorLayer(const std::string& name)
-		: Light::Layer(name), m_Direction(glm::vec2(0.0f, 0.0f))
+	class MirrorLayer : public Layer
 	{
-		m_Camera = std::make_shared<Light::Camera>(glm::vec2(0.0f), 800.0f / 600.0f, 1.0f);
+	private:
+		std::shared_ptr<Texture> m_AwesomefaceTexture;
 
-		Light::ResourceManager::LoadTexture("awesomeface", "res/Textures/awesomeface.png");
-		m_AwesomefaceTexture = Light::ResourceManager::GetTexture("awesomeface");
-		
-		m_Framebuffer = std::shared_ptr<Light::Framebuffer>(Light::Framebuffer::Create({ 800u, 600u, 1, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), false }, Light::GraphicsContext::GetSharedContext()));
+		std::vector<glm::vec3> positions;
+		std::vector<glm::vec2> sizes;
 
-		for (int i = 0; i < 100; i++)
+		glm::vec2 m_Direction;
+		float m_Speed = 1000.0f;
+
+		std::shared_ptr<Camera> m_Camera;
+
+		std::shared_ptr<Framebuffer> m_Framebuffer;
+
+		Scene m_Scene;
+
+		Entity m_TestEntity;
+
+		bool m_GameSceneEvents = false;
+
+	public:
+		MirrorLayer(const std::string& name)
+			: Layer(name), m_Direction(glm::vec2(0.0f, 0.0f))
 		{
-			glm::vec3 position = glm::vec3(-1.0f + (-100.0f / 400.0f) + ((rand() % 1000) / 400.0f), -1.0f + (-100.0f / 300.0f) + ((rand() % 800) / 300.0f), 0.0f);
-			glm::vec2 size = glm::vec2(100 / 400.0f, 100 / 300.0f);
+			m_Camera = std::make_shared<Camera>(glm::vec2(500.0f), NULL, 1000.0f);
 
-			positions.push_back(position);
-			sizes.push_back(size);
-		}
-	}
+			ResourceManager::LoadTexture("awesomeface", "res/Textures/awesomeface.png");
+			m_AwesomefaceTexture = ResourceManager::GetTexture("awesomeface");
 
-	void OnRender() override
-	{
-		m_Camera->CalculateProjection();
-		m_Camera->CalculateView();
+			m_Framebuffer = std::shared_ptr<Framebuffer>(Framebuffer::Create({ 800u, 600u, 1, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), false }, GraphicsContext::GetSharedContext()));
 
-		Light::Renderer::BeginScene(m_Camera, m_Framebuffer);
-
-		for (int i = 0; i < 100; i++)
-			Light::Renderer::DrawQuad(positions[i], sizes[i], m_AwesomefaceTexture);
-
-		Light::Renderer::EndScene();
-	}
-
-	void OnUserInterfaceUpdate()
-	{
-		if (ImGui::Begin("GameView"))
-		{
-			Light::Input::ReceiveGameEvents(ImGui::IsWindowFocused());
-
-			static ImVec2 regionAvailPrev = { 0, 0 };
-			ImVec2 regionAvail = ImGui::GetContentRegionAvail();
-
-			if (regionAvail.x != regionAvailPrev.x || regionAvail.y != regionAvailPrev.y)
+			for (int i = 0; i < 250; i++)
 			{
-				m_Framebuffer->Resize({ regionAvail.x, regionAvail.y });
-				m_Camera->OnResize({ regionAvail.x, regionAvail.y });
-				regionAvailPrev = regionAvail;
+				glm::vec3 position = glm::vec3(rand() % 3000 - 1400.0f, rand() % 3000 - 1400.0f, 0.0f);
+				glm::vec2 size = glm::vec2(250.0f, 250.0f);
+
+				positions.push_back(position);
+				sizes.push_back(size);
+
+				m_Scene.CreateEntity("quad", position, size).AddComponent<SpriteRendererComponent>(m_AwesomefaceTexture);
+			}
+		}
+
+		void OnRender() override
+		{
+			m_Camera->CalculateProjection();
+			m_Camera->CalculateView();
+
+			Renderer::BeginScene(m_Camera, m_Framebuffer);
+
+			m_Scene.OnRender();
+
+			Renderer::EndScene();
+		}
+
+		void OnUserInterfaceUpdate()
+		{
+			if (ImGui::Begin("GameView"))
+			{
+				Input::ReceiveGameEvents(ImGui::IsWindowFocused());
+
+				static ImVec2 regionAvailPrev = { 0, 0 };
+				ImVec2 regionAvail = ImGui::GetContentRegionAvail();
+
+				if (regionAvail.x != regionAvailPrev.x || regionAvail.y != regionAvailPrev.y)
+				{
+					m_Framebuffer->Resize({ regionAvail.x, regionAvail.y });
+					m_Camera->OnResize({ regionAvail.x, regionAvail.y });
+					regionAvailPrev = regionAvail;
+				}
+
+				if (GraphicsContext::GetGraphicsAPI() == GraphicsAPI::DirectX)
+					ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail);
+				else
+					ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail, ImVec2(0, 1), ImVec2(1, 0));
 			}
 
-			if (Light::GraphicsContext::GetGraphicsAPI() == Light::GraphicsAPI::DirectX)
-				ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail);
-			else
-				ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail, ImVec2(0, 1), ImVec2(1, 0));
+			ImGui::End();
 		}
 
-		ImGui::End();
-	}
+		void OnUpdate(float deltaTime) override
+		{
+			if (Input::GetKeyboardKey(KEY_A))
+				m_Direction.x = -1.0f;
+			else if (Input::GetKeyboardKey(KEY_D))
+				m_Direction.x = 1.0f;
+			else
+				m_Direction.x = 0.0f;
 
-	void OnUpdate(float deltaTime) override
-	{
-		if (Light::Input::GetKeyboardKey(KEY_A))
-			m_Direction.x = -1.0f;
-		else if (Light::Input::GetKeyboardKey(KEY_D))
-			m_Direction.x = 1.0f;
-		else
-			m_Direction.x = 0.0f;
+			if (Input::GetKeyboardKey(KEY_W))
+				m_Direction.y = 1.0f;
+			else if (Input::GetKeyboardKey(KEY_S))
+				m_Direction.y = -1.0f;
+			else
+				m_Direction.y = 0.0f;
 
-		if (Light::Input::GetKeyboardKey(KEY_W))
-			m_Direction.y = 1.0f;
-		else if (Light::Input::GetKeyboardKey(KEY_S))
-			m_Direction.y = -1.0f;
-		else
-			m_Direction.y = 0.0f;
+			m_Camera->Move(m_Direction * m_Speed * deltaTime);
+		}
 
-		m_Camera->Move(m_Direction * m_Speed * deltaTime);
-	}
+	};
 
-};
+}

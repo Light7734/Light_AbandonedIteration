@@ -34,6 +34,7 @@ project "Mirror"
 		(dependenciesdir .. "imgui/"),
 		(dependenciesdir .. "imgui/backends"),
 		(dependenciesdir .. "glm/"),
+		(dependenciesdir .. "entt/"),
 	}
 
 	links
