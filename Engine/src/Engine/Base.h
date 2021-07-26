@@ -31,6 +31,7 @@
 
 #endif
 
+
 // operations
 #define BIT(x) 1 << x
 
@@ -42,6 +43,42 @@
 	#define LT_ENGINE_ASSERT(x, ...) { if(!(x)) { LT_ENGINE_CRITICAL(__VA_ARGS__); LT_BREAK(); throw ::Light::FailedEngineAssertion(__FILE__, __LINE__); } }
 	#define LT_CLIENT_ASSERT(x, ...) { if(!(x)) { LT_CLIENT_CRITICAL(__VA_ARGS__); LT_BREAK(); throw ::Light::FailedClientAssertion(__FILE__, __LINE__); } }
 #endif
+
+namespace Light {
+
+	// Ref (std::shared_ptr)
+	template<typename T> 
+	using Ref = std::shared_ptr<T>;
+
+	template<typename T, typename... Args>
+	constexpr std::shared_ptr<T> CreateRef(Args... args)
+	{
+		return std::make_shared<T>(std::forward<Args>(args)...);
+	}
+
+	template<typename T>
+	constexpr std::shared_ptr<T> MakeRef(T* rawPointer)
+	{
+		return std::shared_ptr<T>(T);
+	}
+
+	// Scope (std::unique_ptr)
+	template<typename T>
+	using Scope = std::unique_ptr<T>;
+
+	template<typename T, typename... Args>
+	constexpr std::unique_ptr<T> CreateScope(Args... args)
+	{
+		return std::make_unique<T>(std::forward<Args>(args)...);
+	}
+
+	template<typename T>
+	constexpr std::unique_ptr<T> MakeScope(T* rawPointer)
+	{
+		return std::unique_ptr<T>(rawPointer);
+	}
+
+}
 
 ///*** [  PORTABLES  ] ***///
 //** PORTABLE_DEBUG_BREAK **//
