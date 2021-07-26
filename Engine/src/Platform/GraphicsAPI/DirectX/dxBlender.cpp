@@ -5,7 +5,7 @@
 
 namespace Light {
 
-	dxBlender::dxBlender(std::shared_ptr<dxSharedContext> sharedContext)
+	dxBlender::dxBlender(Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
 		// factor map

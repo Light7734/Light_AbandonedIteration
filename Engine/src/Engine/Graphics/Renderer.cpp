@@ -19,24 +19,24 @@ namespace Light {
 
 	Renderer* Renderer::s_Context = nullptr;
 
-	Renderer::Renderer(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
+	Renderer::Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
 		: m_QuadRenderer(LT_MAX_QUAD_RENDERER_VERTICES, sharedContext),
 		  m_TextureRenderer(LT_MAX_TEXTURE_RENDERER_VERTICES, sharedContext)
 	{
 		LT_ENGINE_ASSERT(!s_Context, "Renderer::Renderer: an instance of 'Renderer' already exists, do not construct this class!");
 		s_Context = this;
 
-		m_RenderCommand = std::unique_ptr<RenderCommand>(RenderCommand::Create(windowHandle, sharedContext));
+		m_RenderCommand = RenderCommand::Create(windowHandle, sharedContext);
 
-		m_ViewProjectionBuffer = std::unique_ptr<ConstantBuffer>(ConstantBuffer::Create(ConstantBufferIndex::ViewProjection, sizeof(glm::mat4), sharedContext));
+		m_ViewProjectionBuffer = ConstantBuffer::Create(ConstantBufferIndex::ViewProjection, sizeof(glm::mat4), sharedContext);
 
-		m_Blender = std::unique_ptr<Blender>(Blender::Create(sharedContext));
+		m_Blender = Blender::Create(sharedContext);
 		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
 	}
 
-	Renderer* Renderer::Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
+	Scope<Renderer> Renderer::Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
 	{
-		return new Renderer(windowHandle, sharedContext);
+		return MakeScope<Renderer>(new Renderer(windowHandle, sharedContext));
 	}
 
 	void Renderer::OnWindowResize(const WindowResizedEvent& event)
@@ -78,7 +78,7 @@ namespace Light {
 		}
 	}
 
-	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture)
+	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture)
 	{
 		// #todo: implement a proper binding
 		texture->Bind();
@@ -125,7 +125,7 @@ namespace Light {
 		m_RenderCommand->ClearBackBuffer(m_Camera->GetClearColor());
 	}
 
-	void Renderer::BeginSceneImpl(const std::shared_ptr<Camera>& camera, const std::shared_ptr<Framebuffer>& targetFrameBuffer /* = nullptr */)
+	void Renderer::BeginSceneImpl(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer /* = nullptr */)
 	{
 		m_TargetFramebuffer = targetFrameBuffer;
 

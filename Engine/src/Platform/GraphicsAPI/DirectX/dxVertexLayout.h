@@ -14,12 +14,12 @@ namespace Light {
 	class dxVertexLayout : public VertexLayout
 	{
 	private:
-		std::shared_ptr<dxSharedContext> m_Context;
+		Ref<dxSharedContext> m_Context;
 
 		Microsoft::WRL::ComPtr<ID3D11InputLayout> m_InputLayout;
 
 	public:
-		dxVertexLayout(std::shared_ptr<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<dxSharedContext> sharedContext);
+		dxVertexLayout(Ref<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, Ref<dxSharedContext> sharedContext);
 		~dxVertexLayout();
 
 		void Bind() override;

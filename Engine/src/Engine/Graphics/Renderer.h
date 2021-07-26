@@ -39,24 +39,24 @@ namespace Light {
 		TextureRendererProgram m_TextureRenderer;
 
 		// constant buffers
-		std::unique_ptr<ConstantBuffer> m_ViewProjectionBuffer;
+		Scope<ConstantBuffer> m_ViewProjectionBuffer;
 
-		std::unique_ptr<RenderCommand> m_RenderCommand;
-		std::unique_ptr<Blender> m_Blender;
+		Scope<RenderCommand> m_RenderCommand;
+		Scope<Blender> m_Blender;
 
-		std::shared_ptr<Framebuffer> m_TargetFramebuffer;
+		Ref<Framebuffer> m_TargetFramebuffer;
 
-		std::shared_ptr<Camera> m_Camera;
+		Ref<Camera> m_Camera;
 
 	public:
-		static Renderer* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
+		static Scope<Renderer> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 		
-		static inline void SetTargetFramebuffer(std::shared_ptr<Framebuffer> framebuffer) { s_Context->SetTargetFramebufferImpl(framebuffer); }
+		static inline void SetTargetFramebuffer(Ref<Framebuffer> framebuffer) { s_Context->SetTargetFramebufferImpl(framebuffer); }
 
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint) { s_Context->DrawQuadImpl(position, size, tint); }
-		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture) { s_Context->DrawQuadImpl(position, size, texture); }
+		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture) { s_Context->DrawQuadImpl(position, size, texture); }
 
-		static inline void BeginScene(const std::shared_ptr<Camera>& camera, const std::shared_ptr<Framebuffer>& targetFrameBuffer = nullptr) { s_Context->BeginSceneImpl(camera, targetFrameBuffer); }
+		static inline void BeginScene(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer = nullptr) { s_Context->BeginSceneImpl(camera, targetFrameBuffer); }
 		static inline void EndScene() { s_Context->EndSceneImpl(); }
 		
 		void OnWindowResize(const WindowResizedEvent& event);
@@ -65,14 +65,14 @@ namespace Light {
 		void EndFrame();
 
 	private:
-		Renderer(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
+		Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
-		void SetTargetFramebufferImpl(std::shared_ptr<Framebuffer> framebuffer);
+		void SetTargetFramebufferImpl(Ref<Framebuffer> framebuffer);
 
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
-		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, std::shared_ptr<Texture> texture);
+		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture);
 
-		void BeginSceneImpl(const std::shared_ptr<Camera>& camera, const std::shared_ptr<Framebuffer>& targetFrameBuffer = nullptr);
+		void BeginSceneImpl(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 		void FlushScene();
 		void EndSceneImpl();
 	};

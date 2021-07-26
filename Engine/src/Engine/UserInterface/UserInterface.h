@@ -12,7 +12,7 @@ namespace Light {
 	class UserInterface
 	{
 	public:
-		static UserInterface* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
+		static Scope<UserInterface> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
 		UserInterface(const UserInterface&) = delete;
 		UserInterface& operator=(const UserInterface&) = delete;

@@ -26,10 +26,10 @@ namespace Light {
 		};
 
 	private:
-		std::shared_ptr<Shader> m_Shader;
-		std::shared_ptr<VertexBuffer> m_VertexBuffer;
-		std::shared_ptr<IndexBuffer> m_IndexBuffer;
-		std::shared_ptr<VertexLayout> m_VertexLayout;
+		Ref<Shader> m_Shader;
+		Ref<VertexBuffer> m_VertexBuffer;
+		Ref<IndexBuffer> m_IndexBuffer;
+		Ref<VertexLayout> m_VertexLayout;
 
 		QuadVertexData* m_MapCurrent = nullptr;
 		QuadVertexData* m_MapEnd = nullptr;
@@ -38,7 +38,7 @@ namespace Light {
 		unsigned int m_MaxVertices = 0u;
 
 	public:
-		QuadRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext);
+		QuadRendererProgram(unsigned int maxVertices, Ref<SharedContext> sharedContext);
 
 		bool Advance();
 		

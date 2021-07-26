@@ -1,5 +1,6 @@
 #pragma once
 
+#define LT_LOGGER_H
 #include "Base.h"
 
 #include <spdlog/spdlog.h>
@@ -47,7 +48,7 @@ namespace Light {
 	class Logger
 	{
 	private:
-		static std::shared_ptr<spdlog::logger> s_EngineLogger, s_ClientLogger, s_FileLogger;
+		static Ref<spdlog::logger> s_EngineLogger, s_ClientLogger, s_FileLogger;
 		static std::string s_LogFilePath;
 
 	public:
@@ -55,11 +56,12 @@ namespace Light {
 
 		static void Initialize();
 
-		static inline std::shared_ptr<spdlog::logger> GetEngineLogger() { return s_EngineLogger; }
-		static inline std::shared_ptr<spdlog::logger> GetClientLogger() { return s_ClientLogger; }
-		static inline std::shared_ptr<spdlog::logger> GetFileLogger() { return s_FileLogger; }
+		static inline Ref<spdlog::logger> GetEngineLogger() { return s_EngineLogger; }
+		static inline Ref<spdlog::logger> GetClientLogger() { return s_ClientLogger; }
+		static inline Ref<spdlog::logger> GetFileLogger() { return s_FileLogger; }
 
 		static void LogDebugData();
 	};
 
 }
+

@@ -17,15 +17,15 @@
 
 namespace Light {
 
-	UserInterface* UserInterface::Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext)
+	Scope<UserInterface> UserInterface::Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return new glUserInterface(windowHandle);
+			return CreateScope<glUserInterface>(windowHandle);
 
 		case GraphicsAPI::DirectX: LT_WIN(
-			return new dxUserInterface(windowHandle, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
+			return CreateScope<dxUserInterface>(windowHandle, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());

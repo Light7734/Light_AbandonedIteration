@@ -11,6 +11,11 @@ namespace Light {
 
 	Input* Input::s_Context = nullptr;
 
+	Scope<Input> Input::Create()
+	{
+		return MakeScope(new Input);
+	}
+
 	Input::Input()
 	{
 		LT_ENGINE_ASSERT(!s_Context, "Input::Input: an instance of 'Input' already exists, do not construct this class!");

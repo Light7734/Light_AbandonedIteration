@@ -13,10 +13,10 @@ namespace Light {
 	class dxRenderCommand : public RenderCommand
 	{
 	private:
-		std::shared_ptr<dxSharedContext> m_Context;
+		Ref<dxSharedContext> m_Context;
 
 	public:
-		dxRenderCommand(std::shared_ptr<dxSharedContext> sharedContext);
+		dxRenderCommand(Ref<dxSharedContext> sharedContext);
 
 		virtual void SwapBuffers() override;
 		virtual void ClearBackBuffer(const glm::vec4& clearColor) override;

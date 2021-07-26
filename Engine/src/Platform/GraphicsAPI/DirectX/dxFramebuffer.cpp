@@ -4,7 +4,7 @@
 
 namespace Light {
 
-	dxFramebuffer::dxFramebuffer(const FramebufferSpecification& specification, std::shared_ptr<dxSharedContext> sharedContext)
+	dxFramebuffer::dxFramebuffer(const FramebufferSpecification& specification, Ref<dxSharedContext> sharedContext)
 		: m_Specification(specification), m_Context(sharedContext)
 	{
 		HRESULT hr;

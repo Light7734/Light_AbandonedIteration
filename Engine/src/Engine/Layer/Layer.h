@@ -22,14 +22,14 @@ namespace Light {
 
 	class Layer
 	{
-	private:
-		std::string m_Name;
+	protected:
+		std::string m_LayerName;
 
 	public:
-		Layer(const std::string& name): m_Name(name) {}
+		Layer(const std::string& name): m_LayerName(name) {}
 		virtual ~Layer() = default;
 
-		inline const std::string& GetName() const { return m_Name; }
+		inline const std::string& GetName() const { return m_LayerName; }
 
 		//** UPDATES //
 		virtual void OnUpdate(float deltaTime) {}

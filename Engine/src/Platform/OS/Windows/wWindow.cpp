@@ -12,9 +12,9 @@
 
 namespace Light {
 
-	Window* Window::Create(std::function<void(Event&)> callback)
+	Scope<Window> Window::Create(std::function<void(Event&)> callback)
 	{
-		return new wWindow(callback);
+		return CreateScope<wWindow>(callback);
 	}
 
 	wWindow::wWindow(std::function<void(Event&)> callback)
@@ -37,7 +37,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		// create graphics context
-		m_GraphicsContext = std::unique_ptr<GraphicsContext>(GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle));
+		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle);
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create 'GraphicsContext'");
 	}
 

@@ -18,8 +18,13 @@ namespace Light {
 		std::vector<Layer*>::iterator m_End;
 		
 	public:
-		LayerStack();
+		static Scope<LayerStack> Create();
+
 		~LayerStack();
+
+		// #todo: should we keep this?
+		template<typename T, typename... Args>
+		static inline void AttachLayer(Args&&... args) { s_Context->AttachLayerImpl(new T((args)...)); }
 
 		static inline void AttachLayer(Layer* layer) { s_Context->AttachLayerImpl(layer); }
 		static inline void DetachLayer(Layer* layer) { s_Context->DetachLayerImpl(layer); }
@@ -32,6 +37,8 @@ namespace Light {
 		std::vector<Layer*>::reverse_iterator rend() { return m_Layers.rend(); }
 
 	private:
+		LayerStack();
+
 		void AttachLayerImpl(Layer* layer);
 		void DetachLayerImpl(Layer* layer);
 	};

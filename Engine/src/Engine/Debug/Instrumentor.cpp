@@ -5,9 +5,9 @@ namespace Light {
 
 	Instrumentor* Instrumentor::s_Context = nullptr;
 
-	Instrumentor* Instrumentor::Create()
+	Scope<Instrumentor> Instrumentor::Create()
 	{
-		return new Instrumentor;
+		return MakeScope<Instrumentor>(new Instrumentor);
 	}
 	
 	Instrumentor::Instrumentor()

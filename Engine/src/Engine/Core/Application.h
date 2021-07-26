@@ -18,12 +18,12 @@ namespace Light {
 	class Application
 	{
 	private:
-		std::unique_ptr<Instrumentor> m_Instrumentor = nullptr;
-		LayerStack m_LayerStack;
-		Input m_Input;
+		Scope<Instrumentor> m_Instrumentor = nullptr;
+		Scope<LayerStack> m_LayerStack;
+		Scope<Input> m_Input;
 
 	protected:
-		std::unique_ptr<Window> m_Window = nullptr;
+		Scope<Window> m_Window = nullptr;
 
 	public:
 		Application(const Application&) = delete;

@@ -14,32 +14,32 @@
 namespace Light {
 
 	//* CONSTANT_BUFFER *//
-	ConstantBuffer* ConstantBuffer::Create(ConstantBufferIndex index, unsigned int size, std::shared_ptr<SharedContext> sharedContext)
+	Scope<ConstantBuffer> ConstantBuffer::Create(ConstantBufferIndex index, unsigned int size, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return new glConstantBuffer(index, size);
+			return CreateScope<glConstantBuffer>(index, size);
 
 		case  GraphicsAPI::DirectX: LT_WIN(
-			return new dxConstantBuffer(index, size, std::static_pointer_cast<dxSharedContext>(sharedContext));)
+			return CreateScope<dxConstantBuffer>(index, size, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
-			LT_ENGINE_ASSERT(false, "VertexBuffer::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
+			LT_ENGINE_ASSERT(false, "ConstantBuffer::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
 		}
 	}
 
 	//* VERTEX_BUFFER *//
-	VertexBuffer* VertexBuffer::Create(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<SharedContext> sharedContext)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, unsigned int stride, unsigned int count, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return new glVertexBuffer(vertices, count);
+			return CreateRef<glVertexBuffer>(vertices, count);
 			
 		case GraphicsAPI::DirectX: LT_WIN(
-			return new dxVertexBuffer(vertices, stride, count, std::static_pointer_cast<dxSharedContext>(sharedContext));)
+			return CreateRef<dxVertexBuffer>(vertices, stride, count, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "VertexBuffer::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
@@ -48,15 +48,15 @@ namespace Light {
 	}
 
 	//* INDEX_BUFFER *//
-	IndexBuffer* IndexBuffer::Create(unsigned int* indices, unsigned int count, std::shared_ptr<SharedContext> sharedContext)
+	Ref<IndexBuffer> IndexBuffer::Create(unsigned int* indices, unsigned int count, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return new glIndexBuffer(indices, count);
+			return CreateRef<glIndexBuffer>(indices, count);
 
 		case GraphicsAPI::DirectX: LT_WIN(
-			return new dxIndexBuffer(indices, count, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
+			return CreateRef<dxIndexBuffer>(indices, count, std::dynamic_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "IndexBuffer::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());

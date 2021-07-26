@@ -38,7 +38,7 @@ namespace Light {
 	private:
 
 	public:
-		static Blender* Create(std::shared_ptr<SharedContext> sharedContext);
+		static Scope<Blender> Create(Ref<SharedContext> sharedContext);
 
 		virtual void Enable(BlendFactor srcFactor, BlendFactor dstFactor) = 0;
 		virtual void Disable() = 0;

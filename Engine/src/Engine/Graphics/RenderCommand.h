@@ -13,7 +13,7 @@ namespace Light {
 	class RenderCommand
 	{
 	public:
-		static RenderCommand* Create(GLFWwindow* windowHandle, std::shared_ptr<SharedContext> sharedContext);
+		static Scope<RenderCommand> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
 		RenderCommand(const RenderCommand&) = delete;
 		RenderCommand& operator=(const RenderCommand&) = delete;

@@ -13,9 +13,9 @@ namespace Light {
 		glm::vec2 m_Direction;
 		float m_Speed = 1000.0f;
 
-		std::shared_ptr<Camera> m_Camera;
+		Ref<Camera> m_Camera;
 
-		std::shared_ptr<Framebuffer> m_Framebuffer;
+		Ref<Framebuffer> m_Framebuffer;
 
 		Scene m_Scene;
 

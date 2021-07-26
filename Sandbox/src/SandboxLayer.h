@@ -11,7 +11,7 @@ private:
 	glm::vec2 m_Direction;
 	float m_Speed = 1.2f;
 
-	std::shared_ptr<Light::Camera> m_Camera;
+	Light::Ref<Light::Camera> m_Camera;
 
 public:
 	SandboxLayer(const std::string& name) 

@@ -6,9 +6,9 @@
 
 namespace Light {
 
-	std::shared_ptr<spdlog::logger> Logger::s_EngineLogger = nullptr;
-	std::shared_ptr<spdlog::logger> Logger::s_ClientLogger = nullptr;
-	std::shared_ptr<spdlog::logger> Logger::s_FileLogger = nullptr;
+	Ref<spdlog::logger> Logger::s_EngineLogger = nullptr;
+	Ref<spdlog::logger> Logger::s_ClientLogger = nullptr;
+	Ref<spdlog::logger> Logger::s_FileLogger = nullptr;
 
 	std::string Logger::s_LogFilePath = LT_LOG_FILE_LOCATION;
 

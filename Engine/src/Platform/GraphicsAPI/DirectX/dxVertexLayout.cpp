@@ -6,7 +6,7 @@
 
 namespace Light {
 
-	dxVertexLayout::dxVertexLayout(std::shared_ptr<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<dxSharedContext> sharedContext)
+	dxVertexLayout::dxVertexLayout(Ref<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
 		// occupy space for input elements
@@ -26,7 +26,7 @@ namespace Light {
 										   0u });
 		}
 
-		std::shared_ptr<dxShader> dxpShader = std::dynamic_pointer_cast<dxShader>(shader);
+		Ref<dxShader> dxpShader = std::dynamic_pointer_cast<dxShader>(shader);
 		LT_ENGINE_ASSERT(dxpShader, "dxVertexLayout::dxVertexLayout: failed to cast 'Shader' to 'dxShader'");
 
 		// create input layout (vertex layout)

@@ -8,6 +8,7 @@ namespace Light {
 
 	class Texture;
 
+	// #todo: store a mat4 for transform
 	struct TransformComponent
 	{
 		glm::vec2 position, size;
@@ -24,13 +25,13 @@ namespace Light {
 
 	struct SpriteRendererComponent
 	{
-		std::shared_ptr<Texture> texture;
+		Ref<Texture> texture;
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
-		SpriteRendererComponent(std::shared_ptr<Texture> _texture) : texture(_texture) {}
+		SpriteRendererComponent(Ref<Texture> _texture) : texture(_texture) {}
 
-		operator std::shared_ptr<Texture>() { return texture; }
+		operator Ref<Texture>() { return texture; }
 	};
 
 }

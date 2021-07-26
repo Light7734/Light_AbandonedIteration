@@ -4,7 +4,7 @@
 
 namespace Light {
 
-	dxTexture::dxTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, std::shared_ptr<dxSharedContext> sharedContext)
+	dxTexture::dxTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
 		// texture desc

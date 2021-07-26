@@ -11,12 +11,12 @@ namespace Light {
 
 	ResourceManager* ResourceManager::s_Context = nullptr;
 
-	ResourceManager* ResourceManager::Create(std::shared_ptr<SharedContext> sharedContext)
+	Scope<ResourceManager> ResourceManager::Create(Ref<SharedContext> sharedContext)
 	{
-		return new ResourceManager(sharedContext);
+		return MakeScope(new ResourceManager(sharedContext));
 	}
 
-	ResourceManager::ResourceManager(std::shared_ptr<SharedContext> sharedContext)
+	ResourceManager::ResourceManager(Ref<SharedContext> sharedContext)
 		: m_SharedContext(sharedContext)
 	{
 		LT_ENGINE_ASSERT(!s_Context, "ResourceManager::ResourceManager: an instance of 'ResourceManager' already exists, do not construct this class!");
@@ -45,7 +45,7 @@ namespace Light {
 		ResourceManager::ExtractShaderSource(psSource, delim);
 
 		// create shader
-		m_Shaders[name] = std::shared_ptr<Shader>(Shader::Create(vsSource, psSource, m_SharedContext));
+		m_Shaders[name] = Ref<Shader>(Shader::Create(vsSource, psSource, m_SharedContext));
 	}
 
 	void ResourceManager::LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath)
@@ -70,7 +70,7 @@ namespace Light {
 			psSS << line << '\n';
 
 		// create shader
-		m_Shaders[name] = std::shared_ptr<Shader>(Shader::Create(vsSS.str(), psSS.str(), m_SharedContext));
+		m_Shaders[name] = Ref<Shader>(Shader::Create(vsSS.str(), psSS.str(), m_SharedContext));
 	}
 
 	void ResourceManager::LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents /* = 4u */)
@@ -88,7 +88,7 @@ namespace Light {
 		}
 
 		// create texture
-		m_Textures[name] = std::shared_ptr<Texture>(Texture::Create(width, height, components, pixels, m_SharedContext));
+		m_Textures[name] = Ref<Texture>(Texture::Create(width, height, components, pixels, m_SharedContext));
 	}
 
 	void ResourceManager::ExtractShaderSource(std::string& src, const std::string& delim)

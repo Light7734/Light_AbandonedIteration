@@ -21,7 +21,7 @@ namespace Light {
 	class Framebuffer
 	{
 	public:
-		static Framebuffer* Create(const FramebufferSpecification& specification, std::shared_ptr<SharedContext> sharedContext);
+		static Ref<Framebuffer> Create(const FramebufferSpecification& specification, Ref<SharedContext> sharedContext);
 
 		virtual void* GetColorAttachment() = 0;
 

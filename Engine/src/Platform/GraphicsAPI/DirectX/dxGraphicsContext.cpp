@@ -32,7 +32,7 @@ namespace Light {
 
 	void dxGraphicsContext::SetupDeviceAndSwapChain(GLFWwindow* windowHandle)
 	{
-		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+		Ref<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
 
 		// swap chain desc
 		DXGI_SWAP_CHAIN_DESC sd = { 0 };
@@ -87,7 +87,7 @@ namespace Light {
 
 	void dxGraphicsContext::SetupRenderTargets()
 	{
-		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+		Ref<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
 
 		// set primitive topology
 		context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -106,7 +106,7 @@ namespace Light {
 	void dxGraphicsContext::SetupDebugInterface()
 	{
 #ifdef LIGHT_DEBUG
-		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+		Ref<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
 
 		HRESULT hr;
 		Microsoft::WRL::ComPtr<ID3D11Debug> debugInterface = nullptr;
@@ -134,7 +134,7 @@ namespace Light {
 
 	void dxGraphicsContext::LogDebugData()
 	{
-		std::shared_ptr<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
+		Ref<dxSharedContext> context = std::static_pointer_cast<dxSharedContext>(m_SharedContext);
 
 		// locals 
 		IDXGIDevice* DXGIDevice;

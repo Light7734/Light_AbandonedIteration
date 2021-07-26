@@ -12,7 +12,7 @@
 
 namespace Light {
 
-	dxUserInterface::dxUserInterface(GLFWwindow* windowHandle, std::shared_ptr<dxSharedContext> sharedContext)
+	dxUserInterface::dxUserInterface(GLFWwindow* windowHandle, Ref<dxSharedContext> sharedContext)
 	{
 		// create context
 		IMGUI_CHECKVERSION();

@@ -4,7 +4,7 @@
 
 namespace Light {
 
-	dxRenderCommand::dxRenderCommand(std::shared_ptr<dxSharedContext> sharedContext)
+	dxRenderCommand::dxRenderCommand(Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{ }
 

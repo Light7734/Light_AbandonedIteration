@@ -15,7 +15,7 @@ namespace Light {
 	class dxUserInterface : public UserInterface
 	{
 	public:
-		dxUserInterface(GLFWwindow* windowHandle, std::shared_ptr<dxSharedContext> sharedContext);
+		dxUserInterface(GLFWwindow* windowHandle, Ref<dxSharedContext> sharedContext);
 		~dxUserInterface();
 
 		void Begin() override;

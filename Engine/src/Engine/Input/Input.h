@@ -23,7 +23,7 @@ namespace Light {
 		bool m_UserInterfaceEvents = true;
 		bool m_GameEvents = true;
 	public:
-		Input();
+		static Scope<Input> Create();
 
 		static inline void ReceiveUserInterfaceEvents(bool receive, bool toggle = false) { s_Context->ReceiveUserInterfaceEventsImpl(receive, toggle); }
 		static inline void ReceiveGameEvents(bool receive, bool toggle = false) { s_Context->ReceieveGameEventsImpl(receive, toggle); }
@@ -39,6 +39,8 @@ namespace Light {
 		inline bool IsReceivingGameEvents() const { return m_GameEvents; }
 
 	private:
+		Input();
+
 		void ReceiveUserInterfaceEventsImpl(bool receive, bool toggle = false);
 		void ReceieveGameEventsImpl(bool receive, bool toggle = false);
 

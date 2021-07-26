@@ -11,13 +11,12 @@ namespace Light {
 	class Shader
 	{
 	public:
-		static Shader* Create(const std::string& vertexPath, const std::string& pixelPath, std::shared_ptr<SharedContext> sharedContext);
+		static Ref<Shader> Create(const std::string& vertexPath, const std::string& pixelPath, Ref<SharedContext> sharedContext);
 
 		virtual ~Shader() = default;
 
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;
-
 
 		//** #TEMP_SHADER_UNIFORMS_TEMP# **//
 		virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) = 0;

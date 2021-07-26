@@ -13,7 +13,6 @@ namespace Light {
 	class wWindow : public Window
 	{
 	private:
-		// #todo: don't handle Windows's window with glfw, create an HWND
 		GLFWwindow* m_Handle = nullptr;
 
 		std::function<void(Event&)> m_EventCallback;

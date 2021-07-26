@@ -20,7 +20,7 @@ namespace Light {
 	class VertexLayout
 	{
 	public:
-		static VertexLayout* Create(std::shared_ptr<VertexBuffer> vertexBuffer, std::shared_ptr<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, std::shared_ptr<SharedContext> sharedContext);
+		static Ref<VertexLayout> Create(Ref<VertexBuffer> vertexBuffer, Ref<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, Ref<SharedContext> sharedContext);
 
 		virtual ~VertexLayout() = default;;
 

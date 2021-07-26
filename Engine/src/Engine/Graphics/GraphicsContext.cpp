@@ -17,9 +17,9 @@ namespace Light {
 
 	GraphicsContext* GraphicsContext::s_Context = nullptr;
 
-	GraphicsContext::~GraphicsContext() { }
+	GraphicsContext::~GraphicsContext() {}
 
-	GraphicsContext* GraphicsContext::Create(GraphicsAPI api, GLFWwindow* windowHandle)
+	Scope<GraphicsContext> GraphicsContext::Create(GraphicsAPI api, GLFWwindow* windowHandle)
 	{
 		// terminate 'GraphicsContext' dependent classes
 		if (s_Context)
@@ -43,14 +43,17 @@ namespace Light {
 		}
 
 		// create gfx context
+		Scope<GraphicsContext> scopeGfx;
 		switch (api)
 		{
 		case GraphicsAPI::OpenGL:
-			s_Context = new glGraphicsContext(windowHandle);
+			scopeGfx = CreateScope<glGraphicsContext>(windowHandle);
+			s_Context = scopeGfx.get();
 			break;
 
 		case GraphicsAPI::DirectX: LT_WIN(
-			s_Context = new dxGraphicsContext(windowHandle);
+			scopeGfx = CreateScope<dxGraphicsContext>(windowHandle);
+			s_Context = scopeGfx.get();
 			break;)
 
 		default:
@@ -59,16 +62,16 @@ namespace Light {
 		}
 
 		// create 'GraphicsContext' dependent classes
-		s_Context->m_ResourceManager = std::unique_ptr<ResourceManager>(ResourceManager::Create(s_Context->m_SharedContext));
-		s_Context->m_UserInterface = std::unique_ptr<UserInterface>(UserInterface::Create(windowHandle, s_Context->m_SharedContext));
-		s_Context->m_Renderer = std::unique_ptr<Renderer>(Renderer::Create(windowHandle, s_Context->m_SharedContext));
+		s_Context->m_ResourceManager = ResourceManager::Create(s_Context->m_SharedContext);
+		s_Context->m_UserInterface = UserInterface::Create(windowHandle, s_Context->m_SharedContext);
+		s_Context->m_Renderer = Renderer::Create(windowHandle, s_Context->m_SharedContext);
 
 		// check
 		LT_ENGINE_ASSERT(s_Context->m_ResourceManager, "GraphicsContext::Create: failed to create ResourceManager");
 		LT_ENGINE_ASSERT(s_Context->m_UserInterface, "GraphicsContext::Create: failed to create UserInterface");
 		LT_ENGINE_ASSERT(s_Context->m_Renderer, "GraphicsContext::Create: failed to create Renderer");
 
-		return s_Context;
+		return std::move(scopeGfx);
 	}
 
 }

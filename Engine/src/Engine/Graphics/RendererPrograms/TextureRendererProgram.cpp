@@ -11,15 +11,15 @@
 
 namespace Light {
 
-	TextureRendererProgram::TextureRendererProgram(unsigned int maxVertices, std::shared_ptr<SharedContext> sharedContext)
+	TextureRendererProgram::TextureRendererProgram(unsigned int maxVertices, Ref<SharedContext> sharedContext)
 		: m_MaxVertices(maxVertices)
 	{
 		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", "../Engine/res/Shaders/Texture/Texture_VS", "../Engine/res/Shaders/Texture/Texture_PS");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER");
-		m_VertexBuffer = std::shared_ptr<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TextureVertexData), maxVertices, sharedContext));
-		m_IndexBuffer = std::shared_ptr<IndexBuffer>(IndexBuffer::Create(nullptr, (maxVertices / 4) * 6, sharedContext));
-		m_VertexLayout = std::shared_ptr<VertexLayout>(VertexLayout::Create(m_VertexBuffer, m_Shader, { { "POSITION", VertexElementType::Float3 },
+		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TextureVertexData), maxVertices, sharedContext));
+		m_IndexBuffer = Ref<IndexBuffer>(IndexBuffer::Create(nullptr, (maxVertices / 4) * 6, sharedContext));
+		m_VertexLayout = Ref<VertexLayout>(VertexLayout::Create(m_VertexBuffer, m_Shader, { { "POSITION", VertexElementType::Float3 },
 		                                                                                                { "TEXCOORD", VertexElementType::Float2 }}, sharedContext));
 	}
 

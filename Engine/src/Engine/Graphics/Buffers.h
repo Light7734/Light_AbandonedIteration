@@ -15,19 +15,22 @@ namespace Light {
 	class ConstantBuffer
 	{
 	public:
-		static ConstantBuffer* Create(ConstantBufferIndex index, unsigned int size, std::shared_ptr<SharedContext> sharedContext);
+		static Scope<ConstantBuffer> Create(ConstantBufferIndex index, unsigned int size, Ref<SharedContext> sharedContext);
 
 		virtual void Bind() = 0;
 
 		virtual void* Map() = 0;
 		virtual void UnMap() = 0;
+
+	protected:
+		ConstantBuffer() = default;
 	};
 
 	//* VERTEX_BUFFER *//
 	class VertexBuffer
 	{
 	public:
-		static VertexBuffer* Create(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<SharedContext> sharedContext);
+		static Ref<VertexBuffer> Create(float* vertices, unsigned int stride, unsigned int count, Ref<SharedContext> sharedContext);
 
 		virtual ~VertexBuffer() = default;
 
@@ -45,7 +48,7 @@ namespace Light {
 	class IndexBuffer
 	{
 	public:
-		static IndexBuffer* Create(unsigned int* indices, unsigned int count, std::shared_ptr<SharedContext> sharedContext);
+		static Ref<IndexBuffer> Create(unsigned int* indices, unsigned int count, Ref<SharedContext> sharedContext);
 
 		virtual ~IndexBuffer() = default;
 

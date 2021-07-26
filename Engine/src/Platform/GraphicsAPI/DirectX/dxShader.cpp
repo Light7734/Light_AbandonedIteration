@@ -6,7 +6,7 @@
 
 namespace Light {
 
-	dxShader::dxShader(const std::string& vertexSource, const std::string& pixelSource, std::shared_ptr<dxSharedContext> sharedContext)
+	dxShader::dxShader(const std::string& vertexSource, const std::string& pixelSource, Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
 		Microsoft::WRL::ComPtr<ID3DBlob> ps = nullptr, vsErr = nullptr, psErr = nullptr;

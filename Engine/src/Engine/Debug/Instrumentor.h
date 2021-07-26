@@ -28,7 +28,7 @@ namespace Light {
 		unsigned int m_CurrentSessionCount;
 
 	public:
-		static Instrumentor* Create();
+		static Scope<Instrumentor> Create();
 
 		static inline void BeginSession(const std::string& outputPath) { s_Context->BeginSessionImpl(outputPath); }
 		static inline void EndSession() { s_Context->EndSessionImpl(); }

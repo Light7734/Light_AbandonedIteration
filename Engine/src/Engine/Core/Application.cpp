@@ -22,10 +22,12 @@ namespace Light {
 	Application::Application()
 	{
 		Logger::Initialize();
-		m_Instrumentor = std::unique_ptr<Instrumentor>(Instrumentor::Create());
+		m_Instrumentor = Instrumentor::Create();
+		m_LayerStack = LayerStack::Create();
+		m_Input = Input::Create();
 
 		m_Instrumentor->BeginSession("Logs/ProfileResults_Startup.json");
-		m_Window = std::unique_ptr<Light::Window>(Light::Window::Create(std::bind(&Light::Application::OnEvent, this, std::placeholders::_1)));
+		m_Window = Window::Create(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 	}
 
 	Application::~Application()
@@ -59,7 +61,7 @@ namespace Light {
 				// update layers
 				LT_PROFILE_SCOPE("GameLoop::Update");
 
-				for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); it++)
+				for (auto it = m_LayerStack->begin(); it != m_LayerStack->end(); it++)
 					(*it)->OnUpdate(deltaTimer.GetDeltaTime());
 			}
 
@@ -68,7 +70,7 @@ namespace Light {
 				LT_PROFILE_SCOPE("GameLoop::Render");
 				m_Window->GetGfxContext()->GetRenderer()->BeginFrame();
 
-				for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); it++)
+				for (auto it = m_LayerStack->begin(); it != m_LayerStack->end(); it++)
 					(*it)->OnRender();
 
 				m_Window->GetGfxContext()->GetRenderer()->EndFrame();
@@ -79,7 +81,7 @@ namespace Light {
 				LT_PROFILE_SCOPE("GameLoop::UserInterface");
 				m_Window->GetGfxContext()->GetUserInterface()->Begin();
 
-				for (auto it = m_LayerStack.begin(); it != m_LayerStack.end(); it++)
+				for (auto it = m_LayerStack->begin(); it != m_LayerStack->end(); it++)
 					(*it)->OnUserInterfaceUpdate();
 
 				m_Window->GetGfxContext()->GetUserInterface()->End();
@@ -112,14 +114,14 @@ namespace Light {
 
 		// input
 		if (event.HasCategory(InputEventCategory))
-			m_Input.OnEvent(event);
+			m_Input->OnEvent(event);
 
 		// layers
 		// return if the event is an input event and 'Input' has disabled the game events
-		if (event.HasCategory(InputEventCategory) && !m_Input.IsReceivingGameEvents()) 
+		if (event.HasCategory(InputEventCategory) && !m_Input->IsReceivingGameEvents()) 
 			return;
 
-		for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); it++)
+		for (auto it = m_LayerStack->rbegin(); it != m_LayerStack->rend(); it++)
 			if ((*it)->OnEvent(event)) return;
 	}
 

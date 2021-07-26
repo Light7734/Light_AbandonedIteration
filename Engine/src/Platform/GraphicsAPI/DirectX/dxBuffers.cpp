@@ -5,7 +5,7 @@
 
 namespace Light {
 
-	dxConstantBuffer::dxConstantBuffer(ConstantBufferIndex index, unsigned int size, std::shared_ptr<dxSharedContext> sharedContext)
+	dxConstantBuffer::dxConstantBuffer(ConstantBufferIndex index, unsigned int size, Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext), m_Index((int)index)
 	{
 		D3D11_BUFFER_DESC bufferDesc = { };
@@ -38,7 +38,7 @@ namespace Light {
 	}
 
 	//* VERTEX_BUFFER *//
-	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
+	dxVertexBuffer::dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, Ref<dxSharedContext> sharedContext)
 		: m_Stride(stride), m_Context(sharedContext)
 	{
 		// buffer desc
@@ -87,7 +87,7 @@ namespace Light {
 	}
 
 	//* INDEX_BUFFER *//
-	dxIndexBuffer::dxIndexBuffer(unsigned int* indices, unsigned int count, std::shared_ptr<dxSharedContext> sharedContext)
+	dxIndexBuffer::dxIndexBuffer(unsigned int* indices, unsigned int count, Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
 	{
 		// generate indices if not provided

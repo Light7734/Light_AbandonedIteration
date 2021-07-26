@@ -19,12 +19,12 @@ namespace Light {
 	class Window
 	{
 	protected:
-		std::unique_ptr<GraphicsContext> m_GraphicsContext;
+		Scope<GraphicsContext> m_GraphicsContext;
 		WindowProperties m_Properties = {};
 		bool b_Closed = false;
 
 	public:
-		static Window* Create(std::function<void(Event&)> callback);
+		static Scope<Window> Create(std::function<void(Event&)> callback);
 
 		Window(const Window&) = delete;
 		Window& operator=(const Window&) = delete;

@@ -13,7 +13,7 @@ namespace Light {
 	class dxFramebuffer : public Framebuffer
 	{
 	private:
-		std::shared_ptr<dxSharedContext> m_Context;
+		Ref<dxSharedContext> m_Context;
 		
 		FramebufferSpecification m_Specification;
 
@@ -24,7 +24,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_DepthStencilView;
 
 	public:
-		dxFramebuffer(const FramebufferSpecification& specification, std::shared_ptr<dxSharedContext> sharedContext);
+		dxFramebuffer(const FramebufferSpecification& specification, Ref<dxSharedContext> sharedContext);
 
 		inline void* GetColorAttachment() override { return (void*)m_ResourceView.Get(); }
 

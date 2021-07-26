@@ -7,7 +7,7 @@
 
 namespace Light {
 
-	glVertexLayout::glVertexLayout(std::shared_ptr<VertexBuffer> buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
+	glVertexLayout::glVertexLayout(Ref<VertexBuffer> buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
 	{
 		// check
 		LT_ENGINE_ASSERT(std::dynamic_pointer_cast<glVertexBuffer>(buffer), "glVertexLayout::glVertexLayout: failed to cast 'VertexBuffer' to 'glVertexBuffer'");

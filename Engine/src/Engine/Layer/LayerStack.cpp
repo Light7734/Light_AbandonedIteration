@@ -12,6 +12,11 @@ namespace Light {
 
 	LayerStack* LayerStack::s_Context = nullptr;
 
+	Scope<LayerStack> LayerStack::Create()
+	{
+		return MakeScope<LayerStack>(new LayerStack());
+	}
+
 	LayerStack::LayerStack()
 	{
 		LT_ENGINE_ASSERT(!s_Context, "LayerStack::LayerStack: an instance of 'LayerStack' already exists, do not construct this class!")

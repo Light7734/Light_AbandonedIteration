@@ -15,13 +15,13 @@ namespace Light {
 	private:
 		static ResourceManager* s_Context;
 
-		std::unordered_map<std::string, std::shared_ptr<Shader>> m_Shaders;
-		std::unordered_map<std::string, std::shared_ptr<Texture>> m_Textures;
+		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
+		std::unordered_map<std::string, Ref<Texture>> m_Textures;
 
-		std::shared_ptr<SharedContext> m_SharedContext;
+		Ref<SharedContext> m_SharedContext;
 
 	public:
-		static ResourceManager* Create(std::shared_ptr<SharedContext> sharedContext);
+		static Scope<ResourceManager> Create(Ref<SharedContext> sharedContext);
 
 		// #todo: add geometry shader support
 		static inline void CreateShader(const std::string& name, const std::string& vertexSource, const std::string& pixelSource) { s_Context->CreateShaderImpl(name, vertexSource, pixelSource); }
@@ -29,11 +29,11 @@ namespace Light {
 
 		static inline void LoadTexture(const std::string& name, const std::string& path, unsigned int desiredComponents = 4u) { s_Context->LoadTextureImpl(name, path, desiredComponents); }
 
-		static inline std::shared_ptr<Shader> GetShader(const std::string& name) { return s_Context->m_Shaders[name]; }
-		static inline std::shared_ptr<Texture> GetTexture(const std::string& name) { return s_Context->m_Textures[name]; }
+		static inline Ref<Shader> GetShader(const std::string& name) { return s_Context->m_Shaders[name]; }
+		static inline Ref<Texture> GetTexture(const std::string& name) { return s_Context->m_Textures[name]; }
 
 	private:
-		ResourceManager(std::shared_ptr<SharedContext> sharedContext);
+		ResourceManager(Ref<SharedContext> sharedContext);
 
 		void CreateShaderImpl(const std::string& name, const std::string& vertexSource, const std::string& pixelSource);
 		void LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath);
