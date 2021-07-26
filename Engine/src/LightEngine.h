@@ -23,7 +23,8 @@
 
 //** INPUT **//
 #include "Input/Input.h"
-#include "Input/InputCodes.h"
+#include "Input/KeyCodes.h"
+#include "Input/MouseCodes.h"
 
 //** LAYER **//
 #include "Layer/Layer.h"

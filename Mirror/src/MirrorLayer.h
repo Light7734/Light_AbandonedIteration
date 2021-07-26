@@ -85,16 +85,16 @@ namespace Light {
 
 		void OnUpdate(float deltaTime) override
 		{
-			if (Input::GetKeyboardKey(KEY_A))
+			if (Input::GetKeyboardKey(Key::A))
 				m_Direction.x = -1.0f;
-			else if (Input::GetKeyboardKey(KEY_D))
+			else if (Input::GetKeyboardKey(Key::D))
 				m_Direction.x = 1.0f;
 			else
 				m_Direction.x = 0.0f;
 
-			if (Input::GetKeyboardKey(KEY_W))
+			if (Input::GetKeyboardKey(Key::W))
 				m_Direction.y = 1.0f;
-			else if (Input::GetKeyboardKey(KEY_S))
+			else if (Input::GetKeyboardKey(Key::S))
 				m_Direction.y = -1.0f;
 			else
 				m_Direction.y = 0.0f;
