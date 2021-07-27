@@ -17,7 +17,7 @@ namespace Light {
 	template<typename T>
 	constexpr Ref<T> MakeRef(T* rawPointer)
 	{
-		return std::shared_ptr<T>(T);
+		return std::shared_ptr<T>(rawPointer);
 	}
 
 	// Scope (std::unique_ptr)

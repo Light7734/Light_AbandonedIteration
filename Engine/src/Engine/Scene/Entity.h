@@ -2,11 +2,11 @@
 
 #include "Base.h"
 
+#include "Scene.h"
+
 #include <entt.hpp>
 
 namespace Light {
-
-	class Scene;
 
 	class Entity
 	{

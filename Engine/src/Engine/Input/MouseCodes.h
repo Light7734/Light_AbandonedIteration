@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ltpch.h"
+
 #include <stdint.h>
 
 namespace Light {

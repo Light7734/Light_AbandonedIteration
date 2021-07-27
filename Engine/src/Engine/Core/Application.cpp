@@ -39,7 +39,7 @@ namespace Light {
 	void Application::GameLoop()
 	{
 		// check
-		// LT_ENGINE_ASSERT(!m_LayerStack.IsEmpty(), "Application::GameLoop(pre): LayerStack is empty");
+		LT_ENGINE_ASSERT(!m_LayerStack->IsEmpty(), "Application::GameLoop(pre): LayerStack is empty");
 
 		// log debug data
 		LogDebugData();

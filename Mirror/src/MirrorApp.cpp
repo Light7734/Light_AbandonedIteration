@@ -22,7 +22,7 @@ namespace Light {
 			m_Window->SetProperties(properties);
 
 			// Attach the sandbox layer
-			LayerStack::AttachLayer<MirrorLayer>(("MirrorLayer"));
+			LayerStack::EmplaceLayer<MirrorLayer>(("MirrorLayer"));
 		}
 
 		~Mirror()
