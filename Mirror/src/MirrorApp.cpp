@@ -31,7 +31,7 @@ namespace Light {
 		}
 	};
 
-	::Light::Application* ::Light::CreateApplication()
+	Application* CreateApplication()
 	{
 		return new Mirror();
 	}
