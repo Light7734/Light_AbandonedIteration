@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/Framebuffer.h"
+
+#include "Base/Base.h"
 
 namespace Light {
 
@@ -10,18 +11,19 @@ namespace Light {
 	private:
 		FramebufferSpecification m_Specification;
 
-		unsigned int m_BufferID, m_ColorAttachment, m_DepthStencilAttachment;
+		unsigned int m_BufferID; 
+		unsigned int m_ColorAttachmentID, m_DepthStencilAttachmentID;
 
 	public:
 		glFramebuffer(const FramebufferSpecification& specification);
 		~glFramebuffer();
 
-		inline void* GetColorAttachment() override { return (void*)m_ColorAttachment; }
-
 		void BindAsTarget() override;
 		void BindAsResource() override;
 
-		void Resize(const glm::vec2& size) override;
+		void Resize(const glm::uvec2& size) override;
+
+		inline void* GetColorAttachment() override { return (void*)m_ColorAttachmentID; }
 	};
 
 }

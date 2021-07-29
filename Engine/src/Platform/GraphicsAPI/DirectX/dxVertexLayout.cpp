@@ -7,7 +7,8 @@
 namespace Light {
 
 	dxVertexLayout::dxVertexLayout(Ref<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, Ref<dxSharedContext> sharedContext)
-		: m_Context(sharedContext)
+		: m_Context(sharedContext),
+		  m_InputLayout(nullptr)
 	{
 		// occupy space for input elements
 		std::vector<D3D11_INPUT_ELEMENT_DESC> inputElementsDesc;
@@ -16,14 +17,13 @@ namespace Light {
 		// extract elements desc
 		for (const auto& element : elements)
 		{
-			inputElementsDesc.emplace_back(D3D11_INPUT_ELEMENT_DESC{
-			                               element.first.c_str(),
-			                               0u,
-			                               GetDxgiFormat(element.second),
-			                               0u,
-			                               D3D11_APPEND_ALIGNED_ELEMENT,
-			                               D3D11_INPUT_PER_VERTEX_DATA,
-										   0u });
+			inputElementsDesc.emplace_back(D3D11_INPUT_ELEMENT_DESC{ element.first.c_str(),
+			                                                         NULL,
+			                                                         GetDxgiFormat(element.second),
+			                                                         0u,
+			                                                         D3D11_APPEND_ALIGNED_ELEMENT,
+			                                                         D3D11_INPUT_PER_VERTEX_DATA,
+										                             0u });
 		}
 
 		Ref<dxShader> dxpShader = std::dynamic_pointer_cast<dxShader>(shader);

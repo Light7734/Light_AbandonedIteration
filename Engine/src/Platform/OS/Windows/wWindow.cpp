@@ -18,7 +18,8 @@ namespace Light {
 	}
 
 	wWindow::wWindow(std::function<void(Event&)> callback)
-		: m_EventCallback(callback)
+		: m_Handle(nullptr),
+		  m_EventCallback(callback)
 	{
 		// init glfw
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize 'glfw'");
@@ -46,10 +47,36 @@ namespace Light {
 		glfwDestroyWindow(m_Handle);
 	}
 
-	void wWindow::SetProperties(const WindowProperties& properties, bool affectVisibility /* = false */)
+	void wWindow::PollEvents()
 	{
-		// save the visibility status and re-assign if 'affectVisibility' is false
-		bool visible = affectVisibility ? properties.visible : m_Properties.visible;
+		glfwPollEvents();
+	}
+
+	void wWindow::OnEvent(const Event& event)
+	{
+		switch (event.GetEventType())
+		{
+		/* closed */
+		case EventType::WindowClosed:
+			b_Closed = true;
+			break;
+
+		/* resized */
+		case EventType::WindowResized:
+			OnWindowResize((const WindowResizedEvent&)event);
+			break;
+		}
+	}
+
+	void wWindow::OnWindowResize(const WindowResizedEvent& event)
+	{
+		m_Properties.size = event.GetSize();
+	}
+
+	void wWindow::SetProperties(const WindowProperties& properties, bool overrideVisiblity /* = false */)
+	{
+		// save the visibility status and re-assign if 'overrideVisibility' is false
+		bool visible = overrideVisiblity ? properties.visible : m_Properties.visible;
 		m_Properties = properties;
 		m_Properties.visible = visible;
 
@@ -58,6 +85,29 @@ namespace Light {
 		SetSize(properties.size);
 		SetVSync(properties.vsync);
 		SetVisibility(visible);
+	}
+
+	void wWindow::SetTitle(const std::string& title)
+	{
+		m_Properties.title = title;
+
+		glfwSetWindowTitle(m_Handle, m_Properties.title.c_str());
+	}
+
+	void wWindow::SetSize(const glm::uvec2& size, bool additive /* = false */)
+	{
+		m_Properties.size.x = size.x == 0u ? m_Properties.size.x : additive ? m_Properties.size.x + size.x : size.x;
+		m_Properties.size.y = size.y == 0u ? m_Properties.size.y : additive ? m_Properties.size.y + size.y : size.y;
+
+
+		glfwSetWindowSize(m_Handle, size.x, size.y);
+	}
+
+	void wWindow::SetVSync(bool vsync, bool toggle /* = false */)
+	{
+		m_Properties.vsync = toggle ? !m_Properties.vsync : vsync;
+
+		glfwSwapInterval(m_Properties.vsync);
 	}
 
 	void wWindow::SetVisibility(bool visible, bool toggle)
@@ -70,63 +120,17 @@ namespace Light {
 			glfwHideWindow(m_Handle);
 	}
 
-	void wWindow::PollEvents()
-	{
-		glfwPollEvents();
-	}
-
-	void wWindow::OnEvent(const Event& event)
-	{
-		switch (event.GetEventType())
-		{
-		// closed
-		case EventType::WindowClosed:
-			b_Closed = true;
-			break;
-
-		// resized
-		case EventType::WindowResized:
-			OnWindowResize((const WindowResizedEvent&)event);
-			break;
-		}
-	}
-
-	void wWindow::OnWindowResize(const WindowResizedEvent& event)
-	{
-		m_Properties.size = event.GetSize();
-	}
-
-	void wWindow::SetTitle(const std::string& title)
-	{
-		m_Properties.title = title;
-
-		glfwSetWindowTitle(m_Handle, m_Properties.title.c_str());
-	}
-
-	void wWindow::SetVSync(bool vsync, bool toggle /* = false */)
-	{
-		m_Properties.vsync = toggle ? !m_Properties.vsync : vsync;
-
-		glfwSwapInterval(m_Properties.vsync);
-	}
-
-	void wWindow::SetSize(const glm::uvec2& size, bool additive /* = false */)
-	{
-		glfwSetWindowSize(m_Handle, size.x == 0u ? m_Properties.size.x : additive ? m_Properties.size.x + size.x : size.x,
-									size.y == 0u ? m_Properties.size.y : additive ? m_Properties.size.y + size.y : size.y);
-	}
-
 	void wWindow::BindGlfwEvents()
 	{
-		//** MOUSE_EVENTS **//
-		// cursor position
+		//============================== MOUSE_EVENTS ==============================//
+		/* cursor position */
 		glfwSetCursorPosCallback(m_Handle, [](GLFWwindow* window, double xpos, double ypos)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			callback(MouseMovedEvent(xpos, ypos));
 		});
 
-		// button
+		/* mouse button */
 		glfwSetMouseButtonCallback(m_Handle, [](GLFWwindow* window, int button, int action, int mods) 
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -137,15 +141,16 @@ namespace Light {
 				callback(ButtonReleasedEvent (button));
 		});
 
-		// scroll
+		/* scroll */
 		glfwSetScrollCallback(m_Handle, [](GLFWwindow* window, double xoffset, double yoffset)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			callback(WheelScrolledEvent (yoffset));
 		});
+		//============================== MOUSE_EVENTS ==============================//
 
-		//** KEYBOARD_EVENTS **//
-		// key
+		//============================== KEYBOARD_EVENTS ==============================//
+		/* key */
 		glfwSetKeyCallback(m_Handle, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -155,30 +160,31 @@ namespace Light {
 			else if(action == GLFW_RELEASE)
 				callback(KeyReleasedEvent(key));
 		});
+		//============================== KEYBOARD_EVENTS ==============================//
 
-		// Window Events //
-		// position
+		//============================== WINDOW_EVENTS ==============================//
+		/* window position */
 		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xpos, int ypos)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			callback(WindowMovedEvent(xpos, ypos));
 		});
 
-		// size
+		/* window size */
 		glfwSetWindowSizeCallback(m_Handle, [](GLFWwindow* window, int width, int height) 
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			callback(WindowResizedEvent(width, height));
 		});
 
-		// close
+		/* window close */
 		glfwSetWindowCloseCallback(m_Handle, [](GLFWwindow* window)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			callback(WindowClosedEvent());
 		});
 
-		// focus
+		/* window focus */
 		glfwSetWindowFocusCallback(m_Handle, [](GLFWwindow* window, int focus)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -188,5 +194,6 @@ namespace Light {
 			else
 				callback(WindowLostFocusEvent());
 		});
+		//============================== WINDOW_EVENTS ==============================//
 	}
 }

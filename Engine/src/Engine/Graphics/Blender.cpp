@@ -9,7 +9,6 @@
 
 #include "GraphicsContext.h"
 
-
 namespace Light {
 
 	Scope<Blender> Blender::Create(Ref<SharedContext> sharedContext)

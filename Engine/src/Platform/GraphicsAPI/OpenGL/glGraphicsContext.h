@@ -1,13 +1,12 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/GraphicsContext.h"
+
+#include "Base/Base.h"
 
 struct GLFWwindow;
 
 namespace Light {
-
-	class WindowResizedEvent;
 
 	class glGraphicsContext : public GraphicsContext
 	{
@@ -17,7 +16,7 @@ namespace Light {
 	public:
 		glGraphicsContext(GLFWwindow* windowHandle);
 
-		virtual void LogDebugData() override;
+		void LogDebugData() override;
 
 	private:
 		void SetDebugMessageCallback();

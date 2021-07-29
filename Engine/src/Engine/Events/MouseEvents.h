@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Event.h"
+
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -15,7 +16,10 @@ namespace Light {
 		const glm::vec2 m_Position;
 
 	public:
-		MouseMovedEvent(float x, float y) : m_Position(x, y) { }
+		MouseMovedEvent(float x, float y)
+			: m_Position(x, y)
+		{
+		}
 
 		inline const glm::vec2& GetPosition() const { return m_Position; }
 
@@ -38,7 +42,10 @@ namespace Light {
 		const float m_Offset;
 
 	public:
-		WheelScrolledEvent(float offset) : m_Offset(offset) { }
+		WheelScrolledEvent(float offset)
+			: m_Offset(offset)
+		{
+		}
 
 		inline float GetOffset() const { return m_Offset; }
 
@@ -58,7 +65,10 @@ namespace Light {
 		const int m_Button;
 
 	public:
-		ButtonPressedEvent(int button): m_Button(button) { }
+		ButtonPressedEvent(int button)
+			: m_Button(button) 
+		{
+		}
 
 		inline int GetButton() const { return m_Button; }
 
@@ -78,7 +88,10 @@ namespace Light {
 		const int m_Button;
 
 	public:
-		ButtonReleasedEvent(int button) : m_Button(button) { }
+		ButtonReleasedEvent(int button)
+			: m_Button(button) 
+		{
+		}
 
 		inline int GetButton() const { return m_Button; }
 
@@ -88,7 +101,6 @@ namespace Light {
 			ss << "ButtonReleased: " << m_Button;
 			return ss.str();
 		}
-
 		EVENT_TYPE(ButtonReleased)
 		EVENT_CATEGORY(InputEventCategory | MouseEventCategory)
 	};

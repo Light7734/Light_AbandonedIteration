@@ -32,7 +32,7 @@ namespace Light {
 			ResourceManager::LoadTexture("awesomeface", "res/Textures/awesomeface.png");
 			m_AwesomefaceTexture = ResourceManager::GetTexture("awesomeface");
 
-			m_Framebuffer = std::shared_ptr<Framebuffer>(Framebuffer::Create({ 800u, 600u, 1, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), false }, GraphicsContext::GetSharedContext()));
+			m_Framebuffer = std::shared_ptr<Framebuffer>(Framebuffer::Create({ 800u, 600u, 1, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f) }, GraphicsContext::GetSharedContext()));
 
 			for (int i = 0; i < 250; i++)
 			{

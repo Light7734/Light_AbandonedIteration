@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/Blender.h"
+
+#include "Base/Base.h"
 
 #include <d3d11.h>
 #include <wrl.h>
@@ -14,7 +15,8 @@ namespace Light {
 	{
 	private:
 		Ref<dxSharedContext> m_Context;
-		std::unordered_map<BlendFactor, D3D11_BLEND> m_FactorMap;
+
+		const std::unordered_map<BlendFactor, D3D11_BLEND> m_FactorMap;
 
 		Microsoft::WRL::ComPtr<ID3D11BlendState> m_BlendState;
 

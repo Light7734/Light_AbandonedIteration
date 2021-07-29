@@ -2,17 +2,22 @@
 #include "Layer.h"
 
 #include "Events/Event.h"
-#include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
+#include "Events/MouseEvents.h"
 #include "Events/WindowEvents.h"
 
 namespace Light {
 	
+	Layer::Layer(const std::string& name)
+		: m_LayerName(name)
+	{
+	}
+
 	bool Layer::OnEvent(const Event& event)
 	{
 		switch (event.GetEventType())
 		{
-		//** MOUSE_EVENTS **//
+		/* mouse */
 		case EventType::MouseMoved:
 			return OnMouseMoved((MouseMovedEvent&)event);
 		case EventType::ButtonPressed:
@@ -22,13 +27,13 @@ namespace Light {
 		case EventType::WheelScrolled:
 			return OnWheelScrolled((WheelScrolledEvent&)event);
 
-		//** KEYBOARD_EVENTS **//
+		/* keyboard */
 		case EventType::KeyPressed:
 			return OnKeyPressed((KeyPressedEvent&)event);
 		case EventType::KeyReleased:
 			return OnKeyReleased((KeyReleasedEvent&)event);
 
-		//** WINDOW_EVENTS **//
+		/* window */
 		case EventType::WindowClosed:
 			return OnWindowClosed((WindowClosedEvent&)event);
 		case EventType::WindowResized:

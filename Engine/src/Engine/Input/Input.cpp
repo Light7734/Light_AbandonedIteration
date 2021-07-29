@@ -17,6 +17,13 @@ namespace Light {
 	}
 
 	Input::Input()
+		: m_KeyboadKeys{},
+		  m_MouseButtons{},
+		  m_MousePosition{},
+		  m_MouseDelta{},
+		  m_MouseWheelDelta{},
+		  m_UserInterfaceEvents(true),
+		  m_GameEvents(true)
 	{
 		LT_ENGINE_ASSERT(!s_Context, "Input::Input: an instance of 'Input' already exists, do not construct this class!");
 		s_Context = this;

@@ -1,9 +1,13 @@
 #pragma once
 
-#include "Base.h"
+#include "Graphics/SharedContext.h"
+
+#include "Base/Base.h"
 
 namespace Light {
 
-	struct glSharedContext { };
+	class glSharedContext : public SharedContext 
+	{
+	};
 
 }

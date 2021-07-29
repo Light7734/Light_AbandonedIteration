@@ -10,6 +10,7 @@
 namespace Light {
 
 	glShader::glShader(const std::string& vertexSource, const std::string& fragmentSource)
+		: m_ShaderID(NULL)
 	{
 		m_ShaderID = glCreateProgram();
 
@@ -29,7 +30,7 @@ namespace Light {
 		glCompileShader(vertexShader);
 		glCompileShader(fragmentShader);
 
-		//** #TEMP_HANDLE_SHADER_COMPILE_FAILURE# **//
+		/* #TEMP_HANDLE_SHADER_COMPILE_FAILURE# */
 		int isCompiled = 0;
 		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled);
 		if (isCompiled == GL_FALSE)
@@ -64,7 +65,7 @@ namespace Light {
 
 			return;
 		}
-		//** #TEMP_HANDLE_SHADER_COMPILE_FAILURE# **//
+		/* #TEMP_HANDLE_SHADER_COMPILE_FAILURE# */
 
 		// attach shaders
 		glAttachShader(m_ShaderID, vertexShader);
@@ -91,16 +92,6 @@ namespace Light {
 	void glShader::UnBind()
 	{
 		glUseProgram(NULL);
-	}
-
-	void glShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
-	{
-		int location = glGetUniformLocation(m_ShaderID, name.c_str());
-
-		if (location == -1)
-			LT_ENGINE_ERROR("glShader::SetUniformMat4: failed to find uniform: {}", name);
-
-		glUniformMatrix4fv(location, 1, GL_FALSE, &(value[0][0]));
 	}
 
 }

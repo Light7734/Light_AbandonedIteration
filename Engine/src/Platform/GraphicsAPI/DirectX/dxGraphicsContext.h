@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/GraphicsContext.h"
+
+#include "Base/Base.h"
 
 #include <d3d11.h>
 #include <wrl.h>
@@ -14,6 +15,7 @@ namespace Light {
 	{
 	private:
 		GLFWwindow* m_WindowHandle;
+
 		Microsoft::WRL::ComPtr<ID3D11Debug> m_DebugInterface;
 
 	public:

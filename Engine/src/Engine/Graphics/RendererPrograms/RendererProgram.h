@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 namespace Light {
 
@@ -8,9 +8,6 @@ namespace Light {
 
 	class RendererProgram
 	{
-		virtual void SetCamera(const Camera& camera) = 0;
-
-
 		virtual void Map() = 0;
 		virtual void UnMap() = 0;
 

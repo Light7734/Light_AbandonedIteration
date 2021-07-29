@@ -1,10 +1,6 @@
 #pragma once
 
-#include "Base.h"
-
-#include "Buffers.h"
-#include "Blender.h"
-#include "Framebuffer.h"
+#include "Base/Base.h"
 
 #include "RendererPrograms/QuadRendererProgram.h"
 #include "RendererPrograms/TextureRendererProgram.h"
@@ -16,18 +12,17 @@ struct GLFWwindow;
 
 namespace Light {
 
-	class RenderCommand;
 	class Blender;
-
+	class ConstantBuffer;
 	class Framebuffer;
+	class RenderCommand;
+	class Texture;
+
+	class SharedContext;
 
 	class Camera;
 
-	class Texture;
-
 	class WindowResizedEvent;
-
-	class SharedContext;
 
 	class Renderer
 	{
@@ -44,15 +39,12 @@ namespace Light {
 		Scope<RenderCommand> m_RenderCommand;
 		Scope<Blender> m_Blender;
 
-		Ref<Framebuffer> m_TargetFramebuffer;
-
 		Ref<Camera> m_Camera;
+		Ref<Framebuffer> m_TargetFramebuffer;
 
 	public:
 		static Scope<Renderer> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 		
-		static inline void SetTargetFramebuffer(Ref<Framebuffer> framebuffer) { s_Context->SetTargetFramebufferImpl(framebuffer); }
-
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint) { s_Context->DrawQuadImpl(position, size, tint); }
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture) { s_Context->DrawQuadImpl(position, size, texture); }
 
@@ -66,8 +58,6 @@ namespace Light {
 
 	private:
 		Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
-
-		void SetTargetFramebufferImpl(Ref<Framebuffer> framebuffer);
 
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture);

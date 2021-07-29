@@ -12,8 +12,15 @@
 namespace Light {
 
 	QuadRendererProgram::QuadRendererProgram(unsigned int maxVertices, Ref<SharedContext> sharedContext)
-		: m_MaxVertices(maxVertices)
+		: m_Shader(nullptr),
+		  m_IndexBuffer(nullptr),
+		  m_VertexLayout(nullptr),
+		  m_MapCurrent(nullptr),
+		  m_MapEnd(nullptr),
+		  m_QuadCount(0u),
+		  m_MaxVertices(maxVertices)
 	{
+		// #todo: don't use relative path
 		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_QUAD_SHADER", "../Engine/res/Shaders/Quad/Quad_VS", "../Engine//res/Shaders/Quad/Quad_PS");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_QUAD_SHADER");
@@ -34,12 +41,6 @@ namespace Light {
 		m_MapCurrent += 4;
 		m_QuadCount++;
 		return true;
-	}
-
-	void QuadRendererProgram::SetCamera(const Camera& camera)
-	{
-		m_Shader->Bind();
-		m_Shader->SetUniformMat4("u_ViewProjection", camera.GetProjection() * camera.GetView());
 	}
 
 	void QuadRendererProgram::Map()

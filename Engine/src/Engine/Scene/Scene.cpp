@@ -1,8 +1,8 @@
 #include "ltpch.h"
 #include "Scene.h"
 
-#include "Entity.h"
 #include "Components.h"
+#include "Entity.h"
 
 #include "Graphics/Renderer.h"
 
@@ -11,6 +11,7 @@
 namespace Light {
 
 	Scene::Scene()
+		: m_Registry()
 	{
 	}
 
@@ -22,10 +23,9 @@ namespace Light {
 	{
 		auto group = m_Registry.group(entt::get<TransformComponent, SpriteRendererComponent>);
 
-		group.each([](TransformComponent& transform, SpriteRendererComponent& sprite) {
+		group.each([](auto& transform, auto& sprite) {
 			Renderer::DrawQuad(glm::vec3(transform.position, 0.0f), transform.size, sprite.texture);
 		});
-
 	}
 
 	Entity Scene::CreateEntity(const std::string& name, const glm::vec2& position, const glm::vec2& size)
@@ -34,7 +34,6 @@ namespace Light {
 		entity.AddComponent<TransformComponent>(position, size);
 
 		return entity;
-
 	}
 
 }

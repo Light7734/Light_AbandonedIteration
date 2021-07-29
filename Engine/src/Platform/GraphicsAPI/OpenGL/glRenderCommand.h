@@ -1,7 +1,10 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/RenderCommand.h"
+
+#include "Base/Base.h"
+
+struct GLFWwindow;
 
 namespace Light {
 
@@ -19,9 +22,9 @@ namespace Light {
 		void Draw(unsigned int count) override;
 		void DrawIndexed(unsigned int count) override;
 
-		virtual void DefaultTargetFramebuffer() override;
+		void DefaultTargetFramebuffer() override;
 
-		virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
+		void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) override;
 	};
 
 }

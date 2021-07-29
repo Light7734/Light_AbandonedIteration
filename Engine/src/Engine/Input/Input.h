@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -20,8 +20,9 @@ namespace Light {
 		glm::vec2 m_MouseDelta;
 		float m_MouseWheelDelta;
 
-		bool m_UserInterfaceEvents = true;
-		bool m_GameEvents = true;
+		bool m_UserInterfaceEvents;
+		bool m_GameEvents;
+
 	public:
 		static Scope<Input> Create();
 

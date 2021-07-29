@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "RendererProgram.h"
+
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -34,15 +35,13 @@ namespace Light {
 		TextureVertexData* m_MapCurrent = nullptr;
 		TextureVertexData* m_MapEnd = nullptr;
 
-		unsigned int m_QuadCount = 0u;
-		unsigned int m_MaxVertices = 0u;
+		unsigned int m_QuadCount;
+		unsigned int m_MaxVertices;
 
 	public:
 		TextureRendererProgram(unsigned int maxVertices, Ref<SharedContext> sharedContext);
 
 		bool Advance();
-
-		void SetCamera(const Camera& camera) override;
 
 		void Map() override;
 		void UnMap() override;
@@ -50,7 +49,9 @@ namespace Light {
 		void Bind() override;
 
 		inline TextureVertexData* GetMapCurrent() { return m_MapCurrent; }
+
 		inline unsigned int GetQuadCount() const { return m_QuadCount; }
+
 		inline constexpr unsigned int GetVertexSize() const { return sizeof(TextureVertexData); }
 	};
 

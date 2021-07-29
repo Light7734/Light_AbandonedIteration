@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Core/Window.h"
+
+#include "Base/Base.h"
 
 struct GLFWwindow;
 
@@ -13,19 +14,20 @@ namespace Light {
 	class lWindow : public Window
 	{
 	private:
-		GLFWwindow* m_Handle = nullptr;
+		GLFWwindow* m_Handle;
 		
 		std::function<void(Event&)> m_EventCallback;
 
 	public:
 		lWindow(std::function<void(Event&)> callback);
-		
 		~lWindow();
 		
+		/* events */
 		void PollEvents() override;
 		void OnEvent(const Event& event) override;
 		
-		void SetProperties(const WindowProperties& properties, bool affectsVisiblity = false) override;
+		//======================================== SETTERS ========================================//
+		void SetProperties(const WindowProperties& properties, bool overrideVisibility = false) override;
 		
 		void SetTitle(const std::string& title) override;
 		
@@ -33,11 +35,12 @@ namespace Light {
 		
 		void SetVSync(bool vsync, bool toggle = false) override;
 		void SetVisibility(bool visible, bool toggle = false);
-		
-	private:
-		void BindGlfwEvents();
+		//======================================== SETTERS ========================================//
 
+	private:
 		void OnWindowResize(const WindowResizedEvent& event);
+
+		void BindGlfwEvents();
 	};
 	
 }

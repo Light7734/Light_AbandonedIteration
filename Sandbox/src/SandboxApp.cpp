@@ -1,11 +1,13 @@
 #define LIGHT_ENTRY_POINT
 #include <LightEngine.h>
-#include <EntryPoint.h>
 
 #include "SandboxLayer.h"
 
 class Sandbox : public Light::Application
 {
+private:
+	 SandboxLayer* m_SandboxLayer;
+
 public:
 	Sandbox()
 	{
@@ -20,7 +22,8 @@ public:
 		m_Window->SetProperties(properties);
 
 		// Attach the sandbox layer
-		Light::LayerStack::AttachLayer(new SandboxLayer("SandboxLayer"));
+		m_SandboxLayer = new SandboxLayer("SandboxLayer");
+		Light::LayerStack::AttachLayer(m_SandboxLayer);
 	}
 		
 	~Sandbox()
@@ -31,5 +34,6 @@ public:
 
 Light::Application* Light::CreateApplication()
 {
+	// note: don't use the logger here, it is not initialized yet
 	return new Sandbox();
 }

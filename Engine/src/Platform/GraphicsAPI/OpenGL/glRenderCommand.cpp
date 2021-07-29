@@ -8,7 +8,8 @@ namespace Light {
 
 	glRenderCommand::glRenderCommand(GLFWwindow* windowHandle)
 		: m_WindowHandle(windowHandle)
-	{ }
+	{
+	}
 
 	void glRenderCommand::SwapBuffers()
 	{

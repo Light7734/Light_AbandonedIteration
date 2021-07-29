@@ -3,54 +3,48 @@
 class SandboxLayer : public Light::Layer
 {
 private:
-	std::shared_ptr<Light::Texture> m_AwesomefaceTexture;
+	// scene
+	Light::Scope<Light::Scene> m_SandboxScene;
 
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec2> sizes;
-
-	glm::vec2 m_Direction;
-	float m_Speed = 1.2f;
-
+	// camera
 	Light::Ref<Light::Camera> m_Camera;
+	glm::vec2 m_Direction = { 0.0f, 0.0f };
+	float m_Speed = 1.2f;
 
 public:
 	SandboxLayer(const std::string& name) 
-		: Light::Layer(name), m_Direction(glm::vec2(0.0f, 0.0f))
+		: Light::Layer(name)
 	{
-		m_Camera = std::make_shared<Light::Camera>(glm::vec2(0.0f), 800.0f / 600.0f, 1.0f);
+		// initialize scene & camera
+		m_SandboxScene = Light::CreateScope<Light::Scene>();
+		m_Camera = Light::CreateRef<Light::Camera>(glm::vec2(0.0f), 800.0f / 600.0f, 1.0f);
 
+		// initialize test quads
 		Light::ResourceManager::LoadTexture("awesomeface", "res/Textures/awesomeface.png");
-		m_AwesomefaceTexture = Light::ResourceManager::GetTexture("awesomeface");
+		Light::Ref<Light::Texture> awesomeface = Light::ResourceManager::GetTexture("awesomeface");
 
 		for (int i = 0; i < 100; i++)
 		{
 			glm::vec3 position = glm::vec3(-1.0f + (-100.0f / 400.0f) + ((rand() % 1000) / 400.0f), -1.0f + (-100.0f / 300.0f) + ((rand() % 800) / 300.0f), 0.0f);
 			glm::vec2 size = glm::vec2(100 / 400.0f, 100 / 300.0f);
 
-			positions.push_back(position);
-			sizes.push_back(size);
+			m_SandboxScene->CreateEntity("awesomeface" + i, position, size).AddComponent<Light::SpriteRendererComponent>(awesomeface);
 		}
 	}
 
 	void OnRender() override
 	{
-		m_Camera->CalculateProjection();
-		m_Camera->CalculateView();
-
 		Light::Renderer::BeginScene(m_Camera);
-
-		for (int i = 0; i < 100; i++)
-			Light::Renderer::DrawQuad(positions[i], sizes[i], m_AwesomefaceTexture);
-
+		m_SandboxScene->OnRender();
 		Light::Renderer::EndScene();
 	}
 
 	bool OnKeyPressed(const Light::KeyPressedEvent& event) override
 	{
 		if (event.GetKey() == Light::Key::A)
-			m_Direction.x +=  -1.0f;
+			m_Direction.x += -1.0f;
 		if(event.GetKey() == Light::Key::D)
-			m_Direction.x += 1.0f;
+			m_Direction.x +=  1.0f;
 
 		if (event.GetKey() == Light::Key::W)
 			m_Direction.y +=  1.0f;
@@ -66,7 +60,7 @@ public:
 		if (event.GetKey() == Light::Key::A)
 			m_Direction.x -= -1.0f;
 		if (event.GetKey() == Light::Key::D)
-			m_Direction.x -= 1.0f;
+			m_Direction.x -=  1.0f;
 
 		if (event.GetKey() == Light::Key::W)
 			m_Direction.y -=  1.0f;
@@ -79,6 +73,9 @@ public:
 	void OnUpdate(float deltaTime) override
 	{
 		m_Camera->Move(m_Direction * m_Speed * deltaTime);
+
+		m_Camera->CalculateProjection();
+		m_Camera->CalculateView();
 	}
 
 };

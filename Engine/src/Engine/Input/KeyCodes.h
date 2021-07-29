@@ -10,7 +10,7 @@ namespace Light {
 	{
 		enum : uint16_t
 		{
-			/* DIGITS */
+			/* digits */
 			D0              = 48,
 			D1              = 49,
 			D2              = 50,
@@ -24,7 +24,7 @@ namespace Light {
 			Semicolon       = 59, // ;
 			Equal           = 61, // =
 
-			/* LETTERS */
+			/* letters */
 			A               = 65,
 			B               = 66,
 			C               = 67,
@@ -52,13 +52,13 @@ namespace Light {
 			Y               = 89,
 			Z               = 90,
 
-			/* BRACKETS */
+			/* brackets */
 			LeftBracket     = 91, // [
 			LBracket        = LeftBracket, // [
 			RightBracket    = 93, // ]
 			RBracket        = RightBracket, // ]
 
-			/* ARROW */
+			/* arrow */
 			Right           = 262,
 			RightArrow      = Right,
 			RArrow          = Right,
@@ -72,25 +72,21 @@ namespace Light {
 			UpArrow         = Up,
 			UArrow          = Up,
 
-			/* PAGE */
+			/* page */
 			PageUp          = 266,
 			PageDown        = 267,
 
-			/* HOME/END */
+			/* home/end */
 			Home            = 268,
 			End             = 269,
 
-			/* LOCKS */
+			/* toggles */
 			CapsLock        = 280,
 			ScrollLock      = 281,
 			NumLock         = 282,
 			NumberLock      = NumLock,
 
-
-			PrintScreen     = 283,
-			Pause           = 284,
-
-			/* FUNCTION */
+			/* function */
 			F1              = 290,
 			F2              = 291,
 			F3              = 292,
@@ -117,7 +113,7 @@ namespace Light {
 			F24             = 313,
 			F25             = 314,
 
-			/* KEYPAD */
+			/* keypad */
 			Kp0             = 320,
 			Kp1             = 321,
 			Kp2             = 322,
@@ -136,7 +132,7 @@ namespace Light {
 			KpEnter         = 335,
 			KpEqual         = 336,
 
-			/* Modifiers */
+			/* modifiers */
 			LeftShift       = 340,
 			LShift          = LeftShift,
 			LeftControl     = 341,
@@ -154,10 +150,17 @@ namespace Light {
 			RightSuper      = 347,
 			RSuper          = 347,
 
-			/* MISC */
+			/* misc */
 			Space           = 32,
 			Apostrophe      = 39, // '
 			Quote           = Apostrophe,
+
+			Comma           = 44, // ,
+			Minus           = 45, // -
+			Period          = 46, // .
+			Slash           = 47, // /
+			ForwardSlash    = Slash, // /
+			BackSlash       = 92, // \
 			
 			GraveAccent     = 96, // `
 			Console         = GraveAccent,
@@ -171,14 +174,11 @@ namespace Light {
 			Insert          = 260,
 			Delete          = 261,
 
-			Comma           = 44, // ,
-			Minus           = 45, // -
-			Period          = 46, // .
-			Slash           = 47, // /
-			ForwardSlash    = Slash, // /
-			BackSlash       = 92, // \
+			PrintScreen     = 283,
+			Pause           = 284,
 
 			Menu            = 348,
+
 		};
 	}
 

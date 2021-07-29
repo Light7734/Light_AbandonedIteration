@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/Shader.h"
 
-#include <glm/glm.hpp>
+#include "Base/Base.h"
 
 namespace Light {
 
@@ -18,8 +17,6 @@ namespace Light {
 
 		void Bind() override;
 		void UnBind() override;
-
-		void SetUniformMat4(const std::string& name, const glm::mat4& value) override;
 	};
 
 }

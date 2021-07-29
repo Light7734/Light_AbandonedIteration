@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Base.h"
 #include "UserInterface/UserInterface.h"
 
-class GLFWwindow;
+#include "Base/Base.h"
+
+struct GLFWwindow;
 
 namespace Light {
 

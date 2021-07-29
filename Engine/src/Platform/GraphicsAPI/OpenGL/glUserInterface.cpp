@@ -1,11 +1,12 @@
-﻿#include "ltpch.h"
+﻿
+#include "ltpch.h"
 #include "glUserInterface.h"
+
+#include <GLFW/glfw3.h>
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
-
-#include <GLFW/glfw3.h>
 
 namespace Light {
 
@@ -58,7 +59,7 @@ namespace Light {
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-		//** #TEMP_IMGUI_DEMO_TEMP# **//
+		/* #TEMP_IMGUI_DEMO_TEMP# */
 		ImGui::ShowDemoWindow();
 	}
 

@@ -1,14 +1,17 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/Buffers.h"
+
+#include "Base/Base.h"
 
 namespace Light {
 
+	//========== CONSTANT_BUFFER ==========//
 	class glConstantBuffer : public ConstantBuffer
 	{
 	private:
-		unsigned int m_BufferID, m_Index;
+		unsigned int m_BufferID; 
+		unsigned int m_Index;
 
 	public:
 		glConstantBuffer(ConstantBufferIndex index, unsigned int size);
@@ -20,7 +23,7 @@ namespace Light {
 		void UnMap() override;
 	};
 
-	//** VERTEX_BUFFER **//
+	//========== VERTEX_BUFFER ==========//
 	class glVertexBuffer : public VertexBuffer
 	{
 	private:
@@ -30,14 +33,14 @@ namespace Light {
 		glVertexBuffer(float* vertices, unsigned int count);
 		~glVertexBuffer();
 
-		void* Map() override;
-		void UnMap() override;
-
 		void Bind() override;
 		void UnBind() override;
+
+		void* Map() override;
+		void UnMap() override;
 	};
 	
-	//** INDEX_BUFFER **//
+	//========== INDEX_BUFFER ==========//
 	class glIndexBuffer : public IndexBuffer
 	{
 	private:

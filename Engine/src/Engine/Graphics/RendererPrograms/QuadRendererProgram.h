@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "RendererProgram.h"
+
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -41,8 +42,6 @@ namespace Light {
 		QuadRendererProgram(unsigned int maxVertices, Ref<SharedContext> sharedContext);
 
 		bool Advance();
-		
-		void SetCamera(const Camera& camera) override;
 
 		void Map() override;
 		void UnMap() override;

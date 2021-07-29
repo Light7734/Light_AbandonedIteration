@@ -6,13 +6,14 @@ namespace Light {
 
 	dxRenderCommand::dxRenderCommand(Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext)
-	{ }
+	{
+	}
 
 	void dxRenderCommand::SwapBuffers()
 	{
 #ifdef LIGHT_DEBUG
 		HRESULT hr;
-		if (FAILED(hr = m_Context->GetSwapChain()->Present(0u, 0u)))
+		if (FAILED(hr = m_Context->GetSwapChain()->Present(1u, 0u)))
 		{
 			if (hr == DXGI_ERROR_DEVICE_REMOVED)
 			{
@@ -83,8 +84,9 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer = nullptr;
 		DXC(m_Context->GetSwapChain()->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
 		DXC(m_Context->GetDevice()->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_Context->GetRenderTargetViewRef()));
+
 		// set render target
-		m_Context->GetDeviceContext()->OMSetRenderTargets(1, m_Context->GetRenderTargetView().GetAddressOf(), nullptr);
+		m_Context->GetDeviceContext()->OMSetRenderTargets(1u, m_Context->GetRenderTargetView().GetAddressOf(), nullptr);
 	}
 
 }

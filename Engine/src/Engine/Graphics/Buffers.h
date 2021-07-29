@@ -1,32 +1,32 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 namespace Light {
 
 	class SharedContext;
 
-	enum ConstantBufferIndex
+	enum class ConstantBufferIndex
 	{
 		ViewProjection = 0u
 	};
 
-	//* CONSTANT_BUFFER *//
+	//========== CONSTANT_BUFFER ==========//
 	class ConstantBuffer
 	{
 	public:
 		static Scope<ConstantBuffer> Create(ConstantBufferIndex index, unsigned int size, Ref<SharedContext> sharedContext);
 
-		virtual void Bind() = 0;
-
 		virtual void* Map() = 0;
 		virtual void UnMap() = 0;
+
+		virtual void Bind() = 0;
 
 	protected:
 		ConstantBuffer() = default;
 	};
 
-	//* VERTEX_BUFFER *//
+	//========== VERTEX_BUFFER ==========//
 	class VertexBuffer
 	{
 	public:
@@ -44,7 +44,7 @@ namespace Light {
 		VertexBuffer() = default;
 	};
 
-	//* INDEX_BUFFER *//
+	//========== INDEX_BUFFER ==========//
 	class IndexBuffer
 	{
 	public:

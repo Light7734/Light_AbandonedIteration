@@ -4,11 +4,14 @@
 
 #include "Events/WindowEvents.h"
 
-// forward declaration
-#include "Graphics/Renderer.h"
-#include "Graphics/RenderCommand.h"
-#include "UserInterface/UserInterface.h"
-#include "Utility/ResourceManager.h"
+#include "Graphics/Blender.h" // required for forward declaration
+#include "Graphics/Buffers.h" // required for forward declaration
+#include "Graphics/Renderer.h" // required for forward declaration
+#include "Graphics/RenderCommand.h" // required for forward declaration
+
+#include "UserInterface/UserInterface.h" // required for forward declaration
+
+#include "Utility/ResourceManager.h" // required for forward declaration
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <glfw/glfw3.h>
@@ -17,7 +20,8 @@
 namespace Light {
 
 	dxGraphicsContext::dxGraphicsContext(GLFWwindow* windowHandle)
-		: m_WindowHandle(windowHandle)
+		: m_WindowHandle(windowHandle),
+		  m_DebugInterface(nullptr)
 	{
 		// set 'GraphicsAPI';
 		m_GraphicsAPI = GraphicsAPI::DirectX;

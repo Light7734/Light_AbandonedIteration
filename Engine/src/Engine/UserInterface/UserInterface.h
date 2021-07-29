@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 struct GLFWwindow;
 
 namespace Light {
 
 	class Event;
+
 	class SharedContext;
 
 	class UserInterface

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/Framebuffer.h"
+
+#include "Base/Base.h"
 
 #include <d3d11.h>
 #include <wrl.h>
@@ -20,18 +21,18 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_RenderTargetView;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_ColorAttachment;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> m_DepthStencilAttachment;
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_ResourceView;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> m_ShaderResourceView;
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_DepthStencilView;
 
 	public:
 		dxFramebuffer(const FramebufferSpecification& specification, Ref<dxSharedContext> sharedContext);
 
-		inline void* GetColorAttachment() override { return (void*)m_ResourceView.Get(); }
+		inline void* GetColorAttachment() override { return (void*)m_ShaderResourceView.Get(); }
 
 		void BindAsTarget() override;
 		void BindAsResource() override;
 
-		void Resize(const glm::vec2& size) override;
+		void Resize(const glm::uvec2& size) override;
 	};
 
 }

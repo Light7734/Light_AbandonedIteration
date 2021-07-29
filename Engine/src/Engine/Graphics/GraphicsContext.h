@@ -1,16 +1,17 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 struct GLFWwindow;
 
 namespace Light {
 
-	class ResourceManager;
-	class UserInterface;
 	class Renderer;
-
+	class ResourceManager;
 	class SharedContext;
+
+	class UserInterface;
+
 
 	class WindowResizedEvent;
 

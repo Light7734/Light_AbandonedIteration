@@ -7,11 +7,11 @@
 	#include "DirectX/dxSharedContext.h"
 #endif
 
-#include "Graphics/GraphicsContext.h"
-
 #include "Events/Event.h"
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
+
+#include "Graphics/GraphicsContext.h"
 
 #include <imgui.h>
 
@@ -38,7 +38,7 @@ namespace Light {
 		ImGuiIO& io = ImGui::GetIO();
 		switch (inputEvent.GetEventType())
 		{
-		//** MOUSE_EVENTS **//
+		/* mouse events */
 		case EventType::MouseMoved:
 		{
 			const MouseMovedEvent& event = (const MouseMovedEvent&)inputEvent;
@@ -63,7 +63,7 @@ namespace Light {
 			ImGui::GetIO().MouseWheel = event.GetOffset();
 			return;
 		}
-		//** MOUSE_EVENTS **//
+		/* keyboard events */
 		case EventType::KeyPressed:
 		{
 			const KeyPressedEvent& event = (const KeyPressedEvent&)inputEvent;

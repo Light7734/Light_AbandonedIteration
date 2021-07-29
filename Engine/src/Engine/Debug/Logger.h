@@ -1,13 +1,13 @@
 #pragma once
 
 #define LT_LOGGER_H
-#include "Base.h"
+#include "Base/Base.h"
 
 #include <spdlog/spdlog.h>
 
 // LOGGER MACROS //
 
-#define LT_LOG_FILE_LOCATION "Logs/Logger.txt";
+#define LT_LOG_FILE_LOCATION "Logs/Logger.txt"
 
 // File
 #define LT_FILE_INFO(...)       ::Light::Logger::GetFileLogger()->log(spdlog::level::info    , __VA_ARGS__)
@@ -48,19 +48,22 @@ namespace Light {
 	class Logger
 	{
 	private:
-		static Ref<spdlog::logger> s_EngineLogger, s_ClientLogger, s_FileLogger;
-		static std::string s_LogFilePath;
+		static Logger* s_Context;
+
+		Ref<spdlog::logger> m_EngineLogger, m_ClientLogger, m_FileLogger;
+		std::string m_LogFilePath;
 
 	public:
-		Logger() = delete;
+		static Scope<Logger> Create();
 
-		static void Initialize();
+		static inline Ref<spdlog::logger> GetEngineLogger() { return s_Context->m_EngineLogger; }
+		static inline Ref<spdlog::logger> GetClientLogger() { return s_Context->m_ClientLogger; }
+		static inline Ref<spdlog::logger> GetFileLogger() { return s_Context->m_FileLogger; }
 
-		static inline Ref<spdlog::logger> GetEngineLogger() { return s_EngineLogger; }
-		static inline Ref<spdlog::logger> GetClientLogger() { return s_ClientLogger; }
-		static inline Ref<spdlog::logger> GetFileLogger() { return s_FileLogger; }
+		void LogDebugData();
 
-		static void LogDebugData();
+	private:
+		Logger();
 	};
 
 }

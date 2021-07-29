@@ -18,6 +18,9 @@ namespace Light {
 	}
 
 	LayerStack::LayerStack()
+		: m_Layers{},
+		  m_Begin(),
+		  m_End()
 	{
 		LT_ENGINE_ASSERT(!s_Context, "LayerStack::LayerStack: an instance of 'LayerStack' already exists, do not construct this class!")
 		s_Context = this;

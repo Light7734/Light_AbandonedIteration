@@ -7,17 +7,22 @@
 	#include "DirectX/dxSharedContext.h"
 #endif
 
-// forward declaration
-#include "Graphics/Renderer.h"
-#include "Graphics/RenderCommand.h"
-#include "UserInterface/UserInterface.h"
-#include "Utility/ResourceManager.h"
+#include "Blender.h" // required for forward declaration
+#include "Buffers.h" // required for forward declaration
+#include "Renderer.h" // required for forward declaration
+#include "RenderCommand.h" // required for forward declaration
+
+#include "UserInterface/UserInterface.h" // required for forward declaration
+
+#include "Utility/ResourceManager.h" // required for forward declaration
 
 namespace Light {
 
 	GraphicsContext* GraphicsContext::s_Context = nullptr;
 
-	GraphicsContext::~GraphicsContext() {}
+	GraphicsContext::~GraphicsContext() 
+	{
+	}
 
 	Scope<GraphicsContext> GraphicsContext::Create(GraphicsAPI api, GLFWwindow* windowHandle)
 	{
@@ -46,11 +51,12 @@ namespace Light {
 		Scope<GraphicsContext> scopeGfx;
 		switch (api)
 		{
+		// opengl
 		case GraphicsAPI::OpenGL:
 			scopeGfx = CreateScope<glGraphicsContext>(windowHandle);
 			s_Context = scopeGfx.get();
 			break;
-
+		// directx
 		case GraphicsAPI::DirectX: LT_WIN(
 			scopeGfx = CreateScope<dxGraphicsContext>(windowHandle);
 			s_Context = scopeGfx.get();

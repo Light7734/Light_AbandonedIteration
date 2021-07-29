@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Event.h"
+
+#include "Base/Base.h"
 
 #include <sstream>
 
@@ -13,7 +14,10 @@ namespace Light {
 		const int m_Key;
 
 	public:
-		KeyPressedEvent(int key): m_Key(key) { }
+		KeyPressedEvent(int key)
+			: m_Key(key)
+		{
+		}
 
 		inline int GetKey() const { return m_Key; }
 
@@ -33,7 +37,10 @@ namespace Light {
 		const int m_Key;
 
 	public:
-		KeyReleasedEvent(int key): m_Key(key) { }
+		KeyReleasedEvent(int key)
+			: m_Key(key) 
+		{
+		}
 
 		inline int GetKey() const { return m_Key; }
 

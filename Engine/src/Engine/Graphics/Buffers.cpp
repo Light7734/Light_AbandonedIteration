@@ -13,7 +13,7 @@
 
 namespace Light {
 
-	//* CONSTANT_BUFFER *//
+	//================================================== CONSTANT_BUFFER ==================================================//
 	Scope<ConstantBuffer> ConstantBuffer::Create(ConstantBufferIndex index, unsigned int size, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
@@ -29,8 +29,9 @@ namespace Light {
 			return nullptr;
 		}
 	}
+	//================================================== CONSTANT_BUFFER ==================================================//
 
-	//* VERTEX_BUFFER *//
+	//================================================== VERTEX_BUFFER ==================================================//
 	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, unsigned int stride, unsigned int count, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
@@ -46,8 +47,9 @@ namespace Light {
 			return nullptr;
 		}
 	}
+	//================================================== VERTEX_BUFFER ==================================================//
 
-	//* INDEX_BUFFER *//
+	//======================================== INDEX_BUFFER ========================================//
 	Ref<IndexBuffer> IndexBuffer::Create(unsigned int* indices, unsigned int count, Ref<SharedContext> sharedContext)
 	{
 		switch (GraphicsContext::GetGraphicsAPI())
@@ -63,5 +65,6 @@ namespace Light {
 			return nullptr;
 		}
 	}
+	//======================================== INDEX_BUFFER ========================================//
 
 }

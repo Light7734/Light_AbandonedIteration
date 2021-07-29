@@ -6,6 +6,7 @@
 namespace Light {
 
 	glTexture::glTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels)
+		: m_TextureID(NULL)
 	{
 		// create texture
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);

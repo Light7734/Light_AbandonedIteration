@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/VertexLayout.h"
 
+#include "Base/Base.h"
+
 namespace Light {
+
+	class VertexBuffer;
 
 	struct glVertexElementDesc
 	{

@@ -17,7 +17,9 @@ namespace Light {
 	}
 
 	ResourceManager::ResourceManager(Ref<SharedContext> sharedContext)
-		: m_SharedContext(sharedContext)
+		: m_SharedGraphicsContext(sharedContext),
+		  m_Shaders{},
+		  m_Textures{}
 	{
 		LT_ENGINE_ASSERT(!s_Context, "ResourceManager::ResourceManager: an instance of 'ResourceManager' already exists, do not construct this class!");
 		s_Context = this;
@@ -45,7 +47,7 @@ namespace Light {
 		ResourceManager::ExtractShaderSource(psSource, delim);
 
 		// create shader
-		m_Shaders[name] = Ref<Shader>(Shader::Create(vsSource, psSource, m_SharedContext));
+		m_Shaders[name] = Ref<Shader>(Shader::Create(vsSource, psSource, m_SharedGraphicsContext));
 	}
 
 	void ResourceManager::LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath)
@@ -70,7 +72,7 @@ namespace Light {
 			psSS << line << '\n';
 
 		// create shader
-		m_Shaders[name] = Ref<Shader>(Shader::Create(vsSS.str(), psSS.str(), m_SharedContext));
+		m_Shaders[name] = Ref<Shader>(Shader::Create(vsSS.str(), psSS.str(), m_SharedGraphicsContext));
 	}
 
 	void ResourceManager::LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents /* = 4u */)
@@ -88,7 +90,7 @@ namespace Light {
 		}
 
 		// create texture
-		m_Textures[name] = Ref<Texture>(Texture::Create(width, height, components, pixels, m_SharedContext));
+		m_Textures[name] = Ref<Texture>(Texture::Create(width, height, components, pixels, m_SharedGraphicsContext));
 	}
 
 	void ResourceManager::ExtractShaderSource(std::string& src, const std::string& delim)

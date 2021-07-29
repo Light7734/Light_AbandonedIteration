@@ -20,21 +20,25 @@ int main(int argc, char** argv)
 
 		application->GameLoop();
 	}
+	// failed engine assertion
 	catch (Light::FailedEngineAssertion)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedEngineAssertion'");
 		exitCode = -1;
 	}
+	// failed client assertion
 	catch (Light::FailedClientAssertion)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedClientAssertion'");
 		exitCode = -2;
 	}
+	// gl exception
 	catch(Light::glException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
 		exitCode = -3;
 	}
+	// dx exception
 	catch (Light::dxException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'dxException'");
@@ -65,17 +69,20 @@ int main(int argc, char* argv[])
 
 		application->GameLoop();
 	}
+	// failed engine assertion
 	catch (Light::FailedEngineAssertion)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedEngineAssertion'");
 		exitCode = -1;
 	}
+	// failed client assertion
 	catch (Light::FailedClientAssertion)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedClientAssertion'");
 		exitCode = -2;
 	}
-	catch(Light::glException)
+	// gl exception
+	catch (Light::glException)
 	{
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
 		exitCode = -3;

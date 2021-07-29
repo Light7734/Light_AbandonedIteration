@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 #include "Graphics/SharedContext.h"
 
 #include <d3d11.h>
@@ -8,7 +8,6 @@
 
 namespace Light {
 
-	// #todo:
 	class dxSharedContext : public SharedContext
 	{
 	private:

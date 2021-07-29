@@ -8,6 +8,7 @@
 namespace Light {
 
 	glVertexLayout::glVertexLayout(Ref<VertexBuffer> buffer, const std::vector<std::pair<std::string, VertexElementType>>& elements)
+		: m_ArrayID(NULL)
 	{
 		// check
 		LT_ENGINE_ASSERT(std::dynamic_pointer_cast<glVertexBuffer>(buffer), "glVertexLayout::glVertexLayout: failed to cast 'VertexBuffer' to 'glVertexBuffer'");

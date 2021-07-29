@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 namespace Light {
 
 	class Layer;
+
 	class Event;
 
 	class LayerStack
@@ -22,7 +23,7 @@ namespace Light {
 
 		~LayerStack();
 
-		// #todo: should we keep this?
+		// #todo: is this needed?
 		template<typename T, typename... Args>
 		static inline void EmplaceLayer(Args&&... args) { s_Context->AttachLayerImpl(new T((args)...)); }
 

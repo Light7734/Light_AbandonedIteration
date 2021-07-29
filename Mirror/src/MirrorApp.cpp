@@ -1,6 +1,5 @@
 #define LIGHT_ENTRY_POINT
 #include <LightEngine.h>
-#include <EntryPoint.h>
 
 #include "MirrorLayer.h"
 
@@ -31,7 +30,7 @@ namespace Light {
 		}
 	};
 
-	::Light::Application* ::Light::CreateApplication()
+	Application* CreateApplication()
 	{
 		return new Mirror();
 	}

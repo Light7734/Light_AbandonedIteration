@@ -3,11 +3,14 @@
 
 #include "Events/WindowEvents.h"
 
-// forward declaration
-#include "Graphics/Renderer.h"
-#include "Graphics/RenderCommand.h"
-#include "UserInterface/UserInterface.h"
-#include "Utility/ResourceManager.h"
+#include "Graphics/Blender.h" // required for forward declaration
+#include "Graphics/Buffers.h" // required for forward declaration
+#include "Graphics/Renderer.h" // required for forward declaration
+#include "Graphics/RenderCommand.h" // required for forward declaration
+
+#include "UserInterface/UserInterface.h" // required for forward declaration
+
+#include "Utility/ResourceManager.h" // required for forward declaration
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -50,11 +53,12 @@ namespace Light {
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_FALSE);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, nullptr, GL_TRUE);
-#else // LT_DIST
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_MEDIUM, 0, nullptr, GL_TRUE);
+#else // LIGHT_DIST
 		return;
 #endif
 
-		// setup message callback
+		/* setup message callback */
 		glDebugMessageCallback([](unsigned int source, unsigned int type,
 		                          unsigned int id, unsigned int severity,
 		                          int length, const char* message,

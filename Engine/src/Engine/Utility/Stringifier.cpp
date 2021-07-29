@@ -9,6 +9,7 @@
 
 namespace Light {
 
+	//============================== OPENGL ==============================//
 	std::string Stringifier::glDebugMsgSeverity(unsigned int severity)
 	{
 		switch (severity)
@@ -51,7 +52,9 @@ namespace Light {
 		default:                                   return "UNKNOWN";
 		}
 	}
+	//============================== OPENGL ==============================//
 
+	//==================== SPDLOG ====================//
 	std::string Stringifier::spdlogLevel(unsigned int level)
 	{
 		switch (level)
@@ -66,7 +69,9 @@ namespace Light {
 		default:                       return "UNKNOWN";
 		}
 	}
+	//==================== SPDLOG ====================//
 
+	//==================== GRAPHICS_API ====================//
 	std::string Stringifier::GraphicsAPIToString(GraphicsAPI api)
 	{
 		switch (api)
@@ -79,5 +84,6 @@ namespace Light {
 		default:                             return "UNKNOWN";
 		}
 	}
+	//==================== GRAPHICS_API ====================//
 
 }

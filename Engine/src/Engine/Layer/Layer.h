@@ -1,19 +1,22 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 namespace Light {
 
 	class Event;
 
+	// mouse
 	class MouseMovedEvent;
 	class ButtonPressedEvent;
 	class ButtonReleasedEvent;
 	class WheelScrolledEvent;
 
+	// keyboard
 	class KeyPressedEvent;
 	class KeyReleasedEvent;
 
+	// window
 	class WindowClosedEvent;
 	class WindowResizedEvent;
 	class WindowMovedEvent;
@@ -26,12 +29,12 @@ namespace Light {
 		std::string m_LayerName;
 
 	public:
-		Layer(const std::string& name): m_LayerName(name) {}
+		Layer(const std::string& name);
 		virtual ~Layer() = default;
 
 		inline const std::string& GetName() const { return m_LayerName; }
 
-		//** UPDATES //
+		/* update */
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnUserInterfaceUpdate() {}
 
@@ -40,17 +43,17 @@ namespace Light {
 		bool OnEvent(const Event& event);
 
 	protected:
-		//** MOUSE_EVENTS //
+		/* mouse */
 		virtual bool OnMouseMoved(const MouseMovedEvent& event) { return false; }
 		virtual bool OnButtonPressed(const ButtonPressedEvent& event) { return false; }
 		virtual bool OnButtonReleased(const ButtonReleasedEvent& event) { return false; }
 		virtual bool OnWheelScrolled(const WheelScrolledEvent& event) { return false; }
 
-		//** KEYBOARD_EVENTS **//
+		/* keyboard */
 		virtual bool OnKeyPressed(const KeyPressedEvent& event) { return false; }
 		virtual bool OnKeyReleased(const KeyReleasedEvent& event) { return false; }
 
-		//** WINDOW_EVENTS **/
+		/* window */
 		virtual bool OnWindowClosed(const WindowClosedEvent& event) { return false; }
 		virtual bool OnWindowResized(const WindowResizedEvent& event) { return false; }
 		virtual bool OnWindowMoved(const WindowMovedEvent& event) { return false; }

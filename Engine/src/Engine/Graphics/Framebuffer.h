@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -14,8 +14,6 @@ namespace Light {
 		unsigned int samples = 1;
 
 		glm::uvec4 defaultColor = glm::uvec4(0u);
-
-		bool swapChainTarget = false; // render to the screen
 	};
 
 	class Framebuffer
@@ -23,12 +21,12 @@ namespace Light {
 	public:
 		static Ref<Framebuffer> Create(const FramebufferSpecification& specification, Ref<SharedContext> sharedContext);
 
-		virtual void* GetColorAttachment() = 0;
-
 		virtual void BindAsTarget() = 0;
 		virtual void BindAsResource() = 0;
 
-		virtual void Resize(const glm::vec2& size) = 0;
+		virtual void Resize(const glm::uvec2& size) = 0;
+
+		virtual void* GetColorAttachment() = 0;
 
 	protected:
 		Framebuffer() = default;

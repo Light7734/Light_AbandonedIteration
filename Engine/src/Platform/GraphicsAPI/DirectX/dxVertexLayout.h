@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/VertexLayout.h"
+
+#include "Base/Base.h"
 
 #include <d3d11.h>
 #include <wrl.h>
@@ -9,6 +10,7 @@
 namespace Light {
 
 	class Shader;
+
 	class dxSharedContext;
 
 	class dxVertexLayout : public VertexLayout

@@ -1,41 +1,39 @@
 #include "ltpch.h"
 #include "dxBlender.h"
-
 #include "dxSharedContext.h"
 
 namespace Light {
 
 	dxBlender::dxBlender(Ref<dxSharedContext> sharedContext)
-		: m_Context(sharedContext)
+		: m_Context(sharedContext),
+		  m_FactorMap{ // constants
+		               { BlendFactor::ZERO, D3D11_BLEND_ZERO                         },
+		               { BlendFactor::ONE, D3D11_BLEND_ONE                           },
+		               
+		               // source										            
+		               { BlendFactor::SRC_COLOR, D3D11_BLEND_SRC_COLOR               },
+		               { BlendFactor::INVERSE_SRC_COLOR, D3D11_BLEND_INV_SRC_COLOR   },
+		               
+		               { BlendFactor::SRC_ALPHA, D3D11_BLEND_SRC_ALPHA               },
+		               { BlendFactor::INVERSE_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA   },
+		               
+		               // destination
+		               { BlendFactor::DST_COLOR, D3D11_BLEND_DEST_COLOR              },
+		               { BlendFactor::INVERSE_DST_COLOR, D3D11_BLEND_INV_DEST_COLOR  },
+		               
+		               { BlendFactor::DST_ALPHA, D3D11_BLEND_DEST_ALPHA              },
+		               { BlendFactor::INVERSE_DST_ALPHA, D3D11_BLEND_INV_DEST_ALPHA  },
+		               
+		               // source1
+		               { BlendFactor::SRC1_COLOR, D3D11_BLEND_SRC1_COLOR             },
+		               { BlendFactor::INVERSE_SRC1_COLOR, D3D11_BLEND_INV_SRC1_COLOR },
+		               
+		               { BlendFactor::SRC1_ALPHA, D3D11_BLEND_SRC1_ALPHA             },
+		               { BlendFactor::INVERSE_SRC1_ALPHA, D3D11_BLEND_INV_SRC1_ALPHA } },
+		  m_BlendState(nullptr),
+		  m_Desc{}
 	{
 		// factor map
-		m_FactorMap = {
-			// constants
-			{ BlendFactor::ZERO, D3D11_BLEND_ZERO },
-			{ BlendFactor::ONE, D3D11_BLEND_ONE },
-
-			// source
-			{ BlendFactor::SRC_COLOR, D3D11_BLEND_SRC_COLOR },
-			{ BlendFactor::INVERSE_SRC_COLOR, D3D11_BLEND_INV_SRC_COLOR },
-
-			{ BlendFactor::SRC_ALPHA, D3D11_BLEND_SRC_ALPHA },
-			{ BlendFactor::INVERSE_SRC_ALPHA, D3D11_BLEND_INV_SRC_ALPHA },
-
-			// destination
-			{ BlendFactor::DST_COLOR, D3D11_BLEND_DEST_COLOR },
-			{ BlendFactor::INVERSE_DST_COLOR, D3D11_BLEND_INV_DEST_COLOR },
-
-			{ BlendFactor::DST_ALPHA, D3D11_BLEND_DEST_ALPHA },
-			{ BlendFactor::INVERSE_DST_ALPHA, D3D11_BLEND_INV_DEST_ALPHA },
-
-			// source1
-			{ BlendFactor::SRC1_COLOR, D3D11_BLEND_SRC1_COLOR },
-			{ BlendFactor::INVERSE_SRC1_COLOR, D3D11_BLEND_INV_SRC1_COLOR },
-
-			{ BlendFactor::SRC1_ALPHA, D3D11_BLEND_SRC1_ALPHA },
-			{ BlendFactor::INVERSE_SRC1_ALPHA, D3D11_BLEND_INV_SRC1_ALPHA }
-		};
-
 		// blender desc
 		m_Desc = { };
 
@@ -57,8 +55,8 @@ namespace Light {
 	{
 		// update desc
 		m_Desc.RenderTarget[0].BlendEnable = true;
-		m_Desc.RenderTarget[0].SrcBlend = m_FactorMap[srcFactor];
-		m_Desc.RenderTarget[0].DestBlend = m_FactorMap[dstFactor];
+		m_Desc.RenderTarget[0].SrcBlend = m_FactorMap.at(srcFactor);
+		m_Desc.RenderTarget[0].DestBlend = m_FactorMap.at(dstFactor);
 
 		// re-create blind state
 		HRESULT hr;

@@ -20,13 +20,19 @@
 namespace Light {
 
 	Application::Application()
+		: m_Instrumentor(nullptr),
+		  m_LayerStack(nullptr),
+		  m_Input(nullptr),
+		  m_Window(nullptr)
 	{
-		Logger::Initialize();
+		m_Logger = Logger::Create();
+
 		m_Instrumentor = Instrumentor::Create();
+		m_Instrumentor->BeginSession("Logs/ProfileResults_Startup.json");
+
 		m_LayerStack = LayerStack::Create();
 		m_Input = Input::Create();
 
-		m_Instrumentor->BeginSession("Logs/ProfileResults_Startup.json");
 		m_Window = Window::Create(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 	}
 
@@ -43,7 +49,7 @@ namespace Light {
 
 		// log debug data
 		LogDebugData();
-		Logger::LogDebugData();
+		m_Logger->LogDebugData();
 		m_Window->GetGfxContext()->LogDebugData();
 		m_Window->GetGfxContext()->GetUserInterface()->LogDebugData();
 
@@ -53,7 +59,7 @@ namespace Light {
 		m_Instrumentor->EndSession(); // ProfileResults_GameLoop //
 		m_Instrumentor->BeginSession("Logs/ProfileResults_GameLoop.json");
 
-		//** GAMELOOP **//
+		/* game loop */
 		DeltaTimer deltaTimer;
 		while (!m_Window->IsClosed())
 		{
@@ -116,9 +122,9 @@ namespace Light {
 		if (event.HasCategory(InputEventCategory))
 			m_Input->OnEvent(event);
 
-		// layers
+		/* layers */
 		// return if the event is an input event and 'Input' has disabled the game events
-		if (event.HasCategory(InputEventCategory) && !m_Input->IsReceivingGameEvents()) 
+		if (event.HasCategory(InputEventCategory) && !m_Input->IsReceivingGameEvents())
 			return;
 
 		for (auto it = m_LayerStack->rbegin(); it != m_LayerStack->rend(); it++)

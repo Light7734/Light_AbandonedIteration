@@ -5,9 +5,10 @@
 
 namespace Light {
 
-	//** CONSTANT_BUFFER **//
+	//==================== CONSTANT_BUFFER ====================//
 	glConstantBuffer::glConstantBuffer(ConstantBufferIndex index, unsigned int size)
-		: m_Index((int)index)
+		: m_BufferID(NULL),
+		  m_Index(static_cast<int>(index))
 	{
 		glCreateBuffers(1, &m_BufferID);
 		glNamedBufferData(m_BufferID, size, nullptr, GL_DYNAMIC_DRAW);
@@ -35,9 +36,11 @@ namespace Light {
 	{
 		glUnmapNamedBuffer(m_BufferID);
 	}
+	//==================== CONSTANT_BUFFER ====================//
 
-	//** VERTEX_BUFFER **//
+	//==================== VERTEX_BUFFER ====================//
 	glVertexBuffer::glVertexBuffer(float* vertices, unsigned int count)
+		: m_BufferID(NULL)
 	{
 		glCreateBuffers(1, &m_BufferID);
 		glNamedBufferData(m_BufferID, count * sizeof(float), vertices, GL_DYNAMIC_DRAW);
@@ -46,16 +49,6 @@ namespace Light {
 	glVertexBuffer::~glVertexBuffer()
 	{
 		glDeleteBuffers(1, &m_BufferID);
-	}
-
-	void* glVertexBuffer::Map()
-	{
-		return glMapNamedBuffer(m_BufferID, GL_WRITE_ONLY);
-	}
-
-	void glVertexBuffer::UnMap()
-	{
-		glUnmapNamedBuffer(m_BufferID);
 	}
 
 	void glVertexBuffer::Bind()
@@ -68,8 +61,20 @@ namespace Light {
 		glBindBuffer(GL_ARRAY_BUFFER, NULL);
 	}
 
-	//** INDEX_BUFFER **//
+	void* glVertexBuffer::Map()
+	{
+		return glMapNamedBuffer(m_BufferID, GL_WRITE_ONLY);
+	}
+
+	void glVertexBuffer::UnMap()
+	{
+		glUnmapNamedBuffer(m_BufferID);
+	}
+	//==================== VERTEX_BUFFER ====================//
+
+	//==================== INDEX_BUFFER ====================//
 	glIndexBuffer::glIndexBuffer(unsigned int* indices, unsigned int count)
+		: m_BufferID(NULL)
 	{
 		// generate indices if not provided
 		bool hasIndices = !!indices;
@@ -85,18 +90,18 @@ namespace Light {
 
 			// create indices
 			indices = new unsigned int[count];
-			unsigned int offset = 0;
-			for (unsigned int i = 0; i < count; i += 6)
+			unsigned int offset = 0u;
+			for (unsigned int i = 0u; i < count; i += 6u)
 			{
-				indices[i + 0] = offset + 0;
-				indices[i + 1] = offset + 1;
-				indices[i + 2] = offset + 2;
+				indices[i + 0] = offset + 0u;
+				indices[i + 1] = offset + 1u;
+				indices[i + 2] = offset + 2u;
 
-				indices[i + 3] = offset + 2;
-				indices[i + 4] = offset + 3;
-				indices[i + 5] = offset + 0;
+				indices[i + 3] = offset + 2u;
+				indices[i + 4] = offset + 3u;
+				indices[i + 5] = offset + 0u;
 
-				offset += 4;
+				offset += 4u;
 			}
 		}
 
@@ -123,5 +128,6 @@ namespace Light {
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, NULL);
 	}
+	//==================== INDEX_BUFFER ====================//
 
 }

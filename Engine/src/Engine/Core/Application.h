@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 #include "Debug/Instrumentor.h"
 
-#include "Layer/LayerStack.h"
-
 #include "Input/Input.h"
+
+#include "Layer/LayerStack.h"
 
 namespace Light {
 
@@ -18,12 +18,13 @@ namespace Light {
 	class Application
 	{
 	private:
-		Scope<Instrumentor> m_Instrumentor = nullptr;
+		Scope<Logger> m_Logger;
+		Scope<Instrumentor> m_Instrumentor;
 		Scope<LayerStack> m_LayerStack;
 		Scope<Input> m_Input;
 
 	protected:
-		Scope<Window> m_Window = nullptr;
+		Scope<Window> m_Window;
 
 	public:
 		Application(const Application&) = delete;

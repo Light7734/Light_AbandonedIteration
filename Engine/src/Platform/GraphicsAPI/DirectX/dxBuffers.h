@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Graphics/Buffers.h"
+
+#include "Base/Base.h"
 
 #include <d3d11.h>
 #include <wrl.h>
@@ -10,7 +11,7 @@ namespace Light {
 
 	class dxSharedContext;
 
-	//* INDEX_BUFFER *//
+	//========== CONSTANT_BUFFER ==========//
 	class dxConstantBuffer : public ConstantBuffer
 	{
 	private:
@@ -30,7 +31,7 @@ namespace Light {
 		void UnMap() override;
 	};
 
-	//* VERTEX_BUFFER *//
+	//========== VERTEX_BUFFER  ==========//
 	class dxVertexBuffer : public VertexBuffer
 	{
 	private:
@@ -45,14 +46,14 @@ namespace Light {
 		dxVertexBuffer(float* vertices, unsigned int stride, unsigned int count, Ref<dxSharedContext> sharedContext);
 		~dxVertexBuffer();
 
-		void* Map() override;
-		void UnMap() override;
-
 		void Bind() override;
 		void UnBind() override;
+
+		void* Map() override;
+		void UnMap() override;
 	};
 
-	//* INDEX_BUFFER *//
+	//========== INDEX_BUFFER  ==========//
 	class dxIndexBuffer : public IndexBuffer
 	{
 	private:

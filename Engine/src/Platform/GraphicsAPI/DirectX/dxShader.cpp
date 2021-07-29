@@ -7,12 +7,14 @@
 namespace Light {
 
 	dxShader::dxShader(const std::string& vertexSource, const std::string& pixelSource, Ref<dxSharedContext> sharedContext)
-		: m_Context(sharedContext)
+		: m_Context(sharedContext),
+		  m_VertexShader(nullptr),
+		  m_PixelShader(nullptr),
+		  m_VertexBlob(nullptr)
 	{
 		Microsoft::WRL::ComPtr<ID3DBlob> ps = nullptr, vsErr = nullptr, psErr = nullptr;
 
-		// compile shaders
-		HRESULT hr;
+		// compile shaders (we don't use DXC here because if D3DCompile fails it throws a dxException without logging the vsErr/psErr)
 		D3DCompile(vertexSource.c_str(), vertexSource.length(), NULL, nullptr, nullptr, "main", "vs_4_0", NULL, NULL, &m_VertexBlob, &vsErr);
 		D3DCompile(pixelSource.c_str(), pixelSource.length(), NULL, nullptr, nullptr, "main", "ps_4_0", NULL, NULL, &ps, &psErr);
 
@@ -21,6 +23,7 @@ namespace Light {
 		LT_ENGINE_ASSERT(!psErr.Get(), "dxShader::dxShader: pixels shader compile error: {}", (char*)psErr->GetBufferPointer());
 
 		// create shaders
+		HRESULT hr;
 		DXC(m_Context->GetDevice()->CreateVertexShader(m_VertexBlob->GetBufferPointer(), m_VertexBlob->GetBufferSize(), NULL, &m_VertexShader));
 		DXC(m_Context->GetDevice()->CreatePixelShader(ps->GetBufferPointer(), ps->GetBufferSize(), NULL, &m_PixelShader));
 	}
@@ -40,11 +43,6 @@ namespace Light {
 	{
 		m_Context->GetDeviceContext()->VSSetShader(nullptr, nullptr, 0u);
 		m_Context->GetDeviceContext()->PSSetShader(nullptr, nullptr, 0u);
-	}
-
-	void dxShader::SetUniformMat4(const std::string& name, const glm::mat4& value)
-	{
-		LT_ENGINE_ERROR("dxShader::SetUniformMat4: NOT_IMPLEMENTED");
 	}
 
 }

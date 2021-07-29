@@ -1,56 +1,56 @@
 #pragma once
 
-//** CORE **//
+// core
 #include "Core/Application.h"
 #include "Core/Window.h"
 
-//** CAMERA **//
+// camera
 #include "Camera/Camera.h"
 
-//** DEBUG **//
+// debug
 #include "Debug/Logger.h"
 
-//** EVENTS **//
+// events
 #include "Events/Event.h"
 #include "Events/KeyboardEvents.h"
 #include "Events/MouseEvents.h"
 #include "Events/WindowEvents.h"
 
-//** GRAPHICS **//
+// graphics
 #include "Graphics/GraphicsContext.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/Framebuffer.h"
 
-//** INPUT **//
+// input
 #include "Input/Input.h"
 #include "Input/KeyCodes.h"
 #include "Input/MouseCodes.h"
 
-//** LAYER **//
+// layer
 #include "Layer/Layer.h"
 #include "Layer/LayerStack.h"
 
-//** USER_INTERFACE **//
+// user interface
 #include "UserInterface/UserInterface.h"
 
-//** UTILITY **//
+// utility
 #include "Utility/ResourceManager.h"
 
-//** TIME **//
+// time
 #include "Time/Timer.h"
 
-//** BASE **//
-#include "Base.h"
+// base
+#include "Base/Base.h"
 
-//** THIRD_PARTY **//
+// third party
 #include <imgui.h>
 
-//** SCENE **//
+// scene
 #include "Scene/Scene.h"
 #include "Scene/Entity.h"
 #include "Scene/Components.h"
 
 // entry point
 #ifdef LIGHT_ENTRY_POINT
-	#include "EntryPoint.h"
+	#include "Base/EntryPoint.h"
 #endif

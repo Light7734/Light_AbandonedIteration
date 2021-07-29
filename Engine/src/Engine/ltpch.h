@@ -1,17 +1,16 @@
 #pragma once
 
-//** ENGINE **//
-#include "Base.h"
+/* engine */
+#include "Base/Base.h"
 
-//** PLATFORM SPECIFIC **//
-// windows
+/* windows */
 #ifdef _WIN32
 	#define NOMINMAX
 	#include <Windows.h>
 	#undef NOMINMAX
 #endif
 
-//** CONTAINERS **//
+/* containers */
 #include <array>
 #include <vector>
 #include <list>
@@ -21,29 +20,29 @@
 #include <unordered_map>
 #include <unordered_set>
 
-//** MISCELLANEOUS **//
+/* misc */
 #include <algorithm>
 #include <functional>
 #include <memory>
 #include <tuple>
 #include <utility>
 
-//** INPUT_OUTPUT **//
+/* input/output */
 #include <iostream>
 #include <fstream>
 #include <sstream>
 
-//** MULTI_THREADING **//
+/* multi threading */
 #include <thread>
 #include <atomic>
 
-//** STRING **//
+/* string */
 #include <string>
 #include <string_view>
 
-//** FILESYSTEM  **//
+/* filesystem */
 #include <filesystem>
 
-//** C_LIBRARIES **//
+/* c libraries */
 #include <time.h>
 #include <math.h>

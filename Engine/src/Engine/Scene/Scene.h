@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Base.h"
-
-#include <glm/glm.hpp>
+#include "Base/Base.h"
 
 #include <entt.hpp>
+
+#include <glm/glm.hpp>
 
 namespace Light {
 

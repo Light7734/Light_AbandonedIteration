@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Base.h"
 #include "Event.h"
+
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -26,7 +27,10 @@ namespace Light {
 		const glm::ivec2 m_Position;
 
 	public:
-		WindowMovedEvent(int x, int y): m_Position(x, y) { }
+		WindowMovedEvent(int x, int y)
+			: m_Position(x, y) 
+		{
+		}
 
 		const glm::ivec2& GetPosition() const{ return m_Position; }
 
@@ -46,7 +50,10 @@ namespace Light {
 		const glm::uvec2 m_Size;
 
 	public:
-		WindowResizedEvent(unsigned int width, unsigned int height): m_Size(width, height) { }
+		WindowResizedEvent(unsigned int width, unsigned int height)
+			: m_Size(width, height) 
+		{
+		}
 
 		const glm::uvec2& GetSize() const { return m_Size; }
 

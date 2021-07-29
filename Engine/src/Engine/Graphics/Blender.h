@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 namespace Light {
 	
@@ -35,8 +35,6 @@ namespace Light {
 
 	class Blender
 	{
-	private:
-
 	public:
 		static Scope<Blender> Create(Ref<SharedContext> sharedContext);
 

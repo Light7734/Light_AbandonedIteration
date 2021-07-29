@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 #include <glm/glm.hpp>
 
@@ -18,14 +18,8 @@ namespace Light {
 		virtual void Bind() = 0;
 		virtual void UnBind() = 0;
 
-		//** #TEMP_SHADER_UNIFORMS_TEMP# **//
-		virtual void SetUniformMat4(const std::string& name, const glm::mat4& value) = 0;
-
 	protected:
 		Shader() = default;
-
-	private:
-		static void ExtractShaderSource(std::string& src, const std::string& delim);
 	};
 
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 #include "Scene.h"
 
@@ -15,8 +15,7 @@ namespace Light {
 		Scene* m_Scene;
 
 	public:
-		Entity(){}
-		Entity(entt::entity handle, Scene* registry);
+		Entity(entt::entity handle = entt::entity(), Scene* registry = nullptr);
 		~Entity();
 
 		template<typename T, typename... Args>
@@ -24,7 +23,6 @@ namespace Light {
 		{
 			return m_Scene->m_Registry.emplace<T>(m_Handle, std::forward<Args>(args)...);
 		}
-
 	};
 
 }

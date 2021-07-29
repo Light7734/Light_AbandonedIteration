@@ -6,14 +6,22 @@
 
 namespace Light {
 
-	Ref<spdlog::logger> Logger::s_EngineLogger = nullptr;
-	Ref<spdlog::logger> Logger::s_ClientLogger = nullptr;
-	Ref<spdlog::logger> Logger::s_FileLogger = nullptr;
+	Logger* Logger::s_Context = nullptr;
 
-	std::string Logger::s_LogFilePath = LT_LOG_FILE_LOCATION;
-
-	void Light::Logger::Initialize()
+	Scope<Logger> Logger::Create()
 	{
+		return MakeScope<Logger>(new Logger());
+	}
+
+	Logger::Logger()
+		: m_EngineLogger(nullptr),
+		  m_ClientLogger(nullptr),
+		  m_FileLogger(nullptr),
+		  m_LogFilePath(LT_LOG_FILE_LOCATION)
+	{
+		LT_ENGINE_ASSERT(!s_Context, "Logger::Logger: an instance of 'Logger' already exists, do not construct this class!");
+		s_Context = this;
+
 		// set spdlog pattern
 #if   defined(LIGHT_PLATFORM_WINDOWS)
 		spdlog::set_pattern("%^[%M:%S:%e] <%n>: %v%$");
@@ -22,16 +30,16 @@ namespace Light {
 #endif
 		// create loggers
 #ifndef LIGHT_DIST
-		s_EngineLogger = spdlog::stdout_color_mt("Engine");
-		s_ClientLogger = spdlog::stdout_color_mt("Client");
+		m_EngineLogger = spdlog::stdout_color_mt("Engine");
+		m_ClientLogger = spdlog::stdout_color_mt("Client");
 #endif
-		s_FileLogger = spdlog::basic_logger_mt("File", s_LogFilePath);
-		s_FileLogger->set_pattern("%^[%M:%S:%e] <%l>: %v%$");
+		m_FileLogger = spdlog::basic_logger_mt("File", m_LogFilePath);
+		m_FileLogger->set_pattern("%^[%M:%S:%e] <%l>: %v%$");
 
 		// set level
 #if   defined(LIGHT_DEBUG)
-		s_EngineLogger->set_level(spdlog::level::trace);
-		s_ClientLogger->set_level(spdlog::level::trace);
+		m_EngineLogger->set_level(spdlog::level::trace);
+		m_ClientLogger->set_level(spdlog::level::trace);
 #elif defined (LIGHT_RELEASE)
 		s_EngineLogger->set_level(spdlog::level::info);
 		s_ClientLogger->set_level(spdlog::level::info);
@@ -43,9 +51,9 @@ namespace Light {
 		// #todo: improve
 		LT_ENGINE_INFO("________________________________________");
 		LT_ENGINE_INFO("Logger::");
-		LT_ENGINE_INFO("        ClientLevel : {}", Stringifier::spdlogLevel(s_ClientLogger->level()));
-		LT_ENGINE_INFO("        EngineLevel : {}", Stringifier::spdlogLevel(s_EngineLogger->level()));
-		LT_ENGINE_INFO("        FileLevel   : {}", Stringifier::spdlogLevel(s_FileLogger->level()));
+		LT_ENGINE_INFO("        ClientLevel : {}", Stringifier::spdlogLevel(m_ClientLogger->level()));
+		LT_ENGINE_INFO("        EngineLevel : {}", Stringifier::spdlogLevel(m_EngineLogger->level()));
+		LT_ENGINE_INFO("        FileLevel   : {}", Stringifier::spdlogLevel(m_FileLogger->level()));
 		LT_ENGINE_INFO("        DefaultLevel: {}", Stringifier::spdlogLevel(spdlog::get_level()));
 		LT_ENGINE_INFO("________________________________________");
 	}

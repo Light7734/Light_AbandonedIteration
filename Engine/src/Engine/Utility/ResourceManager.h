@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Base.h"
+#include "Base/Base.h"
 
 namespace Light {
 
@@ -15,10 +15,10 @@ namespace Light {
 	private:
 		static ResourceManager* s_Context;
 
+		Ref<SharedContext> m_SharedGraphicsContext;
+
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 		std::unordered_map<std::string, Ref<Texture>> m_Textures;
-
-		Ref<SharedContext> m_SharedContext;
 
 	public:
 		static Scope<ResourceManager> Create(Ref<SharedContext> sharedContext);
@@ -39,6 +39,7 @@ namespace Light {
 		void LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath);
 
 		void LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents = 4u);
+
 	private:
 		void ExtractShaderSource(std::string& src, const std::string& delim);
 	};
