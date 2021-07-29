@@ -60,30 +60,33 @@ namespace Light {
 	{
 		switch (type)
 		{
-		// #todo: add char
-		// int
-		case VertexElementType::Int1: return { GL_INT, 1u, sizeof(int), offset };
-		case VertexElementType::Int2: return { GL_INT, 2u, sizeof(int), offset };
-		case VertexElementType::Int3: return { GL_INT, 3u, sizeof(int), offset };
-		case VertexElementType::Int4: return { GL_INT, 4u, sizeof(int), offset };
+		/* byte */
+		case Light::VertexElementType::Byte1: return { GL_BYTE, 1u, sizeof(GLbyte), offset };
+		case Light::VertexElementType::Byte2: return { GL_BYTE, 1u, sizeof(GLbyte), offset };
+		case Light::VertexElementType::Byte4: return { GL_BYTE, 1u, sizeof(GLbyte), offset };
 
-		// uint
-		case VertexElementType::UInt1: return { GL_UNSIGNED_INT, 1u, sizeof(unsigned int), offset };
-		case VertexElementType::UInt2: return { GL_UNSIGNED_INT, 2u, sizeof(unsigned int), offset };
-		case VertexElementType::UInt3: return { GL_UNSIGNED_INT, 3u, sizeof(unsigned int), offset };
-		case VertexElementType::UInt4: return { GL_UNSIGNED_INT, 4u, sizeof(unsigned int), offset };
+		/* ubyte */
+		case Light::VertexElementType::UByte1: return { GL_UNSIGNED_BYTE, 1u, sizeof(GLubyte), offset };
+		case Light::VertexElementType::UByte2: return { GL_UNSIGNED_BYTE, 2u, sizeof(GLubyte), offset };
+		case Light::VertexElementType::UByte4: return { GL_UNSIGNED_BYTE, 4u, sizeof(GLubyte), offset };
 
-		// float
-		case VertexElementType::Float1: return { GL_FLOAT, 1u, sizeof(float), offset };
-		case VertexElementType::Float2: return { GL_FLOAT, 2u, sizeof(float), offset };
-		case VertexElementType::Float3: return { GL_FLOAT, 3u, sizeof(float), offset };
-		case VertexElementType::Float4: return { GL_FLOAT, 4u, sizeof(float), offset };
+		/* int */
+		case VertexElementType::Int1: return { GL_INT, 1u, sizeof(GLint), offset };
+		case VertexElementType::Int2: return { GL_INT, 2u, sizeof(GLint), offset };
+		case VertexElementType::Int3: return { GL_INT, 3u, sizeof(GLint), offset };
+		case VertexElementType::Int4: return { GL_INT, 4u, sizeof(GLint), offset };
 
-		// double
-		case VertexElementType::Double1: return { GL_DOUBLE, 1, sizeof(float), offset };
-		case VertexElementType::Double2: return { GL_DOUBLE, 2, sizeof(float), offset };
-		case VertexElementType::Double3: return { GL_DOUBLE, 3, sizeof(float), offset };
-		case VertexElementType::Double4: return { GL_DOUBLE, 4, sizeof(float), offset };
+		/* uint */
+		case VertexElementType::UInt1: return { GL_UNSIGNED_INT, 1u, sizeof(GLuint), offset };
+		case VertexElementType::UInt2: return { GL_UNSIGNED_INT, 2u, sizeof(GLuint), offset };
+		case VertexElementType::UInt3: return { GL_UNSIGNED_INT, 3u, sizeof(GLuint), offset };
+		case VertexElementType::UInt4: return { GL_UNSIGNED_INT, 4u, sizeof(GLuint), offset };
+
+		/* float */
+		case VertexElementType::Float1: return { GL_FLOAT, 1u, sizeof(GLfloat), offset };
+		case VertexElementType::Float2: return { GL_FLOAT, 2u, sizeof(GLfloat), offset };
+		case VertexElementType::Float3: return { GL_FLOAT, 3u, sizeof(GLfloat), offset };
+		case VertexElementType::Float4: return { GL_FLOAT, 4u, sizeof(GLfloat), offset };
 
 		default:
 			LT_ENGINE_ASSERT(false, "glVertexLayout::GetElementDesc: invalid 'VertexElementType'");

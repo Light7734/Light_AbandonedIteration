@@ -53,32 +53,37 @@ namespace Light {
 	{
 		switch (type)
 		{
-		// #todo: add char
-		// int
+		/* byte */
+		case Light::VertexElementType::Byte1: return DXGI_FORMAT_R8_SINT;
+		case Light::VertexElementType::Byte2: return DXGI_FORMAT_R8G8_SINT;
+		case Light::VertexElementType::Byte4: return DXGI_FORMAT_R8_SINT;
+
+		/* ubyte */
+		case Light::VertexElementType::UByte1: return DXGI_FORMAT_R8_UINT;
+		case Light::VertexElementType::UByte2: return DXGI_FORMAT_R8G8_UINT;
+		case Light::VertexElementType::UByte4: return DXGI_FORMAT_R8G8B8A8_UINT;
+
+		/* int */
 		case Light::VertexElementType::Int1: return DXGI_FORMAT_R32_SINT;
 		case Light::VertexElementType::Int2: return DXGI_FORMAT_R32G32_SINT;
 		case Light::VertexElementType::Int3: return DXGI_FORMAT_R32G32B32_SINT;
 		case Light::VertexElementType::Int4: return DXGI_FORMAT_R32G32B32A32_SINT;
 
-		// uint
+		/* uint */
 		case Light::VertexElementType::UInt1: return DXGI_FORMAT_R32_UINT;
 		case Light::VertexElementType::UInt2: return DXGI_FORMAT_R32G32_UINT;
 		case Light::VertexElementType::UInt3: return DXGI_FORMAT_R32G32B32_UINT;
 		case Light::VertexElementType::UInt4: return DXGI_FORMAT_R32G32B32A32_UINT;
 
-		// float
+		/* float */
 		case Light::VertexElementType::Float1: return DXGI_FORMAT_R32_FLOAT;
 		case Light::VertexElementType::Float2: return DXGI_FORMAT_R32G32_FLOAT;
 		case Light::VertexElementType::Float3: return DXGI_FORMAT_R32G32B32_FLOAT;
 		case Light::VertexElementType::Float4: return DXGI_FORMAT_R32G32B32A32_FLOAT;
 
-		// #todo:
-		case Light::VertexElementType::Double1:
-		case Light::VertexElementType::Double2:
-		case Light::VertexElementType::Double3:
-		case Light::VertexElementType::Double4:
-
-		default: LT_ENGINE_ASSERT(false, "dxVertexLayout::GetDxgiFormat: invalid 'VertexElementType'");
+		default: 
+			LT_ENGINE_ASSERT(false, "dxVertexLayout::GetDxgiFormat: invalid 'VertexElementType'");
+			return DXGI_FORMAT_UNKNOWN;
 		}
 	}
 

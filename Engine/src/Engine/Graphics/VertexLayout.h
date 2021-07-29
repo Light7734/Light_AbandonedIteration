@@ -11,10 +11,11 @@ namespace Light {
 
 	enum class VertexElementType
 	{
-		Int1   , Int2   , Int3   , Int4,
-		UInt1  , UInt2  , UInt3  , UInt4,
-		Float1 , Float2 , Float3 , Float4,
-		Double1, Double2, Double3, Double4
+		Byte1  , Byte2           , Byte4  ,
+		UByte1 , UByte2          , UByte4 ,
+		Int1   , Int2   , Int3   , Int4   ,
+		UInt1  , UInt2  , UInt3  , UInt4  ,
+		Float1 , Float2 , Float3 , Float4 ,
 	};
 
 	class VertexLayout
