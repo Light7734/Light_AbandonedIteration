@@ -9,10 +9,10 @@ cbuffer cb_ViewProjection : register(b0)
 	row_major matrix  viewProjection;
 }
 
-VertexOut main(float3 InPosition : POSITION, float2 InTexChoord : TEXCOORD)
+VertexOut main(float4 InPosition : POSITION, float2 InTexChoord : TEXCOORD)
 {
 	VertexOut vso;
-	vso.Position = mul(float4(InPosition, 1.0), viewProjection);
+	vso.Position = mul(float4(InPosition), viewProjection);
 	vso.TexChoord = InTexChoord;
 
 	return vso;

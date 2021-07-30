@@ -22,7 +22,7 @@ namespace Light {
 	public:
 		struct QuadVertexData
 		{
-			glm::vec3 position;
+			glm::vec4 position;
 			glm::vec4 tint;
 		};
 

@@ -9,10 +9,10 @@ cbuffer cv_ViewProjection : register(b0)
 	row_major matrix viewProjection;
 }
 
-VertexOut main(float3 InPosition : POSITION, float4 InColor : COLOR)
+VertexOut main(float4 InPosition : POSITION, float4 InColor : COLOR)
 {
 	VertexOut vso;
-	vso.Position = mul(float4(InPosition.x, InPosition.y, InPosition.z, 1.0), viewProjection);
+	vso.Position = mul(InPosition, viewProjection);
 	vso.Color = InColor;
 
 	return vso;

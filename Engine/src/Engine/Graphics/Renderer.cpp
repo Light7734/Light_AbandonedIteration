@@ -47,31 +47,42 @@ namespace Light {
 		m_RenderCommand->SetViewport(0u, 0u, event.GetSize().x, event.GetSize().y);
 	}
 
-	//======================================== DRAW_QUAD_TINT ========================================//
+	//======================================== DRAW_QUAD ========================================//
+	/* tint */
 	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint)
+	{
+		DrawQuadFinal(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
+		         tint);
+	}
+
+	/* texture */
+	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture)
+	{		
+		DrawQuadFinal(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
+		         texture);
+	}
+	//======================================== DRAW_QUAD ========================================//
+
+	//==================== DRAW_QUAD_TINT ====================//
+	void Renderer::DrawQuadFinal(const glm::mat4& transform, const glm::vec4& tint)
 	{
 		// locals
 		QuadRendererProgram::QuadVertexData* bufferMap = m_QuadRenderer.GetMapCurrent();
 
-		const float xMin = position.x;
-		const float yMin = position.y;
-		const float xMax = position.x + size.x;
-		const float yMax = position.y + size.y;
-
 		// top left
-		bufferMap[0].position = { xMin, yMin, position.z };
+		bufferMap[0].position = transform * glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);
 		bufferMap[0].tint = tint;
 
 		// top right
-		bufferMap[1].position = { xMax, yMin, position.z };
+		bufferMap[1].position = transform * glm::vec4( 0.5f, -0.5f, 0.0f, 1.0f);
 		bufferMap[1].tint = tint;
 
 		// bottom right
-		bufferMap[2].position = { xMax, yMax, position.z };
+		bufferMap[2].position = transform * glm::vec4( 0.5f,  0.5f, 0.0f, 1.0f);
 		bufferMap[2].tint = tint;
 
 		// bottom left
-		bufferMap[3].position = { xMin, yMax, position.z };
+		bufferMap[3].position = transform * glm::vec4(-0.5f,  0.5f, 0.0f, 1.0f);
 		bufferMap[3].tint = tint;
 
 		// advance
@@ -81,10 +92,10 @@ namespace Light {
 			FlushScene();
 		}
 	}
-	//======================================== DRAW_QUAD_TINT ========================================//
+	//==================== DRAW_QUAD_TINT ====================//
 
-	//============================== DRAW_QUAD_TEXTURE ==============================//
-	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture)
+	//==================== DRAW_QUAD_TEXTURE ====================//
+	void Renderer::DrawQuadFinal(const glm::mat4& transform, Ref<Texture> texture)
 	{
 		// #todo: implement a proper binding
 		texture->Bind();
@@ -92,25 +103,20 @@ namespace Light {
 		// locals
 		TextureRendererProgram::TextureVertexData* bufferMap = m_TextureRenderer.GetMapCurrent();
 
-		const float xMin = position.x;
-		const float yMin = position.y;
-		const float xMax = position.x + size.x;
-		const float yMax = position.y + size.y;
-
 		// top left
-		bufferMap[0].position = { xMin, yMin, position.z };
+		bufferMap[0].position = transform * glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);
 		bufferMap[0].texcoord = { 0.0f, 0.0f };
 
 		// top right
-		bufferMap[1].position = { xMax, yMin, position.z };
+		bufferMap[1].position = transform * glm::vec4( 0.5f, -0.5f, 0.0f, 1.0f);
 		bufferMap[1].texcoord = { 1.0f, 0.0f };
 
 		// bottom right
-		bufferMap[2].position = { xMax, yMax, position.z };
+		bufferMap[2].position = transform * glm::vec4( 0.5f,  0.5f, 0.0f, 1.0f);
 		bufferMap[2].texcoord = { 1.0f, 1.0f };
 
 		// bottom left
-		bufferMap[3].position = { xMin, yMax, position.z };
+		bufferMap[3].position = transform * glm::vec4(-0.5f,  0.5f, 0.0f, 1.0f);
 		bufferMap[3].texcoord = { 0.0f, 1.0f };
 
 		// advance
@@ -120,7 +126,8 @@ namespace Light {
 			FlushScene();
 		}
 	}
-	//============================== DRAW_QUAD_TEXTURE ==============================//
+
+	//==================== DRAW_QUAD_TEXTURE ====================//
 
 	void Renderer::BeginFrame()
 	{

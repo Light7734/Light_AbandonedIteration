@@ -62,6 +62,9 @@ namespace Light {
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture);
 
+		void DrawQuadFinal(const glm::mat4& transform, const glm::vec4& tint);
+		void DrawQuadFinal(const glm::mat4& transform, Ref<Texture> texture);
+
 		void BeginSceneImpl(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 		void FlushScene();
 		void EndSceneImpl();
