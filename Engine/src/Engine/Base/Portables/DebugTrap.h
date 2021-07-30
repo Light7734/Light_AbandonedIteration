@@ -69,34 +69,34 @@
 	#else
 		#include <signal.h>
 
-	#if defined(SIGTRAP)
-		#define LT_DEBUG_TRAP() raise(SIGTRAP)
+		#if defined(SIGTRAP)
+			#define LT_DEBUG_TRAP() raise(SIGTRAP)
 
-	#else
-		#define LT_DEBUG_TRAP() raise(SIGABRT)
+		#else
+			#define LT_DEBUG_TRAP() raise(SIGABRT)
 
-	#endif
+		#endif
 	#endif
 #endif
 
 #if !defined(LT_DEBUG_TRAP)
-	#define LT_BERAK LT_ENGINE_ERROR("Unable to break!, LT_BREAK macro is undefined")
 	#if !defined(LIGHT_IGNORE_UNDEFINED_DEBUG_BREAK)
 		#error "failed to define LT_BREAK, define LIGHT_IGNORE_UNDEFINED_DEBUG_BREAK to disable this error"
-	#elif !defined(LIGHT_DIST)
+
+	#elif defined(LIGHT_DIST)
 		#ifdef _MSC_VER
-		#define LT_DEBUG_TRAP() LT_FILE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}, FILE: {}, LINE: {}", __FUNCSIG__, __FILE__, __LINE__) // or __FUNCSIG__
+			#define LT_DEBUG_TRAP() LT_FILE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}, FILE: {}, LINE: {}", __FUNCSIG__, __FILE__, __LINE__) // or __FUNCSIG__
 	
 		#else
-		#define LT_DEBUG_TRAP() LT_FILE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}",	__PRETTY_FUNCTION__ )
+			#define LT_DEBUG_TRAP() LT_FILE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}",	__PRETTY_FUNCTION__ )
 	
 		#endif
-	#else
+	#else /* !defined(LIGHT_DIST) */
 		#ifdef _MSC_VER
-		#define LT_DEBUG_TRAP() LT_ENGINE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}, FILE: {}, LINE: {}", __FUNCSIG__, __FILE__, __LINE__) // or __FUNCSIG__
+			#define LT_DEBUG_TRAP() LT_ENGINE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}, FILE: {}, LINE: {}", __FUNCSIG__, __FILE__, __LINE__) // or __FUNCSIG__
 	
 		#else
-	#define LT_DEBUG_TRAP() LT_ENGINE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}",	__PRETTY_FUNCTION__ )
+			#define LT_DEBUG_TRAP() LT_ENGINE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}",	__PRETTY_FUNCTION__ )
 	
 	#endif
 #endif

@@ -15,7 +15,7 @@ namespace Light {
 		Scene* m_Scene;
 
 	public:
-		Entity(entt::entity handle = entt::entity(), Scene* registry = nullptr);
+		Entity(entt::entity handle = entt::null, Scene* registry = nullptr);
 		~Entity();
 
 		template<typename T, typename... Args>
