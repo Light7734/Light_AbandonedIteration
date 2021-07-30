@@ -4,7 +4,7 @@
 
 namespace Light {
 
-	class Camera;
+	class OrthographicCamera;
 
 	class RendererProgram
 	{

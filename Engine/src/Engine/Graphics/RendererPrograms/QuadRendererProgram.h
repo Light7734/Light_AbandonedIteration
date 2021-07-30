@@ -13,7 +13,7 @@ namespace Light {
 	class IndexBuffer;
 	class VertexLayout;
 
-	class Camera;
+	class OrthographicCamera;
 
 	class SharedContext;
 

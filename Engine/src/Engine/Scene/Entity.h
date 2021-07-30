@@ -23,6 +23,12 @@ namespace Light {
 		{
 			return m_Scene->m_Registry.emplace<T>(m_Handle, std::forward<Args>(args)...);
 		}
+
+		template<typename T>
+		T& GetComponent()
+		{
+			return m_Scene->m_Registry.get<T>(m_Handle);
+		}
 	};
 
 }

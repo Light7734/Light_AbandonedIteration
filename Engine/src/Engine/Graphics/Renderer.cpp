@@ -7,7 +7,7 @@
 #include "RenderCommand.h"
 #include "Texture.h"
 
-#include "Camera/Camera.h"
+#include "Camera/SceneCamera.h"
 
 #include "Events/WindowEvents.h"
 
@@ -51,20 +51,20 @@ namespace Light {
 	/* tint */
 	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint)
 	{
-		DrawQuadFinal(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
+		DrawQuad(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
 		         tint);
 	}
 
 	/* texture */
 	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture)
 	{		
-		DrawQuadFinal(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
+		DrawQuad(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
 		         texture);
 	}
 	//======================================== DRAW_QUAD ========================================//
 
 	//==================== DRAW_QUAD_TINT ====================//
-	void Renderer::DrawQuadFinal(const glm::mat4& transform, const glm::vec4& tint)
+	void Renderer::DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint)
 	{
 		// locals
 		QuadRendererProgram::QuadVertexData* bufferMap = m_QuadRenderer.GetMapCurrent();
@@ -95,7 +95,7 @@ namespace Light {
 	//==================== DRAW_QUAD_TINT ====================//
 
 	//==================== DRAW_QUAD_TEXTURE ====================//
-	void Renderer::DrawQuadFinal(const glm::mat4& transform, Ref<Texture> texture)
+	void Renderer::DrawQuadImpl(const glm::mat4& transform, Ref<Texture> texture)
 	{
 		// #todo: implement a proper binding
 		texture->Bind();
@@ -136,10 +136,10 @@ namespace Light {
 	void Renderer::EndFrame()
 	{
 		m_RenderCommand->SwapBuffers();
-		m_RenderCommand->ClearBackBuffer(m_Camera->GetClearColor());
+		m_RenderCommand->ClearBackBuffer(m_Camera->GetBackgroundColor());
 	}
 
-	void Renderer::BeginSceneImpl(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer /* = nullptr */)
+	void Renderer::BeginSceneImpl(Camera* camera, const glm::mat4& cameraTransform, const Ref<Framebuffer>& targetFrameBuffer /* = nullptr */)
 	{
 		// determine the target frame buffer
 		m_TargetFramebuffer = targetFrameBuffer;
@@ -152,7 +152,7 @@ namespace Light {
 		// update view projection buffer
 		m_Camera = camera;
 		glm::mat4* map = (glm::mat4*)m_ViewProjectionBuffer->Map();
-		map[0] = m_Camera->GetProjection() * m_Camera->GetView();
+		map[0] = m_Camera->GetProjection() * glm::inverse(cameraTransform);
 		m_ViewProjectionBuffer->UnMap();
 
 		// map renderers

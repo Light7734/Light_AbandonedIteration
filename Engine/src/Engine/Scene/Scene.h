@@ -10,6 +10,8 @@ namespace Light {
 
 	class Entity;
 
+	class Framebuffer;
+
 	class Scene
 	{
 	private:
@@ -20,9 +22,9 @@ namespace Light {
 		Scene();
 		~Scene();
 
-		void OnRender();
+		void OnRender(const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 
-		Entity CreateEntity(const std::string& name, const glm::vec2& position, const glm::vec2& size);
+		Entity CreateEntity(const std::string& name, const glm::mat4& transform);
 	};
 
 }

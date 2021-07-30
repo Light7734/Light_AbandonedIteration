@@ -8,16 +8,18 @@ namespace Light {
 
 	struct TransformComponent
 	{
-		glm::vec2 position, size;
-
-		// glm::mat4 transform{ 1.0f };
+		glm::mat4 transform;
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::vec2& _position, const glm::vec2& _size) : position(_position), size(_size) {}
 
-		// operator glm::mat4&() { return transform; }
-		// operator const glm::mat4& () const { return transform; }
+		TransformComponent(const glm::mat4& _transform)
+			: transform(_transform)
+		{
+		}
+
+		operator glm::mat4&() { return transform; }
+		operator const glm::mat4& () const { return transform; }
 	};
 
 }

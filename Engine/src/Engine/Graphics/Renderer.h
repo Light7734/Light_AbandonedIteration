@@ -39,7 +39,7 @@ namespace Light {
 		Scope<RenderCommand> m_RenderCommand;
 		Scope<Blender> m_Blender;
 
-		Ref<Camera> m_Camera;
+		Camera* m_Camera;
 		Ref<Framebuffer> m_TargetFramebuffer;
 
 	public:
@@ -48,7 +48,10 @@ namespace Light {
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint) { s_Context->DrawQuadImpl(position, size, tint); }
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture) { s_Context->DrawQuadImpl(position, size, texture); }
 
-		static inline void BeginScene(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer = nullptr) { s_Context->BeginSceneImpl(camera, targetFrameBuffer); }
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& tint) { s_Context->DrawQuadImpl(transform, tint); }
+		static void DrawQuad(const glm::mat4& transform, Ref<Texture> texture) { s_Context->DrawQuadImpl(transform, texture); }
+
+		static inline void BeginScene(Camera* camera, const glm::mat4& cameraTransform, const Ref<Framebuffer>& targetFrameBuffer = nullptr) { s_Context->BeginSceneImpl(camera, cameraTransform, targetFrameBuffer); }
 		static inline void EndScene() { s_Context->EndSceneImpl(); }
 		
 		void OnWindowResize(const WindowResizedEvent& event);
@@ -62,10 +65,10 @@ namespace Light {
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture);
 
-		void DrawQuadFinal(const glm::mat4& transform, const glm::vec4& tint);
-		void DrawQuadFinal(const glm::mat4& transform, Ref<Texture> texture);
+		void DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint);
+		void DrawQuadImpl(const glm::mat4& transform, Ref<Texture> texture);
 
-		void BeginSceneImpl(const Ref<Camera>& camera, const Ref<Framebuffer>& targetFrameBuffer = nullptr);
+		void BeginSceneImpl(Camera* camera, const glm::mat4& cameraTransform, const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 		void FlushScene();
 		void EndSceneImpl();
 	};
