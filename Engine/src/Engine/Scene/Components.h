@@ -6,3 +6,4 @@
 #include "Components/NativeScriptComponent.h"
 #include "Components/SpriteRendererComponent.h"
 #include "Components/TransformComponent.h"
+#include "Components/TagComponent.h"
