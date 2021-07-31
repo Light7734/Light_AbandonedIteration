@@ -29,6 +29,8 @@ namespace Light {
 		{
 			return m_Scene->m_Registry.get<T>(m_Handle);
 		}
+
+		operator uint32_t() { return (uint32_t)m_Handle; }
 	};
 
 }

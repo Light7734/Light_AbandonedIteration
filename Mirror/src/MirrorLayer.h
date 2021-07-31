@@ -1,5 +1,7 @@
 #include <LightEngine.h>
 
+#include "Panels/SceneHierarchyPanel.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Light {
@@ -14,7 +16,9 @@ namespace Light {
 
 		Ref<Framebuffer> m_Framebuffer;
 
-		Scene m_Scene;
+		Ref<Scene> m_Scene;
+		SceneHierarchyPanel m_SceneHierarchyPanel;
+
 		Entity m_CameraEntity;
 		Entity m_NativeScriptEntity;
 
@@ -26,21 +30,28 @@ namespace Light {
 			m_AwesomefaceTexture = ResourceManager::GetTexture("awesomeface");
 
 			m_Framebuffer = std::shared_ptr<Framebuffer>(Framebuffer::Create({ 800u, 600u, 1u }, GraphicsContext::GetSharedContext()));
-
-			m_CameraEntity = m_Scene.CreateEntity("camera", glm::mat4(1.0f));
-			m_CameraEntity.AddComponent<CameraComponent>(SceneCamera(), true);
+			
+			m_Scene = CreateRef<Scene>();
 
 			for (int i = 0; i < 250; i++)
 			{
 				glm::vec3 position = glm::vec3(rand() % 3000 - 1400.0f, rand() % 3000 - 1400.0f, 0.0f);
 				glm::vec2 size = glm::vec2(250.0f, 250.0f);
 
-				m_Scene.CreateEntity("quad", glm::translate(glm::mat4(1.0f), { position.x, position.y, 0.0f }) *
-				                             glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f})).AddComponent<SpriteRendererComponent>(m_AwesomefaceTexture);
+				Entity quad = m_Scene->CreateEntity("quad", glm::translate(glm::mat4(1.0f), { position.x, position.y, 0.0f }) *
+				                                            glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f}));
+				quad.AddComponent<SpriteRendererComponent>(m_AwesomefaceTexture);
+				quad.AddComponent<TagComponent>("quad");
+
 			}
 
-			m_NativeScriptEntity = m_Scene.CreateEntity("nsc", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(250.0f, 250.0f, 1.0f)));
+			m_CameraEntity = m_Scene->CreateEntity("camera", glm::mat4(1.0f));
+			m_CameraEntity.AddComponent<CameraComponent>(SceneCamera(), true);
+			m_CameraEntity.AddComponent<TagComponent>("Camera");
+
+			m_NativeScriptEntity = m_Scene->CreateEntity("nsc", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(250.0f, 250.0f, 1.0f)));
 			m_NativeScriptEntity.AddComponent<SpriteRendererComponent>(m_AwesomefaceTexture);
+			m_NativeScriptEntity.AddComponent<TagComponent>("NativeScript");
 
 			class SampleNativeScript : public Light::NativeScript
 			{
@@ -54,7 +65,8 @@ namespace Light {
 
 
 			// create native scripts
-			m_Scene.OnCreate();
+			m_Scene->OnCreate();
+			m_SceneHierarchyPanel.SetContext(m_Scene);
 		}
 
 		void OnUpdate(float deltaTime) override
@@ -76,12 +88,12 @@ namespace Light {
 			auto& transform = m_CameraEntity.GetComponent<TransformComponent>();
 			transform = glm::translate(transform.transform, glm::vec3(m_Direction * m_Speed * deltaTime, 0.0));
 
-			m_Scene.OnUpdate(deltaTime);
+			m_Scene->OnUpdate(deltaTime);
 		}
 
 		void OnRender() override
 		{
-			m_Scene.OnRender(m_Framebuffer);
+			m_Scene->OnRender(m_Framebuffer);
 		}
 
 		void OnUserInterfaceUpdate()
@@ -111,6 +123,8 @@ namespace Light {
 			}
 
 			ImGui::End();
+
+			m_SceneHierarchyPanel.OnUserInterfaceUpdate();
 		}
 
 	};
