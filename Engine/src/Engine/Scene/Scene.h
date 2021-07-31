@@ -14,14 +14,17 @@ namespace Light {
 
 	class Scene
 	{
-	private:
 		friend class Entity;
+	private:
 		entt::registry m_Registry;
 
 	public:
 		Scene();
 		~Scene();
 
+		void OnCreate();
+
+		void OnUpdate(float deltaTime);
 		void OnRender(const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 
 		Entity CreateEntity(const std::string& name, const glm::mat4& transform);

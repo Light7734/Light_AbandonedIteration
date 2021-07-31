@@ -12,8 +12,6 @@ namespace Light {
 	{
 		unsigned int width, height;
 		unsigned int samples = 1;
-
-		glm::uvec4 defaultColor = glm::uvec4(0u);
 	};
 
 	class Framebuffer
@@ -21,7 +19,7 @@ namespace Light {
 	public:
 		static Ref<Framebuffer> Create(const FramebufferSpecification& specification, Ref<SharedContext> sharedContext);
 
-		virtual void BindAsTarget() = 0;
+		virtual void BindAsTarget(const glm::vec4& clearColor) = 0;
 		virtual void BindAsResource() = 0;
 
 		virtual void Resize(const glm::uvec2& size) = 0;

@@ -18,7 +18,7 @@ namespace Light {
 		glFramebuffer(const FramebufferSpecification& specification);
 		~glFramebuffer();
 
-		void BindAsTarget() override;
+		void BindAsTarget(const glm::vec4& clearColor) override;
 		void BindAsResource() override;
 
 		void Resize(const glm::uvec2& size) override;

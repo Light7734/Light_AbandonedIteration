@@ -25,8 +25,9 @@ namespace Light {
 		  m_ViewProjectionBuffer(nullptr),
 		  m_RenderCommand(nullptr),
 		  m_Blender(nullptr),
-		  m_Camera(nullptr),
-		  m_TargetFramebuffer(nullptr)
+		  m_DefaultFramebufferCamera(nullptr),
+		  m_TargetFramebuffer(nullptr),
+		  m_ShouldClearBackbuffer(false)
 	{
 		LT_ENGINE_ASSERT(!s_Context, "Renderer::Renderer: an instance of 'Renderer' already exists, do not construct this class!");
 		s_Context = this;
@@ -136,7 +137,9 @@ namespace Light {
 	void Renderer::EndFrame()
 	{
 		m_RenderCommand->SwapBuffers();
-		m_RenderCommand->ClearBackBuffer(m_Camera->GetBackgroundColor());
+		m_RenderCommand->ClearBackBuffer(m_DefaultFramebufferCamera ? m_DefaultFramebufferCamera->GetBackgroundColor() : glm::vec4(0.0f));
+
+		m_DefaultFramebufferCamera = nullptr;
 	}
 
 	void Renderer::BeginSceneImpl(Camera* camera, const glm::mat4& cameraTransform, const Ref<Framebuffer>& targetFrameBuffer /* = nullptr */)
@@ -145,14 +148,16 @@ namespace Light {
 		m_TargetFramebuffer = targetFrameBuffer;
 
 		if (targetFrameBuffer)
-			targetFrameBuffer->BindAsTarget();
+			targetFrameBuffer->BindAsTarget(camera->GetBackgroundColor());
 		else
+		{
+			m_DefaultFramebufferCamera = camera;
 			m_RenderCommand->DefaultTargetFramebuffer();
+		}
 
 		// update view projection buffer
-		m_Camera = camera;
 		glm::mat4* map = (glm::mat4*)m_ViewProjectionBuffer->Map();
-		map[0] = m_Camera->GetProjection() * glm::inverse(cameraTransform);
+		map[0] = camera->GetProjection() * glm::inverse(cameraTransform);
 		m_ViewProjectionBuffer->UnMap();
 
 		// map renderers
@@ -190,7 +195,7 @@ namespace Light {
 		}
 
 		// reset frame buffer
-		if(m_TargetFramebuffer)
+		if (m_TargetFramebuffer)
 		{
 			m_TargetFramebuffer = nullptr;
 			m_RenderCommand->DefaultTargetFramebuffer();

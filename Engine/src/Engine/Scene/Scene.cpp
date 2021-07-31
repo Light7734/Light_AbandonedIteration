@@ -19,6 +19,34 @@ namespace Light {
 	{
 	}
 
+	void Scene::OnCreate()
+	{
+		/* native scripts */
+		{
+			m_Registry.view<NativeScriptComponent>().
+			each([](NativeScriptComponent& nsc) 
+			{
+				if (nsc.instance == nullptr)
+				{
+					nsc.instance = nsc.CreateInstance();
+					nsc.instance->OnCreate();
+				}
+			});
+		}
+	}
+
+	void Scene::OnUpdate(float deltaTime)
+	{
+		/* native scripts */
+		{
+			m_Registry.view<NativeScriptComponent>().
+			each([=](NativeScriptComponent& nsc) 
+			{
+				nsc.instance->OnUpdate(deltaTime);
+			});
+		}
+	}
+
 	void Scene::OnRender(const Ref<Framebuffer>& targetFrameBuffer /* = nullptr */)
 	{
 		Camera* sceneCamera = nullptr;
@@ -26,38 +54,32 @@ namespace Light {
 
 		/* scene camera */
 		{
-			auto group = m_Registry.group(entt::get<TransformComponent, CameraComponent>);
-			
-			for (auto& entity : group)
+			m_Registry.group(entt::get<TransformComponent, CameraComponent>).
+			each([&](TransformComponent& transformComp, CameraComponent& cameraComp)
 			{
-				auto& [transformComp, cameraComp] = group.get<TransformComponent, CameraComponent>(entity);
 
 				if (cameraComp.isPrimary)
 				{
 					sceneCamera = &cameraComp.camera;
 					sceneCameraTransform = &transformComp.transform;
 				}
-			}
+			});
 		}
 
 		/* draw quads */
 		{
-
 			if (sceneCamera)
 			{
 				Renderer::BeginScene(sceneCamera, *sceneCameraTransform, targetFrameBuffer);
 
-				auto group = m_Registry.group(entt::get<TransformComponent, SpriteRendererComponent>);
-
-				for (auto& entity : group)
+				m_Registry.group(entt::get<TransformComponent, SpriteRendererComponent>).
+				each([](TransformComponent& transformComp, SpriteRendererComponent& spriteRendererComp)
 				{
-					auto& [transformComp, spriteRendererComp] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 					Renderer::DrawQuad(transformComp.transform, spriteRendererComp.texture);
-				}
+				});
 
 				Renderer::EndScene();
 			}
-
 		}
 	}
 

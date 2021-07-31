@@ -39,8 +39,10 @@ namespace Light {
 		Scope<RenderCommand> m_RenderCommand;
 		Scope<Blender> m_Blender;
 
-		Camera* m_Camera;
+		Camera* m_DefaultFramebufferCamera;
 		Ref<Framebuffer> m_TargetFramebuffer;
+
+		bool m_ShouldClearBackbuffer;
 
 	public:
 		static Scope<Renderer> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);

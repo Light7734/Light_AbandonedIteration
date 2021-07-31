@@ -43,13 +43,13 @@ namespace Light {
 		DXC(m_Context->GetDevice()->CreateRenderTargetView(m_ColorAttachment.Get(), &rtvDesc, &m_RenderTargetView));
 	}
 
-	void dxFramebuffer::BindAsTarget()
+	void dxFramebuffer::BindAsTarget(const glm::vec4& clearColor)
 	{
 		FLOAT color[] = {
-			m_Specification.defaultColor.r,
-			m_Specification.defaultColor.g,
-			m_Specification.defaultColor.b,
-			m_Specification.defaultColor.a,
+			clearColor.r,
+			clearColor.g,
+			clearColor.b,
+			clearColor.a,
 		};
 
 		m_Context->GetDeviceContext()->OMSetRenderTargets(1u, m_RenderTargetView.GetAddressOf(), nullptr);

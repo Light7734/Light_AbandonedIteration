@@ -29,7 +29,7 @@ namespace Light {
 
 		inline void* GetColorAttachment() override { return (void*)m_ShaderResourceView.Get(); }
 
-		void BindAsTarget() override;
+		void BindAsTarget(const glm::vec4& clearColor) override;
 		void BindAsResource() override;
 
 		void Resize(const glm::uvec2& size) override;

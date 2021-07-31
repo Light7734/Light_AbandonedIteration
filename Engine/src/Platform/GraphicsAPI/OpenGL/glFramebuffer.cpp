@@ -23,13 +23,13 @@ namespace Light {
 		// glDeleteTextures(1, &m_DepthStencilAttachmentID);
 	}
 
-	void glFramebuffer::BindAsTarget()
+	void glFramebuffer::BindAsTarget(const glm::vec4& clearColor)
 	{
 		// #todo: use viewport instead of default x=0, y=0
 		glBindFramebuffer(GL_FRAMEBUFFER, m_BufferID);
 		glViewport(0, 0, m_Specification.width, m_Specification.height);
 
-		glClearColor(m_Specification.defaultColor.r, m_Specification.defaultColor.g, m_Specification.defaultColor.b, m_Specification.defaultColor.a);
+		glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
