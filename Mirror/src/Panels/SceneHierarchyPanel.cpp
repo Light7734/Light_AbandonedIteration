@@ -1,5 +1,7 @@
 #include "SceneHierarchyPanel.h"
 
+#include "PropertiesPanel.h"
+
 #include "Scene/Components.h"
 
 #include <entt.hpp>
@@ -8,30 +10,44 @@
 
 namespace Light {
 
-	SceneHierarchyPanel::SceneHierarchyPanel(Ref<Scene> context)
-		: m_Context(context)
+	SceneHierarchyPanel::SceneHierarchyPanel()
+		: m_Context(nullptr),
+		  m_PropertiesPanelContext(nullptr),
+		  m_SelectionContext()
 	{
 	}
 
-	void SceneHierarchyPanel::SetContext(Ref<Scene> context)
+	SceneHierarchyPanel::SceneHierarchyPanel(Ref<Scene> context, Ref<PropertiesPanel> propertiesPanel /* = nullptr */)
+		: m_Context(context),
+		  m_PropertiesPanelContext(propertiesPanel)
 	{
-		m_Context = context;
 	}
 
 	void SceneHierarchyPanel::OnUserInterfaceUpdate()
 	{
-		ImGui::Begin("Hierarchy");
-
-		m_Context->m_Registry.
-		each([&](auto& entityID)
+		if(m_Context)
 		{
-			Entity entity(entityID, m_Context.get());
-			const std::string& tag = entity.GetComponent<TagComponent>();
+			ImGui::Begin("Hierarchy");
 
-			DrawNode(entity, tag);
-		});
+			m_Context->m_Registry.
+			each([&](auto entityID)
+			{
+				Entity entity(entityID, m_Context.get());
+				const std::string& tag = entity.GetComponent<TagComponent>();
+				
+				DrawNode(entity, tag);
+			});
 
-		ImGui::End();
+			ImGui::End();
+		}
+	}
+
+	void SceneHierarchyPanel::SetContext(Ref<Scene> context, Ref<PropertiesPanel> propertiesPanel /* = nullptr */)
+	{
+		if (propertiesPanel)
+			m_PropertiesPanelContext = propertiesPanel;
+
+		m_Context = context;
 	}
 
 	void SceneHierarchyPanel::DrawNode(Entity entity, const std::string& label)
@@ -43,7 +59,10 @@ namespace Light {
 		bool expanded = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)(entity), flags, label.c_str());
 
 		if (ImGui::IsItemClicked())
+		{
 			m_SelectionContext = entity;
+			m_PropertiesPanelContext->SetEntityContext(entity);
+		}
 
 		if(expanded)
 		{

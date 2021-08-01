@@ -1,6 +1,8 @@
 #include <LightEngine.h>
 
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/PropertiesPanel.h"
+
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -17,7 +19,8 @@ namespace Light {
 		Ref<Framebuffer> m_Framebuffer;
 
 		Ref<Scene> m_Scene;
-		SceneHierarchyPanel m_SceneHierarchyPanel;
+		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
+		Ref<PropertiesPanel> m_PropertiesPanel;
 
 		Entity m_CameraEntity;
 		Entity m_NativeScriptEntity;
@@ -58,7 +61,6 @@ namespace Light {
 			private:
 				void OnUpdate(float deltaTime) 
 				{
-					LT_CLIENT_TRACE("NativeScript on update {}", deltaTime); 
 				}
 			};
 			m_NativeScriptEntity.AddComponent<NativeScriptComponent>().Bind<SampleNativeScript>();
@@ -66,7 +68,9 @@ namespace Light {
 
 			// create native scripts
 			m_Scene->OnCreate();
-			m_SceneHierarchyPanel.SetContext(m_Scene);
+
+			m_PropertiesPanel = CreateRef<PropertiesPanel>();
+			m_SceneHierarchyPanel = CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertiesPanel);
 		}
 
 		void OnUpdate(float deltaTime) override
@@ -124,7 +128,8 @@ namespace Light {
 
 			ImGui::End();
 
-			m_SceneHierarchyPanel.OnUserInterfaceUpdate();
+			m_SceneHierarchyPanel->OnUserInterfaceUpdate();
+			m_PropertiesPanel->OnUserInterfaceUpdate();
 		}
 
 	};

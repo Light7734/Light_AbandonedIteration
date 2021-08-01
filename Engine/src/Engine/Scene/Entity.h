@@ -19,16 +19,24 @@ namespace Light {
 		~Entity();
 
 		template<typename T, typename... Args>
-		T& AddComponent(Args&&... args)
+		inline T& AddComponent(Args&&... args)
 		{
 			return m_Scene->m_Registry.emplace<T>(m_Handle, std::forward<Args>(args)...);
 		}
 
 		template<typename T>
-		T& GetComponent()
+		inline T& GetComponent()
 		{
 			return m_Scene->m_Registry.get<T>(m_Handle);
 		}
+
+		template <typename T>
+		inline bool HasComponent()
+		{
+			return m_Scene->m_Registry.has<T>(m_Handle);
+		}
+
+		inline bool IsValid() const { return m_Handle != entt::null && m_Scene != nullptr; }
 
 		operator uint32_t() { return (uint32_t)m_Handle; }
 	};
