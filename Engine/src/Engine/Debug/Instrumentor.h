@@ -56,7 +56,14 @@ namespace Light {
 
 }
 
-#define LT_PROFILE_SCOPE(name) InstrumentorTimer timer##__LINE__ (name)
+/* scope */
+#define LT_PROFILE_SCOPE(name) LT_PROFILE_SCOPE_NO_REDIFINITION(name, __LINE__)
+#define LT_PROFILE_SCOPE_NO_REDIFINITION(name, line) LT_PROFILE_SCOPE_NO_REDIFINITION2(name, line)
+#define LT_PROFILE_SCOPE_NO_REDIFINITION2(name, line) InstrumentorTimer timer##line(name)
+
+/* function */
 #define LT_PROFILE_FUNCTION LT_PROFILE_SCOPE(__FUNCSIG__)
+
+/* session */
 #define LT_PROFILE_BEGIN_SESSION(outputPath) ::Light::Instrumentor::BeginSession(outputPath)
 #define LT_PROFILE_END_SESSION() ::Light::Instrumentor::EndSession()

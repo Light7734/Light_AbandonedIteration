@@ -1,6 +1,7 @@
 #pragma once
+#ifndef LIGHT_LOGGER_H
+#define LIGHT_LOGGER_H
 
-#define LT_LOGGER_H
 #include "Base/Base.h"
 
 #include <spdlog/spdlog.h>
@@ -68,3 +69,4 @@ namespace Light {
 
 }
 
+#endif

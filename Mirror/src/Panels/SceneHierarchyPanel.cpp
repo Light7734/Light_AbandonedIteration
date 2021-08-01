@@ -36,7 +36,9 @@ namespace Light {
 
 	void SceneHierarchyPanel::DrawNode(Entity entity, const std::string& label)
 	{
-		ImGuiTreeNodeFlags flags = (m_SelectionContext == entity ? ImGuiTreeNodeFlags_Selected : NULL) | ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanFullWidth;
+		ImGuiTreeNodeFlags flags = (m_SelectionContext == entity ? ImGuiTreeNodeFlags_Selected : NULL) | 
+		                            ImGuiTreeNodeFlags_OpenOnArrow                                     | 
+		                            ImGuiTreeNodeFlags_SpanFullWidth                                   ;
 
 		bool expanded = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)(entity), flags, label.c_str());
 

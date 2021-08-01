@@ -1,4 +1,6 @@
 #pragma once
+#ifndef LIGHT_DEBUG_TRAP_H
+#define LIGHT_DEBUG_TRAP_H
 
 // https://github.com/nemequ/portable-snippets/tree/master/debug-trap
 
@@ -80,8 +82,8 @@
 #endif
 
 #if !defined(LT_DEBUG_TRAP)
-	#if !defined(LIGHT_IGNORE_UNDEFINED_DEBUG_BREAK)
-		#error "failed to define LT_BREAK, define LIGHT_IGNORE_UNDEFINED_DEBUG_BREAK to disable this error"
+	#if !defined(LIGHT_IGNORE_UNDEFINED_DEBUG_TRAP)
+		#error "failed to define LT_BREAK, define LIGHT_IGNORE_UNDEFINED_DEBUG_TRAP in Config.h to disable this error"
 
 	#elif defined(LIGHT_DIST)
 		#ifdef _MSC_VER
@@ -99,5 +101,6 @@
 			#define LT_DEBUG_TRAP() LT_ENGINE_CRITICAL("DEBUG_TRAP REQUESTED AT: {}",	__PRETTY_FUNCTION__ )
 	
 	#endif
+#endif
 #endif
 #endif

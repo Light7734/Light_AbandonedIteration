@@ -73,7 +73,6 @@ namespace Light {
 #endif
 
 		// create device and swap chain
-		HRESULT hr;
 		DXC(D3D11CreateDeviceAndSwapChain(nullptr, 
 		                                  D3D_DRIVER_TYPE_HARDWARE,
 		                                  NULL,
@@ -99,7 +98,6 @@ namespace Light {
 		// create render target view 
 		Microsoft::WRL::ComPtr<ID3D11Resource> backBuffer;
 
-		HRESULT hr;
 		DXC(context->GetSwapChain()->GetBuffer(0u, __uuidof(ID3D11Resource), &backBuffer));
 		DXC(context->GetDevice()->CreateRenderTargetView(backBuffer.Get(), nullptr, &context->GetRenderTargetViewRef()));
 

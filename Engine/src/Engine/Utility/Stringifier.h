@@ -1,4 +1,6 @@
 #pragma once
+#ifndef LIGHT_STRINGIFIER_H
+#define LIGHT_STRINGIFIER_H
 
 #include "Base/Base.h"
 
@@ -19,3 +21,5 @@ namespace Light {
 	};
 
 }
+
+#endif

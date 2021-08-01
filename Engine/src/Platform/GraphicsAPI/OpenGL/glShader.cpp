@@ -67,13 +67,41 @@ namespace Light {
 		}
 		/* #TEMP_HANDLE_SHADER_COMPILE_FAILURE# */
 
+
+#ifdef LIGHT_OPENGL_ENABLE_SHADER_INFO_LOG
+		{
+			int logLength = 0;
+			glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &logLength);
+			if(logLength)
+			{
+				char* infoLog = (char*)alloca(logLength);
+				glGetShaderInfoLog(vertexShader, logLength, &logLength, &infoLog[0]);
+
+				LT_ENGINE_TRACE(infoLog);
+			}
+		}
+
+		{
+			int logLength = 0;
+			glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &logLength);
+			if (logLength)
+			{
+				char* infoLog = (char*)alloca(logLength);
+				glGetShaderInfoLog(fragmentShader, logLength, &logLength, &infoLog[0]);
+
+				LT_ENGINE_TRACE(infoLog);
+			}
+		}
+#endif
+
+
 		// attach shaders
 		glAttachShader(m_ShaderID, vertexShader);
 		glAttachShader(m_ShaderID, fragmentShader);
 
 		// link shader program
 		glLinkProgram(m_ShaderID);
-	
+
 		// delete shaders (free memory)
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);

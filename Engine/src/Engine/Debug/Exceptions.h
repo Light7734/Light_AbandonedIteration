@@ -1,6 +1,8 @@
 #pragma once
 
-#define DXC(x) if(FAILED(hr = x)) throw dxException(hr, __FILE__, __LINE__)
+#define DXC(x) DXC_NO_REDIFINITION(x, __LINE__)
+#define DXC_NO_REDIFINITION(x, line) DXC_NO_REDIFINITION2(x, line)
+#define DXC_NO_REDIFINITION2(x, line) HRESULT hr##line; if(FAILED(hr##line = x)) throw dxException(hr##line, __FILE__, line)
 
 namespace Light {
 	

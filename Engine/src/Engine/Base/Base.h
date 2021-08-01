@@ -76,16 +76,24 @@ namespace Light {
 //====================================================================== OPERATIONS ======================================================================//
 
 //========== ESSENTIAL_HEADERS ==========//
+/* config */
+#ifndef LIGHT_CONFIG_H
+	#include "Base/Config.h"
+#endif
+
 /* debug */
-#ifndef LT_LOGGER_H
-#include "Debug/Logger.h"
-#define LT_LOGGER_H
+#ifndef LIGHT_LOGGER_H
+	#include "Debug/Logger.h"
 #endif
 #include "Debug/Exceptions.h"
 
 /* portables */
-#include "Base/Portables/DebugTrap.h"
+#ifndef LIGHT_DEBUG_TRAP_H
+	#include "Base/Portables/DebugTrap.h"
+#endif
 
 /* utility */
-#include "Utility/Stringifier.h"
+#ifndef LIGHT_STRINGIFIER_H
+	#include "Utility/Stringifier.h"
+#endif
 //========== ESSENTIAL_HEADERS ==========//

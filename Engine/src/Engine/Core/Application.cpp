@@ -66,6 +66,7 @@ namespace Light {
 			{
 				// update layers
 				LT_PROFILE_SCOPE("GameLoop::Update");
+				LT_PROFILE_SCOPE("GameLoop::Updated");
 
 				for (auto it = m_LayerStack->begin(); it != m_LayerStack->end(); it++)
 					(*it)->OnUpdate(deltaTimer.GetDeltaTime());
