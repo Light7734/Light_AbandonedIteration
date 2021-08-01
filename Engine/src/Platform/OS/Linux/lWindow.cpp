@@ -2,6 +2,7 @@
 #include "lWindow.h"
 
 #include "Events/Event.h"
+#include "Events/CharEvent.h"
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
 #include "Events/WindowEvents.h"
@@ -176,6 +177,15 @@ namespace Light {
 				callback(event);
 			}
 		});
+		/* char */
+		glfwSetCharCallback(m_Handle, [](GLFWwindow* window, unsigned int character)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+
+			SetCharEvent event(character);
+			callback(event);
+		});
+
 		//============================== KEYBOARD_EVENTS ==============================//
 
 		//============================== WINDOW_EVENTS ==============================//

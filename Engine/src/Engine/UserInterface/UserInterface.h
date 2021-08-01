@@ -20,8 +20,6 @@ namespace Light {
 
 		virtual ~UserInterface() = default;
 
-		void OnInput(const Event& inputEvent);
-
 		virtual void Begin() = 0;
 		virtual void End() = 0;
 

@@ -2,6 +2,8 @@
 #include "ltpch.h"
 #include "glUserInterface.h"
 
+#include "Input/KeyCodes.h"
+
 #include <GLFW/glfw3.h>
 
 #include <imgui.h>
@@ -38,6 +40,30 @@ namespace Light {
 		// init
 		ImGui_ImplGlfw_InitForOpenGL(windowHandle, false);
 		ImGui_ImplOpenGL3_Init();
+
+		// keyboard map
+		io.KeyMap[ImGuiKey_Tab] = Key::Tab;
+		io.KeyMap[ImGuiKey_LeftArrow] = Key::LeftArrow;
+		io.KeyMap[ImGuiKey_RightArrow] = Key::RightArrow;
+		io.KeyMap[ImGuiKey_UpArrow] = Key::UpArrow;
+		io.KeyMap[ImGuiKey_DownArrow] = Key::DownArrow;
+		io.KeyMap[ImGuiKey_PageUp] = Key::PageUp;
+		io.KeyMap[ImGuiKey_PageDown] = Key::PageDown;
+		io.KeyMap[ImGuiKey_Home] = Key::Home;
+		io.KeyMap[ImGuiKey_End] = Key::End;
+		io.KeyMap[ImGuiKey_Insert] = Key::Insert;
+		io.KeyMap[ImGuiKey_Delete] = Key::Delete;
+		io.KeyMap[ImGuiKey_Backspace] = Key::BackSpace;
+		io.KeyMap[ImGuiKey_Space] = Key::Space;
+		io.KeyMap[ImGuiKey_Enter] = Key::Enter;
+		io.KeyMap[ImGuiKey_Escape] = Key::Escape;
+		io.KeyMap[ImGuiKey_KeyPadEnter] = Key::Enter;
+		io.KeyMap[ImGuiKey_A] = Key::A;
+		io.KeyMap[ImGuiKey_C] = Key::C;
+		io.KeyMap[ImGuiKey_V] = Key::V;
+		io.KeyMap[ImGuiKey_X] = Key::X;
+		io.KeyMap[ImGuiKey_Y] = Key::Y;
+		io.KeyMap[ImGuiKey_Z] = Key::Z;
 	}
 
 	glUserInterface::~glUserInterface()

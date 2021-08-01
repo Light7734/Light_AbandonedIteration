@@ -8,6 +8,7 @@
 #endif
 
 #include "Events/Event.h"
+#include "Events/CharEvent.h"
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
 
@@ -30,52 +31,6 @@ namespace Light {
 		default:
 			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
 			return nullptr;
-		}
-	}
-
-	void UserInterface::OnInput(const Event& inputEvent)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		switch (inputEvent.GetEventType())
-		{
-		/* mouse events */
-		case EventType::MouseMoved:
-		{
-			const MouseMovedEvent& event = (const MouseMovedEvent&)inputEvent;
-			ImGui::GetIO().MousePos = ImVec2(event.GetX(), event.GetY());
-			return;
-		}
-		case EventType::ButtonPressed:
-		{
-			const ButtonPressedEvent& event = (const ButtonPressedEvent&)inputEvent;
-			ImGui::GetIO().MouseDown[event.GetButton()] = true;
-			return;
-		}
-		case EventType::ButtonReleased:
-		{
-			const ButtonReleasedEvent& event = (const ButtonReleasedEvent&)inputEvent;
-			ImGui::GetIO().MouseDown[event.GetButton()] = false;
-			return;
-		}
-		case EventType::WheelScrolled:
-		{
-			const WheelScrolledEvent& event = (const WheelScrolledEvent&)inputEvent;
-			ImGui::GetIO().MouseWheel = event.GetOffset();
-			return;
-		}
-		/* keyboard events */
-		case EventType::KeyPressed:
-		{
-			const KeyPressedEvent& event = (const KeyPressedEvent&)inputEvent;
-			ImGui::GetIO().MouseDown[event.GetKey()] = true;
-			return;
-		}
-		case EventType::KeyReleased:
-		{
-			const KeyReleasedEvent& event = (const KeyReleasedEvent&)inputEvent;
-			ImGui::GetIO().MouseDown[event.GetKey()] = false;
-			return;
-		}
 		}
 	}
 

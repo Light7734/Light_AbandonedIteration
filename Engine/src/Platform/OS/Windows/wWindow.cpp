@@ -2,10 +2,12 @@
 #include "wWindow.h"
 
 #include "Events/Event.h"
+#include "Events/CharEvent.h"
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
 #include "Events/WindowEvents.h"
 		
+
 #include "Graphics/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
@@ -157,9 +159,22 @@ namespace Light {
 
 			if (action == GLFW_PRESS)
 				callback(KeyPressedEvent(key));
-			else if(action == GLFW_RELEASE)
+			else if (action == GLFW_RELEASE)
 				callback(KeyReleasedEvent(key));
+			else if (action == GLFW_REPEAT)
+				callback(KeyRepeatEvent(key));
 		});
+
+		/* char */
+		glfwSetCharCallback(m_Handle, [](GLFWwindow* window, unsigned int character)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			callback(SetCharEvent(character));
+		});
+
+		// ImGuiIO& io = ImGui::GetIO();
+		// io.AddInputCharacter(c);
+
 		//============================== KEYBOARD_EVENTS ==============================//
 
 		//============================== WINDOW_EVENTS ==============================//

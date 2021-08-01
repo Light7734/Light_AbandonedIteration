@@ -2,10 +2,13 @@
 #include "Input.h"
 
 #include "Events/Event.h"
+#include "Events/CharEvent.h"
 #include "Events/MouseEvents.h"
 #include "Events/KeyboardEvents.h"
 
 #include <imgui.h>
+
+#include "Input/KeyCodes.h"
 
 namespace Light {
 
@@ -72,7 +75,7 @@ namespace Light {
 			}
 
 			if(m_UserInterfaceEvents)
-				ImGui::GetIO().MousePos = ImVec2(event.GetX(), event.GetY());
+				io.MousePos = ImVec2(event.GetX(), event.GetY());
 
 			return;
 		}
@@ -84,7 +87,7 @@ namespace Light {
 				m_MouseButtons[event.GetButton()] = true;
 
 			if (m_UserInterfaceEvents)
-				ImGui::GetIO().MouseDown[event.GetButton()] = true;
+				io.MouseDown[event.GetButton()] = true;
 
 			return;
 		}
@@ -96,7 +99,7 @@ namespace Light {
 				m_MouseButtons[event.GetButton()] = false;
 
 			if (m_UserInterfaceEvents)
-				ImGui::GetIO().MouseDown[event.GetButton()] = false;
+				io.MouseDown[event.GetButton()] = false;
 
 			return;
 		}
@@ -108,11 +111,11 @@ namespace Light {
 				m_MouseWheelDelta = event.GetOffset();
 
 			if (m_UserInterfaceEvents)
-				ImGui::GetIO().MouseWheel = event.GetOffset();
+				io.MouseWheel = event.GetOffset();
 
 			return;
 		}
-		//** MOUSE_EVENTS **//
+		//** KEYBOARD_EVENTS **//
 		case EventType::KeyPressed:
 		{
 			const KeyPressedEvent& event = (const KeyPressedEvent&)inputEvent;
@@ -121,7 +124,11 @@ namespace Light {
 				m_KeyboadKeys[event.GetKey()] = true;
 
 			if (m_UserInterfaceEvents)
-				ImGui::GetIO().KeysDown[event.GetKey()] = true;
+			{
+				io.KeysDown[event.GetKey()] = true;
+				//if (event.GetKey() == Key::BackSpace)
+				//	io.AddInputCharacter(Key::BackSpace);
+			}
 
 			return;
 		}
@@ -133,7 +140,17 @@ namespace Light {
 				m_KeyboadKeys[event.GetKey()] = false;
 
 			if (m_UserInterfaceEvents)
-				ImGui::GetIO().KeysDown[event.GetKey()] = false;
+				io.KeysDown[event.GetKey()] = false;
+
+			return;
+		}
+		case EventType::SetChar:
+		{
+			if(m_UserInterfaceEvents)
+			{
+				const SetCharEvent& event = (const SetCharEvent&)inputEvent;
+				io.AddInputCharacter(event.GetCharacter());
+			}
 
 			return;
 		}

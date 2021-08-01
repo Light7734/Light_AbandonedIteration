@@ -34,7 +34,7 @@ namespace Light {
 		void SetSize(const glm::uvec2& size, bool additive = false) override;
 		
 		void SetVSync(bool vsync, bool toggle = false) override;
-		void SetVisibility(bool visible, bool toggle = false);
+		void SetVisibility(bool visible, bool toggle = false) override;
 		//======================================== SETTERS ========================================//
 
 	private:

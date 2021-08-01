@@ -110,6 +110,8 @@ namespace Light {
 
 	void Application::OnEvent(const Event& event)
 	{
+		LT_ENGINE_TRACE(event.GetInfoLog());
+
 		// window
 		if (event.HasCategory(WindowEventCategory))
 		{
@@ -121,13 +123,14 @@ namespace Light {
 
 		// input
 		if (event.HasCategory(InputEventCategory))
+		{
 			m_Input->OnEvent(event);
 
-		/* layers */
-		// return if the event is an input event and 'Input' has disabled the game events
-		if (event.HasCategory(InputEventCategory) && !m_Input->IsReceivingGameEvents())
-			return;
+			if(!m_Input->IsReceivingGameEvents()) // return if the event is an input event and 'Input' has disabled the game events
+				return;
+		}
 
+		/* layers */
 		for (auto it = m_LayerStack->rbegin(); it != m_LayerStack->rend(); it++)
 			if ((*it)->OnEvent(event)) return;
 	}

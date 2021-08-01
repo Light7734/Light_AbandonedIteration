@@ -10,7 +10,8 @@ namespace Light {
 
 		// input
 		MouseMoved, WheelScrolled, ButtonPressed, ButtonReleased,
-		KeyPressed, KeyReleased,
+		KeyPressed, KeyRepeated, KeyReleased,
+		SetChar,
 
 		// window
 		WindowMoved, WindowResized, WindowClosed, WindowLostFocus, WindowGainFocus,

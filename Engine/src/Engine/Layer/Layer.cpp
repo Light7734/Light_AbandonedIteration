@@ -2,6 +2,7 @@
 #include "Layer.h"
 
 #include "Events/Event.h"
+#include "Events/CharEvent.h"
 #include "Events/KeyboardEvents.h"
 #include "Events/MouseEvents.h"
 #include "Events/WindowEvents.h"
@@ -18,28 +19,40 @@ namespace Light {
 		switch (event.GetEventType())
 		{
 		/* mouse */
+		// cursor
 		case EventType::MouseMoved:
 			return OnMouseMoved((MouseMovedEvent&)event);
+		// button
 		case EventType::ButtonPressed:
 			return OnButtonPressed((ButtonPressedEvent&)event);
 		case EventType::ButtonReleased:
 			return OnButtonReleased((ButtonReleasedEvent&)event);
+		// wheel
 		case EventType::WheelScrolled:
 			return OnWheelScrolled((WheelScrolledEvent&)event);
 
 		/* keyboard */
+		// key
 		case EventType::KeyPressed:
 			return OnKeyPressed((KeyPressedEvent&)event);
+		case EventType::KeyRepeated:
+			return OnKeyRepeat((KeyRepeatEvent&)event);
 		case EventType::KeyReleased:
 			return OnKeyReleased((KeyReleasedEvent&)event);
+		// char
+		case EventType::SetChar:
+			return OnSetChar((SetCharEvent&)event);
 
 		/* window */
+		// termination
 		case EventType::WindowClosed:
 			return OnWindowClosed((WindowClosedEvent&)event);
+		// size/position
 		case EventType::WindowResized:
 			return OnWindowResized((WindowResizedEvent&)event);
 		case EventType::WindowMoved:
 			return OnWindowMoved((WindowMovedEvent&)event);
+		// focus
 		case EventType::WindowLostFocus:
 			return OnWindowLostFocus((WindowLostFocusEvent&)event);
 		case EventType::WindowGainFocus:

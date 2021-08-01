@@ -2,6 +2,8 @@
 #include "dxUserInterface.h"
 #include "dxSharedContext.h"
 
+#include "Input/KeyCodes.h"
+
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <glfw/glfw3.h>
 #include <glfw/glfw3native.h>
@@ -40,6 +42,30 @@ namespace Light {
 		// init
 		ImGui_ImplWin32_Init(glfwGetWin32Window(windowHandle));
 		ImGui_ImplDX11_Init(sharedContext->GetDevice().Get(), sharedContext->GetDeviceContext().Get());
+
+		// keyboard map
+		io.KeyMap[ImGuiKey_Tab] = Key::Tab;
+		io.KeyMap[ImGuiKey_LeftArrow] = Key::LeftArrow;
+		io.KeyMap[ImGuiKey_RightArrow] = Key::RightArrow;
+		io.KeyMap[ImGuiKey_UpArrow] = Key::UpArrow;
+		io.KeyMap[ImGuiKey_DownArrow] = Key::DownArrow;
+		io.KeyMap[ImGuiKey_PageUp] = Key::PageUp;
+		io.KeyMap[ImGuiKey_PageDown] = Key::PageDown;
+		io.KeyMap[ImGuiKey_Home] = Key::Home;
+		io.KeyMap[ImGuiKey_End] = Key::End;
+		io.KeyMap[ImGuiKey_Insert] = Key::Insert;
+		io.KeyMap[ImGuiKey_Delete] = Key::Delete;
+		io.KeyMap[ImGuiKey_Backspace] = Key::BackSpace;
+		io.KeyMap[ImGuiKey_Space] = Key::Space;
+		io.KeyMap[ImGuiKey_Enter] = Key::Enter;
+		io.KeyMap[ImGuiKey_Escape] = Key::Escape;
+		io.KeyMap[ImGuiKey_KeyPadEnter] = Key::Enter;
+		io.KeyMap[ImGuiKey_A] = Key::A;
+		io.KeyMap[ImGuiKey_C] = Key::C;
+		io.KeyMap[ImGuiKey_V] = Key::V;
+		io.KeyMap[ImGuiKey_X] = Key::X;
+		io.KeyMap[ImGuiKey_Y] = Key::Y;
+		io.KeyMap[ImGuiKey_Z] = Key::Z;
 	}
 
 	dxUserInterface::~dxUserInterface()
