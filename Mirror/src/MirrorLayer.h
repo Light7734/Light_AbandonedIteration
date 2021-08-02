@@ -48,7 +48,7 @@ namespace Light {
 
 			}
 
-			m_CameraEntity = m_Scene->CreateEntity("camera", glm::mat4(1.0f));
+			m_CameraEntity = m_Scene->CreateEntity("camera", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 1000.0f)));
 			m_CameraEntity.AddComponent<CameraComponent>(SceneCamera(), true);
 			m_CameraEntity.AddComponent<TagComponent>("Camera");
 
