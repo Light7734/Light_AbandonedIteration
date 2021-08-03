@@ -1,34 +1,30 @@
 #pragma once
 
-#include "Entity.h"
+#include "Scene/Entity.h"
 
 #include "Base/Base.h"
 
 namespace Light {
 
-	class NativeScript
-	{
-		friend class Scene;
-	private:
-		Entity m_Entity;
-		unsigned int m_UniqueIdentifier = 0; // :#todo
+class NativeScript {
+  friend class Scene;
 
-	public:
-		NativeScript() = default;
-		virtual ~NativeScript() = default;
+private:
+  Entity m_Entity;
+  unsigned int m_UniqueIdentifier = 0; // :#todo
 
-		inline unsigned int GetUID() const { return m_UniqueIdentifier; }
+public:
+  NativeScript() = default;
+  virtual ~NativeScript() = default;
 
-		template<typename T>
-		T& GetComponent()
-		{
-			return m_Entity.GetComponent<T>();
-		}
+  inline unsigned int GetUID() const { return m_UniqueIdentifier; }
 
-	protected:
-		virtual void OnCreate () {}
-		virtual void OnDestroy() {}
-		virtual void OnUpdate(float ts) {}
-	};
+  template <typename T> T &GetComponent() { return m_Entity.GetComponent<T>(); }
 
-}
+protected:
+  virtual void OnCreate() {}
+  virtual void OnDestroy() {}
+  virtual void OnUpdate(float ts) {}
+};
+
+} // namespace Light
