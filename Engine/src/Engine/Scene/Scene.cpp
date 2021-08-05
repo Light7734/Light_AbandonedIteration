@@ -75,7 +75,7 @@ namespace Light {
 				m_Registry.group(entt::get<TransformComponent, SpriteRendererComponent>).
 				each([](TransformComponent& transformComp, SpriteRendererComponent& spriteRendererComp)
 				{
-					Renderer::DrawQuad(transformComp.transform, spriteRendererComp.texture);
+					Renderer::DrawQuad(transformComp.transform, spriteRendererComp.tint, spriteRendererComp.texture);
 				});
 
 				Renderer::EndScene();

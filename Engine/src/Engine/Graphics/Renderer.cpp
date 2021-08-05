@@ -22,6 +22,7 @@ namespace Light {
 	Renderer::Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
 		: m_QuadRenderer(LT_MAX_QUAD_RENDERER_VERTICES, sharedContext),
 		  m_TextureRenderer(LT_MAX_TEXTURE_RENDERER_VERTICES, sharedContext),
+		  m_TintedTextureRenderer(LT_MAX_TEXTURE_RENDERER_VERTICES, sharedContext),
 		  m_ViewProjectionBuffer(nullptr),
 		  m_RenderCommand(nullptr),
 		  m_Blender(nullptr),
@@ -49,6 +50,13 @@ namespace Light {
 	}
 
 	//======================================== DRAW_QUAD ========================================//
+	/* tinted textures */
+	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint, Ref<Texture> texture)
+	{
+		DrawQuad(glm::translate(glm::mat4(1.0f), position) * glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }),
+		         tint, texture);
+	}
+
 	/* tint */
 	void Renderer::DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint)
 	{
@@ -128,6 +136,42 @@ namespace Light {
 		}
 	}
 
+	void Renderer::DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint, Ref<Texture> texture)
+	{
+		// #todo: implement a proper binding
+		texture->Bind();
+
+		// locals
+		TintedTextureRendererProgram::TintedTextureVertexData* bufferMap = m_TintedTextureRenderer.GetMapCurrent();
+
+		// top left
+		bufferMap[0].position = transform * glm::vec4(-0.5f, -0.5f, 0.0f, 1.0f);
+		bufferMap[0].tint = tint;
+		bufferMap[0].texcoord = { 0.0f, 0.0f };
+
+		// top right
+		bufferMap[1].position = transform * glm::vec4(0.5f, -0.5f, 0.0f, 1.0f);
+		bufferMap[1].tint = tint;
+		bufferMap[1].texcoord = { 1.0f, 0.0f };
+
+		// bottom right
+		bufferMap[2].position = transform * glm::vec4(0.5f, 0.5f, 0.0f, 1.0f);
+		bufferMap[2].tint = tint;
+		bufferMap[2].texcoord = { 1.0f, 1.0f };
+
+		// bottom left
+		bufferMap[3].position = transform * glm::vec4(-0.5f, 0.5f, 0.0f, 1.0f);
+		bufferMap[3].tint = tint;
+		bufferMap[3].texcoord = { 0.0f, 1.0f };
+
+		// advance
+		if (!m_TintedTextureRenderer.Advance())
+		{
+			LT_ENGINE_WARN("Renderer::DrawQuadImpl: exceeded LT_MAX_TEXTURE_RENDERER_VERTICES: {}", LT_MAX_TEXTURE_RENDERER_VERTICES);
+			FlushScene();
+		}
+	}
+
 	//==================== DRAW_QUAD_TEXTURE ====================//
 
 	void Renderer::BeginFrame()
@@ -163,6 +207,7 @@ namespace Light {
 		// map renderers
 		m_QuadRenderer.Map();
 		m_TextureRenderer.Map();
+		m_TintedTextureRenderer.Map();
 	}
 
 	void Renderer::FlushScene()
@@ -171,12 +216,22 @@ namespace Light {
 
 		m_QuadRenderer.Map();
 		m_TextureRenderer.Map();
+		m_TintedTextureRenderer.Map();
 	}
 
 	void Renderer::EndSceneImpl()
 	{
 		// enable blending
 		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
+
+
+		/* tinted texture renderer */
+		m_TintedTextureRenderer.UnMap();
+		if (m_TintedTextureRenderer.GetQuadCount())
+		{
+			m_TintedTextureRenderer.Bind();
+			m_RenderCommand->DrawIndexed(m_TintedTextureRenderer.GetQuadCount() * 6u);
+		}
 
 		/* quad renderer */
 		m_QuadRenderer.UnMap();
@@ -186,7 +241,7 @@ namespace Light {
 			m_RenderCommand->DrawIndexed(m_QuadRenderer.GetQuadCount() * 6u);
 		}
 
-		/* text renderer */
+		/* texture renderer */
 		m_TextureRenderer.UnMap();
 		if (m_TextureRenderer.GetQuadCount())
 		{

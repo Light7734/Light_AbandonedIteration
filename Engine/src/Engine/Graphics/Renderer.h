@@ -4,6 +4,7 @@
 
 #include "RendererPrograms/QuadRendererProgram.h"
 #include "RendererPrograms/TextureRendererProgram.h"
+#include "RendererPrograms/TintedTextureRendererProgram.h"
 
 #define LT_MAX_QUAD_RENDERER_VERTICES    1028u * 4u
 #define LT_MAX_TEXTURE_RENDERER_VERTICES 1028u * 4u
@@ -32,6 +33,7 @@ namespace Light {
 		// renderer programs
 		QuadRendererProgram m_QuadRenderer;
 		TextureRendererProgram m_TextureRenderer;
+		TintedTextureRendererProgram m_TintedTextureRenderer;
 
 		// constant buffers
 		Scope<ConstantBuffer> m_ViewProjectionBuffer;
@@ -47,9 +49,11 @@ namespace Light {
 	public:
 		static Scope<Renderer> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 		
+		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint, Ref<Texture> texture) { s_Context->DrawQuadImpl(position, size, tint, texture); }
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint) { s_Context->DrawQuadImpl(position, size, tint); }
 		static inline void DrawQuad(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture) { s_Context->DrawQuadImpl(position, size, texture); }
 
+		static void DrawQuad(const glm::mat4& transform, const glm::vec4& tint, Ref<Texture> texture) { s_Context->DrawQuadImpl(transform, tint, texture); }
 		static void DrawQuad(const glm::mat4& transform, const glm::vec4& tint) { s_Context->DrawQuadImpl(transform, tint); }
 		static void DrawQuad(const glm::mat4& transform, Ref<Texture> texture) { s_Context->DrawQuadImpl(transform, texture); }
 
@@ -64,9 +68,12 @@ namespace Light {
 	private:
 		Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
+
+		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint, Ref<Texture> texture);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture);
 
+		void DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint, Ref<Texture> texture);
 		void DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::mat4& transform, Ref<Texture> texture);
 
