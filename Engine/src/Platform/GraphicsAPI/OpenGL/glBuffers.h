@@ -30,7 +30,7 @@ namespace Light {
 		unsigned int m_BufferID;
 
 	public:
-		glVertexBuffer(float* vertices, unsigned int count);
+		glVertexBuffer(float* vertices, unsigned int stride, unsigned int count);
 		~glVertexBuffer();
 
 		void Bind() override;

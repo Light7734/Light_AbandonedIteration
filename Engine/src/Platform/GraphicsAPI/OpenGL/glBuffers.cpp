@@ -39,11 +39,11 @@ namespace Light {
 	//==================== CONSTANT_BUFFER ====================//
 
 	//==================== VERTEX_BUFFER ====================//
-	glVertexBuffer::glVertexBuffer(float* vertices, unsigned int count)
+	glVertexBuffer::glVertexBuffer(float* vertices, unsigned int stride, unsigned int count)
 		: m_BufferID(NULL)
 	{
 		glCreateBuffers(1, &m_BufferID);
-		glNamedBufferData(m_BufferID, count * sizeof(float), vertices, GL_DYNAMIC_DRAW);
+		glNamedBufferData(m_BufferID, stride * count, vertices, GL_DYNAMIC_DRAW);
 	}
 
 	glVertexBuffer::~glVertexBuffer()

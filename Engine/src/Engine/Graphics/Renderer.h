@@ -6,8 +6,9 @@
 #include "RendererPrograms/TextureRendererProgram.h"
 #include "RendererPrograms/TintedTextureRendererProgram.h"
 
-#define LT_MAX_QUAD_RENDERER_VERTICES    1028u * 4u
-#define LT_MAX_TEXTURE_RENDERER_VERTICES 1028u * 4u
+#define LT_MAX_QUAD_RENDERER_VERTICES              1028u * 4u
+#define LT_MAX_TEXTURE_RENDERER_VERTICES           1028u * 4u
+#define LT_MAX_TINTED_TEXTURE_RENDERER_VERTICES    1028u * 4u
 
 struct GLFWwindow;
 

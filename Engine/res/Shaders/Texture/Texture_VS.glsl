@@ -13,5 +13,6 @@ out vec2 vso_TexCoord;
 void main()
 {
 	gl_Position = u_ViewProjection * a_Position;
+
 	vso_TexCoord = a_TexCoord;
 }

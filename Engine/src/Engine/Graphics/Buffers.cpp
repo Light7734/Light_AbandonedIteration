@@ -37,7 +37,7 @@ namespace Light {
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return CreateRef<glVertexBuffer>(vertices, count);
+			return CreateRef<glVertexBuffer>(vertices, stride, count);
 			
 		case GraphicsAPI::DirectX: LT_WIN(
 			return CreateRef<dxVertexBuffer>(vertices, stride, count, std::static_pointer_cast<dxSharedContext>(sharedContext));)

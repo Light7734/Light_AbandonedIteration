@@ -22,7 +22,7 @@ namespace Light {
 	Renderer::Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
 		: m_QuadRenderer(LT_MAX_QUAD_RENDERER_VERTICES, sharedContext),
 		  m_TextureRenderer(LT_MAX_TEXTURE_RENDERER_VERTICES, sharedContext),
-		  m_TintedTextureRenderer(LT_MAX_TEXTURE_RENDERER_VERTICES, sharedContext),
+		  m_TintedTextureRenderer(LT_MAX_TINTED_TEXTURE_RENDERER_VERTICES, sharedContext),
 		  m_ViewProjectionBuffer(nullptr),
 		  m_RenderCommand(nullptr),
 		  m_Blender(nullptr),
