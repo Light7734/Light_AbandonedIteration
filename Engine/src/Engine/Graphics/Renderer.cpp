@@ -37,6 +37,7 @@ namespace Light {
 
 		m_RenderCommand = RenderCommand::Create(windowHandle, sharedContext);
 		m_Blender = Blender::Create(sharedContext);
+		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
 	}
 
 	Scope<Renderer> Renderer::Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
@@ -212,7 +213,29 @@ namespace Light {
 
 	void Renderer::FlushScene()
 	{
-		EndScene();
+		/* tinted texture renderer */
+		m_TintedTextureRenderer.UnMap();
+		if (m_TintedTextureRenderer.GetQuadCount())
+		{
+			m_TintedTextureRenderer.Bind();
+			m_RenderCommand->DrawIndexed(m_TintedTextureRenderer.GetQuadCount() * 6u);
+		}
+
+		/* quad renderer */
+		m_QuadRenderer.UnMap();
+		if (m_QuadRenderer.GetQuadCount())
+		{
+			m_QuadRenderer.Bind();
+			m_RenderCommand->DrawIndexed(m_QuadRenderer.GetQuadCount() * 6u);
+		}
+
+		/* texture renderer */
+		m_TextureRenderer.UnMap();
+		if (m_TextureRenderer.GetQuadCount())
+		{
+			m_TextureRenderer.Bind();
+			m_RenderCommand->DrawIndexed(m_TextureRenderer.GetQuadCount() * 6u);
+		}
 
 		m_QuadRenderer.Map();
 		m_TextureRenderer.Map();
@@ -221,10 +244,6 @@ namespace Light {
 
 	void Renderer::EndSceneImpl()
 	{
-		// enable blending
-		m_Blender->Enable(BlendFactor::SRC_ALPHA, BlendFactor::INVERSE_SRC_ALPHA);
-
-
 		/* tinted texture renderer */
 		m_TintedTextureRenderer.UnMap();
 		if (m_TintedTextureRenderer.GetQuadCount())
