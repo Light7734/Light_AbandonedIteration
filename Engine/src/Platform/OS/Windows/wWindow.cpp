@@ -12,6 +12,13 @@
 
 #include <GLFW/glfw3.h>
 
+extern "C"
+{
+	// Force Machine to use Dedicated Graphics
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001; // NVidia
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;   // AMD
+}
+
 namespace Light {
 
 	Scope<Window> Window::Create(std::function<void(Event&)> callback)
@@ -40,7 +47,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		// create graphics context
-		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle);
+		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle);
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create 'GraphicsContext'");
 	}
 
