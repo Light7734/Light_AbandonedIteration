@@ -35,8 +35,8 @@ namespace Light {
 
 				if (ImGui::TreeNodeEx((void*)typeid(TransformComponent).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, "Transform"))
 				{
-					auto& transformComponent = m_EntityContext.GetComponent<TransformComponent>();
-					ImGui::DragFloat3("Position", glm::value_ptr(transformComponent.transform[3]), 0.5f);
+					auto transform = m_EntityContext.GetComponent<TransformComponent>().GetTransform();
+					ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.5f);
 
 					ImGui::TreePop();
 				}

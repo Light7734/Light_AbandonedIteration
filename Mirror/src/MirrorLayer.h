@@ -41,18 +41,17 @@ namespace Light {
 				glm::vec3 position = glm::vec3(rand() % 3000 - 1400.0f, rand() % 3000 - 1400.0f, 0.0f);
 				glm::vec2 size = glm::vec2(250.0f, 250.0f);
 
-				Entity quad = m_Scene->CreateEntity("quad", glm::translate(glm::mat4(1.0f), { position.x, position.y, 0.0f }) *
-				                                            glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f}));
+				Entity quad = m_Scene->CreateEntity("quad", TransformComponent(glm::vec3(position.x, position.y, 0.0f), glm::vec3(size.x, size.y, 1.0f)));
 				quad.AddComponent<SpriteRendererComponent>(m_AwesomefaceTexture);
 				quad.AddComponent<TagComponent>("quad");
 
 			}
 
-			m_CameraEntity = m_Scene->CreateEntity("camera", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 1000.0f)));
+			m_CameraEntity = m_Scene->CreateEntity("camera", TransformComponent(glm::vec3(0.0f, 0.0f, 1000.0f)));
 			m_CameraEntity.AddComponent<CameraComponent>(SceneCamera(), true);
 			m_CameraEntity.AddComponent<TagComponent>("Camera");
 
-			m_NativeScriptEntity = m_Scene->CreateEntity("nsc", glm::translate(glm::mat4(1.0f), glm::vec3(0.0f)) * glm::scale(glm::mat4(1.0f), glm::vec3(250.0f, 250.0f, 1.0f)));
+			m_NativeScriptEntity = m_Scene->CreateEntity("nsc");
 			m_NativeScriptEntity.AddComponent<SpriteRendererComponent>(m_AwesomefaceTexture);
 			m_NativeScriptEntity.AddComponent<TagComponent>("NativeScript");
 
@@ -90,7 +89,7 @@ namespace Light {
 				m_Direction.y = 0.0f;
 
 			auto& transform = m_CameraEntity.GetComponent<TransformComponent>();
-			transform = glm::translate(transform.transform, glm::vec3(m_Direction * m_Speed * deltaTime, 0.0));
+			transform.translation += glm::vec3(m_Direction * m_Speed * deltaTime, 0.0);
 
 			m_Scene->OnUpdate(deltaTime);
 		}

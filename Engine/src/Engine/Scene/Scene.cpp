@@ -50,7 +50,7 @@ namespace Light {
 	void Scene::OnRender(const Ref<Framebuffer>& targetFrameBuffer /* = nullptr */)
 	{
 		Camera* sceneCamera = nullptr;
-		glm::mat4* sceneCameraTransform;
+		TransformComponent* sceneCameraTransform;
 
 		/* scene camera */
 		{
@@ -61,7 +61,7 @@ namespace Light {
 				if (cameraComp.isPrimary)
 				{
 					sceneCamera = &cameraComp.camera;
-					sceneCameraTransform = &transformComp.transform;
+					sceneCameraTransform = &transformComp;
 				}
 			});
 		}
@@ -75,7 +75,7 @@ namespace Light {
 				m_Registry.group(entt::get<TransformComponent, SpriteRendererComponent>).
 				each([](TransformComponent& transformComp, SpriteRendererComponent& spriteRendererComp)
 				{
-					Renderer::DrawQuad(transformComp.transform, spriteRendererComp.tint, spriteRendererComp.texture);
+					Renderer::DrawQuad(transformComp, spriteRendererComp.tint, spriteRendererComp.texture);
 				});
 
 				Renderer::EndScene();
@@ -83,7 +83,7 @@ namespace Light {
 		}
 	}
 
-	Entity Scene::CreateEntity(const std::string& name, const glm::mat4& transform)
+	Entity Scene::CreateEntity(const std::string& name, const TransformComponent& transform)
 	{
 		Entity entity { m_Registry.create(), this } ;
 		entity.AddComponent<TransformComponent>(transform);

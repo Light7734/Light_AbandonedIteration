@@ -2,6 +2,8 @@
 
 #include "Base/Base.h"
 
+#include "Components/TransformComponent.h"
+
 #include <entt.hpp>
 
 #include <glm/glm.hpp>
@@ -28,7 +30,7 @@ namespace Light {
 		void OnUpdate(float deltaTime);
 		void OnRender(const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 
-		Entity CreateEntity(const std::string& name, const glm::mat4& transform);
+		Entity CreateEntity(const std::string& name, const TransformComponent& transform = TransformComponent());
 	};
 
 }
