@@ -48,7 +48,13 @@ namespace Light {
 		// determine log level
 #if defined(LIGHT_DEBUG)
 		glEnable(GL_DEBUG_OUTPUT);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr , GL_TRUE);
+
+		GLuint ids[] =
+		{
+			131185
+		};
+		glDebugMessageControl(GL_DEBUG_SOURCE_API, GL_DEBUG_TYPE_OTHER, GL_DONT_CARE, _countof(ids), ids, GL_FALSE);
 #elif defined(LIGHT_RELEASE)
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_FALSE);
