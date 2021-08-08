@@ -19,7 +19,7 @@ Will support:
 ## Getting Started
 1. Run `git clone --recurse-submodules -j4 https://github.com/Light3039/Light`
 2. Open BuildScripts folder and build the project
-3. Use the Sandbox project (a Demo project will be added soon)
+3. Use the Mirror project (Demo project will be added in the future)
 
 
 ## Acknowledgments
