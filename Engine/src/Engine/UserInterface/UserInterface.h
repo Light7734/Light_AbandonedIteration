@@ -10,6 +10,7 @@ namespace Light {
 
 	class SharedContext;
 
+	// #todo: fix the UserIntreface mess!!
 	class UserInterface
 	{
 	public:

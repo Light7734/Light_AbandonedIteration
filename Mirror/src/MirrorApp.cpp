@@ -15,7 +15,7 @@ namespace Light {
 			// Set window properties
 			Light::WindowProperties properties;
 			properties.title = "Mirror";
-			properties.size = glm::uvec2(800u, 600u);
+			properties.size = glm::uvec2(1280u, 720u);
 			properties.vsync = true;
 
 			m_Window->SetProperties(properties);

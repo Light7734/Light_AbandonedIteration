@@ -23,6 +23,9 @@ namespace Light {
 		void End() override;
 
 		void LogDebugData() override;
+		
+	private:
+		void SetDarkThemeColors();
 	};
 
 }

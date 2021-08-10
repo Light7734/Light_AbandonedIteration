@@ -29,8 +29,25 @@ namespace Light {
 				if (ImGui::InputText("##Tag", buffer, sizeof(buffer)))
 					tagComponent.tag = std::string(buffer);
 
-				ImGui::Separator();
 			}
+			
+			ImGui::SameLine();
+			ImGui::PushItemWidth(-1);
+			
+			if (ImGui::Button("Add component"))
+				ImGui::OpenPopup("Components");
+
+			if (ImGui::BeginPopup("Components"))
+			{
+				if (ImGui::Selectable("SpriteRenderer", false, m_EntityContext.HasComponent<SpriteRendererComponent>() ? ImGuiSelectableFlags_Disabled : NULL))
+					m_EntityContext.AddComponent<SpriteRendererComponent>(Light::ResourceManager::GetTexture("awesomeface"));
+
+				if (ImGui::Selectable("Camera", false, m_EntityContext.HasComponent<CameraComponent>() ? ImGuiSelectableFlags_Disabled : NULL))
+					m_EntityContext.AddComponent<CameraComponent>();
+
+				ImGui::EndPopup();
+			}
+			ImGui::PopItemWidth();
 
 			DrawComponent<TransformComponent>("Transform Component", m_EntityContext, [&](auto& transformComponent)
 			{
@@ -41,7 +58,6 @@ namespace Light {
 			{
 				ImGui::ColorEdit4("Color", &spriteRendererComponent.tint[0]);
 			});
-
 
 			DrawComponent<CameraComponent>("Camera Component", m_EntityContext, [&](auto& cameraComponent)
 			{
@@ -107,19 +123,7 @@ namespace Light {
 				ImGui::Separator();
 			});
 
-			if (ImGui::Button("Add component", ImVec2(ImGui::GetContentRegionAvail().x, 20)))
-				ImGui::OpenPopup("Components");
 
-			if (ImGui::BeginPopup("Components"))
-			{
-				if (ImGui::Selectable("SpriteRenderer", false, m_EntityContext.HasComponent<SpriteRendererComponent>() ? ImGuiSelectableFlags_Disabled : NULL))
-					m_EntityContext.AddComponent<SpriteRendererComponent>(Light::ResourceManager::GetTexture("awesomeface"));
-
-				if (ImGui::Selectable("Camera", false, m_EntityContext.HasComponent<CameraComponent>() ? ImGuiSelectableFlags_Disabled : NULL))
-					m_EntityContext.AddComponent<CameraComponent>();
-
-				ImGui::EndPopup();
-			}
 		}
 
 		ImGui::End();
@@ -132,6 +136,10 @@ namespace Light {
 
 	void PropertiesPanel::DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue /*= 0.0f*/, float columnWidth /*= 100.0f*/)
 	{
+		ImGuiIO& io = ImGui::GetIO();
+
+		auto boldFont = io.Fonts->Fonts[0];
+
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, columnWidth);
 		ImGui::Text(label.c_str());
@@ -146,8 +154,10 @@ namespace Light {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.8f, 0.1f, 0.15f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.9f, 0.2f, 0.2f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.8f, 0.1f, 0.15f, 1.0f));
+		ImGui::PushFont(boldFont);
 		if (ImGui::Button("X", buttonSize))
 			values.x = resetValue;
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
@@ -158,8 +168,10 @@ namespace Light {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.2f, 0.7f, 0.2f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.3f, 0.8f, 0.3f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.7f, 0.2f, 1.0f));
+		ImGui::PushFont(boldFont);
 		if (ImGui::Button("Y", buttonSize))
-			values.x = resetValue;
+			values.y = resetValue;
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
@@ -171,8 +183,10 @@ namespace Light {
 		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0.1f, 0.25f, 0.8f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.2f, 0.35f, 0.9f, 1.0f));
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.1f, 0.25f, 0.8f, 1.0f));
+		ImGui::PushFont(boldFont);
 		if (ImGui::Button("Z", buttonSize))
-			values.x = resetValue;
+			values.z = resetValue;
+		ImGui::PopFont();
 		ImGui::PopStyleColor(3);
 
 		ImGui::SameLine();
@@ -189,13 +203,23 @@ namespace Light {
 	{
 		if (!entity.HasComponent<ComponentType>())
 			return;
-
+			
 		auto& component = entity.GetComponent<ComponentType>();
 
-		if (ImGui::TreeNodeEx((void*)typeid(ComponentType).hash_code(), ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+		ImVec2 regionAvail = ImGui::GetContentRegionAvail();
+
+		ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+
+		ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, { 4, 4 });
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImGui::Separator();
+
+		if (ImGui::TreeNodeEx((void*)typeid(ComponentType).hash_code(), flags, name.c_str()))
 		{
-			ImGui::SameLine(ImGui::GetContentRegionAvail().x - 15.0f);
-			if (ImGui::Button("+"))
+			ImGui::PopStyleVar();
+
+			ImGui::SameLine(regionAvail.x - lineHeight * .5f);
+			if (ImGui::Button("+", { lineHeight, lineHeight }))
 				ImGui::OpenPopup("ComponentSettings");
 
 			if (ImGui::BeginPopup("ComponentSettings"))
@@ -208,8 +232,9 @@ namespace Light {
 
 			userInterfaceFunction(component);
 			ImGui::TreePop();
-
 		}
+		else
+			ImGui::PopStyleVar();
 	}
 
 }
