@@ -53,7 +53,7 @@ namespace Light {
 		inline float GetOrthographicFarPlane() const { return m_OrthographicSpecification.farPlane; }
 		inline float GetOrthographicNearPlane() const { return m_OrthographicSpecification.nearPlane; }
 
-		inline float GetPerspectiveverticalFOV() const { return m_PerspectiveSpecification.verticalFOV; }
+		inline float GetPerspectiveVerticalFOV() const { return m_PerspectiveSpecification.verticalFOV; }
 		inline float GetPerspectiveFarPlane() const { return m_PerspectiveSpecification.farPlane; }
 		inline float GetPerspectiveNearPlane() const { return m_PerspectiveSpecification.nearPlane; }
 

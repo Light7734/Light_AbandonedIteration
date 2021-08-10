@@ -47,7 +47,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		// create graphics context
-		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::OpenGL, m_Handle);
+		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle);
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create 'GraphicsContext'");
 	}
 

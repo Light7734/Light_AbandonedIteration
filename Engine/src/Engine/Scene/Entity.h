@@ -36,6 +36,12 @@ namespace Light {
 			return m_Scene->m_Registry.has<T>(m_Handle);
 		}
 
+		template <typename T>
+		inline void RemoveComponent()
+		{
+			m_Scene->m_Registry.remove<T>(m_Handle);
+		}
+
 		inline bool IsValid() const { return m_Handle != entt::null && m_Scene != nullptr; }
 
 		operator uint32_t() { return (uint32_t)m_Handle; }

@@ -69,7 +69,6 @@ namespace Light {
 	private:
 		Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
-
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint, Ref<Texture> texture);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, const glm::vec4& tint);
 		void DrawQuadImpl(const glm::vec3& position, const glm::vec2& size, Ref<Texture> texture);

@@ -3,7 +3,6 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/PropertiesPanel.h"
 
-
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace Light {
