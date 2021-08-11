@@ -14,16 +14,15 @@ namespace Light {
 		GLFWwindow* m_WindowHandle;
 
 	public:
-		glUserInterface(GLFWwindow* windowHandle);
+		glUserInterface() = default;
 		~glUserInterface();
+
+		void PlatformImplementation(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext) override;
 
 		void Begin() override;
 		void End() override;
 
 		void LogDebugData() override;
-
-	private:
-		void SetDarkThemeColors();
 	};
 
 }

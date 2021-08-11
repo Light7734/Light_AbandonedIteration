@@ -21,6 +21,10 @@ namespace Light {
 
 		virtual ~UserInterface() = default;
 
+		void Init(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
+
+		virtual void PlatformImplementation(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext) = 0;
+
 		virtual void Begin() = 0;
 		virtual void End() = 0;
 
@@ -28,6 +32,9 @@ namespace Light {
 
 	protected:
 		UserInterface() = default;
+
+	private:
+		void SetDarkThemeColors();
 	};
 
 }

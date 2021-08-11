@@ -16,16 +16,15 @@ namespace Light {
 	class dxUserInterface : public UserInterface
 	{
 	public:
-		dxUserInterface(GLFWwindow* windowHandle, Ref<dxSharedContext> sharedContext);
+		dxUserInterface() = default;
 		~dxUserInterface();
+
+		void PlatformImplementation(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext) override;
 
 		void Begin() override;
 		void End() override;
 
 		void LogDebugData() override;
-		
-	private:
-		void SetDarkThemeColors();
 	};
 
 }
