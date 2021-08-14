@@ -2,6 +2,8 @@
 
 #include "Base/Base.h"
 
+#include <imgui.h>
+
 struct GLFWwindow;
 
 namespace Light {
@@ -13,6 +15,11 @@ namespace Light {
 	// #todo: fix the UserIntreface mess!!
 	class UserInterface
 	{
+	private:
+		static UserInterface* s_Context;
+
+		ImGuiWindowFlags m_DockspaceFlags;
+
 	public:
 		static Scope<UserInterface> Create(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
@@ -23,6 +30,9 @@ namespace Light {
 
 		void Init(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext);
 
+		static void DockspaceBegin();
+		static void DockspaceEnd();
+
 		virtual void PlatformImplementation(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext) = 0;
 
 		virtual void Begin() = 0;
@@ -31,7 +41,7 @@ namespace Light {
 		virtual void LogDebugData() = 0;
 
 	protected:
-		UserInterface() = default;
+		UserInterface();
 
 	private:
 		void SetDarkThemeColors();

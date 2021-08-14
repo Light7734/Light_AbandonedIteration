@@ -6,7 +6,7 @@
 namespace Light {
 
 	SceneCamera::SceneCamera()
-		: m_OrthographicSpecification{ 10.0f, -1.0f, 10000.0f },
+		: m_OrthographicSpecification{ 1000.0f, -1.0f, 10000.0f },
 		  m_PerspectiveSpecification{ glm::radians(45.0f), 0.01f, 10000.0f },
 		  m_AspectRatio(16.0f / 9.0f),
 		  m_ProjectionType(ProjectionType::Orthographic)

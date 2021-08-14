@@ -85,7 +85,8 @@ namespace Light {
 
 	Entity Scene::CreateEntity(const std::string& name, const TransformComponent& transform)
 	{
-		Entity entity { m_Registry.create(), this } ;
+		Entity entity { m_Registry.create(), this };
+		entity.AddComponent<TagComponent>(name);
 		entity.AddComponent<TransformComponent>(transform);
 
 		return entity;

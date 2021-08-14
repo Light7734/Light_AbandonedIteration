@@ -11,7 +11,7 @@ namespace Light {
 		TagComponent() = default;
 		TagComponent(const TagComponent&) = default;
 
-		TagComponent(const char* _tag)
+		TagComponent(const std::string& _tag)
 			: tag(_tag)
 		{
 		}

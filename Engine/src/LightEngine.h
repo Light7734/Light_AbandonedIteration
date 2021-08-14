@@ -45,6 +45,9 @@
 // third party
 #include <imgui.h>
 
+// math
+#include "Math/TempExtensions.h"
+
 // scene
 #include "Scene/Scene.h"
 #include "Scene/Entity.h"

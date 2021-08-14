@@ -1,7 +1,7 @@
 #define LIGHT_ENTRY_POINT
 #include <LightEngine.h>
 
-#include "MirrorLayer.h"
+#include "EditorLayer.h"
 
 namespace Light {
 
@@ -10,8 +10,6 @@ namespace Light {
 	public:
 		Mirror()
 		{
-			LT_CLIENT_TRACE("Mirror::Mirror");
-
 			// Set window properties
 			Light::WindowProperties properties;
 			properties.title = "Mirror";
@@ -21,12 +19,7 @@ namespace Light {
 			m_Window->SetProperties(properties);
 
 			// Attach the sandbox layer
-			LayerStack::EmplaceLayer<MirrorLayer>(("MirrorLayer"));
-		}
-
-		~Mirror()
-		{
-			LT_CLIENT_TRACE("Mirror::~Mirror");
+			LayerStack::EmplaceLayer<EditorLayer>(("MirrorLayer"));
 		}
 	};
 

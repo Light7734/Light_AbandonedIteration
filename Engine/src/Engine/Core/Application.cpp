@@ -110,8 +110,6 @@ namespace Light {
 
 	void Application::OnEvent(const Event& event)
 	{
-		LT_ENGINE_TRACE(event.GetInfoLog());
-
 		// window
 		if (event.HasCategory(WindowEventCategory))
 		{

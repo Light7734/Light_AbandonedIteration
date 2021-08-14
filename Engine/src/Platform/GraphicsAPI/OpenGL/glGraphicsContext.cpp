@@ -46,6 +46,7 @@ namespace Light {
 	void glGraphicsContext::SetDebugMessageCallback()
 	{
 		// determine log level
+		// #todo: set filters from config.h
 #if defined(LIGHT_DEBUG)
 		glEnable(GL_DEBUG_OUTPUT);
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr , GL_TRUE);
