@@ -1,9 +1,9 @@
 #include "ltpch.h"
-#include "TempExtensions.h"
+#include "Random.h"
 
 #include <cmath>
 
-namespace Light {
+namespace Light { namespace Math {
 
 	float Math::Rand(int min, int max, int decimals /* = 0 */)
 	{
@@ -32,10 +32,10 @@ namespace Light {
 		min *= dec;
 		max *= dec;
 
-		float r1 = (min + (rand() % (max)-min)) / (float)dec;
-		float r2 = (min + (rand() % (max)-min)) / (float)dec;
-		float r3 = (min + (rand() % (max)-min)) / (float)dec;
+		float r1 = (min + (rand() % (max - min))) / (float)dec;
+		float r2 = (min + (rand() % (max - min))) / (float)dec;
+		float r3 = (min + (rand() % (max - min))) / (float)dec;
 
 		return glm::vec3(r1, r2, r3);
 	}
-}
+}}

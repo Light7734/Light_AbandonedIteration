@@ -29,6 +29,8 @@ namespace Light {
 
 		static inline void LoadTexture(const std::string& name, const std::string& path, unsigned int desiredComponents = 4u) { s_Context->LoadTextureImpl(name, path, desiredComponents); }
 
+		static inline void ReleaseTexture(const std::string& name) { s_Context->ReleaseTextureImpl(name); }
+
 		static inline Ref<Shader> GetShader(const std::string& name) { return s_Context->m_Shaders[name]; }
 		static inline Ref<Texture> GetTexture(const std::string& name) { return s_Context->m_Textures[name]; }
 
@@ -39,6 +41,8 @@ namespace Light {
 		void LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath);
 
 		void LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents = 4u);
+
+		void ReleaseTextureImpl(const std::string& name);
 
 	private:
 		void ExtractShaderSource(std::string& src, const std::string& delim);

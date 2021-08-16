@@ -93,6 +93,17 @@ namespace Light {
 		m_Textures[name] = Ref<Texture>(Texture::Create(width, height, components, pixels, m_SharedGraphicsContext));
 	}
 
+	void ResourceManager::ReleaseTextureImpl(const std::string& name)
+	{
+		if (!m_Textures[name])
+		{
+			LT_ENGINE_WARN("ResourceManager::ReleaseTextureImpl: failed to find texture named: {}", name);
+			return;
+		}
+
+		m_Textures[name] = nullptr;
+	}
+
 	void ResourceManager::ExtractShaderSource(std::string& src, const std::string& delim)
 	{
 		size_t begDelimPos, endDelimPos;
