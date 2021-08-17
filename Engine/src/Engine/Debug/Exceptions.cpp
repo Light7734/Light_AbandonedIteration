@@ -59,4 +59,15 @@ namespace Light {
 	}
 #endif
 
+
+	vkException::vkException(int errorCode, const char* file, int line)
+	{
+		// #todo: improve
+		LT_ENGINE_CRITICAL("________________________________________");
+		LT_ENGINE_CRITICAL("vkException::vkException::");
+		LT_ENGINE_CRITICAL("        error: {}", Stringifier::vkErrorCode(errorCode));
+		LT_ENGINE_CRITICAL("________________________________________");
+
+	}
+
 }

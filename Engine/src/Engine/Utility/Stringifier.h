@@ -15,6 +15,8 @@ namespace Light {
 		static std::string glDebugMsgSource(unsigned int source);
 		static std::string glDebugMsgType(unsigned int type);
 
+		static std::string vkErrorCode(int errorCode);
+
 		static std::string spdlogLevel(unsigned int level);
 
 		static std::string GraphicsAPIToString(GraphicsAPI api);

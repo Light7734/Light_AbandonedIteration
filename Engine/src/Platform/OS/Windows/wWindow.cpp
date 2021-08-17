@@ -34,10 +34,15 @@ namespace Light {
 		LT_ENGINE_ASSERT(glfwInit(), "wWindow::wWindow: failed to initialize 'glfw'");
 
 		// create window
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+
+		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+		// #temp: vulkan support
+		// glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+		// glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+		// glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+		// glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 
 		m_Handle = glfwCreateWindow(1u, 1u, "", nullptr, nullptr);
 		LT_ENGINE_ASSERT(m_Handle, "wWindow::wWindow: glfwCreateWindow: failed to create 'GLFWwindow'");
@@ -47,7 +52,7 @@ namespace Light {
 		BindGlfwEvents();
 
 		// create graphics context
-		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::DirectX, m_Handle);
+		m_GraphicsContext = GraphicsContext::Create(GraphicsAPI::Vulkan, m_Handle);
 		LT_ENGINE_ASSERT(m_GraphicsContext, "wWindow::wWindow: failed to create 'GraphicsContext'");
 	}
 

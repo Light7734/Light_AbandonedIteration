@@ -12,7 +12,7 @@ namespace Light {
 		{
 			// Set window properties
 			Light::WindowProperties properties;
-			properties.title = "Mirror";
+			properties.title = "Mirror - vulkan-support";
 			properties.size = glm::uvec2(1280u, 720u);
 			properties.vsync = true;
 

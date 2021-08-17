@@ -1,6 +1,7 @@
 #include "ltpch.h"
 #include "GraphicsContext.h"
 #include "OpenGL/glGraphicsContext.h"
+#include "Vulkan/vkGraphicsContext.h"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxGraphicsContext.h"
@@ -56,6 +57,11 @@ namespace Light {
 			scopeGfx = CreateScope<glGraphicsContext>(windowHandle);
 			s_Context = scopeGfx.get();
 			break;
+		case GraphicsAPI::Vulkan:
+			scopeGfx = CreateScope<vkGraphicsContext>(windowHandle);
+			s_Context = scopeGfx.get();
+			break;
+
 		// directx
 		case GraphicsAPI::DirectX: LT_WIN(
 			scopeGfx = CreateScope<dxGraphicsContext>(windowHandle);
