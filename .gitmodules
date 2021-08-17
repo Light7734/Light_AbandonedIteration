@@ -10,3 +10,12 @@
 [submodule "Dependencies/imgui"]
 	path = Dependencies/imgui
 	url = https://github.com/Light3039/imgui
+[submodule "Dependencies/volk"]
+	path = Dependencies/volk
+	url = https://github.com/zeux/volk
+[submodule "Dependencies/vma"]
+	path = Dependencies/vma
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
+[submodule "Dependencies/spirv-reflect"]
+	path = Dependencies/spirv-reflect
+	url = https://github.com/KhronosGroup/SPIRV-Reflect
