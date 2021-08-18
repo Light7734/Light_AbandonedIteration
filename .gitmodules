@@ -12,7 +12,7 @@
 	url = https://github.com/Light3039/imgui
 [submodule "Dependencies/volk"]
 	path = Dependencies/volk
-	url = https://github.com/zeux/volk
+	url = https://github.com/Light3039/volk
 [submodule "Dependencies/vma"]
 	path = Dependencies/vma
 	url = https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator
