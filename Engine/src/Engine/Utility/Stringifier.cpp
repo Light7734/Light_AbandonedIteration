@@ -54,7 +54,9 @@ namespace Light {
 		default:                                   return "UNKNOWN";
 		}
 	}
+	//============================== OPENGL ==============================//
 
+	//========================= VULKAN =========================//
 	std::string Stringifier::vkErrorCode(int errorCode)
 	{
 		switch (errorCode)
@@ -83,10 +85,35 @@ namespace Light {
 			case VK_ERROR_NATIVE_WINDOW_IN_USE_KHR : return "VK_ERROR_NATIVE_WINDOW_IN_USE_KHR";
 			case VK_ERROR_VALIDATION_FAILED_EXT : return "VK_ERROR_VALIDATION_FAILED_EXT";
 			case VK_RESULT_MAX_ENUM: return "VK_RESULT_MAX_ENUM";
+			default: return "UNKNOWN";
+		}
+	}
+	std::string Stringifier::vkDebugMessageSeverity(uint32_t severity)
+	{
+		switch(severity)
+		{
+		case VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT: return "VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT";
+		case VK_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT: return "VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT";
+		case VK_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT: return "VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT";
+		case VK_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT: return "VK_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT";
+		default: "UNKNOWN";
 		}
 	}
 
-	//============================== OPENGL ==============================//
+	std::string Stringifier::vkDebugMessageType(uint32_t type)
+	{
+		switch(type)
+		{
+
+		case VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT: return "VK_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT";
+		case VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT: return "VK_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT";
+		case VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT: return  "VK_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT";
+		case VK_DEBUG_UTILS_MESSAGE_TYPE_FLAG_BITS_MAX_ENUM_EXT: return "VK_DEBUG_UTILS_MESSAGE_TYPE_FLAG_BITS_MAX_ENUM_EXT";
+		default: return "UNKNOWN";
+		}
+	}
+	//========================= VULKAN =========================//
+
 
 	//==================== SPDLOG ====================//
 	std::string Stringifier::spdlogLevel(unsigned int level)

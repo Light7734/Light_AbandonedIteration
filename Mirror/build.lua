@@ -35,6 +35,7 @@ project "Mirror"
 		(dependenciesdir .. "imgui/backends"),
 		(dependenciesdir .. "glm/"),
 		(dependenciesdir .. "entt/"),
+		(dependenciesdir .. "volk/"),
 	}
 
 	links
@@ -45,6 +46,7 @@ project "Mirror"
 		"ImGui",
 		"stb_image" ,
 		"entt",
+		"volk",
 	}
 
 	--- Filters ---

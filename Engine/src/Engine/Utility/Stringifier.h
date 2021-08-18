@@ -8,6 +8,7 @@ namespace Light {
 
 	enum class GraphicsAPI;
 
+	// #todo: improve
 	class Stringifier
 	{
 	public:
@@ -16,10 +17,13 @@ namespace Light {
 		static std::string glDebugMsgType(unsigned int type);
 
 		static std::string vkErrorCode(int errorCode);
+		static std::string vkDebugMessageSeverity(uint32_t severity);
+		static std::string vkDebugMessageType(uint32_t type);
 
 		static std::string spdlogLevel(unsigned int level);
 
 		static std::string GraphicsAPIToString(GraphicsAPI api);
+
 	};
 
 }

@@ -51,11 +51,7 @@ project "Engine"
 		(dependenciesdir .. "glm/"),
 		(dependenciesdir .. "entt/"),
 		(dependenciesdir .. "vulkan/Include"),
-	}
-
-	libdirs
-	{
-		(dependenciesdir .. "vulkan/Lib"),
+		(dependenciesdir .. "volk"),
 	}
 
 	links
@@ -65,7 +61,7 @@ project "Engine"
 		"ImGui" ,
 		"stb_image",
 		"entt",
-		"vulkan-1.lib",
+		"volk",
 	}
 	
 	--- Filters ---

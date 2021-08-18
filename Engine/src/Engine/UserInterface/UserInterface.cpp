@@ -1,6 +1,7 @@
 #include "ltpch.h"
 #include "UserInterface.h"
 #include "OpenGL/glUserInterface.h"
+#include "Vulkan/vkUserInterface.h"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxUserInterface.h"
@@ -32,9 +33,13 @@ namespace Light {
 			scopeUserInterface = CreateScope<glUserInterface>();
 			break;
 
-		case GraphicsAPI::DirectX: LT_WIN(
-			scopeUserInterface = CreateScope<dxUserInterface>();)
+		case GraphicsAPI::Vulkan: 
+			scopeUserInterface = CreateScope<vkUserInterface>();
 			break;
+
+		case GraphicsAPI::DirectX: LT_WIN(
+			scopeUserInterface = CreateScope<dxUserInterface>();
+			break;)
 
 		default:
 			LT_ENGINE_ASSERT(false, "UserInterface::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
