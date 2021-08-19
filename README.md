@@ -1,12 +1,12 @@
 # Light
-A 2D cross-platform game engine
+A Cross-Platform, Cross-GraphicsAPI Game Engine
 
 ## Supported Graphics APIs
 * OpenGL
 * DirectX
 
 Will support:
-* Vulkan
+* Vulkan (under development)
 * Metal
 
 ## Supported Operating Systems
@@ -18,6 +18,7 @@ Will support:
 
 ## Getting Started
 1. Run `git clone --recurse-submodules -j4 https://github.com/Light3039/Light`
+     * (If you cloned non-recursively run `git submodule update --init`)
 2. Open BuildScripts folder and build the project
 3. Use the Mirror project (Demo project will be added in the future)
 
