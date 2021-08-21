@@ -44,6 +44,7 @@ namespace Light {
 
 		VkSwapchainKHR m_SwapChain;
 		std::vector<VkImage> m_SwapChainImages;
+		std::vector<VkImageView> m_SwapChainImageViews;
 		VkFormat m_SwapChainFormat;
 		VkExtent2D m_SwapChainExtent;
 
@@ -64,6 +65,8 @@ namespace Light {
 		void CreateSurface();
 
 		void CreateSwapChain();
+
+		void CreateImageViews();
 
 		VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
 		VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR >& availablePresentModes);

@@ -73,10 +73,14 @@ namespace Light {
 		PickPhysicalDevice();
 		CreateLogicalDevice();
 		CreateSwapChain();
+		CreateImageViews();
 	}
 
 	vkGraphicsContext::~vkGraphicsContext()
 	{
+		for (auto imageView : m_SwapChainImageViews)
+			vkDestroyImageView(m_VkLogicalDevice, imageView, nullptr);
+
 		vkDestroySwapchainKHR(m_VkLogicalDevice, m_SwapChain, nullptr);
 		vkDestroySurfaceKHR(m_VkInstance, m_Surface, nullptr);
 		vkDestroyDevice(m_VkLogicalDevice, nullptr);
@@ -200,6 +204,33 @@ namespace Light {
 
 		m_SwapChainFormat = surfaceFormat.format;
 		m_SwapChainExtent = extent;
+	}
+
+	void vkGraphicsContext::CreateImageViews()
+	{
+		m_SwapChainImageViews.resize(m_SwapChainImages.size());
+
+		for(size_t i = 0; i < m_SwapChainImages.size(); i++)
+		{
+			VkImageViewCreateInfo createInfo;
+			createInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+			createInfo.image = m_SwapChainImages[i];
+			createInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
+			createInfo.format = m_SwapChainFormat;
+
+			createInfo.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+			createInfo.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+
+			createInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+			createInfo.subresourceRange.baseMipLevel = 0;
+			createInfo.subresourceRange.levelCount = 1;
+			createInfo.subresourceRange.baseArrayLayer = 0;
+			createInfo.subresourceRange.layerCount = 1;
+
+			VKC(vkCreateImageView(m_VkLogicalDevice, &createInfo, nullptr, &m_SwapChainImageViews[i]));
+		}
 	}
 
 	VkSurfaceFormatKHR vkGraphicsContext::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats)
