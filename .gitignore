@@ -1,7 +1,7 @@
 # Directories
 .vs/
 bin/
-bin-int/
+bin-obj/
 
 # VS Files
 **.vcxproj**

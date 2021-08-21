@@ -3,60 +3,57 @@ project "Engine"
 	-- Output Directories --
 	location "%{wks.location}/Engine/"
 
-	targetdir ("%{wks.location}/bin/"     .. outputdir)
-	objdir    ("%{wks.location}/bin-int/" .. outputdir)
+	targetdir (target_dir)
+	objdir    (object_dir)
 
 	-- Compiler --
-	-- kind
 	kind "StaticLib"
-
-	-- language
 	language "C++"
 	cppdialect "C++17"
 
-	-- pch
 	pchsource "src/Engine/ltpch.cpp"
 	pchheader "ltpch.h"
 
-	-- Project Files ---
+	-- Project Files --
 	files
 	{
 		-- src
 		"%{prj.location}/src/**.h",
 		"%{prj.location}/src/**.cpp",
 		
-		-- premake
+		-- res
+		"%{prj.location}/res/**",
+
+		-- build.lua
 		"%{prj.location}/build.lua",
-		
-		"%{prj.location}/res/**"
 	}
 	
-	-- Dependencies --
+	-- Includes --
 	includedirs
 	{
 		-- engine
-		"%{prj.location}"                          ,
-		"%{prj.location}/src"                      ,
-		"%{prj.location}/src/Engine"               ,
-		"%{prj.location}/src/Platform/GraphicsAPI" ,
-		"%{prj.location}/src/Platform/OS"          ,
+		"%{include_dirs.engine}",
+		"%{include_dirs.engine_platform_graphics}",
+		"%{include_dirs.engine_platform_os}",
 
 		-- 3rd party
-		(dependenciesdir .. "spdlog/include/"),
-		(dependenciesdir .. "GLFW/include/"),
-		(dependenciesdir .. "GLAD/include"),
-		(dependenciesdir .. "imgui/backends"),
-		(dependenciesdir .. "imgui/"),
-		(dependenciesdir .. "stb_image/"),
-		(dependenciesdir .. "glm/"),
-		(dependenciesdir .. "entt/"),
+		"%{include_dirs.entt}",
+		"%{include_dirs.glad}",
+		"%{include_dirs.glfw}",
+		"%{include_dirs.glm}",
+		"%{include_dirs.imgui}",
+		"%{include_dirs.imgui_backends}",
+		"%{include_dirs.spdlog}",
+		"%{include_dirs.stb_image}",
+		"%{include_dirs.volk}",
 	}
 
+	-- Links --
 	links
 	{
-		"GLFW"  ,
-		"GLAD"  ,
-		"ImGui" ,
+		"GLFW",
+		"GLAD",
+		"ImGui",
 		"stb_image",
 		"entt",
 	}
@@ -70,9 +67,9 @@ project "Engine"
 
 		links
 		{
-			"d3d11.lib"       ,
-			"dxguid.lib"      ,
-			"D3DCompiler.lib" ,
+			"d3d11.lib",
+			"dxguid.lib",
+			"D3DCompiler.lib",
 		}
 
 		flags { "MultiProcessorCompile" }
@@ -112,7 +109,7 @@ project "Engine"
 	-- distribution
 	filter "configurations:Distribution"
 		defines "LIGHT_DIST"
-		optimize "on"
+		optimize "full"
 
 	filter { "files:**.hlsl" }
 		flags "ExcludeFromBuild"

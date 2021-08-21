@@ -1,16 +1,14 @@
 project "stb_image"
 
+	-- Output Directories --
 	location "%{wks.location}/Dependencies/stb_image"
 
-	-- Output Directories --
-	targetdir ("%{wks.location}/bin/"     .. outputdir)
-	objdir    ("%{wks.location}/bin-int/" .. outputdir)
+	targetdir (target_dir)
+	objdir    (object_dir)
 
 	-- Compiler --
 	kind "StaticLib"
 	language "C"
-	
-	optimize "on"
 
 	-- Project Files ---
 	files
@@ -18,7 +16,7 @@ project "stb_image"
 		"stb_image.c",
 		"stb_image.h",
 
-		"build.lua"
+		"%{prj.location}/build.lua",
 	}
 	
 	--- Filters ---
@@ -33,3 +31,18 @@ project "stb_image"
 		}
 
 		flags { "MultiProcessorCompile" }
+
+	-- debug
+	filter "configurations:Debug"
+		runtime "Debug"
+		symbols "on"
+
+	-- release
+	filter "configurations:Release"
+		runtime "Release"
+		optimize "on"
+
+	-- distribution
+	filter "configurations:Distribution"
+		runtime "Release"
+		optimize "full"

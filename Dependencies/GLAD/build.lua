@@ -1,10 +1,10 @@
 project "GLAD"
 
+	-- Output Directories --
 	location "%{wks.location}/Dependencies/GLAD"
 
-	-- Output Directories --
-	targetdir ("%{wks.location}/bin/"     .. outputdir)
-	objdir    ("%{wks.location}/bin-int/" .. outputdir)
+	targetdir (target_dir)
+	objdir    (object_dir)
 
 	-- Compiler --
 	kind "StaticLib"
@@ -13,13 +13,14 @@ project "GLAD"
 	-- Project Files ---
 	files
 	{
-		"**.c",
-		"**.h",
+		"src/glad.c",
+		"include/glad/glad.h",
+		"include/KHR/khrplatform.h",
 
-		"build.lua"
+		"%{prj.location}/build.lua",
 	}
 	
-	-- Dependencies --
+	-- Includes --
 	includedirs
 	{
 		"%{prj.location}/include/"
@@ -51,4 +52,4 @@ project "GLAD"
 	-- distribution
 	filter "configurations:Distribution"
 		runtime "Release"
-		optimize "on"
+		optimize "full"

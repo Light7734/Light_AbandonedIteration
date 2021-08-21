@@ -1,17 +1,15 @@
 project "entt"
 
+	-- Output Directories --
 	location "%{wks.location}/Dependencies/entt"
 
-	-- Output Directories --
-	targetdir ("%{wks.location}/bin/"     .. outputdir)
-	objdir    ("%{wks.location}/bin-int/" .. outputdir)
+	targetdir (target_dir)
+	objdir    (object_dir)
 
 	-- Compiler --
 	kind "StaticLib"
 	language "C++"
 	cppdialect "C++17"
-	
-	optimize "on"
 
 	-- Project Files ---
 	files
@@ -19,7 +17,7 @@ project "entt"
 		"entt.cpp",
 		"entt.hpp",
 
-		"build.lua"
+		"%{prj.location}/build.lua",
 	}
 	
 	--- Filters ---
@@ -34,3 +32,18 @@ project "entt"
 		}
 
 		flags { "MultiProcessorCompile" }
+
+	-- debug
+	filter "configurations:Debug"
+		runtime "Debug"
+		symbols "on"
+
+	-- release
+	filter "configurations:Release"
+		runtime "Release"
+		optimize "on"
+
+	-- distribution
+	filter "configurations:Distribution"
+		runtime "Release"
+		optimize "full"

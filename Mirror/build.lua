@@ -3,8 +3,8 @@ project "Mirror"
 	-- Output Directories --
 	location "%{wks.location}/Mirror/"
 
-	targetdir ("%{wks.location}/bin/"     .. outputdir)
-	objdir    ("%{wks.location}/bin-int/" .. outputdir)
+	targetdir (target_dir)
+	objdir    (object_dir)
 
 	-- Compiler --
 	kind "ConsoleApp"
@@ -14,29 +14,35 @@ project "Mirror"
 	-- Project Files ---
 	files
 	{
+		-- src
 		"%{prj.location}/src/**.h",
 		"%{prj.location}/src/**.cpp",
 
+		-- res
+		"%{prj.location}/res/**",
+
+		-- build.lua
 		"%{prj.location}/build.lua",
 	}
 
-	-- Dependencies --
+	-- Includes --
 	includedirs
 	{
-		-- Engine
-		"%{wks.location}/Engine/src",
-		"%{wks.location}/Engine/src/Engine",
-		"%{wks.location}/Engine/src/Platform/GraphicsAPI",
-		"%{wks.location}/Engine/src/Platform/OS",
+		-- engine
+		"%{include_dirs.engine}",
+		"%{include_dirs.engine_platform_graphics}",
+		"%{include_dirs.engine_platform_os}",
 
 		-- 3rd party
-		(dependenciesdir .. "spdlog/include/"),
-		(dependenciesdir .. "imgui/"),
-		(dependenciesdir .. "imgui/backends"),
-		(dependenciesdir .. "glm/"),
-		(dependenciesdir .. "entt/"),
+		"%{include_dirs.entt}",
+		"%{include_dirs.glm}",
+		"%{include_dirs.imgui}",
+		"%{include_dirs.imgui_backends}",
+		"%{include_dirs.spdlog}",
+		"%{include_dirs.stb_image}",
 	}
 
+	-- Links --
 	links
 	{
 		"Engine",
@@ -79,4 +85,4 @@ project "Mirror"
 	-- distribution
 	filter "configurations:Distribution"
 		defines "LIGHT_DIST"
-		optimize "on"
+		optimize "full"
