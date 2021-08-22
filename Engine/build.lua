@@ -46,6 +46,15 @@ project "Engine"
 		"%{include_dirs.spdlog}",
 		"%{include_dirs.stb_image}",
 		"%{include_dirs.volk}",
+		"%{include_dirs.shaderc}",
+
+		"%{include_dirs.vulkan_sdk}",
+	}
+
+	-- Libraries --
+	libdirs
+	{
+		"%{lib_dirs.vulkan_sdk}",
 	}
 
 	-- Links --
@@ -56,6 +65,9 @@ project "Engine"
 		"ImGui",
 		"stb_image",
 		"entt",
+		"shaderc",
+
+		"%{libs.spirv_cross}",
 	}
 	
 	--- Filters ---
