@@ -1,6 +1,12 @@
 # Light
 A 2D cross-platform game engine
 
+## Branch Info [ Vulkan ]
+Unusable branch
+
+The Vulkan graphics api is being implemented in this branch
+
+
 ## Supported Graphics APIs
 * OpenGL
 * DirectX
