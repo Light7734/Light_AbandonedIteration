@@ -21,7 +21,7 @@ namespace Light {
 		  m_MaxVertices(maxVertices)
 	{
 		// #todo: don't use relative path
-		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TINTED_TEXTURE_SHADER", "../Engine/res/Shaders/TintedTexture/TintedTexture_VS", "../Engine/res/Shaders/TintedTexture/TintedTexture_PS");
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TINTED_TEXTURE_SHADER", "../../Engine/res/Shaders/TintedTexture/TintedTexture_VS", "../../Engine/res/Shaders/TintedTexture/TintedTexture_PS");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TINTED_TEXTURE_SHADER");
 		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TintedTextureVertexData), maxVertices, sharedContext));
@@ -33,13 +33,14 @@ namespace Light {
 
 	bool TintedTextureRendererProgram::Advance()
 	{
-		if (m_MapCurrent + 4 >= m_MapEnd)
+		m_MapCurrent += 4;
+
+		if (m_MapCurrent >= m_MapEnd)
 		{
 			LT_ENGINE_WARN("TintedTextureRendererProgram::Advance: 'VertexBuffer' map went beyond 'MaxVertices': {}", m_MaxVertices);
 			return false;
 		}
 
-		m_MapCurrent += 4;
 		m_QuadCount++;
 		return true;
 	}

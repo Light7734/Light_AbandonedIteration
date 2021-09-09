@@ -4,6 +4,8 @@
 
 #include <glm/glm.hpp>
 
+#include <array>
+
 namespace Light {
 
 	class Event;

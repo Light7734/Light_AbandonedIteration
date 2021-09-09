@@ -18,9 +18,6 @@ namespace Light {
 
 		// for native script components
 		m_Scene->OnCreate();
-
-		// #temp
-		srand(time(NULL));
 	}
 	
 	void EditorLayer::OnUpdate(float deltaTime)
@@ -53,16 +50,16 @@ namespace Light {
 			Input::ReceiveGameEvents(ImGui::IsWindowFocused());
 			ImVec2 regionAvail = ImGui::GetContentRegionAvail();
 
-			if(m_AvailableContentRegionPrev != regionAvail)
+			if (m_AvailableContentRegionPrev != regionAvail)
 			{
 				m_Framebuffer->Resize({ regionAvail.x, regionAvail.y });
 				auto& camera = m_CameraEntity.GetComponent<CameraComponent>().camera;
-				camera.SetViewportSize(regionAvail.x, regionAvail.y);;
+				camera.SetViewportSize(regionAvail.x, regionAvail.y);
 
 				m_AvailableContentRegionPrev = regionAvail;
 			}
 
-			if(GraphicsContext::GetGraphicsAPI() == GraphicsAPI::DirectX)
+			if (GraphicsContext::GetGraphicsAPI() == GraphicsAPI::DirectX)
 				ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail);
 			else
 				ImGui::Image(m_Framebuffer->GetColorAttachment(), regionAvail, ImVec2(0, 1), ImVec2(1, 0));
@@ -76,22 +73,20 @@ namespace Light {
 	
 	void EditorLayer::SummonAwesomeness()
 	{
-		ResourceManager::LoadTexture("awesomeface", "res/Textures/awesomeface.png");
+		ResourceManager::LoadTexture("awesomeface", "../../Mirror/res/Textures/awesomeface.png");
 		auto texture = ResourceManager::GetTexture("awesomeface");
 
 		for(unsigned int i = 0; i < 250; i++)
 		{
 			const glm::vec3 translation = Math::RandVec3(-500, 500);
 			const glm::vec3 scale       = glm::vec3(Math::Rand(125, 200));
-			const glm::vec3 rotation    = glm::radians(glm::vec3(0.0f, 0.0f, Math::Rand(0, 360)));
+			const glm::vec3 rotation    = glm::vec3(0.0f, 0.0f, glm::radians(Math::Rand(0, 359)));
 
 			const glm::vec4 tint        = glm::vec4(Math::RandVec3(0, 1, 2), 1.0f);
 
 			auto& entity = m_Scene->CreateEntity("quad" + std::to_string(i), { translation, scale, rotation });
 			entity.AddComponent<SpriteRendererComponent>(texture, tint);
 		}
-
-		ResourceManager::ReleaseTexture("awesomeface");
 	}
 
 }

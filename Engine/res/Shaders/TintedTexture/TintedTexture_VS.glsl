@@ -10,7 +10,7 @@ layout(std140, binding = 0) uniform ub_ViewProjection
 };
 
 out vec4 vso_Tint;
-out vec2 vso_TexCoord;
+out vec2 vso_TexCoord; 
 
 void main()
 {
