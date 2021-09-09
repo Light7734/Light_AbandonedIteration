@@ -24,3 +24,5 @@ Makefile
 **/Logs/**
 **.ini
 !**/default_gui_layout.ini
+
+CMake/
