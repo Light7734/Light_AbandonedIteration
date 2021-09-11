@@ -21,7 +21,7 @@ namespace Light {
 		  m_MaxVertices(maxVertices)
 	{
 		// #todo: don't use relative path
-		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_QUAD_SHADER", "../Engine/res/Shaders/Quad/Quad_VS", "../Engine//res/Shaders/Quad/Quad_PS");
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_QUAD_SHADER", "../../Engine/res/Shaders/Quad/Quad_VS", "../../Engine//res/Shaders/Quad/Quad_PS");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_QUAD_SHADER");
 		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(QuadVertexData), maxVertices, sharedContext));
@@ -32,13 +32,14 @@ namespace Light {
 
 	bool QuadRendererProgram::Advance()
 	{
-		if (m_MapCurrent + 4 >= m_MapEnd)
+		m_MapCurrent += 4;
+
+		if (m_MapCurrent >= m_MapEnd)
 		{
 			LT_ENGINE_WARN("QuadRendererProgram::Advance: 'VertexBuffer' map went beyond 'MaxVertices': {}", m_MaxVertices);
 			return false;
 		}
 
-		m_MapCurrent += 4;
 		m_QuadCount++;
 		return true;
 	}

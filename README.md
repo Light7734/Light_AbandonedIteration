@@ -1,5 +1,5 @@
 # Light
-A 2D cross-platform game engine
+A Cross-Platform, Cross-GraphicsAPI Game Engine
 
 ## Branch Info [ Vulkan ]
 Unusable branch
@@ -12,7 +12,7 @@ The Vulkan graphics api is being implemented in this branch
 * DirectX
 
 Will support:
-* Vulkan
+* Vulkan (under development)
 * Metal
 
 ## Supported Operating Systems
@@ -23,10 +23,11 @@ Will support:
 * Mac
 
 ## Getting Started
-1. Run `git clone --recurse-submodules -j4 https://github.com/Light3039/Light`
-2. Open BuildScripts folder and build the project
-3. Use the Mirror project (Demo project will be added in the future)
-
+1. `git clone --recurse-submodules -j4 https://github.com/Light3039/Light <folder_name>`
+     * (If you cloned non-recursively run `git submodule update --init`)
+2. `cd <folder_name>/CMake`
+3. `cmake ..`
+4. Build and run the Mirror project
 
 ## Acknowledgments
 Huge thanks to these people:

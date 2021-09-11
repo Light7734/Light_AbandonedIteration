@@ -4,7 +4,7 @@
 
 #include "Components/TransformComponent.h"
 
-#include <entt.hpp>
+#include <entt/entt.hpp>
 
 #include <glm/glm.hpp>
 

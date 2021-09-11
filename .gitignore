@@ -1,7 +1,7 @@
 # Directories
 .vs/
 bin/
-bin-int/
+bin-obj/
 
 # VS Files
 **.vcxproj**
@@ -24,3 +24,5 @@ Makefile
 **/Logs/**
 **.ini
 !**/default_gui_layout.ini
+
+CMake/

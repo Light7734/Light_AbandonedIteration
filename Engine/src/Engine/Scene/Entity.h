@@ -4,9 +4,9 @@
 
 #include "Scene.h"
 
-#include <entt.hpp>
+#include <entt/entt.hpp>
 
-namespace Light {
+namespace Light {	
 
 	class Entity
 	{
@@ -33,7 +33,7 @@ namespace Light {
 		template <typename T>
 		inline bool HasComponent()
 		{
-			return m_Scene->m_Registry.has<T>(m_Handle);
+			return m_Scene->m_Registry.any_of<T>(m_Handle);
 		}
 
 		template <typename T>

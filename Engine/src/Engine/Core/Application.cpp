@@ -26,6 +26,7 @@ namespace Light {
 		  m_Window(nullptr)
 	{
 		m_Logger = Logger::Create();
+		LogDebugData();
 
 		m_Instrumentor = Instrumentor::Create();
 		m_Instrumentor->BeginSession("Logs/ProfileResults_Startup.json");
@@ -48,7 +49,6 @@ namespace Light {
 		LT_ENGINE_ASSERT(!m_LayerStack->IsEmpty(), "Application::GameLoop(pre): LayerStack is empty");
 
 		// log debug data
-		LogDebugData();
 		m_Logger->LogDebugData();
 		m_Window->GetGfxContext()->LogDebugData();
 		m_Window->GetGfxContext()->GetUserInterface()->LogDebugData();
@@ -66,7 +66,6 @@ namespace Light {
 			{
 				// update layers
 				LT_PROFILE_SCOPE("GameLoop::Update");
-				LT_PROFILE_SCOPE("GameLoop::Updated");
 
 				for (auto it = m_LayerStack->begin(); it != m_LayerStack->end(); it++)
 					(*it)->OnUpdate(deltaTimer.GetDeltaTime());

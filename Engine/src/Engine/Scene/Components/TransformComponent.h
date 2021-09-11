@@ -4,6 +4,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 namespace Light {
 
@@ -25,18 +26,9 @@ namespace Light {
 		{
 		}
 
-		const glm::mat4& GetTransform() const
-		{
-			return glm::translate(glm::mat4(1.0f), translation)                          *
+		inline glm::mat4 GetTransform() const { return glm::translate(translation) * glm::rotate(rotation.z, glm::vec3(0.0f, 0.0f, 1.0f)) * glm::scale(scale); }
 
-			       glm::rotate(glm::mat4(1.0f), rotation.x, glm::vec3(1.0f, 0.0f, 0.0f)) *
-			       glm::rotate(glm::mat4(1.0f), rotation.y, glm::vec3(0.0f, 1.0f, 0.0f)) *
-			       glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f)) *
-
-			       glm::scale(glm::mat4(1.0f), scale);
-		}
-
-		operator const glm::mat4& () const { return GetTransform(); }
+		operator const glm::mat4() const { return GetTransform(); }
 	};
 
 }

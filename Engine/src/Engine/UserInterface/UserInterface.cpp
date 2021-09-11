@@ -110,8 +110,8 @@ namespace Light {
 		io.KeyMap[ImGuiKey_Y] = Key::Y;
 		io.KeyMap[ImGuiKey_Z] = Key::Z;
 
-		io.Fonts->AddFontFromFileTTF("res/Fonts/OpenSans/OpenSans-Bold.ttf", 18.0f);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("res/Fonts/OpenSans/OpenSans-Regular.ttf", 18.0f);
+		io.Fonts->AddFontFromFileTTF("../../Engine/res/Fonts/OpenSans/OpenSans-Bold.ttf", 18.0f);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("../../Engine/res/Fonts/OpenSans/OpenSans-Regular.ttf", 18.0f);
 
 		SetDarkThemeColors();
 	}
