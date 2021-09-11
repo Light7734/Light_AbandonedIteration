@@ -9,6 +9,7 @@ namespace Light {
 
 		m_PropertiesPanel = CreateRef<PropertiesPanel>();
 		m_SceneHierarchyPanel = CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertiesPanel);
+
 		SummonAwesomeness();
 
 		m_Framebuffer = Framebuffer::Create({ 1, 1, 1 }, GraphicsContext::GetSharedContext());
@@ -26,7 +27,6 @@ namespace Light {
 
 		m_Direction.x = Input::GetKeyboardKey(Key::A) ? -1.0f :
 		                Input::GetKeyboardKey(Key::D) ?  1.0f : 0.0f;
-
 			
 		m_Direction.y = Input::GetKeyboardKey(Key::S) ? -1.0f :
 		                Input::GetKeyboardKey(Key::W) ?  1.0f : 0.0f;

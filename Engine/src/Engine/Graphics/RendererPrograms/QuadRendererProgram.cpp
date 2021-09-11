@@ -32,13 +32,14 @@ namespace Light {
 
 	bool QuadRendererProgram::Advance()
 	{
-		if (m_MapCurrent + 4 >= m_MapEnd)
+		m_MapCurrent += 4;
+
+		if (m_MapCurrent >= m_MapEnd)
 		{
 			LT_ENGINE_WARN("QuadRendererProgram::Advance: 'VertexBuffer' map went beyond 'MaxVertices': {}", m_MaxVertices);
 			return false;
 		}
 
-		m_MapCurrent += 4;
 		m_QuadCount++;
 		return true;
 	}
