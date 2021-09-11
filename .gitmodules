@@ -10,15 +10,6 @@
 [submodule "Dependencies/imgui"]
 	path = Dependencies/imgui
 	url = https://github.com/Light3039/imgui
-[submodule "Dependencies/shaderc"]
-	path = Dependencies/shaderc
-	url = https://github.com/Light3039/shaderc
-[submodule "Dependencies/glslang"]
-	path = Dependencies/glslang
-	url = https://github.com/Light3039/glslang
-[submodule "Dependencies/spirv-headers"]
-	path = Dependencies/spirv-headers
-	url = https://github.com/KhronosGroup/SPIRV-Headers
 [submodule "Dependencies/entt"]
 	path = Dependencies/entt
 	url = https://github.com/skypjack/entt
