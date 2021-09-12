@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.21.2)
 
 project(Light VERSION 1.0.0)
+add_subdirectory(Dependencies/ShaderConductor)
+
 set(CMAKE_CXX_STANDARD 17)
+
 # target_compile_features(Light PUBLIC cxx_std_17)
 # set_property(TARGET Light CXX_STANDARD 17)
 
@@ -32,6 +35,7 @@ target_link_libraries(Engine glfw)
 target_link_libraries(Engine spdlog)
 target_link_libraries(Engine imgui)
 target_link_libraries(Engine stb_image)
+target_link_libraries(Engine ShaderConductor)
 
 target_link_libraries(imgui glad)
 target_link_libraries(imgui glfw)
