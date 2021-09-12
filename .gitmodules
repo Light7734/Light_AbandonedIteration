@@ -13,3 +13,6 @@
 [submodule "Dependencies/entt"]
 	path = Dependencies/entt
 	url = https://github.com/skypjack/entt
+[submodule "Dependencies/ShaderConductor"]
+	path = Dependencies/ShaderConductor
+	url = https://github.com/microsoft/shaderconductor
