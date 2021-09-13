@@ -58,3 +58,12 @@ if(WIN32)
 	target_link_libraries(Engine dxguid)
 	target_link_libraries(Engine D3DCompiler)
 endif()
+
+
+message(BINARY DIRECTORY IS IN ${CMAKE_BINARY_DIR})
+
+add_custom_command(
+	TARGET Engine
+	POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+	${CMAKE_BINARY_DIR}/Dependencies/ShaderConductor/Bin/Debug/ShaderConductor.dll
+	${CMAKE_BINARY_DIR}/bin/Debug)
