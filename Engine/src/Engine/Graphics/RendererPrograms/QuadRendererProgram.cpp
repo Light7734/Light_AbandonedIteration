@@ -21,7 +21,7 @@ namespace Light {
 		  m_MaxVertices(maxVertices)
 	{
 		// #todo: don't use relative path
-		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_QUAD_SHADER", "../../Engine/res/Shaders/Quad/Quad_VS", "../../Engine//res/Shaders/Quad/Quad_PS");
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_QUAD_SHADER", "../../Engine/res/Shaders/Quad/Quad_VS.hlsl", "../../Engine//res/Shaders/Quad/Quad_PS.hlsl");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_QUAD_SHADER");
 		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(QuadVertexData), maxVertices, sharedContext));

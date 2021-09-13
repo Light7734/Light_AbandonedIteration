@@ -11,7 +11,16 @@ namespace Light {
 	class Shader
 	{
 	public:
-		static Ref<Shader> Create(const std::string& vertexPath, const std::string& pixelPath, Ref<SharedContext> sharedContext);
+		enum Stage
+		{
+			NONE = 0,
+			VERTEX = 1,
+			PIXEL = 2,
+			GEOMETRY = 3
+		};
+
+	public:
+		static Ref<Shader> Create(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t>& pixelBlob, const std::string& vertexFileName, const std::string& pixelFileName, Ref<SharedContext> sharedContext);
 
 		virtual ~Shader() = default;
 

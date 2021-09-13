@@ -21,7 +21,7 @@ namespace Light {
 		  m_MaxVertices(maxVertices)
 	{
 		// #todo: don't use relative path
-		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TINTED_TEXTURE_SHADER", "../../Engine/res/Shaders/TintedTexture/TintedTexture_VS", "../../Engine/res/Shaders/TintedTexture/TintedTexture_PS");
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TINTED_TEXTURE_SHADER", "../../Engine/res/Shaders/TintedTexture/TintedTexture_VS.hlsl", "../../Engine/res/Shaders/TintedTexture/TintedTexture_PS.hlsl");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TINTED_TEXTURE_SHADER");
 		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TintedTextureVertexData), maxVertices, sharedContext));
