@@ -7,21 +7,28 @@ A Cross-Platform, Cross-GraphicsAPI Game Engine
 
 Will support:
 * Vulkan (under development)
-* Metal
+* Metal (maybe not...)
 
 ## Supported Operating Systems
 * Windows
-* Linux
+* Linux (Won't compile ATM)
  
 Will support:
 * Mac
 
 ## Getting Started
-1. `git clone --recurse-submodules -j4 https://github.com/Light3039/Light <folder_name>`
-     * (If you cloned non-recursively run `git submodule update --init`)
-2. `cd <folder_name>/CMake`
-3. `cmake ..`
-4. Build and run the Mirror project
+
+### Prerequisites
+* OpenGL 4.5 or higher
+* DirectX 11 support on Windows machines
+
+### Getting the project
+```bash
+    git clone --recurse-submodules -j4 https://github.com/Light3039/Light <folder_name>
+        # if you cloned non-recursively then run "git submodule update --init"
+    cd <folder_name>/CMake
+    cmake ..
+```
 
 ## Acknowledgments
 Huge thanks to these people:
