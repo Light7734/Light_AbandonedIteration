@@ -21,7 +21,7 @@ namespace Light {
 		  m_MaxVertices(maxVertices)
 	{
 		// #todo: don't use relative path
-		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", "../../Engine/res/Shaders/Texture/Texture_VS", "../../Engine/res/Shaders/Texture/Texture_PS");
+		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", "../../Engine/res/Shaders/Texture/Texture_VS.hlsl", "../../Engine/res/Shaders/Texture/Texture_PS.hlsl");
 
 		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER");
 		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TextureVertexData), maxVertices, sharedContext));

@@ -24,7 +24,6 @@ namespace Light {
 		static Scope<ResourceManager> Create(Ref<SharedContext> sharedContext);
 
 		// #todo: add geometry shader support
-		static inline void CreateShader(const std::string& name, const std::string& vertexSource, const std::string& pixelSource) { s_Context->CreateShaderImpl(name, vertexSource, pixelSource); }
 		static inline void LoadShader(const std::string& name, const std::string& vertexPath, const std::string& pixelPath) { s_Context->LoadShaderImpl(name, vertexPath, pixelPath); }
 
 		static inline void LoadTexture(const std::string& name, const std::string& path, unsigned int desiredComponents = 4u) { s_Context->LoadTextureImpl(name, path, desiredComponents); }
@@ -37,15 +36,11 @@ namespace Light {
 	private:
 		ResourceManager(Ref<SharedContext> sharedContext);
 
-		void CreateShaderImpl(const std::string& name, const std::string& vertexSource, const std::string& pixelSource);
 		void LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath);
 
 		void LoadTextureImpl(const std::string& name, const std::string& path, unsigned int desiredComponents = 4u);
 
 		void ReleaseTextureImpl(const std::string& name);
-
-	private:
-		void ExtractShaderSource(std::string& src, const std::string& delim);
 	};
 
 }

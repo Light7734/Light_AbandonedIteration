@@ -22,7 +22,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3DBlob> m_VertexBlob;
 
 	public:
-		dxShader(const std::string& vertexSource, const std::string& pixelSource, Ref<dxSharedContext> sharedContext);
+		dxShader(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t> pixelBlob, Ref<dxSharedContext> sharedContext);
 		~dxShader();
 
 		void Bind() override;

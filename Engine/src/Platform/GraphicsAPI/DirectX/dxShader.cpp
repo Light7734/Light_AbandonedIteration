@@ -6,7 +6,7 @@
 
 namespace Light {
 
-	dxShader::dxShader(const std::string& vertexSource, const std::string& pixelSource, Ref<dxSharedContext> sharedContext)
+	dxShader::dxShader(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t> pixelBlob, Ref<dxSharedContext> sharedContext)
 		: m_Context(sharedContext),
 		  m_VertexShader(nullptr),
 		  m_PixelShader(nullptr),
@@ -14,9 +14,9 @@ namespace Light {
 	{
 		Microsoft::WRL::ComPtr<ID3DBlob> ps = nullptr, vsErr = nullptr, psErr = nullptr;
 
-		// compile shaders (we don't use DXC here because if D3DCompile fails it throws a dxException without logging the vsErr/psErr)
-		D3DCompile(vertexSource.c_str(), vertexSource.length(), NULL, nullptr, nullptr, "main", "vs_4_0", NULL, NULL, &m_VertexBlob, &vsErr);
-		D3DCompile(pixelSource.c_str(), pixelSource.length(), NULL, nullptr, nullptr, "main", "ps_4_0", NULL, NULL, &ps, &psErr);
+		// compile shaders (we don't use DXC here because if D3DCompile fails it throws a dxException without logging the vsErr/psErr
+		D3DCompile(vertexBlob.data(), vertexBlob.size(), NULL, nullptr, nullptr, "main", "vs_4_0", NULL, NULL, &m_VertexBlob, &vsErr);
+		D3DCompile(pixelBlob.data(), pixelBlob.size(), NULL, nullptr, nullptr, "main", "ps_4_0", NULL, NULL, &ps, &psErr);
 
 		// check
 		LT_ENGINE_ASSERT(!vsErr.Get(), "dxShader::dxShader: vertex shader compile error: {}", (char*)vsErr->GetBufferPointer());

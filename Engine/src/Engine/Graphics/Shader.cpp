@@ -11,16 +11,16 @@
 
 namespace Light {
 
-	Ref<Shader> Shader::Create(const std::string& vertexSource, const std::string& pixelSource, Ref<SharedContext> sharedContext)
+	Ref<Shader> Shader::Create(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t>& pixelBlob, const std::string& vertexFileName, const std::string& pixelFileName, Ref<SharedContext> sharedContext)
 	{
 		// load shader source
 		switch (GraphicsContext::GetGraphicsAPI())
 		{
 		case GraphicsAPI::OpenGL:
-			return CreateRef<glShader>(vertexSource, pixelSource);
+			return CreateRef<glShader>(vertexBlob, pixelBlob, vertexFileName, pixelFileName);
 
 		case GraphicsAPI::DirectX: LT_WIN(
-			return CreateRef<dxShader>(vertexSource, pixelSource, std::static_pointer_cast<dxSharedContext>(sharedContext));)
+			return CreateRef<dxShader>(vertexBlob, pixelBlob, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
 		default:
 			LT_ENGINE_ASSERT(false, "Shader::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
