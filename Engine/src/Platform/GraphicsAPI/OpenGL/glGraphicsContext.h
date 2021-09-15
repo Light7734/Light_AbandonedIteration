@@ -19,7 +19,7 @@ namespace Light {
 		void LogDebugData() override;
 
 	private:
-		void SetDebugMessageCallback();
+		void SetupDebugMessageCallback();
 	};
 
 }
