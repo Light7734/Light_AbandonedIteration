@@ -12,7 +12,6 @@
 
 #include <volk.h>
 
-#define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
 namespace Light {
@@ -20,6 +19,8 @@ namespace Light {
 	vkGraphicsContext::vkGraphicsContext(GLFWwindow* windowHandle)
 		: m_VkInstance(VK_NULL_HANDLE),
 		  m_PhysicalDevice(VK_NULL_HANDLE),
+		  m_LogicalDevice(VK_NULL_HANDLE),
+		  m_GraphicsQueue(VK_NULL_HANDLE),
 		  m_ValidationLayers { LT_VULKAN_VALIDATION_LAYERS },
 		  m_GlobalExtensions{ LT_VULKAN_GLOBAL_EXTENSIONS }
 	{
@@ -31,7 +32,7 @@ namespace Light {
 		auto debugMessageCreateInfo = SetupDebugMessageCallback();
 
 		// application info
-		VkApplicationInfo appInfo =
+		VkApplicationInfo appInfo
 		{
 			.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO,
 
@@ -43,9 +44,9 @@ namespace Light {
 
 			.apiVersion = VK_API_VERSION_1_2
 		};
-		
+
 		// instance create-info
-		VkInstanceCreateInfo instanceCreateInfo =
+		VkInstanceCreateInfo instanceCreateInfo
 		{
 			.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
 			.pNext = &debugMessageCreateInfo,
@@ -63,12 +64,16 @@ namespace Light {
 		VKC(vkCreateInstance(&instanceCreateInfo, nullptr, &m_VkInstance));
 		volkLoadInstance(m_VkInstance);
 
-		// specify devices
+		// pick physical device and get it rolling...
+		CreateWindowSurface(windowHandle);
 		PickPhysicalDevice();
+		CreateLogicalDevice();
 	}
 
 	vkGraphicsContext::~vkGraphicsContext()
 	{
+		vkDestroySurfaceKHR(m_VkInstance, m_Surface, nullptr);
+		vkDestroyDevice(m_LogicalDevice, nullptr);
 		vkDestroyInstance(m_VkInstance, nullptr);
 	}
 
@@ -133,6 +138,52 @@ namespace Light {
 		LT_ENGINE_ASSERT(m_PhysicalDevice, "vkGraphicsContext::PickPhysicalDevice: failed to find suitable GPU for vulkan");
 	}
 
+	void vkGraphicsContext::CreateLogicalDevice()
+	{
+		// fetch properties & features
+		VkPhysicalDeviceProperties deviceProperties;
+		VkPhysicalDeviceFeatures deviceFeatures;
+
+		vkGetPhysicalDeviceProperties(m_PhysicalDevice, &deviceProperties);
+		vkGetPhysicalDeviceFeatures(m_PhysicalDevice, &deviceFeatures);
+
+		std::vector<VkDeviceQueueCreateInfo> deviceQueueCreateInfos;
+		deviceQueueCreateInfos.reserve(m_QueueFamilyIndices.indices.size());
+
+		// device queue create-info
+		float queuePriority = 1.0f;
+		for (const auto& queueFamilyIndex : m_QueueFamilyIndices.indices)
+		{
+			VkDeviceQueueCreateInfo deviceQueueCreateInfo
+			{
+				.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
+				.queueFamilyIndex = queueFamilyIndex.value(),
+				.queueCount = 1u,
+				.pQueuePriorities = &queuePriority,
+			};
+
+			deviceQueueCreateInfos.push_back(deviceQueueCreateInfo);
+		}
+
+		// device create-info
+		VkDeviceCreateInfo deviceCreateInfo
+		{
+			.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+			.queueCreateInfoCount = static_cast<uint32_t>(deviceQueueCreateInfos.size()),
+			.pQueueCreateInfos = deviceQueueCreateInfos.data(),
+			.pEnabledFeatures = &deviceFeatures
+		};
+
+		// create logical device and get it's queue
+		VKC(vkCreateDevice(m_PhysicalDevice, &deviceCreateInfo, nullptr, &m_LogicalDevice));
+		vkGetDeviceQueue(m_LogicalDevice, m_QueueFamilyIndices.graphics.value(), 0u, &m_GraphicsQueue);
+	}
+
+	void vkGraphicsContext::CreateWindowSurface(GLFWwindow* windowHandle)
+	{
+		glfwCreateWindowSurface(m_VkInstance, windowHandle, nullptr, &m_Surface);
+	}
+
 	void vkGraphicsContext::FilterValidationLayers()
 	{
 		// fetch available layers
@@ -182,14 +233,22 @@ namespace Light {
 			if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
 				m_QueueFamilyIndices.graphics = index;
 
+			VkBool32 hasPresentSupport;
+			vkGetPhysicalDeviceSurfaceSupportKHR(m_PhysicalDevice, index, m_Surface, &hasPresentSupport);
+
+			if (hasPresentSupport)
+				m_QueueFamilyIndices.present = index;
+
 			index++;
 		}
+
+		m_QueueFamilyIndices.indices = { m_QueueFamilyIndices.graphics, m_QueueFamilyIndices.graphics };
 	}
 
 	VkDebugUtilsMessengerCreateInfoEXT vkGraphicsContext::SetupDebugMessageCallback()
 	{
 		// debug messenger create-info
-		VkDebugUtilsMessengerCreateInfoEXT debugMessengerCreateInfo =
+		VkDebugUtilsMessengerCreateInfoEXT debugMessengerCreateInfo
 		{
 			.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
 

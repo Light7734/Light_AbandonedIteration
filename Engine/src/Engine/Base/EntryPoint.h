@@ -44,6 +44,11 @@ int main(int argc, char** argv)
 		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'dxException'");
 		exitCode = -4;
 	}
+	catch (Light::vkException)
+	{
+		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'dxException'");
+		exitCode = -5;
+	}
 
 	delete application;
 	return exitCode;
