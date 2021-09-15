@@ -57,13 +57,13 @@ namespace Light {
 
 			.enabledExtensionCount = static_cast<uint32_t>(m_GlobalExtensions.size()),
 			.ppEnabledExtensionNames = m_GlobalExtensions.data(),
-
 		};
 
-		// create vulkan instance
+		// create and vulkan instance
 		VKC(vkCreateInstance(&instanceCreateInfo, nullptr, &m_VkInstance));
 		volkLoadInstance(m_VkInstance);
 
+		// specify devices
 		PickPhysicalDevice();
 	}
 
@@ -79,44 +79,54 @@ namespace Light {
 		const char** glfwExtensions;
 		glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionsCount);
 
+		// add required extensions to desired extensions
 		m_GlobalExtensions.insert(m_GlobalExtensions.end(), glfwExtensions, glfwExtensions + glfwExtensionsCount);
 	}
 
 	void vkGraphicsContext::PickPhysicalDevice()
 	{
+		// fetch physical devices
 		uint32_t deviceCount = 0u;
 		vkEnumeratePhysicalDevices(m_VkInstance, &deviceCount, nullptr);
-
 		LT_ENGINE_ASSERT(deviceCount, "vkGraphicsContext::PickPhysicalDevice: failed to find a GPU with vulkan support");
 
 		std::vector<VkPhysicalDevice> devices(deviceCount);
 		vkEnumeratePhysicalDevices(m_VkInstance, &deviceCount, devices.data());
 
-		uint8_t highScore = 0u;
-
+		// select most suitable physical device
+		uint8_t highestDeviceScore = 0u;
 		for (const auto& device : devices)
 		{
+			uint32_t deviceScore = 0u;
 
+			// fetch properties & features
 			VkPhysicalDeviceProperties properties;
 			VkPhysicalDeviceFeatures features;
 
 			vkGetPhysicalDeviceProperties(device, &properties);
 			vkGetPhysicalDeviceFeatures(device, &features);
 
+			// geometry shader is needed for rendering
 			if (!features.geometryShader)
 				continue;
 
-			uint32_t score = 0u;
-
+			// discrete gpu is favored
 			if (properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
-				score += 1000;
+				deviceScore += 1000;
 
-			score += properties.limits.maxImageDimension2D;
+			deviceScore += properties.limits.maxImageDimension2D;
 
-			if (score > highScore)
+			// more suitable device found
+			if (deviceScore > highestDeviceScore)
 			{
-				highScore = score;
 				m_PhysicalDevice = device;
+
+				// check if device supports required queue families
+				FetchSupportedQueueFamilies();
+				if (!m_QueueFamilyIndices)
+					m_PhysicalDevice = VK_NULL_HANDLE;
+				else
+					highestDeviceScore = deviceScore;
 			}
 		}
 
@@ -125,12 +135,14 @@ namespace Light {
 
 	void vkGraphicsContext::FilterValidationLayers()
 	{
+		// fetch available layers
 		uint32_t layerCount;
 		vkEnumerateInstanceLayerProperties(&layerCount, nullptr);
 
 		std::vector<VkLayerProperties> availableLayers(layerCount);
 		vkEnumerateInstanceLayerProperties(&layerCount, availableLayers.data());
 
+		// remove requested layers that are not supported
 		for (const char* layerName : m_ValidationLayers)
 		{
 			bool layerFound = false;
@@ -152,8 +164,31 @@ namespace Light {
 		}
 	}
 
+	void vkGraphicsContext::FetchSupportedQueueFamilies()
+	{
+		m_QueueFamilyIndices = {};
+
+		// fetch queue families
+		uint32_t queueFamilyCount = 0u;
+		vkGetPhysicalDeviceQueueFamilyProperties(m_PhysicalDevice, &queueFamilyCount, nullptr);
+
+		std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+		vkGetPhysicalDeviceQueueFamilyProperties(m_PhysicalDevice, &queueFamilyCount, queueFamilies.data());
+
+		// find queue family indices
+		uint32_t index = 0u;
+		for (const auto& queueFamily : queueFamilies)
+		{
+			if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT)
+				m_QueueFamilyIndices.graphics = index;
+
+			index++;
+		}
+	}
+
 	VkDebugUtilsMessengerCreateInfoEXT vkGraphicsContext::SetupDebugMessageCallback()
 	{
+		// debug messenger create-info
 		VkDebugUtilsMessengerCreateInfoEXT debugMessengerCreateInfo =
 		{
 			.sType = VK_STRUCTURE_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
@@ -168,6 +203,7 @@ namespace Light {
 			.pUserData = nullptr
 		};
 
+		// debug message callback
 		debugMessengerCreateInfo.pfnUserCallback = [](VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
 		                                              VkDebugUtilsMessageTypeFlagsEXT messageType,
 		                                              const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
@@ -180,8 +216,10 @@ namespace Light {
 		return debugMessengerCreateInfo;
 	}
 
+	// #todo: implement
 	void vkGraphicsContext::LogDebugData()
 	{
+		LT_ENGINE_ERROR("vkGraphicsContext::LogDebugData: NO_IMPLEMENTATION");
 	}
 
 }
