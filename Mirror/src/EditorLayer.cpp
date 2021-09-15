@@ -84,7 +84,7 @@ namespace Light {
 
 			const glm::vec4 tint        = glm::vec4(Math::RandVec3(0, 1, 2), 1.0f);
 
-			auto& entity = m_Scene->CreateEntity("quad" + std::to_string(i), { translation, scale, rotation });
+			Entity entity = m_Scene->CreateEntity("quad" + std::to_string(i), { translation, scale, rotation });
 			entity.AddComponent<SpriteRendererComponent>(texture, tint);
 		}
 	}

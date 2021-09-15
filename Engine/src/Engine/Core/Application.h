@@ -34,9 +34,6 @@ namespace Light {
 
 		void GameLoop();
 
-		// To be defined in client project
-		friend Application* CreateApplication();
-
 	protected:
 		Application();
 
@@ -45,5 +42,7 @@ namespace Light {
 
 		void LogDebugData();
 	};
+
+	Application* CreateApplication(); // can't define it inside the class as friend with c++20?
 
 }

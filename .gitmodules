@@ -16,3 +16,6 @@
 [submodule "Dependencies/ShaderConductor"]
 	path = Dependencies/ShaderConductor
 	url = https://github.com/microsoft/shaderconductor
+[submodule "Dependencies/volk"]
+	path = Dependencies/volk
+	url = https://github.com/zeux/volk

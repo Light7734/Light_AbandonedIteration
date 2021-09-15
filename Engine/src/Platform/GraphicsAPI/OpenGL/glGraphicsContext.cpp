@@ -29,7 +29,7 @@ namespace Light {
 		// load opengl (glad)
 		LT_ENGINE_ASSERT(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress), "glGraphicsContext::glGraphicsContext: failed to initialize opengl (glad)");
 
-		SetDebugMessageCallback();
+		SetupDebugMessageCallback();
 	}
 
 	void glGraphicsContext::LogDebugData()
@@ -43,7 +43,7 @@ namespace Light {
 		LT_ENGINE_INFO("________________________________________");
 	}
 
-	void glGraphicsContext::SetDebugMessageCallback()
+	void glGraphicsContext::SetupDebugMessageCallback()
 	{
 		// determine log level
 		// #todo: set filters from config.h

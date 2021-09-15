@@ -14,9 +14,6 @@ set(ENGINE_DIR  ${CMAKE_BINARY_DIR}/../Engine/)
 set(DEPENDENCIES_DIR ${CMAKE_BINARY_DIR}/../Dependencies/)
 
 # projects
-set(CMAKE_CXX_STANDARD 17)
-add_compile_definitions(LIGHT_PLATFORM_WINDOWS)
-
 add_subdirectory(${ENGINE_DIR}/)
 add_subdirectory(${MIRROR_DIR}/)
 
@@ -27,6 +24,7 @@ add_subdirectory(${DEPENDENCIES_DIR}glm/)
 add_subdirectory(${DEPENDENCIES_DIR}entt/)
 add_subdirectory(${DEPENDENCIES_DIR}imgui/)
 add_subdirectory(${DEPENDENCIES_DIR}stb_image/)
+add_subdirectory(${DEPENDENCIES_DIR}volk/)
 
 target_link_libraries(Engine glad)
 target_link_libraries(Engine glfw)
@@ -35,10 +33,18 @@ target_link_libraries(Engine imgui)
 target_link_libraries(Engine stb_image)
 target_link_libraries(Engine ShaderConductor)
 
+target_link_libraries(Engine volk)
+
 target_link_libraries(imgui glad)
 target_link_libraries(imgui glfw)
 
 target_link_libraries(Mirror Engine)
+
+target_compile_definitions(Engine PRIVATE LIGHT_PLATFORM_WINDOWS)
+target_compile_definitions(Mirror PRIVATE LIGHT_PLATFORM_WINDOWS)
+
+set_property(TARGET Engine PROPERTY CXX_STANDARD 20)
+set_property(TARGET Mirror PROPERTY CXX_STANDARD 20)
 
 if(MSVC)
     set_property(DIRECTORY ${CMAE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Mirror)
