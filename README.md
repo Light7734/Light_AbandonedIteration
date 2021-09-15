@@ -19,6 +19,8 @@ Will support:
 ## Getting Started
 
 ### Prerequisites
+* CMake (duh)
+* C++ 20
 * OpenGL 4.5 or higher
 * DirectX 11 support on Windows machines
 
@@ -28,7 +30,7 @@ Will support:
         # if you cloned non-recursively then run "git submodule update --init"
     cd <folder_name>/CMake
     cmake ..
-```
+``` 
 
 ## Acknowledgments
 Huge thanks to these people:
