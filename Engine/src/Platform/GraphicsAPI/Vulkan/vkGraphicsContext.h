@@ -14,6 +14,7 @@ namespace Light {
 	{
 	private:
 		VkInstance m_VkInstance;
+		VkPhysicalDevice m_PhysicalDevice;
 
 		std::vector<const char*> m_ValidationLayers;
 		std::vector<const char*> m_GlobalExtensions;
@@ -24,8 +25,9 @@ namespace Light {
 
 		void LogDebugData() override;
 
-
 	private:
+		void PickPhysicalDevice();
+
 		void FilterValidationLayers();
 		void FetchGlobalExtensions();
 		

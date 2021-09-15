@@ -18,7 +18,8 @@
 namespace Light {
 
 	vkGraphicsContext::vkGraphicsContext(GLFWwindow* windowHandle)
-		: m_VkInstance(NULL),
+		: m_VkInstance(VK_NULL_HANDLE),
+		  m_PhysicalDevice(VK_NULL_HANDLE),
 		  m_ValidationLayers { LT_VULKAN_VALIDATION_LAYERS },
 		  m_GlobalExtensions{ LT_VULKAN_GLOBAL_EXTENSIONS }
 	{
@@ -61,6 +62,9 @@ namespace Light {
 
 		// create vulkan instance
 		VKC(vkCreateInstance(&instanceCreateInfo, nullptr, &m_VkInstance));
+		volkLoadInstance(m_VkInstance);
+
+		PickPhysicalDevice();
 	}
 
 	vkGraphicsContext::~vkGraphicsContext()
@@ -76,6 +80,47 @@ namespace Light {
 		glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionsCount);
 
 		m_GlobalExtensions.insert(m_GlobalExtensions.end(), glfwExtensions, glfwExtensions + glfwExtensionsCount);
+	}
+
+	void vkGraphicsContext::PickPhysicalDevice()
+	{
+		uint32_t deviceCount = 0u;
+		vkEnumeratePhysicalDevices(m_VkInstance, &deviceCount, nullptr);
+
+		LT_ENGINE_ASSERT(deviceCount, "vkGraphicsContext::PickPhysicalDevice: failed to find a GPU with vulkan support");
+
+		std::vector<VkPhysicalDevice> devices(deviceCount);
+		vkEnumeratePhysicalDevices(m_VkInstance, &deviceCount, devices.data());
+
+		uint8_t highScore = 0u;
+
+		for (const auto& device : devices)
+		{
+
+			VkPhysicalDeviceProperties properties;
+			VkPhysicalDeviceFeatures features;
+
+			vkGetPhysicalDeviceProperties(device, &properties);
+			vkGetPhysicalDeviceFeatures(device, &features);
+
+			if (!features.geometryShader)
+				continue;
+
+			uint32_t score = 0u;
+
+			if (properties.deviceType == VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU)
+				score += 1000;
+
+			score += properties.limits.maxImageDimension2D;
+
+			if (score > highScore)
+			{
+				highScore = score;
+				m_PhysicalDevice = device;
+			}
+		}
+
+		LT_ENGINE_ASSERT(m_PhysicalDevice, "vkGraphicsContext::PickPhysicalDevice: failed to find suitable GPU for vulkan");
 	}
 
 	void vkGraphicsContext::FilterValidationLayers()
