@@ -15,14 +15,23 @@ namespace Light {
 		std::optional<uint32_t> graphics;
 		std::optional<uint32_t> present;
 
-		std::vector<std::optional<uint32_t>> indices{ graphics, present };
+		std::vector<uint32_t> indices;
 
-		inline bool IsSuitableForRendering() const
-		{
-			return graphics.has_value() && present.has_value();
-		}
+		inline bool IsSuitableForRendering() const { return graphics.has_value() && present.has_value(); }
 
 		operator bool() const { return IsSuitableForRendering(); };
+	};
+
+	struct SwapchainSupportDetails
+	{
+		VkSurfaceCapabilitiesKHR capabilities;
+
+		std::vector<VkSurfaceFormatKHR> formats;
+		std::vector<VkPresentModeKHR> presentModes;
+
+		inline bool IsSuitableForRendering() const { !formats.empty() && !presentModes.empty(); }
+
+		operator bool() const { return IsSuitableForRendering(); }
 	};
 
 	class vkGraphicsContext : public GraphicsContext
@@ -33,15 +42,22 @@ namespace Light {
 		VkPhysicalDevice m_PhysicalDevice;
 		VkDevice m_LogicalDevice;
 
-		VkQueue m_GraphicsQueue;
-		VkQueue m_PresentQueue;
+		VkSwapchainKHR m_Swapchain;
 
 		VkSurfaceKHR m_Surface;
 
+		VkQueue m_GraphicsQueue;
+		VkQueue m_PresentQueue;
+
+
 		std::vector<const char*> m_ValidationLayers;
 		std::vector<const char*> m_GlobalExtensions;
+		std::vector<const char*> m_DeviceExtensions;
 
 		QueueFamilyIndices m_QueueFamilyIndices;
+		SwapchainSupportDetails m_SwapChainDetails;
+
+		GLFWwindow* m_WindowHandle;
 
 	public:
 		vkGraphicsContext(GLFWwindow* windowHandle);
@@ -56,7 +72,11 @@ namespace Light {
 
 		void FilterValidationLayers();
 		void FetchGlobalExtensions();
+		void FetchDeviceExtensions();
 		void FetchSupportedQueueFamilies();
+		void FetchSwapchainSupportDetails();
+
+		void CreateSwapchain();
 
 		VkDebugUtilsMessengerCreateInfoEXT SetupDebugMessageCallback();
 	};
