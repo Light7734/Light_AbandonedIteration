@@ -1,6 +1,8 @@
-cmake_minimum_required(VERSION 3.21.2)
+cmake_minimum_required(VERSION 3.14)
 
 project(Light VERSION 1.0.0)
+
+set(SPIRV_CROSS_ENABLE_TESTS OFF)
 
 add_subdirectory(Dependencies/ShaderConductor) # <-- this project should not use "cxx_standard 17"
 
