@@ -5,7 +5,7 @@
 
 namespace Light { namespace Math {
 
-	float Math::Rand(int min, int max, int decimals /* = 0 */)
+	float Rand(int min, int max, int decimals /* = 0 */)
 	{
 		const int dec = std::pow(10, decimals);
 		min *= dec;
@@ -14,7 +14,7 @@ namespace Light { namespace Math {
 		return (min + (rand() % (max)-min)) / (float)dec;
 	}
 
-	glm::vec2 Math::RandVec2(int min, int max, int decimals /* = 0 */)
+	glm::vec2 RandVec2(int min, int max, int decimals /* = 0 */)
 	{
 		const int dec = std::pow(10, decimals);
 		min *= dec;
@@ -26,7 +26,7 @@ namespace Light { namespace Math {
 		return glm::vec2(r1, r2);
 	}
 
-	glm::vec3 Math::RandVec3(int min, int max, int decimals /* = 0 */)
+	glm::vec3 RandVec3(int min, int max, int decimals /* = 0 */)
 	{
 		const int dec = std::pow(10, decimals);
 		min *= dec;
