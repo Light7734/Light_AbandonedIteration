@@ -2,8 +2,10 @@ cmake_minimum_required(VERSION 3.14)
 
 project(Light VERSION 1.0.0)
 
+set(CMAKE_CXX_STANDARD 14)
 set(SPIRV_CROSS_ENABLE_TESTS OFF)
-
+set(INSTALL_GTEST OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
 add_subdirectory(Dependencies/ShaderConductor) # <-- this project should not use "cxx_standard 17"
 
 # directories
@@ -16,8 +18,13 @@ set(ENGINE_DIR  ${CMAKE_BINARY_DIR}/../Engine/)
 set(DEPENDENCIES_DIR ${CMAKE_BINARY_DIR}/../Dependencies/)
 
 # projects
-set(CMAKE_CXX_STANDARD 17)
-add_compile_definitions(LIGHT_PLATFORM_WINDOWS)
+set(CMAKE_CXX_STANDARD 20)
+
+if(WIN32)
+    add_compile_definitions(LIGHT_PLATFORM_WINDOWS)
+elseif(UNIX)
+    add_compile_definitions(LIGHT_PLATFORM_LINUX)
+endif()
 
 add_subdirectory(${ENGINE_DIR}/)
 add_subdirectory(${MIRROR_DIR}/)

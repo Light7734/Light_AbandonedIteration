@@ -35,7 +35,6 @@ namespace Light {
 		void GameLoop();
 
 		// To be defined in client project
-		friend Application* CreateApplication();
 
 	protected:
 		Application();
@@ -45,5 +44,7 @@ namespace Light {
 
 		void LogDebugData();
 	};
+
+	Application* CreateApplication();
 
 }
