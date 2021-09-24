@@ -18,8 +18,6 @@ set(ENGINE_DIR  ${CMAKE_BINARY_DIR}/../Engine/)
 set(DEPENDENCIES_DIR ${CMAKE_BINARY_DIR}/../Dependencies/)
 
 # projects
-<<<<<<< HEAD
-=======
 set(CMAKE_CXX_STANDARD 20)
 
 if(WIN32)
@@ -28,7 +26,6 @@ elseif(UNIX)
     add_compile_definitions(LIGHT_PLATFORM_LINUX)
 endif()
 
->>>>>>> d703c8330a88c501bfe104b139f54277cde123d5
 add_subdirectory(${ENGINE_DIR}/)
 add_subdirectory(${MIRROR_DIR}/)
 
