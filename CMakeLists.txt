@@ -5,7 +5,10 @@ project(Light VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 14)
 set(SPIRV_CROSS_ENABLE_TESTS OFF)
 set(INSTALL_GTEST OFF)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
+
+if(NOT MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
+endif()
 add_subdirectory(Dependencies/ShaderConductor) # <-- this project should not use "cxx_standard 17"
 
 # directories
