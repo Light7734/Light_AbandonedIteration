@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21.2)
+cmake_minimum_required(VERSION 3.14)
 
 if (CMAKE_COMPILER_IS_GNUCC)
 	add_compile_options(-w)
@@ -67,8 +67,10 @@ include_directories(
 	
 message(BINARY DIRECTORY IS IN ${CMAKE_BINARY_DIR})
 
-add_custom_command(
-	TARGET Engine
-	POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
-	${CMAKE_BINARY_DIR}/Dependencies/ShaderConductor/Bin/Debug/ShaderConductor.dll
-	${CMAKE_BINARY_DIR}/bin/Debug)
+if(WIN32)
+	add_custom_command(
+		TARGET Engine
+		POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+		${CMAKE_BINARY_DIR}/Dependencies/ShaderConductor/Bin/Debug/ShaderConductor.dll
+		${CMAKE_BINARY_DIR}/bin/Debug)
+endif()

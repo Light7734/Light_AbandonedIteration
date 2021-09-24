@@ -15,7 +15,7 @@
 	url = https://github.com/skypjack/entt
 [submodule "Dependencies/ShaderConductor"]
 	path = Dependencies/ShaderConductor
-	url = https://github.com/microsoft/shaderconductor
+	url = https://github.com/Light3039/shaderconductor
 [submodule "Dependencies/volk"]
 	path = Dependencies/volk
 	url = https://github.com/zeux/volk

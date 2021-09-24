@@ -310,6 +310,8 @@ namespace Light {
 
 		m_SwapChainDetails.presentModes.resize(presentModeCount);
 		vkGetPhysicalDeviceSurfacePresentModesKHR(m_PhysicalDevice, m_Surface, &presentModeCount, m_SwapChainDetails.presentModes.data());
+
+
 	}
 
 	void vkGraphicsContext::CreateSwapchain()
@@ -319,6 +321,7 @@ namespace Light {
 		for (const auto& surfaceFormat : m_SwapChainDetails.formats)
 			if (surfaceFormat.format == VK_FORMAT_B8G8R8A8_SRGB && surfaceFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 				swapChainSurfaceFormat = surfaceFormat;
+		m_SwapchainImageFormat = swapChainSurfaceFormat.format;
 
 		// pick a decent swap chain present mode
 		VkPresentModeKHR swapChainPresentMode{};
@@ -326,22 +329,19 @@ namespace Light {
 			if (presentMode == VK_PRESENT_MODE_MAILBOX_KHR)
 				swapChainPresentMode = presentMode;
 
-		VkExtent2D swapChainExtent2D{};
 		if (m_SwapChainDetails.capabilities.currentExtent.width != UINT32_MAX)
-		{
-			swapChainExtent2D = m_SwapChainDetails.capabilities.currentExtent;
-		}
+			m_SwapchainExtent = m_SwapChainDetails.capabilities.currentExtent;
 		else
 		{
 			int width, height;
 			glfwGetFramebufferSize(m_WindowHandle, &width, &height);
 
-			swapChainExtent2D = { static_cast<uint32_t>(width), static_cast<uint32_t>(height) };
+			m_SwapchainExtent = { static_cast<uint32_t>(width), static_cast<uint32_t>(height) };
 
-			swapChainExtent2D.width = std::clamp(swapChainExtent2D.width, m_SwapChainDetails.capabilities.minImageExtent.width,
+			m_SwapchainExtent.width = std::clamp(m_SwapchainExtent.width, m_SwapChainDetails.capabilities.minImageExtent.width,
 			                                                              m_SwapChainDetails.capabilities.maxImageExtent.width);
 
-			swapChainExtent2D.height = std::clamp(swapChainExtent2D.height, m_SwapChainDetails.capabilities.minImageExtent.height,
+			m_SwapchainExtent.height = std::clamp(m_SwapchainExtent.height, m_SwapChainDetails.capabilities.minImageExtent.height,
 			                                                                m_SwapChainDetails.capabilities.maxImageExtent.height);
 		}
 
@@ -359,7 +359,7 @@ namespace Light {
 			.minImageCount = imageCount,
 			.imageFormat = swapChainSurfaceFormat.format,
 			.imageColorSpace = swapChainSurfaceFormat.colorSpace,
-			.imageExtent = swapChainExtent2D,
+			.imageExtent = m_SwapchainExtent,
 			.imageArrayLayers = 1u,
 			.imageUsage = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
 			.imageSharingMode = m_QueueFamilyIndices.graphics.value() == m_QueueFamilyIndices.present.value() ? VK_SHARING_MODE_EXCLUSIVE : VK_SHARING_MODE_CONCURRENT,
@@ -374,6 +374,20 @@ namespace Light {
 		};
 
 		VKC(vkCreateSwapchainKHR(m_LogicalDevice, &swapchainCreateInfo, nullptr, &m_Swapchain));
+		
+		vkGetSwapchainImagesKHR(m_LogicalDevice, m_Swapchain, &imageCount, nullptr);
+		m_SwapchainImages.resize(imageCount);
+		vkGetSwapchainImagesKHR(m_LogicalDevice, m_Swapchain, &imageCount, m_SwapchainImages.data());
+	}
+
+	void vkGraphicsContext::CreateImageViews()
+	{
+		m_ImageViews.resize(m_SwapchainImages.size());
+
+		for (int i = 0; i < m_SwapchainImages.size(); i++)
+		{
+
+		}
 	}
 
 	VkDebugUtilsMessengerCreateInfoEXT vkGraphicsContext::SetupDebugMessageCallback()

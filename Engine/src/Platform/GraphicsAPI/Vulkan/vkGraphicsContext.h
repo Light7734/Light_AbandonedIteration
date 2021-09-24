@@ -42,17 +42,24 @@ namespace Light {
 		VkPhysicalDevice m_PhysicalDevice;
 		VkDevice m_LogicalDevice;
 
-		VkSwapchainKHR m_Swapchain;
 
 		VkSurfaceKHR m_Surface;
 
 		VkQueue m_GraphicsQueue;
 		VkQueue m_PresentQueue;
 
-
 		std::vector<const char*> m_ValidationLayers;
 		std::vector<const char*> m_GlobalExtensions;
 		std::vector<const char*> m_DeviceExtensions;
+
+		// swap chain
+		VkSwapchainKHR m_Swapchain;
+
+		std::vector<VkImage> m_SwapchainImages;
+		std::vector<VkImageView> m_ImageViews;
+
+		VkFormat m_SwapchainImageFormat;
+		VkExtent2D m_SwapchainExtent;
 
 		QueueFamilyIndices m_QueueFamilyIndices;
 		SwapchainSupportDetails m_SwapChainDetails;
@@ -69,6 +76,9 @@ namespace Light {
 		void PickPhysicalDevice();
 		void CreateLogicalDevice();
 		void CreateWindowSurface(GLFWwindow* windowHandle);
+		void CreateSwapchain();
+		void CreateImageViews();
+
 
 		void FilterValidationLayers();
 		void FetchGlobalExtensions();
@@ -76,7 +86,6 @@ namespace Light {
 		void FetchSupportedQueueFamilies();
 		void FetchSwapchainSupportDetails();
 
-		void CreateSwapchain();
 
 		VkDebugUtilsMessengerCreateInfoEXT SetupDebugMessageCallback();
 	};
