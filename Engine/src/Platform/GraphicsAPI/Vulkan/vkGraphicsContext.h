@@ -40,6 +40,7 @@ namespace Light {
 		VkInstance m_VkInstance;
 
 		VkPhysicalDevice m_PhysicalDevice;
+
 		VkDevice m_LogicalDevice;
 
 		VkSurfaceKHR m_Surface;
@@ -54,7 +55,7 @@ namespace Light {
 		VkSwapchainKHR m_Swapchain;
 
 		std::vector<VkImage> m_SwapchainImages;
-		std::vector<VkImageView> m_ImageViews;
+		std::vector<VkImageView> m_SwapchainImageViews;
 
 		VkFormat m_SwapchainImageFormat;
 		VkExtent2D m_SwapchainExtent;

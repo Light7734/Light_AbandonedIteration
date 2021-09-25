@@ -30,6 +30,7 @@ namespace Light {
 		  m_WindowHandle(windowHandle)
 	{
 		m_SharedContext = CreateRef<vkSharedContext>();
+		m_GraphicsAPI = GraphicsAPI::Vulkan;
 
 		// load and setup vulkan
 		VKC(volkInitialize());
@@ -82,7 +83,9 @@ namespace Light {
 
 	vkGraphicsContext::~vkGraphicsContext()
 	{
-		// destroy vulkan api
+		for (auto swapchainImageView : m_SwapchainImageViews)
+			vkDestroyImageView(m_LogicalDevice, swapchainImageView, nullptr);
+
 		vkDestroySwapchainKHR(m_LogicalDevice, m_Swapchain, nullptr);
 
 		vkDestroySurfaceKHR(m_VkInstance, m_Surface, nullptr);
@@ -179,6 +182,8 @@ namespace Light {
 
 	void vkGraphicsContext::CreateLogicalDevice()
 	{
+		Ref<vkSharedContext> context = std::static_pointer_cast<vkSharedContext>(m_SharedContext);
+
 		// fetch properties & features
 		VkPhysicalDeviceProperties deviceProperties;
 		VkPhysicalDeviceFeatures deviceFeatures;
@@ -223,6 +228,8 @@ namespace Light {
 		// create logical device and get it's queue
 		VKC(vkCreateDevice(m_PhysicalDevice, &deviceCreateInfo, nullptr, &m_LogicalDevice));
 		vkGetDeviceQueue(m_LogicalDevice, m_QueueFamilyIndices.graphics.value(), 0u, &m_GraphicsQueue);
+
+		context->m_Device = m_LogicalDevice;
 	}
 
 	void vkGraphicsContext::CreateWindowSurface(GLFWwindow* windowHandle)
@@ -383,11 +390,35 @@ namespace Light {
 
 	void vkGraphicsContext::CreateImageViews()
 	{
-		m_ImageViews.resize(m_SwapchainImages.size());
+		m_SwapchainImageViews.resize(m_SwapchainImages.size());
 
 		for (int i = 0; i < m_SwapchainImages.size(); i++)
 		{
+			// image view create-info
+			VkImageViewCreateInfo imageViewCreateInfo
+			{
+				.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO,
+				.image = m_SwapchainImages[i],
+				.viewType = VK_IMAGE_VIEW_TYPE_2D,
+				.format = m_SwapchainImageFormat,
+				.components
+				{
+					.r = VK_COMPONENT_SWIZZLE_IDENTITY,
+					.g = VK_COMPONENT_SWIZZLE_IDENTITY,
+					.b = VK_COMPONENT_SWIZZLE_IDENTITY,
+					.a = VK_COMPONENT_SWIZZLE_IDENTITY,
+				},
+				.subresourceRange
+				{
+					.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT,
+					.baseMipLevel = 0u,
+					.levelCount = 0u,
+					.baseArrayLayer = 0u,
+					.layerCount = 0u,
+				}
+			};
 
+			VKC(vkCreateImageView(m_LogicalDevice, &imageViewCreateInfo, nullptr, &m_SwapchainImageViews[i]));
 		}
 	}
 

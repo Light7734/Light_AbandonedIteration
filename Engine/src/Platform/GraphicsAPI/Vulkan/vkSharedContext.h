@@ -10,6 +10,8 @@ namespace Light {
 	class vkSharedContext : public SharedContext
 	{
 	private:
+		friend class vkGraphicsContext;
+	private:
 		VkDevice m_Device = VK_NULL_HANDLE;
 
 	public:
