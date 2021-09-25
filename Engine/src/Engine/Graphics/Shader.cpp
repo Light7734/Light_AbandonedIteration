@@ -1,6 +1,8 @@
 #include "ltpch.h"
 #include "Shader.h"
 #include "OpenGL/glShader.h"
+#include "Vulkan/vkShader.h"
+#include "Vulkan/vkSharedContext.h"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 	#include "DirectX/dxShader.h"
@@ -18,6 +20,9 @@ namespace Light {
 		{
 		case GraphicsAPI::OpenGL:
 			return CreateRef<glShader>(vertexBlob, pixelBlob, vertexFileName, pixelFileName);
+
+		case GraphicsAPI::Vulkan:
+			return CreateRef<vkShader>(vertexBlob, pixelBlob, vertexFileName, pixelFileName, std::static_pointer_cast<vkSharedContext>(sharedContext));
 
 		case GraphicsAPI::DirectX: LT_WIN(
 			return CreateRef<dxShader>(vertexBlob, pixelBlob, std::static_pointer_cast<dxSharedContext>(sharedContext));)
