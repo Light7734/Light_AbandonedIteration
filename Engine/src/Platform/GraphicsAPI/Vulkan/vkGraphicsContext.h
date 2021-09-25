@@ -42,9 +42,7 @@ namespace Light {
 		VkPhysicalDevice m_PhysicalDevice;
 		VkDevice m_LogicalDevice;
 
-
 		VkSurfaceKHR m_Surface;
-
 		VkQueue m_GraphicsQueue;
 		VkQueue m_PresentQueue;
 

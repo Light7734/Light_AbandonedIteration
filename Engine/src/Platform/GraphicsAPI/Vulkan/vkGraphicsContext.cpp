@@ -1,5 +1,6 @@
 #include "ltpch.h"
 #include "vkGraphicsContext.h"
+#include "vkSharedContext.h"
 
 #include "Graphics/Blender.h" // required for forward declaration
 #include "Graphics/Buffers.h" // required for forward declaration
@@ -28,6 +29,8 @@ namespace Light {
 		  m_DeviceExtensions{ VK_KHR_SWAPCHAIN_EXTENSION_NAME },
 		  m_WindowHandle(windowHandle)
 	{
+		m_SharedContext = CreateRef<vkSharedContext>();
+
 		// load and setup vulkan
 		VKC(volkInitialize());
 
@@ -290,10 +293,8 @@ namespace Light {
 
 	void vkGraphicsContext::FetchSwapchainSupportDetails()
 	{
-		SwapchainSupportDetails details;
-
 		// fetch device surface capabilities
-		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_PhysicalDevice, m_Surface, &details.capabilities);
+		vkGetPhysicalDeviceSurfaceCapabilitiesKHR(m_PhysicalDevice, m_Surface, &m_SwapChainDetails.capabilities);
 
 		// fetch device surface formats
 		uint32_t formatCount = 0u;
@@ -310,8 +311,6 @@ namespace Light {
 
 		m_SwapChainDetails.presentModes.resize(presentModeCount);
 		vkGetPhysicalDeviceSurfacePresentModesKHR(m_PhysicalDevice, m_Surface, &presentModeCount, m_SwapChainDetails.presentModes.data());
-
-
 	}
 
 	void vkGraphicsContext::CreateSwapchain()
@@ -321,7 +320,9 @@ namespace Light {
 		for (const auto& surfaceFormat : m_SwapChainDetails.formats)
 			if (surfaceFormat.format == VK_FORMAT_B8G8R8A8_SRGB && surfaceFormat.colorSpace == VK_COLOR_SPACE_SRGB_NONLINEAR_KHR)
 				swapChainSurfaceFormat = surfaceFormat;
-		m_SwapchainImageFormat = swapChainSurfaceFormat.format;
+		
+		if(swapChainSurfaceFormat.format == VK_FORMAT_UNDEFINED)
+			m_SwapchainImageFormat = swapChainSurfaceFormat.format;
 
 		// pick a decent swap chain present mode
 		VkPresentModeKHR swapChainPresentMode{};
