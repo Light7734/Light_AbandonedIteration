@@ -11,7 +11,7 @@ Will support:
 
 ## Supported Operating Systems
 * Windows
-* Linux (Won't compile ATM)
+* Linux
  
 Will support:
 * Mac
