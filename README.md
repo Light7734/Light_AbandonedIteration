@@ -11,7 +11,7 @@ Will support:
 
 ## Supported Operating Systems
 * Windows
-* Linux (Won't compile ATM)
+* Linux
  
 Will support:
 * Mac
@@ -28,7 +28,7 @@ Will support:
 ```bash
     git clone --recurse-submodules -j4 https://github.com/Light3039/Light <folder_name>
         # if you cloned non-recursively then run "git submodule update --init"
-    cd <folder_name>/CMake
+    mkdir <folder_name>/build && cd <folder_name>/build
     cmake ..
 ``` 
 
