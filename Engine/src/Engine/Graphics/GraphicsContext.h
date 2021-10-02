@@ -12,7 +12,6 @@ namespace Light {
 
 	class UserInterface;
 
-
 	class WindowResizedEvent;
 
 	enum class GraphicsAPI
@@ -29,7 +28,6 @@ namespace Light {
 	private:
 		static GraphicsContext* s_Context;
 
-		Scope<ResourceManager> m_ResourceManager;
 		Scope<UserInterface> m_UserInterface;
 		Scope<Renderer> m_Renderer;
 

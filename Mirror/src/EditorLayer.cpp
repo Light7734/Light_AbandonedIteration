@@ -33,6 +33,9 @@ namespace Light {
 
 		auto& cameraTranslation = m_CameraEntity.GetComponent<TransformComponent>().translation;
 		cameraTranslation += glm::vec3(m_Direction * m_Speed * deltaTime, 0.0f);
+
+		if (Input::GetKeyboardKey(Key::Escape))
+			Application::Quit();
 	}
 	
 	void EditorLayer::OnRender()

@@ -8,6 +8,8 @@
 
 #include "Layer/LayerStack.h"
 
+#include "Utility/ResourceManager.h"
+
 namespace Light {
 
 	class Window;
@@ -18,10 +20,14 @@ namespace Light {
 	class Application
 	{
 	private:
+		static Application* s_Context;
+
+	private:
 		Scope<Logger> m_Logger;
 		Scope<Instrumentor> m_Instrumentor;
 		Scope<LayerStack> m_LayerStack;
 		Scope<Input> m_Input;
+		Scope<ResourceManager> m_ResourceManager;
 
 	protected:
 		Scope<Window> m_Window;
@@ -35,6 +41,8 @@ namespace Light {
 		void GameLoop();
 
 		// To be defined in client project
+
+		static void Quit();
 
 	protected:
 		Application();

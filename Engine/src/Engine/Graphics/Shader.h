@@ -2,6 +2,8 @@
 
 #include "Base/Base.h"
 
+#include "Utility/FileManager.h"
+
 #include <glm/glm.hpp>
 
 namespace Light {
@@ -20,7 +22,7 @@ namespace Light {
 		};
 
 	public:
-		static Ref<Shader> Create(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t>& pixelBlob, const std::string& vertexFileName, const std::string& pixelFileName, Ref<SharedContext> sharedContext);
+		static Ref<Shader> Create(BasicFileHandle vertexFile, BasicFileHandle pixelFile, Ref<SharedContext> sharedContext);
 
 		virtual ~Shader() = default;
 

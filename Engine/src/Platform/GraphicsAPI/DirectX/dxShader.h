@@ -4,6 +4,8 @@
 
 #include "Base/Base.h"
 
+#include "Utility/FileManager.h"
+
 #include <d3d11.h>
 #include <wrl.h>
 
@@ -22,7 +24,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3DBlob> m_VertexBlob;
 
 	public:
-		dxShader(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t> pixelBlob, Ref<dxSharedContext> sharedContext);
+		dxShader(BasicFileHandle vertexFile, BasicFileHandle pixelFile, Ref<dxSharedContext> sharedContext);
 		~dxShader();
 
 		void Bind() override;

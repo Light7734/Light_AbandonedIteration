@@ -19,12 +19,17 @@
 
 namespace Light {
 
+	Application* Application::s_Context = nullptr;
+
 	Application::Application()
 		: m_Instrumentor(nullptr),
 		  m_LayerStack(nullptr),
 		  m_Input(nullptr),
 		  m_Window(nullptr)
 	{
+		LT_ENGINE_ASSERT(!s_Context, "Application::Application: repeated singleton construction");
+		s_Context = this;
+
 		m_Logger = Logger::Create();
 		LogDebugData();
 
@@ -33,6 +38,8 @@ namespace Light {
 
 		m_LayerStack = LayerStack::Create();
 		m_Input = Input::Create();
+
+		m_ResourceManager = ResourceManager::Create();
 
 		m_Window = Window::Create(std::bind(&Application::OnEvent, this, std::placeholders::_1));
 	}
@@ -105,6 +112,12 @@ namespace Light {
 		
 		m_Instrumentor->EndSession(); // ProfileResults_GameLoop //
 		m_Instrumentor->BeginSession("Logs/ProfileResults_Termination.json");
+	}
+
+	/* static */
+	void Application::Quit() 
+	{
+		s_Context->m_Window->Close();
 	}
 
 	void Application::OnEvent(const Event& event)

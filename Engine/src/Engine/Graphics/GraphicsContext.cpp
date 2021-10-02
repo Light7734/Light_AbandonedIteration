@@ -43,7 +43,7 @@ namespace Light {
 #elif defined(LIGHT_PLATFORM_LINUX)
 			api = GraphicsAPI::OpenGL;
 #elif defined(LIGHT_PLATFORM_MAC)
-			// #todo:
+			api = GraphicsAPI::OpenGL;
 #endif
 		}
 
@@ -68,12 +68,10 @@ namespace Light {
 		}
 
 		// create 'GraphicsContext' dependent classes
-		s_Context->m_ResourceManager = ResourceManager::Create(s_Context->m_SharedContext);
 		s_Context->m_UserInterface = UserInterface::Create(windowHandle, s_Context->m_SharedContext);
 		s_Context->m_Renderer = Renderer::Create(windowHandle, s_Context->m_SharedContext);
 
 		// check
-		LT_ENGINE_ASSERT(s_Context->m_ResourceManager, "GraphicsContext::Create: failed to create ResourceManager");
 		LT_ENGINE_ASSERT(s_Context->m_UserInterface, "GraphicsContext::Create: failed to create UserInterface");
 		LT_ENGINE_ASSERT(s_Context->m_Renderer, "GraphicsContext::Create: failed to create Renderer");
 

@@ -9,19 +9,16 @@ namespace Light {
 
 	class SharedContext;
 
-	// #todo: optimize
 	class ResourceManager
 	{
 	private:
 		static ResourceManager* s_Context;
 
-		Ref<SharedContext> m_SharedGraphicsContext;
-
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 		std::unordered_map<std::string, Ref<Texture>> m_Textures;
 
 	public:
-		static Scope<ResourceManager> Create(Ref<SharedContext> sharedContext);
+		static Scope<ResourceManager> Create();
 
 		// #todo: add geometry shader support
 		static inline void LoadShader(const std::string& name, const std::string& vertexPath, const std::string& pixelPath) { s_Context->LoadShaderImpl(name, vertexPath, pixelPath); }
@@ -34,7 +31,7 @@ namespace Light {
 		static inline Ref<Texture> GetTexture(const std::string& name) { return s_Context->m_Textures[name]; }
 
 	private:
-		ResourceManager(Ref<SharedContext> sharedContext);
+		ResourceManager();
 
 		void LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath);
 

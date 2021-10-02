@@ -10,18 +10,18 @@
 
 namespace Light {
 
-	glShader::glShader(const std::vector<uint8_t>& vertexBlob, const std::vector<uint8_t>& pixelBlob, const std::string& vertexFileName, const std::string& pixelFileName)
-		: m_ShaderID(NULL)
+	glShader::glShader(BasicFileHandle vertexFile, BasicFileHandle pixelFile):
+		m_ShaderID(NULL)
 	{
 		// create
 		m_ShaderID = glCreateProgram();
 
 		// compile hlsl to glsl
-		ShaderConductor::Compiler::ResultDesc vertexResult = CompileHLSL(vertexBlob, vertexFileName, Shader::Stage::VERTEX);
-		ShaderConductor::Compiler::ResultDesc pixelResult = CompileHLSL(pixelBlob, pixelFileName, Shader::Stage::PIXEL);
+		ShaderConductor::Compiler::ResultDesc vertexResult = CompileHLSL(vertexFile, Shader::Stage::VERTEX);
+		ShaderConductor::Compiler::ResultDesc pixelResult = CompileHLSL(pixelFile, Shader::Stage::PIXEL);
 
-		LT_ENGINE_ASSERT(!vertexResult.hasError, "glShader::glShader: failed to compile hlsl vertex shader: {}", vertexFileName);
-		LT_ENGINE_ASSERT(!pixelResult.hasError, "glShader::glShader: failed to compile hlsl pixel shader: {}", pixelFileName);
+		LT_ENGINE_ASSERT(!vertexResult.hasError, "glShader::glShader: failed to compile hlsl vertex shader: {}", vertexFile.GetPath());
+		LT_ENGINE_ASSERT(!pixelResult.hasError, "glShader::glShader: failed to compile hlsl pixel shader: {}", pixelFile.GetPath());
 
 		// extract glsl source
 		std::string vertexSource = std::string(reinterpret_cast<const char*>(vertexResult.target.Data()));
@@ -61,12 +61,11 @@ namespace Light {
 		glUseProgram(NULL);
 	}
 
-	ShaderConductor::Compiler::ResultDesc glShader::CompileHLSL(std::vector<uint8_t> blob, std::string fileName, Shader::Stage stage)
+	ShaderConductor::Compiler::ResultDesc glShader::CompileHLSL(BasicFileHandle file, Shader::Stage stage)
 	{
 		// check
-		LT_ENGINE_ASSERT(!blob.empty(), "glShader::CompileHLSL: 'blob' is empty");
-		LT_ENGINE_ASSERT(!fileName.empty(), "glShader::CompileHLSL: 'fileName' is empty");
-		LT_ENGINE_ASSERT(stage, "glShader::CompileHLSL: 'stage' is invalid: None");
+		LT_ENGINE_ASSERT(file.IsValid(), "glShader::CompileHLSL: invalid 'file'");
+		LT_ENGINE_ASSERT(stage, "glShader::CompileHLSL: invalid 'stage': None");
 
 		// compiler options
 		ShaderConductor::Compiler::Options options = {};
@@ -84,9 +83,9 @@ namespace Light {
 
 		// compiler source descriptor
 		ShaderConductor::Compiler::SourceDesc sourceDesc = {};
-		std::string source = std::string(reinterpret_cast<char*>(blob.data()), blob.size());
+		std::string source = std::string(reinterpret_cast<char*>(file.GetData()), file.GetSize());
 		sourceDesc.source = source.c_str();
-		sourceDesc.fileName = fileName.c_str();
+		sourceDesc.fileName = file.GetName().c_str();
 		sourceDesc.entryPoint = "main";
 		sourceDesc.stage = stage == Shader::Stage::VERTEX ? ShaderConductor::ShaderStage::VertexShader :
 		                   stage == Shader::Stage::PIXEL  ? ShaderConductor::ShaderStage::PixelShader  :
@@ -98,23 +97,16 @@ namespace Light {
 		// compilation result
 		ShaderConductor::Compiler::ResultDesc result = ShaderConductor::Compiler::Compile(sourceDesc, options, targetDesc);
 
-		// log info
-		LT_ENGINE_INFO("_______________________________________");
-		LT_ENGINE_INFO("Compiled with ShaderConductor:");
-		LT_ENGINE_INFO("		hasError: {}", result.hasError);
-		LT_ENGINE_INFO("		isText: {}", result.isText);
-
+		// log error/warning
 		if (result.errorWarningMsg.Size() != 0u)
 		{
-			const char* errorStr = reinterpret_cast<const char*>(result.errorWarningMsg.Data());
-			LT_ENGINE_ERROR("				errorWarningMsg: \n{}", errorStr);
+			const char* errorWarningStr = reinterpret_cast<const char*>(result.errorWarningMsg.Data());
+			
+			if(result.hasError)
+				LT_ENGINE_ERROR("glShader::CompileHLSL: ShaderConductor error:'{}': {}", file.GetName(), errorWarningStr);
+			else 
+				LT_ENGINE_WARN("glShader::CompileHLSL: ShaderConductor warning:'{}': {}", errorWarningStr);
 		}
-		if (result.target.Size() != 0u)
-		{
-			const char* targetStr = reinterpret_cast<const char*>(result.target.Data());
-			LT_ENGINE_INFO("				target: \n{}", targetStr);
-		}
-		LT_ENGINE_INFO("_______________________________________");
 		
 		return result;
 	}
