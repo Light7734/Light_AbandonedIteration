@@ -46,11 +46,12 @@
 namespace Light {
 
 	// #todo: extend
-	class Logger
+	class Logger /* singleton */
 	{
 	private:
 		static Logger* s_Context;
 
+	private:
 		Ref<spdlog::logger> m_EngineLogger, m_ClientLogger, m_FileLogger;
 		std::string m_LogFilePath;
 

@@ -8,10 +8,12 @@ namespace Light {
 
 	class Event;
 
-	class LayerStack
+	class LayerStack /* singleton */
 	{
 	private:
 		static LayerStack* s_Context;
+
+	private:
 
 		std::vector<Layer*> m_Layers;
 

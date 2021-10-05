@@ -13,10 +13,12 @@ namespace Light {
 	class SharedContext;
 
 	// #todo: fix the UserIntreface mess!!
-	class UserInterface
+	class UserInterface /* singleton */
 	{
 	private:
 		static UserInterface* s_Context;
+
+	private:
 
 		ImGuiWindowFlags m_DockspaceFlags;
 

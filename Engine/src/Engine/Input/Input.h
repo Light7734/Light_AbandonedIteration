@@ -10,10 +10,12 @@ namespace Light {
 
 	class Event;
 
-	class Input
+	class Input /* singleton */
 	{
 	private:
 		static Input* s_Context;
+
+	private:
 
 		std::array<bool, 348> m_KeyboadKeys;
 		std::array<bool, 8> m_MouseButtons;

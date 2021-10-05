@@ -23,10 +23,12 @@ namespace Light {
 		Metal   // :#todo
 	};
 
-	class GraphicsContext
+	class GraphicsContext /* singleton */
 	{
 	private:
 		static GraphicsContext* s_Context;
+
+	private:
 
 		Scope<UserInterface> m_UserInterface;
 		Scope<Renderer> m_Renderer;

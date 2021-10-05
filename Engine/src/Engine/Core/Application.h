@@ -17,7 +17,7 @@ namespace Light {
 
 	class Instrumentor;
 
-	class Application
+	class Application /* singleton */
 	{
 	private:
 		static Application* s_Context;

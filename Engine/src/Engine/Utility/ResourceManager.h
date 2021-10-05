@@ -9,10 +9,12 @@ namespace Light {
 
 	class SharedContext;
 
-	class ResourceManager
+	class ResourceManager /* singleton */
 	{
 	private:
 		static ResourceManager* s_Context;
+
+	private:
 
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 		std::unordered_map<std::string, Ref<Texture>> m_Textures;

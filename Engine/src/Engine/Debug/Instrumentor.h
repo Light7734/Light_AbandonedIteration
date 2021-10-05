@@ -17,11 +17,12 @@ namespace Light {
 
 	// #todo: add event categories
 	// #todo: use ofstream in a separate thread
-	class Instrumentor
+	class Instrumentor /* singleton */
 	{
 	private:
 		static Instrumentor* s_Context;
 
+	private:
 		std::ofstream m_OutputFileStream;
 
 		unsigned int m_CurrentSessionCount;
