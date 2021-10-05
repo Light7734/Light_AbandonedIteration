@@ -21,6 +21,7 @@ ${DEPENDENCIES_DIR}glm/
 ${DEPENDENCIES_DIR}imgui/
 ${DEPENDENCIES_DIR}spdlog/include
 ${DEPENDENCIES_DIR}stb_image/
+${DEPENDENCIES_DIR}yaml-cpp/include
 )
 
 

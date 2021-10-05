@@ -55,7 +55,7 @@ namespace Light {
 		ImageFileHandle imgFile = FileManager::ReadImageFile(path, desiredComponents);
 
 		// create texture
-		m_Textures[name] = Ref<Texture>(Texture::Create(imgFile.GetWidth(), imgFile.GetHeight(), imgFile.GetComponents(), imgFile.GetData(), GraphicsContext::GetSharedContext()));
+		m_Textures[name] = Ref<Texture>(Texture::Create(imgFile.GetWidth(), imgFile.GetHeight(), imgFile.GetComponents(), imgFile.GetData(), GraphicsContext::GetSharedContext(), path) );
 
 		// free file
 		imgFile.Release();
@@ -71,5 +71,4 @@ namespace Light {
 
 		m_Textures[name] = nullptr;
 	}
-
-}
+	

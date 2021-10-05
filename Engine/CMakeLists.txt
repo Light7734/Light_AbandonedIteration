@@ -48,6 +48,7 @@ ${DEPENDENCIES_DIR}imgui/
 ${DEPENDENCIES_DIR}spdlog/include/
 ${DEPENDENCIES_DIR}stb_image/
 ${DEPENDENCIES_DIR}ShaderConductor/Include/
+${DEPENDENCIES_DIR}yaml-cpp/include/
 )
 
 source_group(TREE ${ENGINE_DIR} FILES ${ENGINE_ALL_FILES} ${ENGINE_RES_FILES})

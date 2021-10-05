@@ -17,9 +17,11 @@ namespace Light {
 	public:
 		Camera() = default;
 
-		const glm::mat4& GetProjection() const { return m_Projection; }
+		inline const glm::mat4& GetProjection() const { return m_Projection; }
 
-		const glm::vec4& GetBackgroundColor() const { return m_BackgroundColor; }
+		inline const glm::vec4& GetBackgroundColor() const { return m_BackgroundColor; }
+
+		inline void SetBackgroundColor(const glm::vec4& color) { m_BackgroundColor = color; }
 	};
 
 }

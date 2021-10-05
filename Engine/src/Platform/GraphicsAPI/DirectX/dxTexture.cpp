@@ -4,11 +4,12 @@
 
 namespace Light {
 
-	dxTexture::dxTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, Ref<dxSharedContext> sharedContext)
-		: m_Context(sharedContext),
-		  m_Texture2D(nullptr),
-		  m_ShaderResourceView(nullptr),
-		  m_SamplerState(nullptr)
+	dxTexture::dxTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, Ref<dxSharedContext> sharedContext, const std::string& filePath):
+		Texture(filePath),
+		m_Context(sharedContext),
+		m_Texture2D(nullptr),
+		m_ShaderResourceView(nullptr),
+		m_SamplerState(nullptr)
 	{
 		// texture2d desc
 		D3D11_TEXTURE2D_DESC t2dDesc = {};

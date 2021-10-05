@@ -1,5 +1,7 @@
 #include "EditorLayer.h"
 
+#include "Utility/Serializer.h"
+
 namespace Light {
 
 	EditorLayer::EditorLayer(const std::string& name)
@@ -19,6 +21,9 @@ namespace Light {
 
 		// for native script components
 		m_Scene->OnCreate();
+
+		SceneSerializer serializer(m_Scene);
+		serializer.Serialize("assets/scenes/test.yaml");
 	}
 	
 	void EditorLayer::OnUpdate(float deltaTime)

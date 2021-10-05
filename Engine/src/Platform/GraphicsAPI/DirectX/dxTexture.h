@@ -21,7 +21,7 @@ namespace Light {
 		Microsoft::WRL::ComPtr<ID3D11SamplerState> m_SamplerState;
 
 	public:
-		dxTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, Ref<dxSharedContext> sharedContext);
+		dxTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, Ref<dxSharedContext> sharedContext, const std::string& filePath);
 
 		void Bind(unsigned int slot = 0u) override;
 	};

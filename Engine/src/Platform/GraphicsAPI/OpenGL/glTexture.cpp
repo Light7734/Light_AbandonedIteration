@@ -5,9 +5,11 @@
 
 namespace Light {
 
-	glTexture::glTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels)
-		: m_TextureID(NULL)
+	glTexture::glTexture(unsigned int width, unsigned int height, unsigned int components, unsigned char* pixels, const std::string& filePath):
+		Texture(filePath),
+		m_TextureID(NULL)
 	{
+
 		// create texture
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_TextureID);
 		

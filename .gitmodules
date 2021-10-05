@@ -16,3 +16,6 @@
 [submodule "Dependencies/ShaderConductor"]
 	path = Dependencies/ShaderConductor
 	url = https://github.com/Light3039/shaderconductor
+[submodule "Dependencies/yaml-cpp"]
+	path = Dependencies/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp
