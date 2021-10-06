@@ -2,6 +2,8 @@
 
 #include "Base/Base.h"
 
+#include "Core/UUID.h"
+
 #include "Components/TransformComponent.h"
 
 #include <entt/entt.hpp>
@@ -34,6 +36,11 @@ namespace Light {
 		void OnRender(const Ref<Framebuffer>& targetFrameBuffer = nullptr);
 
 		Entity CreateEntity(const std::string& name, const TransformComponent& transform = TransformComponent());
+
+		Entity GetEntityByTag(const std::string& tag);
+
+	private:
+		Entity CreateEntityWithUUID(const std::string& name, UUID uuid, const TransformComponent& transform = TransformComponent());
 	};
 
 }

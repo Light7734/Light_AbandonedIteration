@@ -85,9 +85,38 @@ namespace Light {
 
 	Entity Scene::CreateEntity(const std::string& name, const TransformComponent& transform)
 	{
+		return CreateEntityWithUUID(name, UUID(), transform);
+	}
+
+	Entity Scene::GetEntityByTag(const std::string& tag)
+	{
+		// TagComponent tagComp(tag);
+		// entt::entity entity = entt::to_entity(m_Registry, tagComp);
+		Entity entity;
+
+		m_Registry.view<TagComponent>().
+		each([&](TagComponent& tagComp) 
+		{
+			if (tagComp.tag == tag)
+				entity = Entity(entt::to_entity(m_Registry, tagComp), this);
+		});
+
+		if (entity.IsValid())
+			return entity;
+		else {
+			LT_ENGINE_ERROR("Scene::GetEntityByTag: failed to find entity by tag: {}", tag);
+			return Entity();
+		}
+			
+
+	}
+
+	Entity Scene::CreateEntityWithUUID(const std::string& name, UUID uuid, const TransformComponent& transform)
+	{
 		Entity entity { m_Registry.create(), this };
 		entity.AddComponent<TagComponent>(name);
 		entity.AddComponent<TransformComponent>(transform);
+		entity.AddComponent<UUIDComponent>(uuid);
 
 		return entity;
 	}

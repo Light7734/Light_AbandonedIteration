@@ -16,8 +16,6 @@ namespace Light {
 		glm::vec2 m_Direction;
 		float m_Speed = 1000.0f;
 
-		std::vector<Entity> m_Entities;
-
 		Ref<Scene> m_Scene;
 
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
@@ -37,9 +35,6 @@ namespace Light {
 		void OnRender() override;
 
 		void OnUserInterfaceUpdate() override;
-
-	private:
-		void SummonAwesomeness();
 	};
 
 }

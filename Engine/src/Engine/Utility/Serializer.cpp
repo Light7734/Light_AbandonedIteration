@@ -5,6 +5,8 @@
 
 #include "Graphics/Texture.h"
 
+#include "Utility/ResourceManager.h"
+
 namespace YAML {
 
 	template<>
@@ -46,7 +48,7 @@ namespace YAML {
 
 		static bool decode(const Node& node, glm::vec4& rhs)
 		{
-			if (!node.IsSequence() || node.size() != 3)
+			if (!node.IsSequence() || node.size() != 4)
 				return false;
 
 			rhs.x = node[0].as<float>();
@@ -119,6 +121,11 @@ namespace Light {
 		auto entities = data["Entities"];
 		if (entities)
 		{
+			/* #TEMPORARY SOLUTION# */
+			std::unordered_set<std::string> texturePaths;
+			/* #TEMPORARY SOLUTION# */
+
+
 			for (auto entity : entities)
 			{
 				uint64_t uuid = entity["Entity"].as<uint64_t>(); // #todo
@@ -130,8 +137,10 @@ namespace Light {
 
 				LT_ENGINE_TRACE("SceneSerializer::Deserialize: Deserialized entity '{}' : '{}'", uuid, name);
 
-				Entity deserializedEntity = m_Scene->CreateEntity(name);
+				Entity deserializedEntity = m_Scene->CreateEntityWithUUID(name, uuid);
 
+				TagComponent gg = deserializedEntity.GetComponent<TagComponent>();
+				LT_ENGINE_TRACE(gg.tag);
 				auto transformComponent = entity["TransformComponent"];
 				if (transformComponent)
 				{
@@ -142,17 +151,36 @@ namespace Light {
 					entityTransforomComponent.scale = transformComponent["Scale"].as<glm::vec3>();
 				}
 
+				/* #TEMPORARY SOLUTION# */
+				auto spriteRendererComponent = entity["SpriteRendererComponent"];
+				if (spriteRendererComponent)
+				{
+					auto& entitySpriteRendererComponent = deserializedEntity.AddComponent<SpriteRendererComponent>();
+					entitySpriteRendererComponent.tint = spriteRendererComponent["Tint"].as<glm::vec4>();
+
+					std::string texturePath = spriteRendererComponent["Texture"].as<std::string>();
+
+					if (!texturePaths.contains(texturePath))
+					{
+						ResourceManager::LoadTexture(texturePath, texturePath);
+						texturePaths.insert(texturePath);
+					}
+
+					entitySpriteRendererComponent.texture = ResourceManager::GetTexture(texturePath);
+				}
+				/* #TEMPORARY SOLUTION# */
+
 				auto cameraComponent = entity["CameraComponent"];
 				if(cameraComponent)
 				{
 					auto& entityCameraComponent = deserializedEntity.AddComponent<CameraComponent>();
 
-					auto& cameraSpecifications = cameraComponent["Camera"];
+					const auto& cameraSpecifications = cameraComponent["Camera"];
 					entityCameraComponent.camera.SetProjectionType((SceneCamera::ProjectionType)cameraSpecifications["ProjectionType"].as<int>());
 
-					entityCameraComponent.camera.SetOrthographicSize(cameraSpecifications["OrthographicsSize"].as<float>());
-					entityCameraComponent.camera.SetOrthographicNearPlane(cameraSpecifications["OrthographicsNearPlane"].as<float>());
-					entityCameraComponent.camera.SetOrthographicFarPlane(cameraSpecifications["OrthographicsFarPlane"].as<float>());
+					entityCameraComponent.camera.SetOrthographicSize(cameraSpecifications["OrthographicSize"].as<float>());
+					entityCameraComponent.camera.SetOrthographicNearPlane(cameraSpecifications["OrthographicNearPlane"].as<float>());
+					entityCameraComponent.camera.SetOrthographicFarPlane(cameraSpecifications["OrthographicFarPlane"].as<float>());
 
 					entityCameraComponent.camera.SetPerspectiveVerticalFOV(cameraSpecifications["PerspectiveVerticalFOV"].as<float>());
 					entityCameraComponent.camera.SetPerspectiveNearPlane(cameraSpecifications["PerspectiveNearPlane"].as<float>());
@@ -162,9 +190,9 @@ namespace Light {
 
 					entityCameraComponent.isPrimary = cameraComponent["IsPrimary"].as<bool>();
 				}
-
-				// #todo: figure out texture de-serialization
 			}
+
+			return true;
 		}
 
 		return false;
@@ -184,8 +212,7 @@ namespace Light {
 	void SceneSerializer::SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
 		out << YAML::BeginMap; // entity
-		out << YAML::Key << "Entity" << YAML::Value << "69696969696969"; // dummy uuid
-		out << YAML::EndMap; // entity
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID(); // dummy uuid
 
 		if (entity.HasComponent<TagComponent>())
 		{
@@ -251,6 +278,7 @@ namespace Light {
 
 			out << YAML::EndMap; // camera component
 		}
+		out << YAML::EndMap; // entity
 	}
 
 }

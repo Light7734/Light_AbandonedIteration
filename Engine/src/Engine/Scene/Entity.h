@@ -4,6 +4,8 @@
 
 #include "Scene.h"
 
+#include "Components/UUIDComponent.h"
+
 #include <entt/entt.hpp>
 
 namespace Light {	
@@ -41,6 +43,8 @@ namespace Light {
 		{
 			m_Scene->m_Registry.remove<T>(m_Handle);
 		}
+
+		inline uint64_t GetUUID() { return GetComponent<UUIDComponent>().uuid; }
 
 		inline bool IsValid() const { return m_Handle != entt::null && m_Scene != nullptr; }
 

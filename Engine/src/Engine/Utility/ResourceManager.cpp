@@ -16,14 +16,14 @@ namespace Light {
 		return MakeScope(new ResourceManager());
 	}
 
-	ResourceManager::ResourceManager():
-		  m_Shaders{},
-		  m_Textures{}
+	ResourceManager::ResourceManager() :
+		m_Shaders{},
+		m_Textures{}
 	{
 		LT_ENGINE_ASSERT(!s_Context, "ResourceManager::ResourceManager: repeated singleton construction");
 		s_Context = this;
 	}
-	
+
 	void ResourceManager::LoadShaderImpl(const std::string& name, const std::string& vertexPath, const std::string& pixelPath)
 	{
 		// check
@@ -55,7 +55,7 @@ namespace Light {
 		ImageFileHandle imgFile = FileManager::ReadImageFile(path, desiredComponents);
 
 		// create texture
-		m_Textures[name] = Ref<Texture>(Texture::Create(imgFile.GetWidth(), imgFile.GetHeight(), imgFile.GetComponents(), imgFile.GetData(), GraphicsContext::GetSharedContext(), path) );
+		m_Textures[name] = Ref<Texture>(Texture::Create(imgFile.GetWidth(), imgFile.GetHeight(), imgFile.GetComponents(), imgFile.GetData(), GraphicsContext::GetSharedContext(), path));
 
 		// free file
 		imgFile.Release();
@@ -71,4 +71,5 @@ namespace Light {
 
 		m_Textures[name] = nullptr;
 	}
-	
+
+}

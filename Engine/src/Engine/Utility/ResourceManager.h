@@ -15,7 +15,6 @@ namespace Light {
 		static ResourceManager* s_Context;
 
 	private:
-
 		std::unordered_map<std::string, Ref<Shader>> m_Shaders;
 		std::unordered_map<std::string, Ref<Texture>> m_Textures;
 

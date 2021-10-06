@@ -12,18 +12,12 @@ namespace Light {
 		m_PropertiesPanel = CreateRef<PropertiesPanel>();
 		m_SceneHierarchyPanel = CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertiesPanel);
 
-		SummonAwesomeness();
-
 		m_Framebuffer = Framebuffer::Create({ 1, 1, 1 }, GraphicsContext::GetSharedContext());
 		
-		m_CameraEntity = m_Scene->CreateEntity("Game Camera", TransformComponent({0.0f, 0.0f, 1000.0f}));
-		m_CameraEntity.AddComponent<CameraComponent>(SceneCamera(), true);
-
-		// for native script components
-		m_Scene->OnCreate();
-
 		SceneSerializer serializer(m_Scene);
-		serializer.Serialize("assets/scenes/test.yaml");
+		serializer.Deserialize("../../Mirror/res/Scenes/editorlayer.yaml");
+
+		m_CameraEntity = m_Scene->GetEntityByTag("Game Camera");
 	}
 	
 	void EditorLayer::OnUpdate(float deltaTime)
@@ -79,22 +73,4 @@ namespace Light {
 		UserInterface::DockspaceEnd();
 	}
 	
-	void EditorLayer::SummonAwesomeness()
-	{
-		ResourceManager::LoadTexture("awesomeface", "../../Mirror/res/Textures/awesomeface.png");
-		auto texture = ResourceManager::GetTexture("awesomeface");
-
-		for(unsigned int i = 0; i < 250; i++)
-		{
-			const glm::vec3 translation = Math::RandVec3(-500, 500);
-			const glm::vec3 scale       = glm::vec3(Math::Rand(125, 200));
-			const glm::vec3 rotation    = glm::vec3(0.0f, 0.0f, glm::radians(Math::Rand(0, 359)));
-
-			const glm::vec4 tint        = glm::vec4(Math::RandVec3(0, 1, 2), 1.0f);
-
-			auto entity = m_Scene->CreateEntity("quad" + std::to_string(i), { translation, scale, rotation });
-			entity.AddComponent<SpriteRendererComponent>(texture, tint);
-		}
-	}
-
 }

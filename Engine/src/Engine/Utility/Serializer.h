@@ -19,7 +19,6 @@ namespace Light {
 
 		void SerializeBinary(const std::string& filePath);
 		bool DeserializeBinary(const std::string& filePath);
-
 	private:
 		void SerializeEntity(YAML::Emitter& out, Entity entity);
 
