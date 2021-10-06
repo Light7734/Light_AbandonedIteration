@@ -19,6 +19,12 @@ namespace Light {
 
 		m_CameraEntity = m_Scene->GetEntityByTag("Game Camera");
 	}
+
+	EditorLayer::~EditorLayer()
+	{
+		SceneSerializer serializer(m_Scene);
+		serializer.Serialize("../../Mirror/res/Scenes/editorlayer.yaml");
+	}
 	
 	void EditorLayer::OnUpdate(float deltaTime)
 	{

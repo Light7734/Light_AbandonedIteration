@@ -29,6 +29,7 @@ namespace Light {
 
 	public:
 		EditorLayer(const std::string& name);
+		~EditorLayer();
 
 		void OnUpdate(float deltaTime) override;
 
