@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "VertexLayout.h"
 #include "OpenGL/glVertexLayout.h"
 

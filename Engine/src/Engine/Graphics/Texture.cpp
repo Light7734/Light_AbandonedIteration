@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Texture.h"
 #include "OpenGL/glTexture.h"
 

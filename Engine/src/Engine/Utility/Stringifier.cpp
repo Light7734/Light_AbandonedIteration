@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Stringifier.h"
 
 #include "Graphics/GraphicsContext.h"

@@ -1,6 +1,4 @@
-﻿
-#include "ltpch.h"
-#include "glUserInterface.h"
+﻿#include "glUserInterface.h"
 
 #include "Input/KeyCodes.h"
 

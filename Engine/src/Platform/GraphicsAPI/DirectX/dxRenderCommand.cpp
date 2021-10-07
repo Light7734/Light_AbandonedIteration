@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "dxRenderCommand.h"
 #include "dxSharedContext.h"
 

@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "ResourceManager.h"
 
 #include "FileManager.h"

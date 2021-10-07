@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.16)
 
 project(Light VERSION 1.0.0)
 
@@ -31,7 +31,6 @@ endif()
 
 add_subdirectory(${ENGINE_DIR}/)
 add_subdirectory(${MIRROR_DIR}/)
-
 add_subdirectory(${DEPENDENCIES_DIR}GLAD/)
 add_subdirectory(${DEPENDENCIES_DIR}GLFW/)
 add_subdirectory(${DEPENDENCIES_DIR}spdlog/)
@@ -48,11 +47,11 @@ target_link_libraries(Engine imgui)
 target_link_libraries(Engine stb_image)
 target_link_libraries(Engine ShaderConductor)
 target_link_libraries(Engine yaml-cpp)
-
 target_link_libraries(imgui glad)
 target_link_libraries(imgui glfw)
-
 target_link_libraries(Mirror Engine)
+
+target_precompile_headers(Engine PUBLIC ${ENGINE_DIR}src/Engine/ltpch.h)
 
 if(MSVC)
     set_property(DIRECTORY ${CMAE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Mirror)

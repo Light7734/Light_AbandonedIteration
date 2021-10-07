@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "wWindow.h"
 
 #include "Events/Event.h"

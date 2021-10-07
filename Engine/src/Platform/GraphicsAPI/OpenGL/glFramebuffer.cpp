@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "glFramebuffer.h"
 
 #include <glad/glad.h>

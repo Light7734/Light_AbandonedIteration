@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Serializer.h"
 
 #include "Scene/Components.h"

@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Layer.h"
 
 #include "Events/Event.h"

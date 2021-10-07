@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Buffers.h"
 #include "OpenGL/glBuffers.h"
 

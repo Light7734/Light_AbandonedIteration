@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "LayerStack.h"
 
 #include "Layer.h"

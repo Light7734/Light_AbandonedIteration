@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Blender.h"
 #include "OpenGL/glBlender.h"
 

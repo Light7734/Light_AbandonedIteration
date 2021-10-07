@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "glVertexLayout.h"
 
 #include "glBuffers.h"

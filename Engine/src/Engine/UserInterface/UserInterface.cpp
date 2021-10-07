@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "UserInterface.h"
 #include "OpenGL/glUserInterface.h"
 

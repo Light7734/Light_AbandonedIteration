@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Application.h"
 
 #include "Window.h"
@@ -114,7 +113,6 @@ namespace Light {
 		m_Instrumentor->BeginSession("Logs/ProfileResults_Termination.json");
 	}
 
-	/* static */
 	void Application::Quit() 
 	{
 		s_Context->m_Window->Close();

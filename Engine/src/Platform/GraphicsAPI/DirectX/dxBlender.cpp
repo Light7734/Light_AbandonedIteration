@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "dxBlender.h"
 #include "dxSharedContext.h"
 

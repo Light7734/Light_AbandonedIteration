@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Instrumentor.h"
 
 namespace Light {

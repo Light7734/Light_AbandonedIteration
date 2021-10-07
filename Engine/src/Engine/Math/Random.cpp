@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Random.h"
 
 #include <cmath>

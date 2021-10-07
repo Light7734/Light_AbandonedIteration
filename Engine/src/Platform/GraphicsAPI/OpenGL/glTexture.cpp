@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "glTexture.h"
 
 #include <glad/glad.h>

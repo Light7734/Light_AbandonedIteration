@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "OrthographicCamera.h"
 
 #include <glm/matrix.hpp>

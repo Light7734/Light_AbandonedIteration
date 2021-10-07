@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Shader.h"
 #include "OpenGL/glShader.h"
 

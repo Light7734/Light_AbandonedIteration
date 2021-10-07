@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "glGraphicsContext.h"
 
 #include "Events/WindowEvents.h"

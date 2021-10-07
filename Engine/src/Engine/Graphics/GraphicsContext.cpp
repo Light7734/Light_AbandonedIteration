@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "GraphicsContext.h"
 #include "OpenGL/glGraphicsContext.h"
 

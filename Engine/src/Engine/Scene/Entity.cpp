@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Entity.h"
 
 #include "Scene.h"

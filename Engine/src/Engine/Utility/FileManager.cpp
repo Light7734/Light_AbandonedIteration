@@ -1,4 +1,3 @@
-#include <ltpch.h>
 #include "FileManager.h"
 
 #include <stb_image.h>

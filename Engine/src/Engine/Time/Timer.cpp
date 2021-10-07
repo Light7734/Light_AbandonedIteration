@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "Timer.h"
 
 namespace Light {

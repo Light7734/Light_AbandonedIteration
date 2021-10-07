@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "dxTexture.h"
 #include "dxSharedContext.h"
 

@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "QuadRendererProgram.h"
 
 #include "Camera/Camera.h"

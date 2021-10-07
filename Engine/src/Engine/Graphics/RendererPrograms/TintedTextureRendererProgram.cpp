@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "TintedTextureRendererProgram.h"
 
 #include "Camera/Camera.h"

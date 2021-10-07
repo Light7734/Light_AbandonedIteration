@@ -1,4 +1,3 @@
-#include "ltpch.h"
 #include "RenderCommand.h"
 #include "OpenGL/glRenderCommand.h"
 
