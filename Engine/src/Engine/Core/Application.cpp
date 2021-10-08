@@ -20,7 +20,7 @@ namespace Light {
 
 	Application* Application::s_Context = nullptr;
 
-	Application::Application()
+	Application::Application(std::string execName, std::vector<std::string> args)
 		: m_Instrumentor(nullptr),
 		  m_LayerStack(nullptr),
 		  m_Input(nullptr),

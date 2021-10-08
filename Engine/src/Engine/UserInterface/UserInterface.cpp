@@ -49,7 +49,7 @@ namespace Light {
 		                   ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize  | ImGuiWindowFlags_NoMove     |
 		                   ImGuiWindowFlags_NoBringToFrontOnFocus                   | ImGuiWindowFlags_NoNavFocus )
 	{
-		LT_ENGINE_ASSERT(!s_Context, "serInterface::UserInterface: an instance of 'UserInterface' already exists, do not construct this class!");
+		LT_ENGINE_ASSERT(!s_Context, "UserInterface::UserInterface: an instance of 'UserInterface' already exists, do not construct this class!");
 		s_Context = this;
 	}
 
@@ -104,8 +104,8 @@ namespace Light {
 		io.KeyMap[ImGuiKey_Y] = Key::Y;
 		io.KeyMap[ImGuiKey_Z] = Key::Z;
 
-		io.Fonts->AddFontFromFileTTF("../../Engine/res/Fonts/OpenSans/OpenSans-Bold.ttf", 18.0f);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("../../Engine/res/Fonts/OpenSans/OpenSans-Regular.ttf", 18.0f);
+		io.Fonts->AddFontFromFileTTF("Assets//Fonts/OpenSans/OpenSans-Bold.ttf", 18.0f);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("Assets/Fonts/OpenSans/OpenSans-Regular.ttf", 18.0f);
 
 		SetDarkThemeColors();
 	}

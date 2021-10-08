@@ -5,18 +5,26 @@
 #include <LightEngine.h>
 
 // to be defined in client project
-extern Light::Application* Light::CreateApplication();
+extern Light::Application* Light::CreateApplication(std::string execName, std::vector<std::string> args);
 
 // #todo: use windows specific stuff
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
 	Light::Application* application = nullptr;
 	int exitCode = 0;
 
+	std::vector<std::string> args;
+
+	if (argc > 1)
+		args.assign(argv + 1, argv + argc);
+
 	try
 	{
-		application = Light::CreateApplication();
+		application = Light::CreateApplication(argv[0], args);
 		LT_ENGINE_ASSERT(application, "main: Light::Application is not intialized");
+
+		for (int i = 0; i < argc; i++)
+			LT_ENGINE_INFO("main: argv[{}]: {}", i, argv[i]);
 
 		application->GameLoop();
 	}

@@ -45,7 +45,7 @@ namespace Light {
 		static void Quit();
 
 	protected:
-		Application();
+		Application(std::string execName, std::vector<std::string> args);
 
 	private:
 		void OnEvent(const Event& event);
@@ -53,6 +53,6 @@ namespace Light {
 		void LogDebugData();
 	};
 
-	Application* CreateApplication();
+	extern Application* CreateApplication(std::string execName, std::vector<std::string> args);
 
 }

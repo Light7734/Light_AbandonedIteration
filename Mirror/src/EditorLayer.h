@@ -12,6 +12,8 @@ namespace Light {
 	class EditorLayer : public Layer
 	{
 	private: 
+		std::string m_SceneDir;
+
 		// #todo: add camera controller class to the engine
 		glm::vec2 m_Direction;
 		float m_Speed = 1000.0f;
@@ -28,7 +30,7 @@ namespace Light {
 		ImVec2 m_AvailableContentRegionPrev;
 
 	public:
-		EditorLayer(const std::string& name);
+		EditorLayer(const std::string& name, const std::vector<std::string>& args);
 		~EditorLayer();
 
 		void OnUpdate(float deltaTime) override;

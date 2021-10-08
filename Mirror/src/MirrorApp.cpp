@@ -8,7 +8,8 @@ namespace Light {
 	class Mirror : public Light::Application
 	{
 	public:
-		Mirror()
+		Mirror(std::string execName, std::vector<std::string> args)
+			: Application(execName, args)
 		{
 			// Set window properties
 			Light::WindowProperties properties;
@@ -19,13 +20,13 @@ namespace Light {
 			m_Window->SetProperties(properties);
 
 			// Attach the sandbox layer
-			LayerStack::EmplaceLayer<EditorLayer>(("MirrorLayer"));
+			LayerStack::EmplaceLayer<EditorLayer>(("MirrorLayer"), args);
 		}
 	};
 
-	Application* CreateApplication()
+	Application* CreateApplication(std::string execName, std::vector<std::string> args)
 	{
-		return new Mirror();
+		return new Mirror(execName, args);
 	}
 
 }

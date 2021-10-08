@@ -4,8 +4,9 @@
 
 namespace Light {
 
-	EditorLayer::EditorLayer(const std::string& name)
-		: Layer(name)
+	EditorLayer::EditorLayer(const std::string& name, const std::vector<std::string>& args):
+		Layer(name),
+		m_SceneDir(args.empty() ? "" : args[0])
 	{
 		m_Scene = CreateRef<Scene>();
 
@@ -13,17 +14,27 @@ namespace Light {
 		m_SceneHierarchyPanel = CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertiesPanel);
 
 		m_Framebuffer = Framebuffer::Create({ 1, 1, 1 }, GraphicsContext::GetSharedContext());
-		
+
+		if (m_SceneDir.empty())
+		{
+			m_CameraEntity = m_Scene->CreateEntity("Camera");
+			m_CameraEntity.AddComponent<CameraComponent>(SceneCamera(), true);
+			return;
+		}
+
 		SceneSerializer serializer(m_Scene);
-		serializer.Deserialize("../../Mirror/res/Scenes/editorlayer.yaml");
+		LT_ENGINE_ASSERT(serializer.Deserialize(m_SceneDir), "EditorLayer::EditorLayer: failed to de-serialize: ", m_SceneDir);
 
 		m_CameraEntity = m_Scene->GetEntityByTag("Game Camera");
 	}
 
 	EditorLayer::~EditorLayer()
 	{
-		SceneSerializer serializer(m_Scene);
-		serializer.Serialize("../../Mirror/res/Scenes/editorlayer.yaml");
+		if (!m_SceneDir.empty())
+		{
+			SceneSerializer serializer(m_Scene);
+			serializer.Serialize(m_SceneDir);
+		}
 	}
 	
 	void EditorLayer::OnUpdate(float deltaTime)

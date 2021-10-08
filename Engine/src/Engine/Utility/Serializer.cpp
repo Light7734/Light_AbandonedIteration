@@ -98,9 +98,11 @@ namespace Light {
 		out << YAML::EndSeq;
 		out << YAML::EndMap;
 
-		std::filesystem::create_directories(filePath.substr(0ull, filePath.find_last_of('/')));
+		std::filesystem::create_directories(filePath.substr(0ull, filePath.find_last_of('\\')));
 
 		std::ofstream fout(filePath);
+		if (!fout.is_open())
+			LT_ENGINE_ERROR("SceneSerializer::Serialize: failed to create fout at: {}", filePath);
 		fout << out.c_str();
 	}
 
