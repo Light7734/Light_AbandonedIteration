@@ -4,6 +4,7 @@
 
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/PropertiesPanel.h"
+#include "Panels/ContentBrowser.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -11,7 +12,7 @@ namespace Light {
 
 	class EditorLayer : public Layer
 	{
-	private: 
+	private:
 		std::string m_SceneDir;
 
 		// #todo: add camera controller class to the engine
@@ -22,6 +23,7 @@ namespace Light {
 
 		Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 		Ref<PropertiesPanel> m_PropertiesPanel;
+		Ref<ContentBrowserPanel> m_ContentBrowserPanel;
 
 		Ref<Framebuffer> m_Framebuffer;
 
