@@ -47,8 +47,8 @@ ${DEPENDENCIES_DIR}glm/
 ${DEPENDENCIES_DIR}imgui/
 ${DEPENDENCIES_DIR}spdlog/include/
 ${DEPENDENCIES_DIR}stb_image/
-${DEPENDENCIES_DIR}ShaderConductor/Include/
 ${DEPENDENCIES_DIR}yaml-cpp/include/
+${DEPENDENCIES_DIR}shaderc/libshaderc/include
 )
 
 source_group(TREE ${ENGINE_DIR} FILES ${ENGINE_ALL_FILES} ${ENGINE_RES_FILES})
@@ -62,11 +62,3 @@ endif()
 
 
 message(BINARY DIRECTORY IS IN ${CMAKE_BINARY_DIR})
-
-if(WIN32)
-	add_custom_command(
-		TARGET Engine
-		POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
-		${CMAKE_BINARY_DIR}/Dependencies/ShaderConductor/Bin/Debug/ShaderConductor.dll
-		${CMAKE_BINARY_DIR}/bin/Debug)
-endif()

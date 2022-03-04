@@ -73,8 +73,8 @@ namespace Light {
 			switch (severity)
 			{
 			case GL_DEBUG_SEVERITY_HIGH:
-				throw glException(source, type, id, message);
-				return;
+			    // throw glException(source, type, id, message);
+			    return;
 
 			case GL_DEBUG_SEVERITY_MEDIUM: case  GL_DEBUG_SEVERITY_LOW:
 				LT_ENGINE_WARN("glMessageCallback: Severity: {} :: Source: {} :: Type: {} :: ID: {}",

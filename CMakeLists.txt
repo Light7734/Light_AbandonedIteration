@@ -1,15 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Light VERSION 1.0.0)
-
-set(CMAKE_CXX_STANDARD 14)
-set(SPIRV_CROSS_ENABLE_TESTS OFF)
-set(INSTALL_GTEST OFF)
-
-if(NOT MSVC)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
-endif()
-add_subdirectory(Dependencies/ShaderConductor) # <-- this project should not use "cxx_standard 17"
+project(Light)
+set(CMAKE_CXX_STANDARD 20)
 
 # directories
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -20,8 +12,9 @@ set(MIRROR_DIR  ${CMAKE_BINARY_DIR}/../Mirror/)
 set(ENGINE_DIR  ${CMAKE_BINARY_DIR}/../Engine/)
 set(DEPENDENCIES_DIR ${CMAKE_BINARY_DIR}/../Dependencies/)
 
-# projects
-set(CMAKE_CXX_STANDARD 20)
+if(NOT MSV)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error")
+endif()
 
 if(WIN32)
     add_compile_definitions(LIGHT_PLATFORM_WINDOWS)
@@ -29,8 +22,11 @@ elseif(UNIX)
     add_compile_definitions(LIGHT_PLATFORM_LINUX)
 endif()
 
+# Projects
 add_subdirectory(${ENGINE_DIR}/)
 add_subdirectory(${MIRROR_DIR}/)
+
+# Dependencies
 add_subdirectory(${DEPENDENCIES_DIR}GLAD/)
 add_subdirectory(${DEPENDENCIES_DIR}GLFW/)
 add_subdirectory(${DEPENDENCIES_DIR}spdlog/)
@@ -39,20 +35,35 @@ add_subdirectory(${DEPENDENCIES_DIR}entt/)
 add_subdirectory(${DEPENDENCIES_DIR}imgui/)
 add_subdirectory(${DEPENDENCIES_DIR}stb_image/)
 add_subdirectory(${DEPENDENCIES_DIR}yaml-cpp/)
+add_subdirectory(${DEPENDENCIES_DIR}shaderc/)
 
-target_link_libraries(Engine glad)
-target_link_libraries(Engine glfw)
-target_link_libraries(Engine spdlog)
-target_link_libraries(Engine imgui)
-target_link_libraries(Engine stb_image)
-target_link_libraries(Engine ShaderConductor)
-target_link_libraries(Engine yaml-cpp)
-target_link_libraries(imgui glad)
-target_link_libraries(imgui glfw)
-target_link_libraries(Mirror Engine)
+# Link
+target_link_libraries(
+    Engine 
+    PRIVATE glad
+    PRIVATE glfw
+    PRIVATE spdlog
+    PRIVATE imgui
+    PRIVATE stb_image
+    PRIVATE yaml-cpp
+    PRIVATE shaderc)
 
+target_link_libraries(
+    imgui 
+    PRIVATE glad
+    PRIVATE glfw)
+
+target_link_libraries(
+    Mirror
+    PRIVATE Engine)
+
+# Precompiled headers
 target_precompile_headers(Engine PUBLIC ${ENGINE_DIR}src/Engine/ltpch.h)
 
 if(MSVC)
     set_property(DIRECTORY ${CMAE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Mirror)
 endif()
+
+
+set(CMAKE_BUILD_TYPE debug)
+set(CMAKE_EXPORT_COMPILE_COMMANDS_ON)

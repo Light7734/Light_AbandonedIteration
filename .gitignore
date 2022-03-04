@@ -3,6 +3,7 @@
 bin/
 bin-obj/
 build/
+.cache/
 
 # VS Files
 **.vcxproj**
@@ -27,3 +28,6 @@ Makefile
 !**/default_gui_layout.ini
 
 CMake/
+
+.vimspector.json
+compiled_commands.json

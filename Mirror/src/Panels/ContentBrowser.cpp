@@ -4,29 +4,26 @@
 
 namespace Light {
 
-	ContentBrowserPanel::ContentBrowserPanel() :
-		m_CurrentDirectory("assets"),
-		m_AssetsPath("assets")
+ContentBrowserPanel::ContentBrowserPanel()
+    : m_CurrentDirectory("Assets"), m_AssetsPath("Assets") {}
+
+void ContentBrowserPanel::OnUserInterfaceUpdate()
+{
+	ImGui::Begin("Content Browser");
+
+	if (m_CurrentDirectory != std::filesystem::path("Assets"))
 	{
+		if (ImGui::Button(" <--  "))
+		{
+			m_CurrentDirectory = m_CurrentDirectory.parent_path();
+		}
 	}
 
-	void ContentBrowserPanel::OnUserInterfaceUpdate()
+	for (auto& dirEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 	{
-		ImGui::Begin("Content Browser");
-
-		if (m_CurrentDirectory != std::filesystem::path("assets"))
+		const auto& path = dirEntry.path();
 		{
-			if (ImGui::Button(" <--  "))
-			{
-				m_CurrentDirectory = m_CurrentDirectory.parent_path();
-			}
-		}
-
-		for (auto& dirEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
-		{
-			const auto& path = dirEntry.path();
-			Texture2D
-				auto relativePathasd; = std::filesystem::relative(path, m_AssetsPath);
+			auto relativePath              = std::filesystem::relative(path, m_AssetsPath);
 			std::string relativePathString = relativePath.string();
 
 			if (dirEntry.is_directory())
@@ -40,12 +37,12 @@ namespace Light {
 			{
 				if (ImGui::Button(relativePathString.c_str()))
 				{
-
 				}
 			}
 		}
 
 		ImGui::End();
 	}
-
 }
+
+} // namespace Light

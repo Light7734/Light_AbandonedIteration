@@ -20,9 +20,9 @@ namespace Light {
 		  m_MaxVertices(maxVertices)
 	{
 		// #todo: don't use relative path
-		ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", "Assets/Shaders/Texture/Texture_VS.hlsl", "Assets/Shaders/Texture/Texture_PS.hlsl");
+	    ResourceManager::LoadShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER", "Assets/Shaders/Texture/Texture_VS.glsl", "Assets/Shaders/Texture/Texture_PS.glsl");
 
-		m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER");
+	    m_Shader = ResourceManager::GetShader("LT_ENGINE_RESOURCES_TEXTURE_SHADER");
 		m_VertexBuffer = Ref<VertexBuffer>(VertexBuffer::Create(nullptr, sizeof(TextureVertexData), maxVertices, sharedContext));
 		m_IndexBuffer = Ref<IndexBuffer>(IndexBuffer::Create(nullptr, (maxVertices / 4) * 6, sharedContext));
 		m_VertexLayout = Ref<VertexLayout>(VertexLayout::Create(m_VertexBuffer, m_Shader, { { "POSITION", VertexElementType::Float4 },

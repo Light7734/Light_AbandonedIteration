@@ -13,9 +13,12 @@
 [submodule "Dependencies/entt"]
 	path = Dependencies/entt
 	url = https://github.com/skypjack/entt
-[submodule "Dependencies/ShaderConductor"]
-	path = Dependencies/ShaderConductor
-	url = https://github.com/Light3039/shaderconductor
 [submodule "Dependencies/yaml-cpp"]
 	path = Dependencies/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp
+[submodule "Dependencies/shaderc"]
+	path = Dependencies/shaderc
+	url = https://github.com/google/shaderc
+[submodule "Dependencies/spirv-cross"]
+	path = Dependencies/spirv-cross
+	url = https://github.com/KhronosGroup/SPIRV-Cross

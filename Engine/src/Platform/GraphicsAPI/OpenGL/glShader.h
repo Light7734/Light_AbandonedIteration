@@ -6,26 +6,26 @@
 
 #include "Utility/FileManager.h"
 
-#include <ShaderConductor/ShaderConductor.hpp>
+#include <shaderc/shaderc.hpp>
 
 namespace Light {
 
-	class glShader : public Shader
-	{
-	private:
-		unsigned int m_ShaderID;
+class glShader: public Shader
+{
+private:
+	unsigned int m_ShaderID;
 
-	public:
-		glShader(BasicFileHandle vertexFile, BasicFileHandle pixelFile);
-		~glShader();
+public:
+	glShader(BasicFileHandle vertexFile, BasicFileHandle pixelFile);
+	~glShader();
 
-		void Bind() override;
-		void UnBind() override;
+	void Bind() override;
+	void UnBind() override;
 
-	private:
-		ShaderConductor::Compiler::ResultDesc CompileHLSL(BasicFileHandle file, Shader::Stage stage);
+private:
+	shaderc::SpvCompilationResult CompileGLSL(BasicFileHandle file, Shader::Stage stage);
 
-		unsigned int CompileShader(const std::string& source, Shader::Stage stage);
-	};
+	unsigned int CompileShader(std::string source, Shader::Stage stage);
+};
 
-}
+} // namespace Light
