@@ -1,4 +1,4 @@
-# Directories
+# Temp directories
 .vs/
 bin/
 bin-obj/
@@ -11,6 +11,7 @@ build/
 
 .codelite/
 .build-debug/
+.vimspector.json
 **.workspace
 
 Makefile
@@ -29,5 +30,4 @@ Makefile
 
 CMake/
 
-.vimspector.json
-compiled_commands.json
+compile_commands.json
