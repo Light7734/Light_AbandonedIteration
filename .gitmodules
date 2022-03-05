@@ -9,7 +9,8 @@
 	url = https://github.com/g-truc/glm
 [submodule "Dependencies/imgui"]
 	path = Dependencies/imgui
-	url = https://github.com/Light3039/imgui
+	url = https://github.com/ocornut/imgui
+	branch = docking
 [submodule "Dependencies/entt"]
 	path = Dependencies/entt
 	url = https://github.com/skypjack/entt
