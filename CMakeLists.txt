@@ -29,15 +29,20 @@ add_subdirectory(${MIRROR_DIR}/)
 # Dependencies
 add_subdirectory(${DEPENDENCIES_DIR}GLAD/)
 add_subdirectory(${DEPENDENCIES_DIR}GLFW/)
+add_subdirectory(${DEPENDENCIES_DIR})
 add_subdirectory(${DEPENDENCIES_DIR}spdlog/)
 add_subdirectory(${DEPENDENCIES_DIR}glm/)
 add_subdirectory(${DEPENDENCIES_DIR}entt/)
-add_subdirectory(${DEPENDENCIES_DIR}imgui/)
 add_subdirectory(${DEPENDENCIES_DIR}stb_image/)
 add_subdirectory(${DEPENDENCIES_DIR}yaml-cpp/)
 add_subdirectory(${DEPENDENCIES_DIR}shaderc/)
 
 # Link
+target_link_libraries(
+    imgui 
+    PUBLIC glad
+    PUBLIC glfw)
+
 target_link_libraries(
     Engine 
     PRIVATE glad
@@ -49,13 +54,9 @@ target_link_libraries(
     PRIVATE shaderc)
 
 target_link_libraries(
-    imgui 
-    PRIVATE glad
-    PRIVATE glfw)
-
-target_link_libraries(
     Mirror
-    PRIVATE Engine)
+    PRIVATE Engine
+    PRIVATE imgui)
 
 # Precompiled headers
 target_precompile_headers(Engine PUBLIC ${ENGINE_DIR}src/Engine/ltpch.h)

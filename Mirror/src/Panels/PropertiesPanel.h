@@ -1,30 +1,29 @@
 #pragma once
 
 #include "Panel.h"
-
 #include "Scene/Entity.h"
 
 namespace Light {
 
-	class PropertiesPanel : public Panel
-	{
-	private:
-		Entity m_EntityContext;
+class PropertiesPanel: public Panel
+{
+private:
+	Entity m_EntityContext;
 
-	public:
-		PropertiesPanel() = default;
-		~PropertiesPanel() = default;
-		
-		void OnUserInterfaceUpdate();
+public:
+	PropertiesPanel()  = default;
+	~PropertiesPanel() = default;
 
-		void SetEntityContext(Entity entity);
+	void OnUserInterfaceUpdate();
 
-	private:
-		void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f);
+	void SetEntityContext(Entity entity);
 
-		template<typename ComponentType, typename UIFunction>
-		void DrawComponent(const std::string& name, Entity entity, UIFunction function);
-	};
+private:
+	void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f);
+
+	template<typename ComponentType, typename UIFunction>
+	void DrawComponent(const std::string& name, Entity entity, UIFunction function);
+};
 
 
-}
+} // namespace Light

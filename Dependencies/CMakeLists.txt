@@ -9,22 +9,28 @@ if(MSVC)
 endif()
 
 file(GLOB IMGUI_FILES true ABSOLUTE
-${CMAKE_CURRENT_SOURCE_DIR} *.cpp *.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_tables.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_widgets.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_draw.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/imgui/imgui_demo.cpp
+)
 
-set(BACKENDS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/backends/)
+set(BACKENDS_DIR ${CMAKE_CURRENT_SOURCE_DIR}/imgui/backends/)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/imgui)
 
 file(GLOB IMGUI_BACKEND_FILES true ABSOLUTE 
-${BACKENDS_DIR}imgui_impl_opengl3.cpp ${BACKENDS_DIR}imgui_impl_opengl3.h
-# ${BACKENDS_DIR}imgui_impl_vulkan.cpp ${BACKENDS_DIR}imgui_impl_vulkan.h
-${BACKENDS_DIR}imgui_impl_glfw.cpp ${BACKENDS_DIR}imgui_impl_glfw.h)
+    ${BACKENDS_DIR}imgui_impl_opengl3.cpp
+    ${BACKENDS_DIR}imgui_impl_glfw.cpp
+    # ${BACKENDS_DIR}imgui_impl_vulkan.cpp ${BACKENDS_DIR}imgui_impl_vulkan.h
+)
 
 if(WIN32)
     file(GLOB IMGUI_WINDOWS_BACKEND_FILES true ABSOLUTE ${CMAKE_CURRENT_SOURCE_DIR}/backends/
-    ${BACKENDS_DIR}imgui_impl_dx11.cpp ${BACKENDS_DIR}imgui_impl_dx11.h
-    # ${BACKENDS_DIR}imgui_impl_dx12.cpp ${BACKENDS_DIR}imgui_impl_dx12.h
-    ${BACKENDS_DIR}imgui_impl_win32.cpp ${BACKENDS_DIR}imgui_impl_win32.h)
+    ${BACKENDS_DIR}imgui_impl_dx11.cpp
+    ${BACKENDS_DIR}imgui_impl_win32.cpp
+)
 
     list(APPEND IMGUI_BACKEND_FILES ${IMGUI_WINDOWS_BACKEND_FILES})
 endif()
@@ -32,5 +38,10 @@ endif()
 add_compile_definitions(IMGUI_IMPL_OPENGL_LOADER_GLAD)
 include_directories(${DEPENDENCIES_DIR}GLAD/include)
 include_directories(${DEPENDENCIES_DIR}GLFW/include)
-
+include_directories(${DEPENDENCIES_DIR}glm/)
 add_library(imgui STATIC ${IMGUI_FILES} ${IMGUI_BACKEND_FILES})
+
+
+# Copy imconfig.h over
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Configurations/imgui/imconfig.h
+    DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/imgui/)
