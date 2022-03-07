@@ -17,9 +17,10 @@
 #include "Events/WindowEvents.h"
 
 // graphics
+#include "Graphics/Framebuffer.h"
 #include "Graphics/GraphicsContext.h"
 #include "Graphics/Renderer.h"
-#include "Graphics/Framebuffer.h"
+#include "Graphics/Texture.h"
 
 // input
 #include "Input/Input.h"
@@ -49,9 +50,9 @@
 #include "Math/Random.h"
 
 // scene
-#include "Scene/Scene.h"
-#include "Scene/Entity.h"
 #include "Scene/Components.h"
+#include "Scene/Entity.h"
+#include "Scene/Scene.h"
 
 // entry point
 #ifdef LIGHT_ENTRY_POINT

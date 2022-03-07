@@ -22,7 +22,7 @@ private:
 
 	Ref<SceneHierarchyPanel> m_SceneHierarchyPanel;
 	Ref<PropertiesPanel> m_PropertiesPanel;
-	Ref<ContentBrowserPanel> m_ContentBrowserPanel;
+	Ref<AssetBrowserPanel> m_ContentBrowserPanel;
 
 	Ref<Framebuffer> m_Framebuffer;
 

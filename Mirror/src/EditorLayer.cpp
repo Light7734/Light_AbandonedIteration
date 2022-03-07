@@ -11,7 +11,7 @@ EditorLayer::EditorLayer(const std::string& name, const std::vector<std::string>
 
 	m_PropertiesPanel     = CreateRef<PropertiesPanel>();
 	m_SceneHierarchyPanel = CreateRef<SceneHierarchyPanel>(m_Scene, m_PropertiesPanel);
-	m_ContentBrowserPanel = CreateRef<ContentBrowserPanel>();
+	m_ContentBrowserPanel = CreateRef<AssetBrowserPanel>();
 
 	m_Framebuffer = Framebuffer::Create({ 1, 1, 1 }, GraphicsContext::GetSharedContext());
 

@@ -7,10 +7,10 @@
 
 namespace Light {
 
-class ContentBrowserPanel: public Panel
+class AssetBrowserPanel: public Panel
 {
 private:
-	enum FileType
+	enum AssetType
 	{
 		None = 0,
 		Directory,
@@ -19,7 +19,7 @@ private:
 	};
 
 public:
-	ContentBrowserPanel();
+	AssetBrowserPanel();
 
 	void OnUserInterfaceUpdate();
 
@@ -28,10 +28,12 @@ private:
 	const std::filesystem::path m_AssetsPath;
 
 	// TODO: Save configuration
-	uint32_t m_FileSize    = 256u;
-	uint32_t m_FilePadding = 16u;
+	uint32_t m_FileSize    = 128u;
+	uint32_t m_FilePadding = 8u;
 
 	Ref<Texture> m_DirectoryTexture;
+	Ref<Texture> m_ImageTexture;
+	Ref<Texture> m_TextTexture;
 };
 
 } // namespace Light

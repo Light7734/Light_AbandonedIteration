@@ -1,10 +1,9 @@
 #include "glShader.h"
 
 #include <glad/glad.h>
-
 #include <glm/glm.hpp>
-#include <glm/matrix.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/matrix.hpp>
 
 
 namespace Light {
@@ -17,7 +16,6 @@ glShader::glShader(BasicFileHandle vertexFile, BasicFileHandle pixelFile)
 
 	std::string vertexSource(vertexFile.GetData(), vertexFile.GetData() + vertexFile.GetSize());
 	std::string pixelSource(pixelFile.GetData(), pixelFile.GetData() + pixelFile.GetSize());
-	LT_ENGINE_WARN(pixelSource);
 
 	unsigned int vertexShader = CompileShader(vertexSource, Shader::Stage::VERTEX);
 	unsigned int pixelShader  = CompileShader(pixelSource, Shader::Stage::PIXEL);
@@ -74,7 +72,6 @@ unsigned int glShader::CompileShader(std::string source, Shader::Stage stage)
 {
 	// &(address of) needs an lvalue
 	const char* lvalue_source = source.c_str();
-	LT_ENGINE_WARN("Source______________________________________\n{}", lvalue_source);
 	unsigned int shader       = glCreateShader(stage == Shader::Stage::VERTEX   ? GL_VERTEX_SHADER :
 	                                           stage == Shader::Stage::PIXEL    ? GL_FRAGMENT_SHADER :
 	                                           stage == Shader::Stage::GEOMETRY ? GL_GEOMETRY_SHADER :
@@ -110,7 +107,7 @@ unsigned int glShader::CompileShader(std::string source, Shader::Stage stage)
 			char* infoLog = (char*)alloca(logLength);
 			glGetShaderInfoLog(shader, logLength, &logLength, &infoLog[0]);
 
-			LT_ENGINE_TRACE(infoLog);
+			LT_ENGINE_WARN(infoLog);
 		}
 	}
 #endif
