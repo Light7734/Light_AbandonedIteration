@@ -61,8 +61,8 @@ shaderc::SpvCompilationResult glShader::CompileGLSL(BasicFileHandle file, Shader
 	// log error
 	if (result.GetCompilationStatus() != shaderc_compilation_status_success)
 	{
-		LT_ENGINE_ERROR("Failed to compile {} shader at {}...", stage == Shader::Stage::VERTEX ? "vertex" : "pixel", file.GetPath());
-		LT_ENGINE_ERROR("    {}", result.GetErrorMessage());
+		LOG(err, "Failed to compile {} shader at {}...", stage == Shader::Stage::VERTEX ? "vertex" : "pixel", file.GetPath());
+		LOG(err, "    {}", result.GetErrorMessage());
 	}
 
 	return result;
@@ -92,7 +92,7 @@ unsigned int glShader::CompileShader(std::string source, Shader::Stage stage)
 		char* errorLog = (char*)alloca(logLength);
 		glGetShaderInfoLog(shader, logLength, &logLength, &errorLog[0]);
 
-		LT_ENGINE_ERROR("glShader::glShader: failed to compile {} shader:\n        {}", stage == Shader::Stage::VERTEX ? "Vertex" : "Pixel", errorLog);
+		LOG(err, "glShader::glShader: failed to compile {} shader:\n        {}", stage == Shader::Stage::VERTEX ? "Vertex" : "Pixel", errorLog);
 
 		return NULL;
 	}
@@ -107,7 +107,7 @@ unsigned int glShader::CompileShader(std::string source, Shader::Stage stage)
 			char* infoLog = (char*)alloca(logLength);
 			glGetShaderInfoLog(shader, logLength, &logLength, &infoLog[0]);
 
-			LT_ENGINE_WARN(infoLog);
+			LOG(warn, infoLog);
 		}
 	}
 #endif

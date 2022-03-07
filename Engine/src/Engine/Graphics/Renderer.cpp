@@ -19,7 +19,7 @@ Renderer* Renderer::s_Context = nullptr;
 Renderer::Renderer(GLFWwindow* windowHandle, Ref<SharedContext> sharedContext)
     : m_QuadRenderer(LT_MAX_QUAD_RENDERER_VERTICES, sharedContext), m_TextureRenderer(LT_MAX_TEXTURE_RENDERER_VERTICES, sharedContext), m_TintedTextureRenderer(LT_MAX_TINTED_TEXTURE_RENDERER_VERTICES, sharedContext), m_ViewProjectionBuffer(nullptr), m_RenderCommand(nullptr), m_Blender(nullptr), m_DefaultFramebufferCamera(nullptr), m_TargetFramebuffer(nullptr), m_ShouldClearBackbuffer(false)
 {
-	LT_ENGINE_ASSERT(!s_Context, "Renderer::Renderer: an instance of 'Renderer' already exists, do not construct this class!");
+	ASSERT(!s_Context, "An instance of 'Renderer' already exists, do not construct this class!");
 	s_Context = this;
 
 	m_ViewProjectionBuffer = ConstantBuffer::Create(ConstantBufferIndex::ViewProjection, sizeof(glm::mat4), sharedContext);
@@ -87,7 +87,7 @@ void Renderer::DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint)
 	// advance
 	if (!m_QuadRenderer.Advance())
 	{
-		LT_ENGINE_WARN("Renderer::DrawQuadImpl: exceeded LT_MAX_QUAD_RENDERER_VERTICES: {}", LT_MAX_QUAD_RENDERER_VERTICES);
+		LOG(warn, "Exceeded LT_MAX_QUAD_RENDERER_VERTICES: {}", LT_MAX_QUAD_RENDERER_VERTICES);
 		FlushScene();
 	}
 }
@@ -97,7 +97,7 @@ void Renderer::DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint)
 void Renderer::DrawQuadImpl(const glm::mat4& transform, Ref<Texture> texture)
 {
 	// #todo: implement a proper binding
-	LT_ENGINE_ASSERT(texture, "Invalid texture passed to Renderer::DrawQuadImpl");
+	ASSERT(texture, "Texture passed to Renderer::DrawQuadImpl");
 	texture->Bind();
 
 	// locals
@@ -122,7 +122,7 @@ void Renderer::DrawQuadImpl(const glm::mat4& transform, Ref<Texture> texture)
 	// advance
 	if (!m_TextureRenderer.Advance())
 	{
-		LT_ENGINE_WARN("Renderer::DrawQuadImpl: exceeded LT_MAX_TEXTURE_RENDERER_VERTICES: {}", LT_MAX_TEXTURE_RENDERER_VERTICES);
+		LOG(warn, "Exceeded LT_MAX_TEXTURE_RENDERER_VERTICES: {}", LT_MAX_TEXTURE_RENDERER_VERTICES);
 		FlushScene();
 	}
 }
@@ -130,7 +130,7 @@ void Renderer::DrawQuadImpl(const glm::mat4& transform, Ref<Texture> texture)
 void Renderer::DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint, Ref<Texture> texture)
 {
 	// #todo: implement a proper binding
-	LT_ENGINE_ASSERT(texture, "Invalid texture passed to Renderer::DrawQuadImpl");
+	ASSERT(texture, "Texture passed to Renderer::DrawQuadImpl");
 	texture->Bind();
 
 	// locals
@@ -159,7 +159,7 @@ void Renderer::DrawQuadImpl(const glm::mat4& transform, const glm::vec4& tint, R
 	// advance
 	if (!m_TintedTextureRenderer.Advance())
 	{
-		LT_ENGINE_WARN("Renderer::DrawQuadImpl: exceeded LT_MAX_TEXTURE_RENDERER_VERTICES: {}", LT_MAX_TEXTURE_RENDERER_VERTICES);
+		LOG(warn, "Exceeded LT_MAX_TEXTURE_RENDERER_VERTICES: {}", LT_MAX_TEXTURE_RENDERER_VERTICES);
 		FlushScene();
 	}
 }

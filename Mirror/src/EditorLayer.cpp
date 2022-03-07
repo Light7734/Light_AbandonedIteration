@@ -27,7 +27,7 @@ EditorLayer::EditorLayer(const std::string& name, const std::vector<std::string>
 	else
 	{
 		SceneSerializer serializer(m_Scene);
-		LT_ENGINE_ASSERT(serializer.Deserialize(m_SceneDir), "EditorLayer::EditorLayer: failed to de-serialize: ", m_SceneDir);
+		ASSERT(serializer.Deserialize(m_SceneDir), "Failed to de-serialize: {}", m_SceneDir);
 
 		m_CameraEntity = m_Scene->GetEntityByTag("Game Camera");
 	}

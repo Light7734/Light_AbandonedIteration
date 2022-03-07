@@ -30,7 +30,7 @@ glTexture::glTexture(unsigned int width, unsigned int height, unsigned int compo
                                                       NULL;
 
 	// check
-	LT_ENGINE_ASSERT(format, "glTexture::glTexture: invalid number of components: {}", components);
+	ASSERT(format, "Invalid number of components: {}", components);
 
 
 	// #todo: isn't there something like glTextureImage2D ???

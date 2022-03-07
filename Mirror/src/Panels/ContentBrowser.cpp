@@ -38,7 +38,6 @@ void AssetBrowserPanel::OnUserInterfaceUpdate()
 		m_DirectoryTexture->Bind(0u);
 		for (auto& dirEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 		{
-			LT_ENGINE_TRACE("File: ", dirEntry.path().string());
 			AssetType assetType;
 			std::string extension = dirEntry.path().extension().string();
 
@@ -71,7 +70,6 @@ void AssetBrowserPanel::OnUserInterfaceUpdate()
 				if (ImGui::ImageButton(m_DirectoryTexture->GetTexture(), ImVec2(m_FileSize, m_FileSize), ImVec2 { 0.0f, 0.0f }, ImVec2 { 1.0f, 1.0f }, 0, ImVec4 { 0.0f, 0.0f, 0.0f, 0.0f }, ImVec4 { 1.0f, 1.0f, 1.0f, 1.0f }))
 				{
 					m_CurrentDirectory /= path.filename();
-					LT_ENGINE_INFO(path.filename().string());
 				}
 				break;
 

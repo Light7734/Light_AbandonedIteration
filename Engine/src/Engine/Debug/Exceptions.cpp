@@ -10,52 +10,46 @@
 
 namespace Light {
 
-	FailedEngineAssertion::FailedEngineAssertion(const char* file, int line)
-	{
-		LT_ENGINE_CRITICAL("FailedAssertion::FailedAssertion: engine assertion failed in: {} (line {})", file, line);
-	}
+FailedAssertion::FailedAssertion(const char* file, int line)
+{
+	LOG(critical, "Assertion failed in: {} (line {})", file, line);
+}
 
-	FailedClientAssertion::FailedClientAssertion(const char* file, int line)
-	{
-		LT_ENGINE_CRITICAL("FailedClientAssertion::FailedClientAssertion: client assertion failed in: {} (line {})", file, line);
-	}
-
-	glException::glException(unsigned int source, unsigned int type, unsigned int id, const char* msg)
-	{
-		// #todo: improve
-		LT_ENGINE_CRITICAL("________________________________________");
-		LT_ENGINE_CRITICAL("glException::glException::");
-		LT_ENGINE_CRITICAL("        Severity: {}", Stringifier::glDebugMsgSeverity(GL_DEBUG_SEVERITY_HIGH));
-		LT_ENGINE_CRITICAL("        Source  : {}", Stringifier::glDebugMsgSource(source));
-		LT_ENGINE_CRITICAL("        Type    : {}", Stringifier::glDebugMsgType(type));
-		LT_ENGINE_CRITICAL("        ID      : {}", id);
-		LT_ENGINE_CRITICAL("        Vendor  : {}", glGetString(GL_VENDOR));
-		LT_ENGINE_CRITICAL("        Renderer: {}", glGetString(GL_RENDERER));
-		LT_ENGINE_CRITICAL("        Version : {}", glGetString(GL_VERSION));
-		LT_ENGINE_CRITICAL("        SVersion: {}", glGetString(GL_SHADING_LANGUAGE_VERSION));
-		LT_ENGINE_CRITICAL("        {}", msg);
-
-		LT_ENGINE_CRITICAL("________________________________________");
-	}
+glException::glException(unsigned int source, unsigned int type, unsigned int id, const char* msg)
+{
+	// #todo: improve
+	LOG(critical, "________________________________________");
+	LOG(critical, "glException::glException::");
+	LOG(critical, "        Severity: {}", Stringifier::glDebugMsgSeverity(GL_DEBUG_SEVERITY_HIGH));
+	LOG(critical, "        Source  : {}", Stringifier::glDebugMsgSource(source));
+	LOG(critical, "        Type    : {}", Stringifier::glDebugMsgType(type));
+	LOG(critical, "        ID      : {}", id);
+	LOG(critical, "        Vendor  : {}", glGetString(GL_VENDOR));
+	LOG(critical, "        Renderer: {}", glGetString(GL_RENDERER));
+	LOG(critical, "        Version : {}", glGetString(GL_VERSION));
+	LOG(critical, "        critical, SVersion: {}", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	LOG(critical, "        {}", msg);
+	LOG(critical, "________________________________________");
+}
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	dxException::dxException(long hr, const char* file, int line)
-	{
-		char* message;
-		FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		               nullptr, hr,
-		               MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		               (LPSTR)(&message), NULL, nullptr);
+dxException::dxException(long hr, const char* file, int line)
+{
+	char* message;
+	FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+	               nullptr, hr,
+	               MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+	               (LPSTR)(&message), NULL, nullptr);
 
-		// #todo: improve
-		LT_ENGINE_CRITICAL("________________________________________");
-		LT_ENGINE_CRITICAL("dxException::dxException::");
-		LT_ENGINE_CRITICAL("        File: {}, Line: {}", file, line);
-		LT_ENGINE_CRITICAL("        {}", message);
-		LT_ENGINE_CRITICAL("________________________________________");
+	// #todo: improve
+	LOG(critical, "________________________________________");
+	LOG(critical, "dxException::dxException::");
+	LOG(critical, "        File: {}, Line: {}", file, line);
+	LOG(critical, "        {}", message);
+	LOG(critical, "________________________________________");
 
-		LocalFree(message);
-	}
+	LocalFree(message);
+}
 #endif
 
-}
+} // namespace Light

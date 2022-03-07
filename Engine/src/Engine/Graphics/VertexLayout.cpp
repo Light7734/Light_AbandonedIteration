@@ -1,4 +1,5 @@
 #include "VertexLayout.h"
+
 #include "OpenGL/glVertexLayout.h"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
@@ -10,20 +11,20 @@
 
 namespace Light {
 
-	Ref<VertexLayout> VertexLayout::Create(Ref<VertexBuffer> vertexBuffer, Ref<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, Ref<SharedContext> sharedContext)
+Ref<VertexLayout> VertexLayout::Create(Ref<VertexBuffer> vertexBuffer, Ref<Shader> shader, const std::vector<std::pair<std::string, VertexElementType>>& elements, Ref<SharedContext> sharedContext)
+{
+	switch (GraphicsContext::GetGraphicsAPI())
 	{
-		switch (GraphicsContext::GetGraphicsAPI())
-		{
-		case GraphicsAPI::OpenGL:
-			return CreateRef<glVertexLayout>(vertexBuffer, elements);
+	case GraphicsAPI::OpenGL:
+		return CreateRef<glVertexLayout>(vertexBuffer, elements);
 
-		case GraphicsAPI::DirectX: LT_WIN(
-			return CreateRef<dxVertexLayout>(shader, elements, std::static_pointer_cast<dxSharedContext>(sharedContext));)
+	case GraphicsAPI::DirectX: LT_WIN(
+		return CreateRef<dxVertexLayout>(shader, elements, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
-		default:
-			LT_ENGINE_ASSERT(false, "VertexLayout::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
-			return nullptr;
-		}
+	default:
+		ASSERT(false, "Invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
+		return nullptr;
 	}
-
 }
+
+} // namespace Light

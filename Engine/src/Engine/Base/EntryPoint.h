@@ -2,7 +2,7 @@
 
 #ifdef LIGHT_PLATFORM_WINDOWS
 
-#include <LightEngine.h>
+	#include <LightEngine.h>
 
 // to be defined in client project
 extern Light::Application* Light::CreateApplication(std::string execName, std::vector<std::string> args);
@@ -11,7 +11,7 @@ extern Light::Application* Light::CreateApplication(std::string execName, std::v
 int main(int argc, char* argv[])
 {
 	Light::Application* application = nullptr;
-	int exitCode = 0;
+	int exitCode                    = 0;
 
 	std::vector<std::string> args;
 
@@ -21,35 +21,29 @@ int main(int argc, char* argv[])
 	try
 	{
 		application = Light::CreateApplication(argv[0], args);
-		LT_ENGINE_ASSERT(application, "main: Light::Application is not intialized");
+		ASSERT(application, "Light::Application is not intialized");
 
 		for (int i = 0; i < argc; i++)
-			LT_ENGINE_INFO("main: argv[{}]: {}", i, argv[i]);
+			LOG(info, "argv[{}]: {}", i, argv[i]);
 
 		application->GameLoop();
 	}
 	// failed engine assertion
-	catch (Light::FailedEngineAssertion)
+	catch (Light::FailedAssertion)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedEngineAssertion'");
+		LOG(critical, "Terminating due to unhandled 'FailedEngineAssertion'");
 		exitCode = -1;
 	}
-	// failed client assertion
-	catch (Light::FailedClientAssertion)
-	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedClientAssertion'");
-		exitCode = -2;
-	}
 	// gl exception
-	catch(Light::glException)
+	catch (Light::glException)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
+		LOG(critical, "Terminating due to unhandled 'glException'");
 		exitCode = -3;
 	}
 	// dx exception
 	catch (Light::dxException)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'dxException'");
+		LOG(critical, "Terminating due to unhandled 'dxException'");
 		exitCode = -4;
 	}
 
@@ -59,7 +53,7 @@ int main(int argc, char* argv[])
 
 #elif defined(LIGHT_PLATFORM_LINUX)
 
-#include <LightEngine.h>
+	#include <LightEngine.h>
 
 // to be defined in client project
 extern Light::Application* Light::CreateApplication();
@@ -68,31 +62,25 @@ extern Light::Application* Light::CreateApplication();
 int main(int argc, char* argv[])
 {
 	Light::Application* application = nullptr;
-	int exitCode = 0;
+	int exitCode                    = 0;
 
 	try
 	{
 		application = Light::CreateApplication();
-		LT_ENGINE_ASSERT(application, "main: Light::Application is not intialized");
+		ASSERT(application, "Light::Application is not intialized");
 
 		application->GameLoop();
 	}
 	// failed engine assertion
-	catch (Light::FailedEngineAssertion)
+	catch (Light::FailedAssertion)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedEngineAssertion'");
+		LOG(critical, "Exitting due to unhandled 'FailedEngineAssertion'");
 		exitCode = -1;
-	}
-	// failed client assertion
-	catch (Light::FailedClientAssertion)
-	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'FailedClientAssertion'");
-		exitCode = -2;
 	}
 	// gl exception
 	catch (Light::glException)
 	{
-		LT_ENGINE_CRITICAL("main: exitting due to unhandled 'glException'");
+		LOG(critical, "main: exitting due to unhandled 'glException'");
 		exitCode = -3;
 	}
 

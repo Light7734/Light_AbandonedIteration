@@ -1,4 +1,5 @@
 #include "Shader.h"
+
 #include "OpenGL/glShader.h"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
@@ -10,21 +11,21 @@
 
 namespace Light {
 
-	Ref<Shader> Shader::Create(BasicFileHandle vertexFile, BasicFileHandle pixelFile, Ref<SharedContext> sharedContext)
+Ref<Shader> Shader::Create(BasicFileHandle vertexFile, BasicFileHandle pixelFile, Ref<SharedContext> sharedContext)
+{
+	// load shader source
+	switch (GraphicsContext::GetGraphicsAPI())
 	{
-		// load shader source
-		switch (GraphicsContext::GetGraphicsAPI())
-		{
-		case GraphicsAPI::OpenGL:
-			return CreateRef<glShader>(vertexFile, pixelFile);
+	case GraphicsAPI::OpenGL:
+		return CreateRef<glShader>(vertexFile, pixelFile);
 
-		case GraphicsAPI::DirectX: LT_WIN(
-			return CreateRef<dxShader>(vertexFile, pixelFile, std::static_pointer_cast<dxSharedContext>(sharedContext));)
+	case GraphicsAPI::DirectX: LT_WIN(
+		return CreateRef<dxShader>(vertexFile, pixelFile, std::static_pointer_cast<dxSharedContext>(sharedContext));)
 
-		default:
-			LT_ENGINE_ASSERT(false, "Shader::Create: invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
-			return nullptr;
-		}
+	default:
+		ASSERT(false, "Invalid/unsupported 'GraphicsAPI' {}", GraphicsContext::GetGraphicsAPI());
+		return nullptr;
 	}
-
 }
+
+} // namespace Light
