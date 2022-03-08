@@ -1,7 +1,7 @@
-#include "dxVertexLayout.h"
+#include "dxVertexLayout.hpp"
 
-#include "dxShader.h"
-#include "dxSharedContext.h"
+#include "dxShader.hpp"
+#include "dxSharedContext.hpp"
 
 namespace Light {
 

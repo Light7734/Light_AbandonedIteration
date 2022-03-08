@@ -59,7 +59,7 @@ target_link_libraries(
     PRIVATE imgui)
 
 # Precompiled headers
-target_precompile_headers(Engine PUBLIC ${ENGINE_DIR}src/Engine/ltpch.h)
+target_precompile_headers(Engine PUBLIC ${ENGINE_DIR}src/Engine/ltpch.hpp)
 
 if(MSVC)
     set_property(DIRECTORY ${CMAE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Mirror)

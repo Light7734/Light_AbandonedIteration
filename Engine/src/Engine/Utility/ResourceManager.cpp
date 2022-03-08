@@ -1,9 +1,9 @@
-#include "ResourceManager.h"
+#include "ResourceManager.hpp"
 
-#include "FileManager.h"
-#include "Graphics/GraphicsContext.h"
-#include "Graphics/Shader.h"
-#include "Graphics/Texture.h"
+#include "FileManager.hpp"
+#include "Graphics/GraphicsContext.hpp"
+#include "Graphics/Shader.hpp"
+#include "Graphics/Texture.hpp"
 
 namespace Light {
 

@@ -1,6 +1,6 @@
-#include "dxRenderCommand.h"
+#include "dxRenderCommand.hpp"
 
-#include "dxSharedContext.h"
+#include "dxSharedContext.hpp"
 
 namespace Light {
 

@@ -1,18 +1,18 @@
-#include "UserInterface.h"
+#include "UserInterface.hpp"
 
-#include "OpenGL/glUserInterface.h"
+#include "OpenGL/glUserInterface.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxUserInterface.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxUserInterface.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "Events/CharEvent.h"
-#include "Events/Event.h"
-#include "Events/KeyboardEvents.h"
-#include "Events/MouseEvents.h"
-#include "Graphics/GraphicsContext.h"
-#include "Input/KeyCodes.h"
+#include "Events/CharEvent.hpp"
+#include "Events/Event.hpp"
+#include "Events/KeyboardEvents.hpp"
+#include "Events/MouseEvents.hpp"
+#include "Graphics/GraphicsContext.hpp"
+#include "Input/KeyCodes.hpp"
 
 #include <imgui.h>
 

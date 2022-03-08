@@ -1,14 +1,14 @@
-#include "Application.h"
+#include "Application.hpp"
 
-#include "Debug/Instrumentor.h"
-#include "Events/Event.h"
-#include "Graphics/GraphicsContext.h"
-#include "Graphics/RenderCommand.h"
-#include "Graphics/Renderer.h"
-#include "Layer/Layer.h"
-#include "Time/Timer.h"
-#include "UserInterface/UserInterface.h"
-#include "Window.h"
+#include "Debug/Instrumentor.hpp"
+#include "Events/Event.hpp"
+#include "Graphics/GraphicsContext.hpp"
+#include "Graphics/RenderCommand.hpp"
+#include "Graphics/Renderer.hpp"
+#include "Layer/Layer.hpp"
+#include "Time/Timer.hpp"
+#include "UserInterface/UserInterface.hpp"
+#include "Window.hpp"
 
 namespace Light {
 

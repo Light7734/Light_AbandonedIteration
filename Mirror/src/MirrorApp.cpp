@@ -1,32 +1,32 @@
 #define LIGHT_ENTRY_POINT
-#include <LightEngine.h>
+#include "EditorLayer.hpp"
 
-#include "EditorLayer.h"
+#include <LightEngine.hpp>
 
 namespace Light {
 
-	class Mirror : public Light::Application
+class Mirror: public Light::Application
+{
+public:
+	Mirror(std::string execName, std::vector<std::string> args)
+	    : Application(execName, args)
 	{
-	public:
-		Mirror(std::string execName, std::vector<std::string> args)
-			: Application(execName, args)
-		{
-			// Set window properties
-			Light::WindowProperties properties;
-			properties.title = "Mirror";
-			properties.size = glm::uvec2(1280u, 720u);
-			properties.vsync = true;
+		// Set window properties
+		Light::WindowProperties properties;
+		properties.title = "Mirror";
+		properties.size  = glm::uvec2(1280u, 720u);
+		properties.vsync = true;
 
-			m_Window->SetProperties(properties);
+		m_Window->SetProperties(properties);
 
-			// Attach the sandbox layer
-			LayerStack::EmplaceLayer<EditorLayer>(("MirrorLayer"), args);
-		}
-	};
-
-	Application* CreateApplication(std::string execName, std::vector<std::string> args)
-	{
-		return new Mirror(execName, args);
+		// Attach the sandbox layer
+		LayerStack::EmplaceLayer<EditorLayer>(("MirrorLayer"), args);
 	}
+};
 
+Application* CreateApplication(std::string execName, std::vector<std::string> args)
+{
+	return new Mirror(execName, args);
 }
+
+} // namespace Light

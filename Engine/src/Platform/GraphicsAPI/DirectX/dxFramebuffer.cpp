@@ -1,6 +1,6 @@
-#include "dxFramebuffer.h"
+#include "dxFramebuffer.hpp"
 
-#include "dxSharedContext.h"
+#include "dxSharedContext.hpp"
 
 namespace Light {
 

@@ -1,11 +1,11 @@
-#include "Input.h"
+#include "Input.hpp"
 
-#include "Events/CharEvent.h"
-#include "Events/Event.h"
-#include "Events/KeyboardEvents.h"
-#include "Events/MouseEvents.h"
-#include "Input/KeyCodes.h"
-#include "ltpch.h"
+#include "Events/CharEvent.hpp"
+#include "Events/Event.hpp"
+#include "Events/KeyboardEvents.hpp"
+#include "Events/MouseEvents.hpp"
+#include "Input/KeyCodes.hpp"
+#include "ltpch.hpp"
 
 #include <imgui.h>
 

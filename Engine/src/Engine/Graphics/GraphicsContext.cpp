@@ -1,18 +1,18 @@
-#include "GraphicsContext.h"
+#include "GraphicsContext.hpp"
 
-#include "OpenGL/glGraphicsContext.h"
+#include "OpenGL/glGraphicsContext.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxGraphicsContext.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxGraphicsContext.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "Blender.h"                     // required for forward declaration
-#include "Buffers.h"                     // required for forward declaration
-#include "RenderCommand.h"               // required for forward declaration
-#include "Renderer.h"                    // required for forward declaration
-#include "UserInterface/UserInterface.h" // required for forward declaration
-#include "Utility/ResourceManager.h"     // required for forward declaration
+#include "Blender.hpp"                     // required for forward declaration
+#include "Buffers.hpp"                     // required for forward declaration
+#include "RenderCommand.hpp"               // required for forward declaration
+#include "Renderer.hpp"                    // required for forward declaration
+#include "UserInterface/UserInterface.hpp" // required for forward declaration
+#include "Utility/ResourceManager.hpp"     // required for forward declaration
 
 namespace Light {
 

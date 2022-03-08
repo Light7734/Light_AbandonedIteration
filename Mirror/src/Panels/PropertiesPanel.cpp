@@ -1,7 +1,7 @@
-#include "PropertiesPanel.h"
+#include "PropertiesPanel.hpp"
 
-#include "Scene/Components.h"
-#include "Utility/ResourceManager.h"
+#include "Scene/Components.hpp"
+#include "Utility/ResourceManager.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>

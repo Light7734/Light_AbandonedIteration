@@ -1,6 +1,6 @@
-﻿#include "glUserInterface.h"
+﻿#include "glUserInterface.hpp"
 
-#include "Input/KeyCodes.h"
+#include "Input/KeyCodes.hpp"
 
 #include <GLFW/glfw3.h>
 #include <backends/imgui_impl_glfw.h>

@@ -1,14 +1,14 @@
-#include "Buffers.h"
+#include "Buffers.hpp"
 
-#include "OpenGL/glBuffers.h"
-#include "SharedContext.h"
+#include "OpenGL/glBuffers.hpp"
+#include "SharedContext.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxBuffers.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxBuffers.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "GraphicsContext.h"
+#include "GraphicsContext.hpp"
 
 namespace Light {
 

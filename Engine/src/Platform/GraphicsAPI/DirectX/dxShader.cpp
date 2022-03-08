@@ -1,6 +1,6 @@
-#include "dxShader.h"
+#include "dxShader.hpp"
 
-#include "dxSharedContext.h"
+#include "dxSharedContext.hpp"
 
 #include <d3dcompiler.h>
 

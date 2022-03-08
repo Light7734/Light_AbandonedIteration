@@ -1,6 +1,6 @@
-#include "glVertexLayout.h"
+#include "glVertexLayout.hpp"
 
-#include "glBuffers.h"
+#include "glBuffers.hpp"
 
 #include <glad/glad.h>
 

@@ -1,7 +1,7 @@
-#include "dxUserInterface.h"
+#include "dxUserInterface.hpp"
 
-#include "Input/KeyCodes.h"
-#include "dxSharedContext.h"
+#include "Input/KeyCodes.hpp"
+#include "dxSharedContext.hpp"
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <backends/imgui_impl_dx11.h>

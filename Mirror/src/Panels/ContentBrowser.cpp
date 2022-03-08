@@ -1,6 +1,6 @@
-#include "ContentBrowser.h"
+#include "ContentBrowser.hpp"
 
-#include <LightEngine.h>
+#include <LightEngine.hpp>
 #include <imgui.h>
 
 namespace Light {

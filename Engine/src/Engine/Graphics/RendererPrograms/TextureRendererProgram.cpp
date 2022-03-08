@@ -1,10 +1,10 @@
-#include "TextureRendererProgram.h"
+#include "TextureRendererProgram.hpp"
 
-#include "Camera/Camera.h"
-#include "Graphics/Buffers.h"
-#include "Graphics/Shader.h"
-#include "Graphics/VertexLayout.h"
-#include "Utility/ResourceManager.h"
+#include "Camera/Camera.hpp"
+#include "Graphics/Buffers.hpp"
+#include "Graphics/Shader.hpp"
+#include "Graphics/VertexLayout.hpp"
+#include "Utility/ResourceManager.hpp"
 
 namespace Light {
 

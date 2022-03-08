@@ -1,13 +1,13 @@
-#include "Shader.h"
+#include "Shader.hpp"
 
-#include "OpenGL/glShader.h"
+#include "OpenGL/glShader.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxShader.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxShader.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "GraphicsContext.h"
+#include "GraphicsContext.hpp"
 
 namespace Light {
 

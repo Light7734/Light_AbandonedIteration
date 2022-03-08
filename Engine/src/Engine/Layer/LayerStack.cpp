@@ -1,10 +1,10 @@
-#include "LayerStack.h"
+#include "LayerStack.hpp"
 
-#include "Events/Event.h"
-#include "Events/KeyboardEvents.h"
-#include "Events/MouseEvents.h"
-#include "Events/WindowEvents.h"
-#include "Layer.h"
+#include "Events/Event.hpp"
+#include "Events/KeyboardEvents.hpp"
+#include "Events/MouseEvents.hpp"
+#include "Events/WindowEvents.hpp"
+#include "Layer.hpp"
 
 namespace Light {
 

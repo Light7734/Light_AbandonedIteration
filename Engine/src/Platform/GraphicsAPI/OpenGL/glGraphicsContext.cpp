@@ -1,12 +1,12 @@
-#include "glGraphicsContext.h"
+#include "glGraphicsContext.hpp"
 
-#include "Events/WindowEvents.h"
-#include "Graphics/Blender.h"            // required for forward declaration
-#include "Graphics/Buffers.h"            // required for forward declaration
-#include "Graphics/RenderCommand.h"      // required for forward declaration
-#include "Graphics/Renderer.h"           // required for forward declaration
-#include "UserInterface/UserInterface.h" // required for forward declaration
-#include "Utility/ResourceManager.h"     // required for forward declaration
+#include "Events/WindowEvents.hpp"
+#include "Graphics/Blender.hpp"            // required for forward declaration
+#include "Graphics/Buffers.hpp"            // required for forward declaration
+#include "Graphics/RenderCommand.hpp"      // required for forward declaration
+#include "Graphics/Renderer.hpp"           // required for forward declaration
+#include "UserInterface/UserInterface.hpp" // required for forward declaration
+#include "Utility/ResourceManager.hpp"     // required for forward declaration
 
 #include <glad/glad.h>
 

@@ -1,8 +1,8 @@
-#include "Scene.h"
+#include "Scene.hpp"
 
-#include "Components.h"
-#include "Entity.h"
-#include "Graphics/Renderer.h"
+#include "Components.hpp"
+#include "Entity.hpp"
+#include "Graphics/Renderer.hpp"
 
 #include <glm/glm.hpp>
 

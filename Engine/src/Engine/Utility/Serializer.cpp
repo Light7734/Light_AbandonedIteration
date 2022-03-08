@@ -1,8 +1,8 @@
-#include "Serializer.h"
+#include "Serializer.hpp"
 
-#include "Graphics/Texture.h"
-#include "Scene/Components.h"
-#include "Utility/ResourceManager.h"
+#include "Graphics/Texture.hpp"
+#include "Scene/Components.hpp"
+#include "Utility/ResourceManager.hpp"
 
 namespace YAML {
 

@@ -1,6 +1,6 @@
-#include "Exceptions.h"
+#include "Exceptions.hpp"
 
-#include "Utility/Stringifier.h"
+#include "Utility/Stringifier.hpp"
 
 #include <glad/glad.h>
 

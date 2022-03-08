@@ -1,13 +1,13 @@
-#include "Blender.h"
+#include "Blender.hpp"
 
-#include "OpenGL/glBlender.h"
+#include "OpenGL/glBlender.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxBlender.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxBlender.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "GraphicsContext.h"
+#include "GraphicsContext.hpp"
 
 namespace Light {
 

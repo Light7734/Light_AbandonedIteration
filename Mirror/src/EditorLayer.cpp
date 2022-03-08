@@ -1,6 +1,6 @@
-#include "EditorLayer.h"
+#include "EditorLayer.hpp"
 
-#include "Utility/Serializer.h"
+#include "Utility/Serializer.hpp"
 
 namespace Light {
 

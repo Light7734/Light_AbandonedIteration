@@ -1,13 +1,13 @@
-#include "Texture.h"
+#include "Texture.hpp"
 
-#include "OpenGL/glTexture.h"
+#include "OpenGL/glTexture.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxTexture.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxTexture.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "GraphicsContext.h"
+#include "GraphicsContext.hpp"
 
 namespace Light {
 

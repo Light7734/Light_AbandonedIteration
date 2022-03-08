@@ -1,12 +1,12 @@
-#include "Renderer.h"
+#include "Renderer.hpp"
 
-#include "Blender.h"
-#include "Buffers.h"
-#include "Camera/SceneCamera.h"
-#include "Events/WindowEvents.h"
-#include "Framebuffer.h"
-#include "RenderCommand.h"
-#include "Texture.h"
+#include "Blender.hpp"
+#include "Buffers.hpp"
+#include "Camera/SceneCamera.hpp"
+#include "Events/WindowEvents.hpp"
+#include "Framebuffer.hpp"
+#include "RenderCommand.hpp"
+#include "Texture.hpp"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

@@ -1,11 +1,11 @@
-#include "wWindow.h"
+#include "wWindow.hpp"
 
-#include "Events/CharEvent.h"
-#include "Events/Event.h"
-#include "Events/KeyboardEvents.h"
-#include "Events/MouseEvents.h"
-#include "Events/WindowEvents.h"
-#include "Graphics/GraphicsContext.h"
+#include "Events/CharEvent.hpp"
+#include "Events/Event.hpp"
+#include "Events/KeyboardEvents.hpp"
+#include "Events/MouseEvents.hpp"
+#include "Events/WindowEvents.hpp"
+#include "Graphics/GraphicsContext.hpp"
 
 #include <GLFW/glfw3.h>
 

@@ -1,13 +1,13 @@
-#include "VertexLayout.h"
+#include "VertexLayout.hpp"
 
-#include "OpenGL/glVertexLayout.h"
+#include "OpenGL/glVertexLayout.hpp"
 
 #ifdef LIGHT_PLATFORM_WINDOWS
-	#include "DirectX/dxVertexLayout.h"
-	#include "DirectX/dxSharedContext.h"
+	#include "DirectX/dxVertexLayout.hpp"
+	#include "DirectX/dxSharedContext.hpp"
 #endif
 
-#include "GraphicsContext.h"
+#include "GraphicsContext.hpp"
 
 namespace Light {
 
