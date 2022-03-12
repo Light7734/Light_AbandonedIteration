@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Panels/ContentBrowser.hpp"
+#include "Panels/AssetBrowser.hpp"
 #include "Panels/PropertiesPanel.hpp"
 #include "Panels/SceneHierarchyPanel.hpp"
 

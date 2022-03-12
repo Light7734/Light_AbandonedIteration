@@ -4,6 +4,7 @@ add_compile_definitions(LIGHT_PLATFORM_WINDOWS)
 
 include_directories(
     ${ENGINE_DIR}src/Engine/
+    ${MIRROR_DIR}/src/
     ${ENGINE_DIR}src/Platform/GraphicsAPI/
     ${ENGINE_DIR}src/Platform/OS/
     ${DEPENDENCIES_DIR}entt/src/
