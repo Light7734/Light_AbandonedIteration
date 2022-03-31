@@ -3,18 +3,18 @@ A Cross-Platform, Cross-GraphicsAPI Game Engine
 
 ## Supported Graphics APIs
 * OpenGL
-* DirectX
+* DirectX (Will get rid of this, f* microsoft)
 
 Will support:
 * Vulkan (under development)
-* Metal (maybe not...)
+
 
 ## Supported Operating Systems
-* Windows
+* Windows (Fails to build ATM, gotta get rid of DirectX)
 * Linux
  
 Will support:
-* Mac
+* Mac (Get a real OS lol)
 
 ## Getting Started
 
@@ -22,15 +22,18 @@ Will support:
 * CMake (duh)
 * C++ 20
 * OpenGL 4.5 or higher
-* DirectX 11 support on Windows machines
 
 ### Getting the project
 ```bash
-    git clone --recurse-submodules -j4 https://github.com/Light3039/Light <folder_name>
+    git clone --recurse-submodules https://github.com/Light3039/Light
         # if you cloned non-recursively then run "git submodule update --init"
-    mkdir <folder_name>/build && cd <folder_name>/build
+    mkdir Light/build
+    cd Light/build
     cmake ..
-``` 
+    cmake --build . -j20
+```
+
+hmu if you wanna chat Light7734#4652
 
 ## Acknowledgments
 Huge thanks to these people:
