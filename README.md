@@ -1,16 +1,17 @@
 # Light
 A Cross-Platform, Cross-GraphicsAPI Game Engine
 
+READ -> The engine is in a pretty broken condition right now, I haven't abandoned this project(yet), will resurrect this as soon as I am able to, thanks for your time
+
 ## Supported Graphics APIs
 * OpenGL
-* DirectX (Will get rid of this, f* microsoft)
+* DirectX
 
 Will support:
 * Vulkan (under development)
 
-
 ## Supported Operating Systems
-* Windows (Fails to build ATM, gotta get rid of DirectX)
+* Windows (Fails to build ATM)
 * Linux
  
 Will support:
