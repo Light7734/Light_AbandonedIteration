@@ -56,7 +56,7 @@ constexpr std::unique_ptr<T> MakeScope(T* rawPointer)
 	#define LT_MAC(x) x
 
 #else
-// #error "Unsupported platform: Unknown"
+	#error "Unsupported platform: Unknown"
 #endif
 //========== PLATFORM ==========//
 
