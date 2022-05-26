@@ -1,43 +1,37 @@
 # Light
-A Cross-Platform, Cross-GraphicsAPI Game Engine
+~~A Cross-Platform, Cross-GraphicsAPI Game Engine~~
 
-READ -> The engine is in a pretty broken condition right now, I haven't abandoned this project(yet), will resurrect this as soon as I am able to, thanks for your time
+A game engine with Vulkan backend and emphasis on pixel art.
 
-## Supported Graphics APIs
-* OpenGL
-* DirectX
+## New plan
+I'm going to remove the support for DirectX & OpenGL, this engine will only implement Vulkan for performance and simplicity(not Vulkan's simplicity but simplicity of not having 3 GraphicsAPIs exposed using the same functions...)
 
-Will support:
-* Vulkan (under development)
+But for the time being, I need to learn vulkan, so the engine will be in an unusable state
+
+Many things need to be changed as well, and I do have a busy schedule, so it'll take a while.
 
 ## Supported Operating Systems
-* Windows (Fails to build ATM)
 * Linux
+* Windows (Fails to build ATM)
  
 Will support:
-* Mac (Get a real OS lol)
+* Mac
 
 ## Getting Started
 
 ### Prerequisites
 * CMake (duh)
 * C++ 20
-* OpenGL 4.5 or higher
+* Vulkan 1.3 support
 
 ### Getting the project
 ```bash
-    git clone --recurse-submodules https://github.com/Light3039/Light
+    git clone --recurse-submodules https://github.com/Light7734/light
         # if you cloned non-recursively then run "git submodule update --init"
-    mkdir Light/build
-    cd Light/build
-    cmake ..
+    mkdir light/build
+    cd light/build
+    cmake -DEXPORT_COMPILE_COMMANDS=1 .. && ln -fs ./compile_commands.json ../compile_commands.json
     cmake --build . -j20
 ```
 
 hmu if you wanna chat Light7734#4652
-
-## Acknowledgments
-Huge thanks to these people:
-* [TheCherno](https://www.youtube.com/channel/UCQ-W1KE9EYfdxhL6S4twUNw) for teaching C++, OpenGL and GameEngine development
-* [Chili](https://www.youtube.com/channel/UCsyHonfwHi4fLb2lkq0DEAA) for teaching DirectX
-* [JoeyDeVriez](https://learnopengl.com/) for creating learnopengl.com
